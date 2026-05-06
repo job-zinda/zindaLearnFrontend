@@ -2,7 +2,6 @@
 
 
 import React from "react";
-// import schoolLogo from "frontend/zindalearn/src/assets/topnavlogo.jpeg";
 import schoolLogo from "../assets/topnavlogo.jpeg";
 
 export default function AdminTopNav({ title, onMenuClick }) {
