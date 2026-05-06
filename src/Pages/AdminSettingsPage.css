@@ -1,0 +1,318 @@
+.admin-settings-page {
+  width: 100%;
+  min-height: calc(100vh - 130px);
+  background: #ffffff;
+  padding: 44px 42px 50px;
+}
+
+.admin-settings-layout {
+  display: grid;
+  grid-template-columns: 310px 1fr;
+  gap: 44px;
+  align-items: start;
+}
+
+.admin-settings-menu {
+  min-height: 520px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #111f83, #8b00e8);
+  padding: 38px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.admin-settings-menu button {
+  min-height: 56px;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.admin-settings-menu button:hover,
+.admin-settings-menu button.active {
+  background: rgba(255, 255, 255, 0.28);
+  transform: translateY(-2px);
+}
+
+.admin-settings-content {
+  min-height: 520px;
+}
+
+.admin-settings-content-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  padding: 34px;
+  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.06);
+}
+
+.admin-settings-content-card h2 {
+  margin: 0 0 20px;
+  font-size: 30px;
+  font-weight: 950;
+  color: #020617;
+}
+
+.admin-settings-content-card p {
+  color: #4b5563;
+  font-size: 17px;
+  line-height: 1.75;
+  margin: 0 0 14px;
+}
+
+.admin-settings-profile-view {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-bottom: 28px;
+}
+
+.admin-settings-profile-avatar {
+  width: 105px;
+  height: 105px;
+  border-radius: 50%;
+  border: 3px solid #e9d5ff;
+  background: #faf5ff;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.admin-settings-profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.admin-settings-profile-avatar span {
+  font-size: 42px;
+  color: #7c00d8;
+  font-weight: 900;
+}
+
+.admin-settings-profile-view h3 {
+  margin: 0 0 8px;
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.admin-settings-profile-view p {
+  margin: 4px 0;
+  color: #6d00d7;
+  font-weight: 800;
+}
+
+.admin-settings-primary-btn {
+  width: 100%;
+  min-height: 52px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #8b00e8, #5f00d7);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 16px 34px rgba(98, 0, 216, 0.18);
+}
+
+.admin-settings-primary-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.admin-settings-mobile-back {
+  display: none;
+}
+
+.admin-settings-modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483647 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(15, 23, 42, 0.55) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 20px !important;
+  overflow-y: auto !important;
+}
+
+.admin-settings-modal {
+  width: min(560px, calc(100vw - 40px)) !important;
+  max-height: calc(100vh - 40px) !important;
+  background: #ffffff !important;
+  border-radius: 22px !important;
+  overflow: hidden !important;
+  box-shadow: 0 28px 70px rgba(15, 23, 42, 0.28) !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.admin-settings-modal-head {
+  flex-shrink: 0 !important;
+  padding: 16px 22px !important;
+  border-bottom: 1px solid #eef2f7 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: #ffffff !important;
+}
+
+.admin-settings-modal-head h3 {
+  margin: 0 !important;
+  font-size: 22px !important;
+  font-weight: 900 !important;
+  color: #020617 !important;
+}
+
+.admin-settings-modal-close {
+  width: 42px !important;
+  height: 42px !important;
+  border: none !important;
+  border-radius: 50% !important;
+  background: #f3e8ff !important;
+  color: #6d00d7 !important;
+  font-size: 30px !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+.admin-settings-modal-close:hover {
+  background: #6d00d7 !important;
+  color: #ffffff !important;
+}
+
+.admin-settings-modal-body {
+  overflow-y: auto !important;
+  padding: 22px 26px !important;
+}
+
+.admin-settings-form {
+  display: grid;
+  gap: 14px;
+}
+
+.admin-settings-form label {
+  color: #4b5563;
+  font-weight: 900;
+}
+
+.admin-settings-form input {
+  width: 100%;
+  border: 1px solid #d9e0ef;
+  border-radius: 13px;
+  padding: 14px 16px;
+  outline: none;
+  font-size: 15px;
+  color: #111827;
+}
+
+.admin-settings-photo-box {
+  display: grid;
+  place-items: center;
+  gap: 14px;
+  margin-bottom: 6px;
+}
+
+.admin-settings-photo-box img,
+.admin-settings-photo-box span {
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
+  border: 3px solid #e9d5ff;
+  background: #faf5ff;
+  object-fit: cover;
+  display: grid;
+  place-items: center;
+  font-size: 42px;
+  color: #7c00d8;
+  font-weight: 900;
+}
+
+.admin-settings-photo-box label {
+  background: #0ea5a3;
+  color: #ffffff;
+  padding: 12px 22px;
+  border-radius: 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .admin-settings-page {
+    padding: 24px 14px 40px;
+  }
+
+  .admin-settings-layout {
+    display: block;
+  }
+
+  .admin-settings-menu {
+    min-height: auto;
+    padding: 24px;
+  }
+
+  .admin-settings-menu--hide-mobile {
+    display: none;
+  }
+
+  .admin-settings-content {
+    display: none;
+  }
+
+  .admin-settings-content--open-mobile {
+    display: block;
+  }
+
+  .admin-settings-mobile-back {
+    display: inline-flex;
+    margin-bottom: 16px;
+    border: none;
+    background: #f3e8ff;
+    color: #6d00d7;
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-weight: 900;
+  }
+
+  .admin-settings-content-card {
+    padding: 22px;
+  }
+
+  .admin-settings-profile-view {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-settings-menu {
+    gap: 14px;
+  }
+
+  .admin-settings-menu button {
+    min-height: 50px;
+    font-size: 15px;
+  }
+
+  .admin-settings-content-card h2 {
+    font-size: 24px;
+  }
+
+  .admin-settings-modal {
+    max-height: calc(100vh - 24px) !important;
+    border-radius: 18px !important;
+  }
+
+  .admin-settings-modal-body {
+    padding: 18px !important;
+  }
+}

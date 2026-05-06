@@ -1,0 +1,59 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="purpleBg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#9b00ff"></stop>
+      <stop offset="70%" stop-color="#7b00d8"></stop>
+      <stop offset="100%" stop-color="#5a00b5"></stop>
+    </radialGradient>
+
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="22" result="blur"></feGaussianBlur>
+      <feMerge>
+        <feMergeNode in="blur"></feMergeNode>
+        <feMergeNode in="SourceGraphic"></feMergeNode>
+      </feMerge>
+    </filter>
+
+    <linearGradient id="orange" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffb13b"></stop>
+      <stop offset="100%" stop-color="#ff6a00"></stop>
+    </linearGradient>
+  </defs>
+
+  <rect width="1024" height="1024" fill="#000000"></rect>
+
+  <circle cx="512" cy="512" r="435" fill="url(#purpleBg)" stroke="#a855f7" stroke-width="3" filter="url(#glow)"></circle>
+
+  <path d="M333 312
+       H690
+       Q704 312 704 326
+       V380
+       Q704 390 697 398
+       L453 674
+       H680
+       Q694 674 694 688
+       V742
+       Q694 756 680 756
+       H328
+       Q314 756 314 742
+       V688
+       Q314 678 321 670
+       L565 394
+       H333
+       Q319 394 319 380
+       V326
+       Q319 312 333 312Z" fill="#ffffff"></path>
+
+  <path d="M668 270
+       H740
+       Q751 270 751 281
+       V351
+       Q751 358 746 363
+       L719 390
+       Q711 398 711 386
+       V314
+       Q711 306 703 306
+       H649
+       Q637 306 646 297
+       L668 270Z" fill="url(#orange)"></path>
+</svg>
