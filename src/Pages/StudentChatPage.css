@@ -880,3 +880,77 @@
     display:none;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 768px) {
+  .student-chat-page,
+  .student-chat-main,
+  .student-chat-container,
+  .student-chat-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow-x: hidden !important;
+  }
+
+  .student-chat-card {
+    margin: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  .student-chat-body {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .student-chat-input-area,
+  .student-chat-form {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .student-chat-input {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  body {
+    overflow-x: hidden !important;
+  }
+}
