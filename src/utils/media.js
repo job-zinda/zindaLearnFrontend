@@ -32,7 +32,6 @@
 
 
 
-
 const SERVER_URL =
   import.meta.env.VITE_API_ORIGIN ||
   "https://zindalearn-backend.onrender.com";
