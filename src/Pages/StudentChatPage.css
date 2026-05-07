@@ -1908,8 +1908,8 @@ body,
   .admin-content-inner {
     padding-left: 0 !important;
     padding-right: 0 !important;
-    margin-left: 10px !important;
-    margin-right: 10px !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
   }
 
   .student-chat-page {
