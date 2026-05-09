@@ -291,3 +291,55 @@
     height: 190px;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.student-category-card {
+  background: linear-gradient(145deg, #111633, #080b22) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+}
+
+.student-category-body {
+  background: transparent !important;
+}
+
+.student-category-body h3 {
+  color: #ffffff !important;
+}
+
+.student-category-body p {
+  color: rgba(255,255,255,0.72) !important;
+}
