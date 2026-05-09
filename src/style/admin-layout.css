@@ -567,7 +567,7 @@
 
     margin-top: auto !important;
 
-    margin-bottom: calc(38px + env(safe-area-inset-bottom)) !important;
+    margin-bottom: calc(10px + env(safe-area-inset-bottom)) !important;
   }
 
   .admin-sidenav::-webkit-scrollbar,
