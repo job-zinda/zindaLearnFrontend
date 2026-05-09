@@ -606,3 +606,29 @@
   border-radius: 50% !important;
   display: block !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.admin-logout-btn,
+.student-logout-btn,
+.admin-logout-icon-btn {
+  flex: 0 0 auto !important;
+
+  margin-top: auto !important;
+
+  margin-bottom: calc(50px + env(safe-area-inset-bottom)) !important;
+}
