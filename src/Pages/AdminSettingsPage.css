@@ -1,4 +1,4 @@
-.admin-settings-page {
+/* .admin-settings-page {
   width: 100%;
   min-height: calc(100vh - 130px);
   background: #ffffff;
@@ -285,6 +285,438 @@
 
   .admin-settings-content-card {
     padding: 22px;
+  }
+
+  .admin-settings-profile-view {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-settings-menu {
+    gap: 14px;
+  }
+
+  .admin-settings-menu button {
+    min-height: 50px;
+    font-size: 15px;
+  }
+
+  .admin-settings-content-card h2 {
+    font-size: 24px;
+  }
+
+  .admin-settings-modal {
+    max-height: calc(100vh - 24px) !important;
+    border-radius: 18px !important;
+  }
+
+  .admin-settings-modal-body {
+    padding: 18px !important;
+  }
+} */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.admin-settings-page {
+  width: 100%;
+  min-height: calc(100vh - 130px);
+  background: transparent;
+  padding: 44px 42px 50px;
+  color: #ffffff;
+}
+
+.admin-settings-layout {
+  display: grid;
+  grid-template-columns: 310px 1fr;
+  gap: 44px;
+  align-items: start;
+}
+
+.admin-settings-menu {
+  min-height: 520px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #111633, #7c00d8);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 38px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.32);
+}
+
+.admin-settings-menu button {
+  min-height: 56px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 900;
+  cursor: pointer;
+  border-radius: 0;
+  transition: 0.25s ease;
+}
+
+.admin-settings-menu button:hover,
+.admin-settings-menu button.active {
+  background: linear-gradient(135deg, #d946ef, #7c3aed);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px rgba(217, 70, 239, 0.22);
+}
+
+.admin-settings-content {
+  min-height: 520px;
+}
+
+.admin-settings-content-card {
+  background: linear-gradient(145deg, #111633, #090b22);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 22px;
+  padding: 38px;
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.28);
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-settings-content-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(217, 70, 239, 0.16), transparent 45%);
+  pointer-events: none;
+}
+
+.admin-settings-content-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.admin-settings-content-card h2 {
+  margin: 0 0 20px;
+  font-size: 30px;
+  font-weight: 950;
+  color: #ffffff;
+}
+
+.admin-settings-content-card p {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 17px;
+  line-height: 1.75;
+  margin: 0 0 14px;
+}
+
+.admin-settings-profile-view {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-bottom: 28px;
+}
+
+.admin-settings-profile-avatar {
+  width: 105px;
+  height: 105px;
+  border-radius: 50%;
+  border: 3px solid rgba(217, 70, 239, 0.42);
+  background: rgba(217, 70, 239, 0.12);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.admin-settings-profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.admin-settings-profile-avatar span {
+  font-size: 42px;
+  color: #d946ef;
+  font-weight: 950;
+}
+
+.admin-settings-profile-view h3 {
+  margin: 0 0 8px;
+  font-size: 24px;
+  font-weight: 950;
+  color: #ffffff;
+}
+
+.admin-settings-profile-view p {
+  margin: 4px 0;
+  color: #d8b4fe;
+  font-weight: 850;
+}
+
+.admin-settings-primary-btn {
+  width: 100%;
+  min-height: 54px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #d946ef, #7c3aed);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 950;
+  cursor: pointer;
+  box-shadow: 0 16px 34px rgba(217, 70, 239, 0.22);
+  transition: 0.25s ease;
+}
+
+.admin-settings-primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 42px rgba(217, 70, 239, 0.32);
+}
+
+.admin-settings-primary-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.admin-settings-mobile-back {
+  display: none;
+}
+
+/* Modal */
+.admin-settings-modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483647 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(2, 6, 23, 0.72) !important;
+  backdrop-filter: blur(6px) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 20px !important;
+  overflow-y: auto !important;
+}
+
+.admin-settings-modal {
+  width: min(560px, calc(100vw - 40px)) !important;
+  max-height: calc(100vh - 40px) !important;
+  background: linear-gradient(145deg, #111633, #090b22) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 22px !important;
+  overflow: hidden !important;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.45) !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.admin-settings-modal-head {
+  flex-shrink: 0 !important;
+  padding: 16px 22px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+}
+
+.admin-settings-modal-head h3 {
+  margin: 0 !important;
+  font-size: 22px !important;
+  font-weight: 950 !important;
+  color: #ffffff !important;
+}
+
+.admin-settings-modal-close {
+  width: 42px !important;
+  height: 42px !important;
+  border: none !important;
+  border-radius: 50% !important;
+  background: rgba(217, 70, 239, 0.16) !important;
+  color: #f0abfc !important;
+  font-size: 30px !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+  display: grid !important;
+  place-items: center !important;
+  transition: 0.25s ease !important;
+}
+
+.admin-settings-modal-close:hover {
+  background: #d946ef !important;
+  color: #ffffff !important;
+}
+
+.admin-settings-modal-body {
+  overflow-y: auto !important;
+  padding: 22px 26px !important;
+}
+
+.admin-settings-form {
+  display: grid;
+  gap: 14px;
+}
+
+.admin-settings-form label {
+  color: rgba(255, 255, 255, 0.82);
+  font-weight: 950;
+}
+
+.admin-settings-form input {
+  width: 100%;
+  border: 1px solid rgba(217, 70, 239, 0.26);
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 13px;
+  padding: 14px 16px;
+  outline: none;
+  font-size: 15px;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.admin-settings-form input::placeholder {
+  color: rgba(255, 255, 255, 0.48);
+}
+
+.admin-settings-form input:focus {
+  border-color: #d946ef;
+  box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.18);
+}
+
+.admin-settings-photo-box {
+  display: grid;
+  place-items: center;
+  gap: 14px;
+  margin-bottom: 6px;
+}
+
+.admin-settings-photo-box img,
+.admin-settings-photo-box span {
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
+  border: 3px solid rgba(217, 70, 239, 0.42);
+  background: rgba(217, 70, 239, 0.12);
+  object-fit: cover;
+  display: grid;
+  place-items: center;
+  font-size: 42px;
+  color: #d946ef;
+  font-weight: 950;
+}
+
+.admin-settings-photo-box label {
+  background: #0ea5a3;
+  color: #ffffff;
+  padding: 12px 22px;
+  border-radius: 12px;
+  font-weight: 950;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.admin-settings-photo-box label:hover {
+  transform: translateY(-2px);
+  background: #0fbbb8;
+}
+
+@media (max-width: 900px) {
+  .admin-settings-page {
+    padding: 24px 14px 40px;
+  }
+
+  .admin-settings-layout {
+    display: block;
+  }
+
+  .admin-settings-menu {
+    min-height: auto;
+    padding: 24px;
+  }
+
+  .admin-settings-menu--hide-mobile {
+    display: none;
+  }
+
+  .admin-settings-content {
+    display: none;
+  }
+
+  .admin-settings-content--open-mobile {
+    display: block;
+  }
+
+  .admin-settings-mobile-back {
+    display: inline-flex;
+    margin-bottom: 16px;
+    border: none;
+    background: rgba(217, 70, 239, 0.16);
+    color: #f0abfc;
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-weight: 950;
+  }
+
+  .admin-settings-content-card {
+    padding: 24px;
   }
 
   .admin-settings-profile-view {
