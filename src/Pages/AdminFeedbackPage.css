@@ -687,3 +687,39 @@
     text-align: center;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.admin-feedback-card {
+  background: linear-gradient(145deg, #111633 0%, #0b0f2a 65%, #221239 100%);
+  border-radius: 22px;
+  padding: 24px;
+  min-height: 210px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: none;
+  transition: 0.28s ease;
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-feedback-card::before {
+  display: none;
+}
+
+.admin-feedback-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(217, 70, 239, 0.28);
+  box-shadow: none;
+}
