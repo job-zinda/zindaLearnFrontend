@@ -545,3 +545,79 @@
     height: 54px;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.student-course-tutors-search {
+  height: 60px;
+  background: linear-gradient(145deg, #111633, #080b22);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 20px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
+}
+
+.student-course-tutors-search span {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 24px;
+}
+
+.student-course-tutors-search input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  color: #ffffff;
+  background: transparent;
+}
+
+.student-course-tutors-search input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
