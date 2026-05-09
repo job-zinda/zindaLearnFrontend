@@ -352,6 +352,40 @@ export default function AdminTutorDetailsPage() {
     }
   }
 
+
+
+
+
+
+
+
+
+function contactTutor() {
+  const phone = String(tutor?.phone || "").replace(/\D/g, "");
+
+  if (!phone) {
+    showAlert("Tutor phone number not added", "error");
+    return;
+  }
+
+  window.open(`tel:${phone}`, "_self");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   if (loading) {
     return (
       <div className="tutor-detail-page">
@@ -457,7 +491,6 @@ export default function AdminTutorDetailsPage() {
             <p>No subjects added.</p>
           )}
         </section>
-
         <section className="detail-section">
           <div className="reviews-head">
             <h3>Recent Reviews</h3>
@@ -493,6 +526,14 @@ export default function AdminTutorDetailsPage() {
             </button>
           )}
         </section>
+
+        <button
+          type="button"
+          className="tutor-contact-btn"
+          onClick={contactTutor}
+        >
+          Contact
+        </button>
       </div>
 
       <Modal

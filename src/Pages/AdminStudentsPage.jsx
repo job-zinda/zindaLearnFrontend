@@ -572,8 +572,7 @@ export default function AdminStudentsPage() {
       >
         <div className="student-delete-box">
           <p>
-            <b>{deleteTarget?.name || "This student"}</b> account delete
-            cheyyano?
+            <b>{deleteTarget?.name || "This student"}</b> delete account?
           </p>
 
           <div className="form-actions">

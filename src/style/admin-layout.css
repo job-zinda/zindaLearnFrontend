@@ -6,7 +6,6 @@
   --footer-height: 44px;
 }
 
-/* INLINE ALERT */
 .inline-alert {
   position: fixed;
   top: 18px;
@@ -58,13 +57,11 @@
   }
 }
 
-/* SHELL */
 .admin-shell {
   min-height: 100vh;
   background: #ffffff;
 }
 
-/* SIDENAV */
 .admin-sidenav {
   position: fixed;
   top: 0;
@@ -90,7 +87,6 @@
   display: none;
 }
 
-/* PROFILE CARD */
 .admin-profile-card {
   display: flex;
   align-items: center;
@@ -136,7 +132,6 @@
   font-weight: 500;
 }
 
-/* NAV */
 .admin-nav {
   display: grid;
   gap: 14px;
@@ -166,7 +161,6 @@
   box-shadow: none;
 }
 
-/* LOGOUT */
 .admin-logout-btn {
   border: none;
   background: #790028;
@@ -183,7 +177,6 @@
   transform: none;
 }
 
-/* TOPNAV */
 .admin-topnav {
   position: fixed;
   top: 0;
@@ -238,7 +231,6 @@
   filter: none !important;
 }
 
-/* CONTENT */
 .admin-content {
   position: fixed;
   top: var(--topnav-height);
@@ -255,7 +247,6 @@
   min-height: 100%;
 }
 
-/* FOOTER */
 .admin-footer {
   position: fixed;
   left: var(--sidebar-width);
@@ -272,7 +263,6 @@
   z-index: 1200;
 }
 
-/* MODAL */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -325,7 +315,6 @@
   max-height: calc(100vh - 120px);
 }
 
-/* RESPONSIVE */
 @media (max-width: 860px) {
   .admin-sidenav {
     transform: translateX(-100%);
@@ -407,6 +396,130 @@
     padding: 0 10px;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 768px) {
+  .admin-sidenav,
+  .student-sidenav {
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding-bottom: 90px !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .admin-sidenav__top {
+    flex: 0 0 auto !important;
+  }
+
+  .admin-nav,
+  .student-nav {
+    flex: 0 0 auto !important;
+  }
+
+  .admin-logout-btn,
+  .student-logout-btn,
+  .admin-logout-icon-btn {
+    flex: 0 0 auto !important;
+    margin-top: 24px !important;
+    margin-bottom: 40px !important;
+  }
+
+  .admin-sidenav::-webkit-scrollbar,
+  .student-sidenav::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+  }
+} 
+
+
+
+
 
 
 

@@ -521,3 +521,75 @@
     height: 105px;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.tutor-contact-btn {
+  width: 100%;
+  margin-top: 24px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 16px 20px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #3b1dff, #b100ff);
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+  transition: 0.3s ease;
+}
+
+.tutor-contact-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+
+.tutor-contact-btn:active {
+  transform: scale(0.98);
+}
