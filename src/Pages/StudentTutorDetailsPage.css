@@ -1358,3 +1358,103 @@
     font-size: 12px;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Fix Connect + Review modal white theme */
+
+body:has(.student-detail-page) .modal-box,
+body:has(.student-detail-page) .modal-content,
+body:has(.student-detail-page) .modal-container {
+  background: linear-gradient(145deg, #111633, #080b22) !important;
+  border: 1px solid rgba(217, 70, 239, 0.22) !important;
+  color: #ffffff !important;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55) !important;
+}
+
+body:has(.student-detail-page) .modal-header,
+body:has(.student-detail-page) .modal-title {
+  background: transparent !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+}
+
+body:has(.student-detail-page) .modal-header h2,
+body:has(.student-detail-page) .modal-header h3,
+body:has(.student-detail-page) .modal-title {
+  color: #ffffff !important;
+}
+
+body:has(.student-detail-page) .modal-close,
+body:has(.student-detail-page) .close-btn {
+  color: #ffffff !important;
+}
+
+/* Connect modal icons */
+
+.connect-modal-box {
+  background: transparent !important;
+}
+
+.connect-icon-btn {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(217, 70, 239, 0.25) !important;
+  color: #ffffff !important;
+}
+
+.connect-icon-btn:hover {
+  background: rgba(217, 70, 239, 0.16) !important;
+}
+
+/* Review modal */
+
+.student-review-form {
+  background: transparent !important;
+}
+
+.student-rating-picker > span,
+.student-review-field span {
+  color: #ffffff !important;
+}
+
+.student-review-field textarea {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(217, 70, 239, 0.35) !important;
+}
+
+.student-review-field textarea::placeholder {
+  color: rgba(255, 255, 255, 0.45) !important;
+}
+
+.student-rating-stars button {
+  color: rgba(255,255,255,0.25) !important;
+}
+
+.student-rating-stars button.selected {
+  color: #ffc400 !important;
+}
+
+.student-review-cancel-btn {
+  background: rgba(255,255,255,0.08) !important;
+  color: #ffffff !important;
+}
+
+.student-review-submit-btn {
+  background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
+  color: #ffffff !important;
+}
