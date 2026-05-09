@@ -2,7 +2,7 @@
 
 
 import React from "react";
-import schoolLogo from "../assets/39563374-7a83-4838-bd70-4f96624bb4ed.png";
+import schoolLogo from "../assets/0f69b18d-3eae-4db8-adac-e59af718d6f9.png";
 
 export default function AdminTopNav({ title, onMenuClick }) {
   return (
