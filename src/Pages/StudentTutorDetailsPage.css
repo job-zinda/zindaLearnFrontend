@@ -1627,3 +1627,105 @@ body:has(.student-detail-page) .close-btn {
 .all-reviews-list .detail-star.filled {
   color: #ffc400 !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Student tutor details - All Reviews modal final fix */
+
+.student-all-reviews-list {
+  display: grid !important;
+  gap: 16px !important;
+  background: #ffffff !important;
+  color: #111827 !important;
+}
+
+.student-all-reviews-list,
+.student-all-reviews-list * {
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+}
+
+.student-all-reviews-list .student-review-card {
+  background: #ffffff !important;
+  border: 1px solid #eadcff !important;
+  border-radius: 18px !important;
+  padding: 18px 20px !important;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08) !important;
+}
+
+.student-all-reviews-list .student-review-card__left {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+}
+
+.student-all-reviews-list .student-review-card h4 {
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+  font-weight: 900 !important;
+}
+
+.student-all-reviews-list .student-review-card p {
+  color: #334155 !important;
+  -webkit-text-fill-color: #334155 !important;
+  font-weight: 700 !important;
+}
+
+.student-all-reviews-list .student-review-avatar {
+  background: #faf5ff !important;
+  border: 2px solid #e9d5ff !important;
+}
+
+.student-all-reviews-list .student-review-avatar span {
+  color: #d946ef !important;
+  -webkit-text-fill-color: #d946ef !important;
+}
+
+.student-all-reviews-list .student-detail-stars,
+.student-all-reviews-list .student-detail-stars * {
+  -webkit-text-fill-color: initial !important;
+}
+
+.student-all-reviews-list .student-detail-star {
+  color: #d1d5db !important;
+}
+
+.student-all-reviews-list .student-detail-star.filled {
+  color: #ffc400 !important;
+}
