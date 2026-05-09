@@ -1391,3 +1391,129 @@
     font-size: 17px;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* FINAL FIX: login input text + modal heading visibility */
+
+.zs-card .zs-title,
+.zs-card h1,
+.zs-card h2,
+.zs-card h3 {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+.zs-card .zs-desc,
+.zs-card p {
+  color: rgba(255, 255, 255, 0.78) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.78) !important;
+}
+
+.zs-label,
+.zs-card label {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+/* login input text visible */
+.zs-input,
+.zs-input[type="text"],
+.zs-input[type="email"],
+.zs-input[type="password"],
+.zs-input[type="number"],
+input.zs-input {
+  background: rgba(255, 255, 255, 0.10) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+.zs-input::placeholder,
+input.zs-input::placeholder {
+  color: rgba(255, 255, 255, 0.62) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.62) !important;
+  opacity: 1 !important;
+}
+
+/* browser autofill color fix */
+.zs-input:-webkit-autofill,
+.zs-input:-webkit-autofill:hover,
+.zs-input:-webkit-autofill:focus,
+.zs-input:-webkit-autofill:active {
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+  box-shadow: 0 0 0 1000px #1b2140 inset !important;
+  border: 1px solid #d946ef !important;
+}
+
+/* modal heading visible */
+.modal-title,
+.modal-head .modal-title,
+.modal h1,
+.modal h2,
+.modal h3 {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  opacity: 1 !important;
+  font-weight: 950 !important;
+}
+
+/* modal labels/input text visible */
+.modal .zs-label,
+.modal label {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+.modal .zs-input {
+  background: rgba(255, 255, 255, 0.10) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+}
+
+.modal .zs-input::placeholder {
+  color: rgba(255, 255, 255, 0.62) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.62) !important;
+}
