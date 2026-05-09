@@ -943,3 +943,74 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Add/Edit Tutor Modal input color fix */
+.tutor-form input,
+.tutor-form textarea,
+.tutor-form select,
+.tutor-form option {
+  background: #ffffff !important;
+  color: #020617 !important;
+  -webkit-text-fill-color: #020617 !important;
+}
+
+.tutor-form input::placeholder,
+.tutor-form textarea::placeholder {
+  color: #7c8798 !important;
+  -webkit-text-fill-color: #7c8798 !important;
+}
+
+.tutor-form input:focus,
+.tutor-form textarea:focus,
+.tutor-form select:focus {
+  border-color: #a855f7 !important;
+  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.18) !important;
+}
+
+/* disabled course select also readable */
+.tutor-form select:disabled,
+.tutor-form input:disabled {
+  background: #f1f5f9 !important;
+  color: #475569 !important;
+  -webkit-text-fill-color: #475569 !important;
+  opacity: 1 !important;
+}
+
+/* modal labels black */
+.tutor-form .form-field span {
+  color: #1f2937 !important;
+}
