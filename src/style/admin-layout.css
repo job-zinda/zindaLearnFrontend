@@ -567,7 +567,7 @@
 
     margin-top: auto !important;
 
-    margin-bottom: calc(16px + env(safe-area-inset-bottom)) !important;
+    margin-bottom: calc(38px + env(safe-area-inset-bottom)) !important;
   }
 
   .admin-sidenav::-webkit-scrollbar,
@@ -622,13 +622,3 @@
 
 
 
-
-.admin-logout-btn,
-.student-logout-btn,
-.admin-logout-icon-btn {
-  flex: 0 0 auto !important;
-
-  margin-top: auto !important;
-
-  margin-bottom: calc(50px + env(safe-area-inset-bottom)) !important;
-}
