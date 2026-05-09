@@ -1,4 +1,4 @@
-.student-category-section {
+/* .student-category-section {
   width: 100%;
 }
 
@@ -83,6 +83,187 @@
   font-size: 16px;
   font-weight: 900;
   box-shadow: 0 14px 24px rgba(98, 0, 216, 0.2);
+  transition: 0.25s ease;
+}
+
+.student-category-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.92;
+}
+
+@media (max-width: 1250px) {
+  .student-category-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .student-category-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .student-category-head h2 {
+    font-size: 26px;
+  }
+
+  .student-category-media {
+    height: 190px;
+  }
+} */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.student-category-section {
+  width: 100%;
+}
+
+.student-category-head {
+  margin-bottom: 22px;
+}
+
+.student-category-head h2 {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 950;
+  color: #ffffff;
+}
+
+.student-category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.student-category-card {
+  background: #ffffff;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow: 0 22px 55px rgba(0,0,0,0.28);
+  transition: 0.28s ease;
+}
+
+.student-category-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 22px 48px rgba(217, 70, 239, 0.22);
+}
+
+.student-category-media {
+  width: 100%;
+  height: 210px;
+  background: #111633;
+  overflow: hidden;
+}
+
+.student-category-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.student-category-fallback {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  font-size: 58px;
+  background: linear-gradient(135deg, #d946ef, #7c3aed);
+}
+
+.student-category-body {
+  padding: 24px;
+  background: #ffffff;
+}
+
+.student-category-body h3 {
+  margin: 0 0 12px;
+  font-size: 23px;
+  font-weight: 950;
+  color: #020617;
+}
+
+.student-category-body p {
+  margin: 0 0 24px;
+  color: #334155;
+  font-size: 16px;
+  line-height: 1.55;
+  min-height: 76px;
+}
+
+.student-category-btn {
+  border: none;
+  border-radius: 14px;
+  padding: 14px 22px;
+  background: linear-gradient(135deg, #d946ef, #7c3aed);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 950;
+  box-shadow: 0 16px 28px rgba(124, 58, 237, 0.26);
   transition: 0.25s ease;
 }
 
