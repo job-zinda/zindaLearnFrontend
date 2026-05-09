@@ -1,4 +1,4 @@
-
+/* 
 
 
 .tutor-detail-page {
@@ -592,4 +592,355 @@
 
 .tutor-contact-btn:active {
   transform: scale(0.98);
+} */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.tutor-detail-page {
+  width: 100%;
+  max-width: 100%;
+  display: grid;
+  gap: 24px;
+  overflow-x: hidden;
+  color: #ffffff;
+}
+
+.detail-breadcrumb,
+.detail-breadcrumb button,
+.detail-breadcrumb b {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.detail-breadcrumb button:hover {
+  color: #d946ef;
+}
+
+.detail-card,
+.detail-state {
+  background: linear-gradient(145deg, #111633, #080b22);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.28);
+  color: #ffffff;
+}
+
+.detail-card {
+  position: relative;
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  border-radius: 24px;
+  padding: 44px;
+  overflow: hidden;
+}
+
+.detail-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(217, 70, 239, 0.16), transparent 42%);
+  pointer-events: none;
+}
+
+.detail-actions,
+.detail-head,
+.detail-info-grid,
+.detail-section,
+.reviews-head {
+  position: relative;
+  z-index: 1;
+}
+
+.detail-actions {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.detail-edit-btn,
+.detail-delete-btn {
+  border: none;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-weight: 900;
+}
+
+.detail-edit-btn {
+  background: rgba(217, 70, 239, 0.14);
+  color: #f0abfc;
+}
+
+.detail-delete-btn {
+  background: rgba(220, 38, 38, 0.14);
+  color: #fb7185;
+}
+
+.detail-edit-btn:hover {
+  background: #d946ef;
+  color: #ffffff;
+}
+
+.detail-delete-btn:hover {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+.detail-head {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding-right: 220px;
+  margin-bottom: 34px;
+}
+
+.detail-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid rgba(217, 70, 239, 0.42);
+  background: rgba(217, 70, 239, 0.1);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.detail-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.detail-avatar span {
+  font-size: 48px;
+  font-weight: 950;
+  color: #d946ef;
+}
+
+.detail-title h2 {
+  margin: 0 0 10px;
+  font-size: 36px;
+  color: #ffffff;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+.detail-title p {
+  margin: 0 0 12px;
+  color: #c084fc;
+  font-size: 22px;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.detail-star {
+  color: rgba(255, 255, 255, 0.22);
+  font-size: 26px;
+}
+
+.detail-star.filled {
+  color: #ffc400;
+}
+
+.detail-stars b {
+  margin-left: 8px;
+  color: #ffffff;
+  font-size: 20px;
+}
+
+.detail-info-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 34px;
+}
+
+.detail-info-box {
+  border: 1px solid rgba(217, 70, 239, 0.26);
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 15px;
+}
+
+.detail-info-box span {
+  display: block;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 13px;
+  font-weight: 900;
+  margin-bottom: 6px;
+}
+
+.detail-info-box b {
+  display: block;
+  color: #ffffff;
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+
+.detail-section {
+  margin-top: 28px;
+}
+
+.detail-section h3,
+.reviews-head h3 {
+  margin: 0 0 14px;
+  font-size: 24px;
+  color: #ffffff;
+}
+
+.detail-section p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.76);
+  line-height: 1.7;
+  font-size: 17px;
+  overflow-wrap: anywhere;
+}
+
+.subject-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.subject-pills span {
+  background: rgba(217, 70, 239, 0.14);
+  color: #f0abfc;
+  border: 1px solid rgba(217, 70, 239, 0.24);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-weight: 900;
+}
+
+.review-card,
+.empty-reviews {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.review-card h4 {
+  color: #ffffff;
+}
+
+.review-card p,
+.empty-reviews {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.tutor-contact-btn {
+  width: 100%;
+  margin-top: 24px;
+  border: none;
+  padding: 16px 20px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #d946ef, #7c3aed);
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 900;
 }
