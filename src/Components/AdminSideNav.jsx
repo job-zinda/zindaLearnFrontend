@@ -177,9 +177,8 @@ export default function AdminSideNav({ open, onClose }) {
   return (
     <>
       <aside
-        className={`admin-sidenav admin-icon-sidenav ${
-          open ? "admin-sidenav--open" : ""
-        }`}
+        className={`admin-sidenav admin-icon-sidenav ${open ? "admin-sidenav--open" : ""
+          }`}
       >
         <div className="admin-sidenav__top">
           <div className="admin-profile-card">
@@ -191,19 +190,21 @@ export default function AdminSideNav({ open, onClose }) {
               }}
             >
               {profilePhoto ? (
-                <img
+                <img style={{
+                  width: "100%",
+                  height: "100%",
+                  minWidth: "100%",
+                  minHeight: "100%",
+                  objectFit: "cover",
+                  borderRadius: "50%",
+                  display: "block",
+                }}
                   src={profilePhoto}
                   alt={user?.name || "Admin"}
                   onError={(e) => {
                     e.currentTarget.style.display = "none";
                   }}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    borderRadius: "50%",
-                    display: "block",
-                  }}
+                  
                 />
               ) : (
                 <span>👨‍💼</span>
@@ -223,10 +224,9 @@ export default function AdminSideNav({ open, onClose }) {
                 to={item.to}
                 end={item.to === "/admin"}
                 className={({ isActive }) =>
-                  `admin-nav__link admin-nav-icon-link ${
-                    isActive
-                      ? "admin-nav__link--active admin-nav-icon-link--active"
-                      : ""
+                  `admin-nav__link admin-nav-icon-link ${isActive
+                    ? "admin-nav__link--active admin-nav-icon-link--active"
+                    : ""
                   }`
                 }
                 onClick={onClose}

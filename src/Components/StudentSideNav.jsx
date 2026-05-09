@@ -164,13 +164,15 @@ export default function StudentSideNav({ open, onClose }) {
                   onError={(e) => {
                     e.currentTarget.style.display = "none";
                   }}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    borderRadius: "50%",
-                    display: "block",
-                  }}
+                 style={{
+                  width: "100%",
+                  height: "100%",
+                  minWidth: "100%",
+                  minHeight: "100%",
+                  objectFit: "cover",
+                  borderRadius: "50%",
+                  display: "block",
+                }}
                 />
               ) : (
                 <span>👨‍🎓</span>

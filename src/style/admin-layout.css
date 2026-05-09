@@ -478,7 +478,7 @@
 
 
 
-
+/* 
 
 @media (max-width: 768px) {
   .admin-sidenav,
@@ -526,3 +526,83 @@
 
 
 
+ */
+
+
+
+
+
+@media (max-width: 768px) {
+  .admin-sidenav,
+  .student-sidenav {
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    max-height: 100dvh !important;
+
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+
+    padding-bottom: calc(22px + env(safe-area-inset-bottom)) !important;
+
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .admin-sidenav__top {
+    flex: 0 0 auto !important;
+  }
+
+  .admin-nav,
+  .student-nav {
+    flex: 0 0 auto !important;
+  }
+
+  .admin-logout-btn,
+  .student-logout-btn,
+  .admin-logout-icon-btn {
+    flex: 0 0 auto !important;
+
+    margin-top: auto !important;
+
+    margin-bottom: calc(16px + env(safe-area-inset-bottom)) !important;
+  }
+
+  .admin-sidenav::-webkit-scrollbar,
+  .student-sidenav::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+  }
+}
+
+
+
+
+
+
+
+.admin-profile-card__avatar {
+  width: 52px !important;
+  height: 52px !important;
+  min-width: 52px !important;
+  min-height: 52px !important;
+  max-width: 52px !important;
+  max-height: 52px !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+  flex: 0 0 52px !important;
+}
+
+.admin-profile-card__avatar img {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 100% !important;
+  min-height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  border-radius: 50% !important;
+  display: block !important;
+}
