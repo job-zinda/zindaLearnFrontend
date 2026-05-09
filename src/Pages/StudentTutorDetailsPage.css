@@ -1458,3 +1458,122 @@ body:has(.student-detail-page) .close-btn {
   background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
   color: #ffffff !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Modal final fix: review + connect */
+
+.student-review-form,
+.student-review-form * {
+  color: #111827 !important;
+}
+
+.student-rating-picker > span,
+.student-review-field span {
+  color: #111827 !important;
+}
+
+.student-rating-stars {
+  display: flex !important;
+  gap: 8px !important;
+  margin: 18px 0 22px !important;
+}
+
+.student-rating-stars button {
+  color: #d1d5db !important;
+  background: transparent !important;
+  border: none !important;
+  font-size: 36px !important;
+  cursor: pointer !important;
+}
+
+.student-rating-stars button.selected {
+  color: #f5b400 !important;
+}
+
+.student-review-field textarea {
+  background: #ffffff !important;
+  color: #111827 !important;
+  border: 2px solid #f0a7ff !important;
+  border-radius: 16px !important;
+  min-height: 140px !important;
+}
+
+.student-review-field textarea::placeholder {
+  color: #6b7280 !important;
+}
+
+.student-review-actions {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 14px !important;
+  margin-top: 18px !important;
+}
+
+.student-review-cancel-btn {
+  display: inline-flex !important;
+  background: #eef2ff !important;
+  color: #111827 !important;
+  border: none !important;
+  border-radius: 14px !important;
+  padding: 14px 22px !important;
+  font-weight: 900 !important;
+}
+
+.student-review-submit-btn {
+  display: inline-flex !important;
+  background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 14px !important;
+  padding: 14px 24px !important;
+  font-weight: 900 !important;
+}
+
+.student-review-delete-btn {
+  background: #dc2626 !important;
+  color: #ffffff !important;
+}
+
+/* Contact modal text fix */
+
+.connect-icon-btn {
+  background: #ffffff !important;
+  border: 1px solid #f0a7ff !important;
+  color: #111827 !important;
+}
+
+.connect-icon-btn span {
+  display: block !important;
+  color: #111827 !important;
+  font-weight: 900 !important;
+  font-size: 13px !important;
+}
+
+.connect-icon-btn img {
+  display: block !important;
+}
