@@ -1577,3 +1577,53 @@ body:has(.student-detail-page) .close-btn {
 .connect-icon-btn img {
   display: block !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Show more modal review text fix */
+.all-reviews-list,
+.all-reviews-list * {
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+}
+
+.all-reviews-list .review-card {
+  background: #ffffff !important;
+  border: 1px solid #eadcff !important;
+}
+
+.all-reviews-list .review-card h4,
+.all-reviews-list .review-card p {
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+}
+
+.all-reviews-list .detail-stars,
+.all-reviews-list .detail-stars * {
+  -webkit-text-fill-color: initial !important;
+}
+
+.all-reviews-list .detail-star {
+  color: #d1d5db !important;
+}
+
+.all-reviews-list .detail-star.filled {
+  color: #ffc400 !important;
+}
