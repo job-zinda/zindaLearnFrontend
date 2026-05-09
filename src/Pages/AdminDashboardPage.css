@@ -1,4 +1,4 @@
-.admin-dashboard-page {
+/* .admin-dashboard-page {
   width: 100%;
   min-height: calc(100vh - 130px);
   background: #f1f1f4;
@@ -392,6 +392,289 @@
   .admin-dashboard-page {
     padding: 20px 14px;
     border-radius: 16px;
+  }
+
+  .admin-dashboard-header h1 {
+    font-size: 28px;
+  }
+
+  .admin-dashboard-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-dashboard-divider {
+    margin: 38px 0 28px;
+  }
+
+  .admin-dashboard-chart-card {
+    padding: 18px;
+    border-radius: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-dashboard-stat-card {
+    min-height: 112px;
+    padding: 20px;
+  }
+
+  .admin-dashboard-stat-bottom h2 {
+    font-size: 34px;
+  }
+
+  .admin-dashboard-chart-title h3 {
+    font-size: 16px;
+  }
+} */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.admin-dashboard-page {
+  width: 100%;
+  min-height: calc(100vh - 130px);
+  background: transparent;
+  padding: 30px 34px;
+  color: #ffffff;
+}
+
+.admin-dashboard-header {
+  padding-bottom: 22px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.admin-dashboard-header h1 {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 950;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+
+.admin-dashboard-loading {
+  margin-top: 28px;
+  background: linear-gradient(145deg, #111633, #080b22);
+  border-radius: 22px;
+  padding: 30px;
+  font-size: 17px;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.admin-dashboard-stats {
+  margin-top: 34px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+}
+
+.admin-dashboard-stat-click {
+  border: none;
+  background: transparent;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+}
+
+.admin-dashboard-stat-card {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(145deg, #111633, #080b22);
+  min-height: 130px;
+  border-radius: 22px;
+  padding: 24px 26px;
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: 0.28s ease;
+}
+
+.admin-dashboard-stat-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(217, 70, 239, 0.18), transparent 42%);
+  pointer-events: none;
+}
+
+.admin-dashboard-stat-click:hover .admin-dashboard-stat-card {
+  transform: translateY(-6px);
+  border-color: rgba(217, 70, 239, 0.42);
+  box-shadow: 0 24px 54px rgba(217, 70, 239, 0.18);
+}
+
+.admin-dashboard-stat-card p {
+  position: relative;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.admin-dashboard-stat-bottom {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.admin-dashboard-stat-bottom h2 {
+  margin: 0;
+  font-size: 48px;
+  line-height: 1;
+  font-weight: 950;
+  color: #ffffff;
+}
+
+.admin-dashboard-change {
+  font-size: 15px;
+  font-weight: 950;
+  margin-bottom: 7px;
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+.admin-dashboard-change.up {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.14);
+}
+
+.admin-dashboard-change.down {
+  color: #fb7185;
+  background: rgba(244, 63, 94, 0.14);
+}
+
+.admin-dashboard-divider {
+  margin: 70px 0 44px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #d946ef, #7c3aed, transparent);
+  opacity: 0.85;
+}
+
+.admin-dashboard-chart-section {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.admin-dashboard-chart-card {
+  width: min(780px, 100%);
+  background: linear-gradient(145deg, #111633, #080b22);
+  border-radius: 24px;
+  padding: 26px;
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(217, 70, 239, 0.22);
+}
+
+.admin-dashboard-chart-title {
+  margin-bottom: 16px;
+}
+
+.admin-dashboard-chart-title h3 {
+  margin: 0 0 20px;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 950;
+}
+
+.admin-dashboard-chart-title p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+@media (max-width: 1000px) {
+  .admin-dashboard-page {
+    padding: 24px 20px;
+  }
+
+  .admin-dashboard-stats {
+    gap: 18px;
+  }
+
+  .admin-dashboard-stat-bottom h2 {
+    font-size: 38px;
+  }
+}
+
+@media (max-width: 760px) {
+  .admin-dashboard-page {
+    padding: 20px 14px;
   }
 
   .admin-dashboard-header h1 {
