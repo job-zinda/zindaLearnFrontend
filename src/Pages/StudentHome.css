@@ -778,3 +778,95 @@
     font-size: 26px;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.student-home-feedback-card {
+  background: linear-gradient(145deg, #111633, #080b22) !important;
+  border-radius: 22px;
+  padding: 24px;
+  min-height: 190px;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.28);
+  transition: 0.28s ease;
+}
+
+.student-home-feedback-user h3 {
+  color: #ffffff !important;
+}
+
+.student-home-feedback-message {
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+
+.student-home-feedback-avatar {
+  background: rgba(217, 70, 239, 0.12) !important;
+  border: 2px solid rgba(217, 70, 239, 0.35) !important;
+}
+
+.student-home-feedback-avatar span {
+  color: #d946ef !important;
+}
+
+.student-home-feedback-stars span {
+  color: rgba(255, 255, 255, 0.22) !important;
+}
+
+.student-home-feedback-stars span.filled {
+  color: #f5b301 !important;
+}
