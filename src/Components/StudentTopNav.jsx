@@ -1,5 +1,5 @@
 import React from "react";
-import schoolLogo from "../assets/topnavlogo.jpeg";
+import schoolLogo from "../assets/5aa1151f-ac87-48fb-a83c-241004a33c64.png";
 
 export default function StudentTopNav({ title, onMenuClick }) {
   return (
