@@ -141,7 +141,6 @@ function StudentFeedbackPreview() {
 
                         <div>
                           <h3>{student?.name || "Student"}</h3>
-                          <p>{student?.email || "No email"}</p>
                         </div>
                       </div>
 
