@@ -1173,3 +1173,41 @@
     padding: 0 10px;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.admin-content h1,
+.admin-content h2,
+.admin-content h3,
+.admin-content h4,
+.admin-content h5,
+.admin-content h6,
+.student-content h1,
+.student-content h2,
+.student-content h3,
+.student-content h4,
+.student-content h5,
+.student-content h6 {
+  color: #ffffff !important;
+}
