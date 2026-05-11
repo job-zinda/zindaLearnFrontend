@@ -124,15 +124,27 @@ Subjects: ${subjects}
 About: ${tutor.about || "Not added"}
 Rating: ${Number(tutor.averageRating || 0).toFixed(1)}`;
 }
+function getTutorShareLink(tutor) {
+  return `${window.location.origin}/student/tutors/${tutor._id}`;
+}
 
 async function shareTutorDetails(tutor, showAlert) {
-  const text = getTutorShareText(tutor);
+  const tutorLink = getTutorShareLink(tutor);
+
+  const text = `Tutor Profile Link
+
+${tutor.name || "Tutor"} profile കാണാൻ ഈ link open ചെയ്യുക:
+
+${tutorLink}
+
+Login ചെയ്ത ശേഷം tutor details നേരിട്ട് കാണാം.`;
 
   if (navigator.share) {
     try {
       await navigator.share({
-        title: `${tutor.name || "Tutor"} Details`,
+        title: `${tutor.name || "Tutor"} Profile`,
         text,
+        url: tutorLink,
       });
       return;
     } catch (err) {
@@ -142,7 +154,7 @@ async function shareTutorDetails(tutor, showAlert) {
 
   try {
     await navigator.clipboard.writeText(text);
-    showAlert("Tutor details copied. You can paste it on WhatsApp, Email, etc.", "success");
+    showAlert("Tutor link copied. You can share it with students.", "success");
   } catch {
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
     window.open(whatsappUrl, "_blank");
