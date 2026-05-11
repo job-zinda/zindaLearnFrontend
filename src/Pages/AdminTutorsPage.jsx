@@ -163,17 +163,13 @@ async function shareTutorWithPhoto(tutor, showAlert) {
     navigator.canShare({ files: [imageFile] })
   ) {
     try {
-    await navigator.share({
-  title: `${tutor.name || "Tutor"} Photo`,
-  files: [imageFile],
-});
+      await navigator.share({
 
-setTimeout(async () => {
-  await navigator.share({
-    title: `${tutor.name || "Tutor"} Details`,
-    text,
-  });
-}, 800);
+        files: [imageFile],
+        title: `${tutor.name || "Tutor"} Details`,
+        text,
+        
+      });
       return;
     } catch (err) {
       if (err.name === "AbortError") return;
