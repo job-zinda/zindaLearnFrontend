@@ -64,6 +64,60 @@ function Stars({ rating = 0 }) {
 
 
 
+// function getTutorShareText(tutor) {
+//   const subjects = Array.isArray(tutor.subjects)
+//     ? tutor.subjects.join(", ")
+//     : tutor.subjects || "Not added";
+
+//   return `Tutor Details
+
+// Name: ${tutor.name || "Not added"}
+// Qualification: ${tutor.qualification || "Not added"}
+// Phone: ${tutor.phone || "Not added"}
+// Email: ${tutor.email || "Not added"}
+// Subjects: ${subjects}
+// About: ${tutor.about || "Not added"}
+// Rating: ${Number(tutor.averageRating || 0).toFixed(1)}`;
+// }
+
+// async function shareTutor(tutor, showAlert) {
+//   const text = getTutorShareText(tutor);
+
+//   if (navigator.share) {
+//     try {
+//       await navigator.share({
+//         title: `${tutor.name || "Tutor"} Details`,
+//         text,
+//       });
+//       return;
+//     } catch (err) {
+//       if (err.name === "AbortError") return;
+//     }
+//   }
+
+//   try {
+//     await navigator.clipboard.writeText(text);
+//     showAlert("Tutor details copied. You can paste it on WhatsApp, Email, etc.", "success");
+//   } catch {
+//     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
+//     window.open(whatsappUrl, "_blank");
+//   }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function getTutorShareText(tutor) {
   const subjects = Array.isArray(tutor.subjects)
     ? tutor.subjects.join(", ")
@@ -80,14 +134,51 @@ About: ${tutor.about || "Not added"}
 Rating: ${Number(tutor.averageRating || 0).toFixed(1)}`;
 }
 
-async function shareTutor(tutor, showAlert) {
+async function getShareImageFile(photoUrl, fileName = "tutor-photo.jpg") {
+  if (!photoUrl) return null;
+
+  try {
+    const response = await fetch(photoUrl);
+    const blob = await response.blob();
+
+    return new File([blob], fileName, {
+      type: blob.type || "image/jpeg",
+    });
+  } catch {
+    return null;
+  }
+}
+
+async function shareTutorWithPhoto(tutor, showAlert) {
   const text = getTutorShareText(tutor);
+  const photoUrl = tutor.photo ? getMediaUrl(tutor.photo) : "";
+  const imageFile = await getShareImageFile(
+    photoUrl,
+    `${tutor.name || "tutor"}-photo.jpg`
+  );
+
+  if (
+    imageFile &&
+    navigator.canShare &&
+    navigator.canShare({ files: [imageFile] })
+  ) {
+    try {
+      await navigator.share({
+        title: `${tutor.name || "Tutor"} Details`,
+        text,
+        files: [imageFile],
+      });
+      return;
+    } catch (err) {
+      if (err.name === "AbortError") return;
+    }
+  }
 
   if (navigator.share) {
     try {
       await navigator.share({
         title: `${tutor.name || "Tutor"} Details`,
-        text,
+        text: photoUrl ? `${text}\n\nPhoto: ${photoUrl}` : text,
       });
       return;
     } catch (err) {
@@ -96,13 +187,20 @@ async function shareTutor(tutor, showAlert) {
   }
 
   try {
-    await navigator.clipboard.writeText(text);
-    showAlert("Tutor details copied. You can paste it on WhatsApp, Email, etc.", "success");
+    await navigator.clipboard.writeText(
+      photoUrl ? `${text}\n\nPhoto: ${photoUrl}` : text
+    );
+    showAlert("Tutor details copied with photo link", "success");
   } catch {
-    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
+      photoUrl ? `${text}\n\nPhoto: ${photoUrl}` : text
+    )}`;
     window.open(whatsappUrl, "_blank");
   }
 }
+
+
+
 
 
 
@@ -422,8 +520,7 @@ export default function AdminTutorsPage() {
   type="button"
   onClick={() => {
     setMenuOpenId(null);
-    shareTutor(tutor, showAlert);
-  }}
+shareTutorWithPhoto(tutor, showAlert);  }}
 >
   ↗ Share
 </button>
