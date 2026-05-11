@@ -978,3 +978,23 @@
   -webkit-text-fill-color: #475569 !important;
   opacity: 1 !important;
 }
+
+
+
+
+
+
+
+
+
+/* Delete modal text fix */
+.student-delete-box,
+.student-delete-box p,
+.student-delete-box b {
+  color: #111827 !important;
+}
+
+.student-delete-box p {
+  font-size: 16px;
+  font-weight: 600;
+}
