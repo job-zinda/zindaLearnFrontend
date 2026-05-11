@@ -176,10 +176,10 @@ async function shareTutorWithPhoto(tutor, showAlert) {
 
   if (navigator.share) {
     try {
-      await navigator.share({
-        title: `${tutor.name || "Tutor"} Details`,
-        text: photoUrl ? `${text}\n\nPhoto: ${photoUrl}` : text,
-      });
+     await navigator.share({
+  title: `${tutor.name || "Tutor"} Details`,
+  text: photoUrl ? `Photo: ${photoUrl}\n\n${text}` : text,
+});
       return;
     } catch (err) {
       if (err.name === "AbortError") return;
