@@ -101,6 +101,57 @@ function Stars({ rating = 0, compact = false }) {
   );
 }
 
+
+function getTutorShareText(tutor) {
+  const subjects = Array.isArray(tutor.subjects)
+    ? tutor.subjects.join(", ")
+    : tutor.subjects || "Not added";
+
+  const course =
+    typeof tutor.courseId === "object"
+      ? tutor.courseId?.name || tutor.courseId?.title || "Not added"
+      : "Not added";
+
+  return `Tutor Details
+
+Name: ${tutor.name || "Not added"}
+Qualification: ${tutor.qualification || "Not added"}
+Phone: ${tutor.phone || "Not added"}
+Email: ${tutor.email || "Not added"}
+Course / Class: ${course}
+Syllabus: ${formatSyllabus(tutor.syllabus)}
+Subjects: ${subjects}
+About: ${tutor.about || "Not added"}
+Rating: ${Number(tutor.averageRating || 0).toFixed(1)}`;
+}
+
+async function shareTutorDetails(tutor, showAlert) {
+  const text = getTutorShareText(tutor);
+
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: `${tutor.name || "Tutor"} Details`,
+        text,
+      });
+      return;
+    } catch (err) {
+      if (err.name === "AbortError") return;
+    }
+  }
+
+  try {
+    await navigator.clipboard.writeText(text);
+    showAlert("Tutor details copied. You can paste it on WhatsApp, Email, etc.", "success");
+  } catch {
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
+    window.open(whatsappUrl, "_blank");
+  }
+}
+
+
+
+
 function ReviewCard({ review }) {
   const photo = getStudentPhoto(review);
   const photoSrc = getImageSrc(photo);
@@ -423,6 +474,16 @@ function contactTutor() {
           <button type="button" className="detail-edit-btn" onClick={openEditModal}>
             ✎ Edit
           </button>
+
+
+<button
+  type="button"
+  className="detail-share-btn"
+  onClick={() => shareTutorDetails(tutor, showAlert)}
+>
+  ↗ Share
+</button>
+
 
           <button
             type="button"

@@ -55,6 +55,68 @@ function Stars({ rating = 0 }) {
   );
 }
 
+
+
+
+
+
+
+
+
+
+function getTutorShareText(tutor) {
+  const subjects = Array.isArray(tutor.subjects)
+    ? tutor.subjects.join(", ")
+    : tutor.subjects || "Not added";
+
+  return `Tutor Details
+
+Name: ${tutor.name || "Not added"}
+Qualification: ${tutor.qualification || "Not added"}
+Phone: ${tutor.phone || "Not added"}
+Email: ${tutor.email || "Not added"}
+Subjects: ${subjects}
+About: ${tutor.about || "Not added"}
+Rating: ${Number(tutor.averageRating || 0).toFixed(1)}`;
+}
+
+async function shareTutor(tutor, showAlert) {
+  const text = getTutorShareText(tutor);
+
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: `${tutor.name || "Tutor"} Details`,
+        text,
+      });
+      return;
+    } catch (err) {
+      if (err.name === "AbortError") return;
+    }
+  }
+
+  try {
+    await navigator.clipboard.writeText(text);
+    showAlert("Tutor details copied. You can paste it on WhatsApp, Email, etc.", "success");
+  } catch {
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
+    window.open(whatsappUrl, "_blank");
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export default function AdminTutorsPage() {
   const navigate = useNavigate();
   const { showAlert } = useAlert();
@@ -355,6 +417,19 @@ export default function AdminTutorsPage() {
                       <button type="button" onClick={() => askDeleteTutor(tutor)}>
                         🗑 Delete
                       </button>
+
+                      <button
+  type="button"
+  onClick={() => {
+    setMenuOpenId(null);
+    shareTutor(tutor, showAlert);
+  }}
+>
+  ↗ Share
+</button>
+
+
+
                       <button type="button" onClick={() => toggleStatus(tutor)}>
                         {active ? "⏻ Deactive" : "✓ Active"}
                       </button>
