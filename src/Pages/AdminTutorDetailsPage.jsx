@@ -133,19 +133,19 @@ async function shareTutorDetails(tutor, showAlert) {
 
   const text = `Tutor Profile Link
 
-${tutor.name || "Tutor"} profile കാണാൻ ഈ link open ചെയ്യുക:
+View ${tutor.name || "Tutor"} profile using the link below:
 
 ${tutorLink}
 
-Login ചെയ്ത ശേഷം tutor details നേരിട്ട് കാണാം.`;
+Login to view full tutor details.`;
 
   if (navigator.share) {
     try {
       await navigator.share({
         title: `${tutor.name || "Tutor"} Profile`,
         text,
-        url: tutorLink,
       });
+
       return;
     } catch (err) {
       if (err.name === "AbortError") return;
@@ -154,9 +154,14 @@ Login ചെയ്ത ശേഷം tutor details നേരിട്ട് കാ
 
   try {
     await navigator.clipboard.writeText(text);
-    showAlert("Tutor link copied. You can share it with students.", "success");
+
+    showAlert(
+      "Tutor profile link copied successfully",
+      "success"
+    );
   } catch {
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
+
     window.open(whatsappUrl, "_blank");
   }
 }
