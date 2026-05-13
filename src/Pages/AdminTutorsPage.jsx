@@ -817,6 +817,24 @@ import { getMediaUrl } from "../utils/media";
 import api from "../api/axios";
 import "./AdminTutorsPage.css";
 
+// const emptyForm = {
+//   name: "",
+//   email: "",
+//   phone: "",
+//   qualification: "",
+//   about: "",
+//   subjects: "",
+//   categoryId: "",
+//   sectionType: "",
+//   syllabus: "",
+//   courseId: "",
+//   photo: null,
+// };
+
+
+
+
+
 const emptyForm = {
   name: "",
   email: "",
@@ -827,7 +845,7 @@ const emptyForm = {
   categoryId: "",
   sectionType: "",
   syllabus: "",
-  courseId: "",
+  courseIds: [],
   photo: null,
 };
 
@@ -932,10 +950,18 @@ export default function AdminTutorsPage() {
 
       if (courseCategoryId !== form.categoryId) return false;
 
-      if (selectedCategory?.key === "online_tuition") {
-        if (!form.sectionType) return false;
-        return course.sectionType === form.sectionType;
-      }
+     if (selectedCategory?.key === "online_tuition") {
+  if (!form.sectionType) return false;
+
+  if (form.sectionType === "both") {
+    return (
+      course.sectionType === "one_to_one" ||
+      course.sectionType === "batch"
+    );
+  }
+
+  return course.sectionType === form.sectionType;
+}
 
       return true;
     });
@@ -1004,7 +1030,13 @@ export default function AdminTutorsPage() {
       categoryId,
       sectionType: online ? tutor.sectionType || "" : "none",
       syllabus: online ? tutor.syllabus || "" : "none",
-      courseId: normalizeId(tutor.courseId),
+      // courseId: normalizeId(tutor.courseId),
+      courseIds:
+  Array.isArray(tutor.courseIds) && tutor.courseIds.length
+    ? tutor.courseIds.map((course) => normalizeId(course))
+    : tutor.courseId
+    ? [normalizeId(tutor.courseId)]
+    : [],
       photo: null,
     });
 
@@ -1013,40 +1045,115 @@ export default function AdminTutorsPage() {
     setMenuOpenId(null);
   }
 
-  function handleChange(e) {
-    const { name, value, files } = e.target;
+  // function handleChange(e) {
+  //   const { name, value, files } = e.target;
 
-    if (name === "photo") {
-      const file = files?.[0] || null;
-      setForm((prev) => ({ ...prev, photo: file }));
-      if (file) setPreview(URL.createObjectURL(file));
-      return;
+  //   if (name === "photo") {
+  //     const file = files?.[0] || null;
+  //     setForm((prev) => ({ ...prev, photo: file }));
+  //     if (file) setPreview(URL.createObjectURL(file));
+  //     return;
+  //   }
+
+  //   if (name === "categoryId") {
+  //     const selectedCat = categories.find((cat) => cat._id === value);
+
+  //     setForm((prev) => ({
+  //       ...prev,
+  //       categoryId: value,
+  //       sectionType: selectedCat?.key === "online_tuition" ? "" : "none",
+  //       syllabus: selectedCat?.key === "online_tuition" ? "" : "none",
+  //       courseId: "",
+  //     }));
+  //     return;
+  //   }
+
+  //   if (name === "sectionType") {
+  //     setForm((prev) => ({
+  //       ...prev,
+  //       sectionType: value,
+  //       courseId: "",
+  //     }));
+  //     return;
+  //   }
+
+  //   setForm((prev) => ({ ...prev, [name]: value }));
+  // }
+
+
+
+
+
+function handleChange(e) {
+  const { name, value, files } = e.target;
+
+  if (name === "photo") {
+    const file = files?.[0] || null;
+
+    setForm((prev) => ({
+      ...prev,
+      photo: file,
+    }));
+
+    if (file) {
+      setPreview(URL.createObjectURL(file));
     }
 
-    if (name === "categoryId") {
-      const selectedCat = categories.find((cat) => cat._id === value);
-
-      setForm((prev) => ({
-        ...prev,
-        categoryId: value,
-        sectionType: selectedCat?.key === "online_tuition" ? "" : "none",
-        syllabus: selectedCat?.key === "online_tuition" ? "" : "none",
-        courseId: "",
-      }));
-      return;
-    }
-
-    if (name === "sectionType") {
-      setForm((prev) => ({
-        ...prev,
-        sectionType: value,
-        courseId: "",
-      }));
-      return;
-    }
-
-    setForm((prev) => ({ ...prev, [name]: value }));
+    return;
   }
+
+  if (name === "categoryId") {
+    const selectedCat = categories.find((cat) => cat._id === value);
+
+    setForm((prev) => ({
+      ...prev,
+      categoryId: value,
+      sectionType:
+        selectedCat?.key === "online_tuition" ? "" : "none",
+      syllabus:
+        selectedCat?.key === "online_tuition" ? "" : "none",
+      courseIds: [],
+    }));
+
+    return;
+  }
+
+  if (name === "sectionType") {
+    setForm((prev) => ({
+      ...prev,
+      sectionType: value,
+      courseIds: [],
+    }));
+
+    return;
+  }
+
+  if (name === "courseIds") {
+    const values = Array.from(
+      e.target.selectedOptions || []
+    ).map((option) => option.value);
+
+    setForm((prev) => ({
+      ...prev,
+      courseIds: values,
+    }));
+
+    return;
+  }
+
+  setForm((prev) => ({
+    ...prev,
+    [name]: value,
+  }));
+}
+
+
+
+
+
+
+
+
 
   async function submitTutor(e) {
     e.preventDefault();
@@ -1064,7 +1171,14 @@ export default function AdminTutorsPage() {
         return showAlert("Syllabus select cheyyuka", "error");
       }
 
-      if (!form.courseId) return showAlert("Course / Batch select cheyyuka", "error");
+      // if (!form.courseId) return showAlert("Course / Batch select cheyyuka", "error");
+
+      if (!form.courseIds.length) {
+  return showAlert(
+    "At least one Course / Batch select cheyyuka",
+    "error"
+  );
+}
 
       const finalSectionType = isOnlineTuition ? form.sectionType : "none";
       const finalSyllabus = isOnlineTuition ? form.syllabus : "none";
@@ -1077,7 +1191,12 @@ export default function AdminTutorsPage() {
       fd.append("about", form.about.trim());
       fd.append("subjects", form.subjects.trim());
       fd.append("categoryId", form.categoryId);
-      fd.append("courseId", form.courseId);
+      // fd.append("courseId", form.courseId);
+      form.courseIds.forEach((courseId) => {
+  fd.append("courseIds", courseId);
+});
+
+fd.append("courseId", form.courseIds[0]);
       fd.append("sectionType", finalSectionType);
       fd.append("syllabus", finalSyllabus);
 
@@ -1253,136 +1372,176 @@ export default function AdminTutorsPage() {
         </div>
       )}
 
-      <Modal
-        open={modalOpen}
-        title={editingTutor ? "Edit Tutor" : "Add Tutor"}
-        width="850px"
-        onClose={() => setModalOpen(false)}
+     <Modal
+  open={modalOpen}
+  title={editingTutor ? "Edit Tutor" : "Add Tutor"}
+  width="850px"
+  onClose={() => setModalOpen(false)}
+>
+  <form className="tutor-form" onSubmit={submitTutor}>
+    <div className="tutor-form-grid">
+      <label className="form-field">
+        <span>Tutor Photo</span>
+        <input
+          type="file"
+          name="photo"
+          accept="image/*"
+          onChange={handleChange}
+        />
+      </label>
+
+      {preview && (
+        <div className="tutor-photo-preview">
+          <img src={preview} alt="Preview" />
+        </div>
+      )}
+
+      <label className="form-field">
+        <span>Name</span>
+        <input name="name" value={form.name} onChange={handleChange} />
+      </label>
+
+      <label className="form-field">
+        <span>Email</span>
+        <input
+          name="email"
+          type="email"
+          value={form.email}
+          onChange={handleChange}
+        />
+      </label>
+
+      <label className="form-field">
+        <span>Phone</span>
+        <input name="phone" value={form.phone} onChange={handleChange} />
+      </label>
+
+      <label className="form-field">
+        <span>Qualification</span>
+        <input
+          name="qualification"
+          value={form.qualification}
+          onChange={handleChange}
+        />
+      </label>
+
+      <label className="form-field form-field--full">
+        <span>About / Description</span>
+        <textarea
+          name="about"
+          rows="3"
+          value={form.about}
+          onChange={handleChange}
+        />
+      </label>
+
+      <label className="form-field form-field--full">
+        <span>Subject</span>
+        <input
+          name="subjects"
+          placeholder="Example: Mathematics, Physics"
+          value={form.subjects}
+          onChange={handleChange}
+        />
+      </label>
+
+      <label className="form-field">
+        <span>Category</span>
+        <select
+          name="categoryId"
+          value={form.categoryId}
+          onChange={handleChange}
+        >
+          <option value="">Select category</option>
+          {categories.map((cat) => (
+            <option key={cat._id} value={cat._id}>
+              {cat.title}
+            </option>
+          ))}
+        </select>
+      </label>
+
+      {isOnlineTuition && (
+        <label className="form-field">
+          <span>Class Type</span>
+          <select
+            name="sectionType"
+            value={form.sectionType}
+            onChange={handleChange}
+          >
+            <option value="">Select class type</option>
+            <option value="one_to_one">One-to-One</option>
+            <option value="batch">Batch</option>
+            <option value="both">Both</option>
+          </select>
+        </label>
+      )}
+
+      {isOnlineTuition && (
+        <label className="form-field">
+          <span>Syllabus</span>
+          <select
+            name="syllabus"
+            value={form.syllabus}
+            onChange={handleChange}
+          >
+            <option value="">Select syllabus</option>
+            <option value="state">State</option>
+            <option value="cbse">CBSE</option>
+            <option value="icse">ICSE</option>
+          </select>
+        </label>
+      )}
+
+      <label className="form-field">
+        <span>
+          {isOnlineTuition && form.sectionType === "batch"
+            ? "Batch"
+            : isOnlineTuition && form.sectionType === "both"
+            ? "Courses / Batches"
+            : "Course / Class"}
+        </span>
+
+        <select
+          name="courseIds"
+          multiple
+          value={Array.isArray(form.courseIds) ? form.courseIds : []}
+          onChange={handleChange}
+          disabled={!form.categoryId || (isOnlineTuition && !form.sectionType)}
+        >
+          {visibleCourses.map((course) => (
+            <option key={course._id} value={course._id}>
+              {course.name}
+              {isOnlineTuition && form.sectionType === "both"
+                ? course.sectionType === "batch"
+                  ? " - Batch"
+                  : " - One-to-One"
+                : ""}
+            </option>
+          ))}
+        </select>
+
+        <small style={{ color: "#6b7280", fontWeight: 700 }}>
+          Hold Ctrl and click to select multiple courses
+        </small>
+      </label>
+    </div>
+
+    <div className="form-actions">
+      <button
+        type="button"
+        className="secondary-btn"
+        onClick={() => setModalOpen(false)}
       >
-        <form className="tutor-form" onSubmit={submitTutor}>
-          <div className="tutor-form-grid">
-            <label className="form-field">
-              <span>Tutor Photo</span>
-              <input type="file" name="photo" accept="image/*" onChange={handleChange} />
-            </label>
+        Cancel
+      </button>
 
-            {preview && (
-              <div className="tutor-photo-preview">
-                <img src={preview} alt="Preview" />
-              </div>
-            )}
-
-            <label className="form-field">
-              <span>Name</span>
-              <input name="name" value={form.name} onChange={handleChange} />
-            </label>
-
-            <label className="form-field">
-              <span>Email</span>
-              <input name="email" type="email" value={form.email} onChange={handleChange} />
-            </label>
-
-            <label className="form-field">
-              <span>Phone</span>
-              <input name="phone" value={form.phone} onChange={handleChange} />
-            </label>
-
-            <label className="form-field">
-              <span>Qualification</span>
-              <input name="qualification" value={form.qualification} onChange={handleChange} />
-            </label>
-
-            <label className="form-field form-field--full">
-              <span>About / Description</span>
-              <textarea name="about" rows="3" value={form.about} onChange={handleChange} />
-            </label>
-
-            <label className="form-field form-field--full">
-              <span>Subject</span>
-              <input
-                name="subjects"
-                placeholder="Example: Mathematics, Physics"
-                value={form.subjects}
-                onChange={handleChange}
-              />
-            </label>
-
-            <label className="form-field">
-              <span>Category</span>
-              <select name="categoryId" value={form.categoryId} onChange={handleChange}>
-                <option value="">Select category</option>
-                {categories.map((cat) => (
-                  <option key={cat._id} value={cat._id}>
-                    {cat.title}
-                  </option>
-                ))}
-              </select>
-            </label>
-
-            {isOnlineTuition && (
-              <label className="form-field">
-                <span>Class Type</span>
-                <select
-                  name="sectionType"
-                  value={form.sectionType}
-                  onChange={handleChange}
-                >
-                  <option value="">Select class type</option>
-                  <option value="one_to_one">One-to-One</option>
-                  <option value="batch">Batch</option>
-                </select>
-              </label>
-            )}
-
-            {isOnlineTuition && (
-              <label className="form-field">
-                <span>Syllabus</span>
-                <select name="syllabus" value={form.syllabus} onChange={handleChange}>
-                  <option value="">Select syllabus</option>
-                  <option value="state">State</option>
-                  <option value="cbse">CBSE</option>
-                  <option value="icse">ICSE</option>
-                </select>
-              </label>
-            )}
-
-            <label className="form-field">
-              <span>
-                {isOnlineTuition && form.sectionType === "batch"
-                  ? "Batch"
-                  : "Course / Class"}
-              </span>
-              <select
-                name="courseId"
-                value={form.courseId}
-                onChange={handleChange}
-                disabled={!form.categoryId || (isOnlineTuition && !form.sectionType)}
-              >
-                <option value="">
-                  {isOnlineTuition && form.sectionType === "batch"
-                    ? "Select batch"
-                    : "Select course"}
-                </option>
-
-                {visibleCourses.map((course) => (
-                  <option key={course._id} value={course._id}>
-                    {course.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-
-          <div className="form-actions">
-            <button type="button" className="secondary-btn" onClick={() => setModalOpen(false)}>
-              Cancel
-            </button>
-            <button type="submit" className="primary-btn">
-              {editingTutor ? "Update" : "Add"}
-            </button>
-          </div>
-        </form>
-      </Modal>
+      <button type="submit" className="primary-btn">
+        {editingTutor ? "Update" : "Add"}
+      </button>
+    </div>
+  </form>
+</Modal>
 
       <Modal
         open={confirmOpen}
