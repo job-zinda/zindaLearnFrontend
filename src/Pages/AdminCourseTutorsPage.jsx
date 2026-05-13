@@ -69,9 +69,23 @@ export default function AdminCourseTutorsPage() {
       const { data } = await api.get("/admin/tuter/all");
       const allTutors = data.tuters || [];
 
+      // const filtered = allTutors.filter((tutor) => {
+      //   return String(normalizeId(tutor.courseId)) === String(courseId);
+      // });
+
+
+
       const filtered = allTutors.filter((tutor) => {
-        return String(normalizeId(tutor.courseId)) === String(courseId);
-      });
+  // NEW MULTIPLE COURSE SUPPORT
+  if (Array.isArray(tutor.courseIds) && tutor.courseIds.length > 0) {
+    return tutor.courseIds.some(
+      (course) => String(normalizeId(course)) === String(courseId)
+    );
+  }
+
+  // OLD SINGLE COURSE SUPPORT
+  return String(normalizeId(tutor.courseId)) === String(courseId);
+});
 
       setTutors(filtered);
     } catch (err) {
