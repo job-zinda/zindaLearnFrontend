@@ -1493,38 +1493,51 @@ fd.append("courseId", form.courseIds[0]);
         </label>
       )}
 
-      <label className="form-field">
-        <span>
-          {isOnlineTuition && form.sectionType === "batch"
-            ? "Batch"
-            : isOnlineTuition && form.sectionType === "both"
-            ? "Courses / Batches"
-            : "Course / Class"}
-        </span>
+     <div className="form-field">
+  <span>
+    {isOnlineTuition && form.sectionType === "batch"
+      ? "Batch"
+      : isOnlineTuition && form.sectionType === "both"
+      ? "Courses / Batches"
+      : "Course / Class"}
+  </span>
 
-        <select
-          name="courseIds"
-          multiple
-          value={Array.isArray(form.courseIds) ? form.courseIds : []}
-          onChange={handleChange}
-          disabled={!form.categoryId || (isOnlineTuition && !form.sectionType)}
-        >
-          {visibleCourses.map((course) => (
-            <option key={course._id} value={course._id}>
+  <div className="course-checkbox-list">
+    {visibleCourses.length === 0 ? (
+      <p className="course-empty-text">No courses found</p>
+    ) : (
+      visibleCourses.map((course) => {
+        const checked = form.courseIds.includes(course._id);
+
+        return (
+          <label key={course._id} className="course-check-item">
+            <input
+              type="checkbox"
+              checked={checked}
+              onChange={(e) => {
+                setForm((prev) => ({
+                  ...prev,
+                  courseIds: e.target.checked
+                    ? [...prev.courseIds, course._id]
+                    : prev.courseIds.filter((id) => id !== course._id),
+                }));
+              }}
+            />
+
+            <span>
               {course.name}
               {isOnlineTuition && form.sectionType === "both"
                 ? course.sectionType === "batch"
                   ? " - Batch"
                   : " - One-to-One"
                 : ""}
-            </option>
-          ))}
-        </select>
-
-        <small style={{ color: "#6b7280", fontWeight: 700 }}>
-          Hold Ctrl and click to select multiple courses
-        </small>
-      </label>
+            </span>
+          </label>
+        );
+      })
+    )}
+  </div>
+</div>
     </div>
 
     <div className="form-actions">
