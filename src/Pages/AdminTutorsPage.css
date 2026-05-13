@@ -1222,3 +1222,367 @@
   color: #6b7280;
   font-weight: 700;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   PREMIUM WHITE ADD / EDIT TUTOR MODAL UI
+   Paste at the VERY BOTTOM of AdminTutorsPage.css
+   ========================================================= */
+
+/* Modal form base */
+.tutor-form {
+  color: #111827 !important;
+  padding: 4px 4px 0;
+}
+
+/* Clean two-column layout */
+.tutor-form-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 18px 22px !important;
+  align-items: start !important;
+}
+
+/* Full-width fields */
+.tutor-form .form-field--full {
+  grid-column: 1 / -1 !important;
+}
+
+/* Field wrapper */
+.tutor-form .form-field {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 9px !important;
+  margin: 0 !important;
+  min-width: 0 !important;
+  align-self: start !important;
+}
+
+/* Label */
+.tutor-form .form-field > span {
+  color: #1f2937 !important;
+  font-size: 15px !important;
+  font-weight: 950 !important;
+  line-height: 1.15 !important;
+  margin: 0 !important;
+  letter-spacing: 0.01em;
+}
+
+/* Inputs */
+.tutor-form .form-field input,
+.tutor-form .form-field textarea,
+.tutor-form .form-field select {
+  width: 100% !important;
+  min-height: 58px !important;
+  border: 1px solid #d9e1ef !important;
+  border-radius: 18px !important;
+  background:
+    linear-gradient(180deg, #ffffff 0%, #fbfcff 100%) !important;
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  outline: none !important;
+  padding: 15px 18px !important;
+  box-shadow:
+    0 10px 24px rgba(15, 23, 42, 0.045),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+  transition: 0.22s ease !important;
+}
+
+/* Textarea */
+.tutor-form .form-field textarea {
+  min-height: 138px !important;
+  resize: vertical !important;
+  line-height: 1.55 !important;
+}
+
+/* Placeholder */
+.tutor-form .form-field input::placeholder,
+.tutor-form .form-field textarea::placeholder {
+  color: #727b8c !important;
+  -webkit-text-fill-color: #727b8c !important;
+  font-weight: 800 !important;
+}
+
+/* Focus */
+.tutor-form .form-field input:focus,
+.tutor-form .form-field textarea:focus,
+.tutor-form .form-field select:focus {
+  border-color: #c026d3 !important;
+  box-shadow:
+    0 0 0 4px rgba(192, 38, 211, 0.14),
+    0 16px 36px rgba(168, 85, 247, 0.14) !important;
+}
+
+/* Select */
+.tutor-form .form-field select {
+  cursor: pointer !important;
+  appearance: auto !important;
+}
+
+/* Disabled */
+.tutor-form .form-field select:disabled,
+.tutor-form .form-field input:disabled {
+  background: #f1f5f9 !important;
+  color: #64748b !important;
+  -webkit-text-fill-color: #64748b !important;
+  opacity: 1 !important;
+  cursor: not-allowed !important;
+}
+
+/* File input */
+.tutor-form input[type="file"] {
+  display: flex !important;
+  align-items: center !important;
+  padding: 13px !important;
+}
+
+.tutor-form input[type="file"]::file-selector-button {
+  border: 1px solid #d7dce8 !important;
+  border-radius: 14px !important;
+  background: #f8fafc !important;
+  color: #111827 !important;
+  font-weight: 950 !important;
+  padding: 12px 18px !important;
+  margin-right: 14px !important;
+  cursor: pointer !important;
+  transition: 0.22s ease !important;
+}
+
+.tutor-form input[type="file"]::file-selector-button:hover {
+  background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+}
+
+/* Preview image */
+.tutor-photo-preview {
+  width: 132px !important;
+  height: 132px !important;
+  border-radius: 24px !important;
+  overflow: hidden !important;
+  border: 3px solid rgba(217, 70, 239, 0.28) !important;
+  background: #f8fafc !important;
+  box-shadow:
+    0 18px 38px rgba(15, 23, 42, 0.13),
+    0 0 0 7px rgba(217, 70, 239, 0.05) !important;
+  align-self: end !important;
+}
+
+.tutor-photo-preview img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+/* Category / Class Type alignment fix */
+.tutor-form .form-field:has(select[name="categoryId"]),
+.tutor-form .form-field:has(select[name="sectionType"]),
+.tutor-form .form-field:has(input[name="syllabus"]) {
+  align-self: start !important;
+}
+
+/* Course box */
+.tutor-form .course-checkbox-list {
+  min-height: 170px !important;
+  max-height: 220px !important;
+  overflow-y: auto !important;
+  border: 1px solid #d9e1ef !important;
+  border-radius: 22px !important;
+  padding: 12px !important;
+  background:
+    radial-gradient(circle at top right, rgba(217, 70, 239, 0.09), transparent 34%),
+    linear-gradient(180deg, #ffffff 0%, #fbfcff 100%) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 12px 28px rgba(15, 23, 42, 0.055) !important;
+}
+
+/* Scrollbar */
+.tutor-form .course-checkbox-list::-webkit-scrollbar {
+  width: 8px !important;
+}
+
+.tutor-form .course-checkbox-list::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #d946ef, #7c3aed) !important;
+  border-radius: 999px !important;
+}
+
+.tutor-form .course-checkbox-list::-webkit-scrollbar-track {
+  background: #eef2f7 !important;
+  border-radius: 999px !important;
+}
+
+/* Course row */
+.tutor-form .course-check-item {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: 56px 1fr !important;
+  align-items: center !important;
+  gap: 12px !important;
+  min-height: 58px !important;
+  padding: 10px 12px !important;
+  border-radius: 18px !important;
+  cursor: pointer !important;
+  color: #111827 !important;
+  font-weight: 950 !important;
+  transition: 0.22s ease !important;
+  border: 1px solid transparent !important;
+}
+
+.tutor-form .course-check-item:hover {
+  background: #f8fafc !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Switch checkbox */
+.tutor-form .course-check-item input[type="checkbox"] {
+  position: relative !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  width: 50px !important;
+  height: 30px !important;
+  min-height: 30px !important;
+  border: none !important;
+  border-radius: 999px !important;
+  background: #d1d5db !important;
+  box-shadow: inset 0 2px 5px rgba(15, 23, 42, 0.18) !important;
+  cursor: pointer !important;
+  transition: 0.25s ease !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  accent-color: unset !important;
+}
+
+.tutor-form .course-check-item input[type="checkbox"]::before {
+  content: "" !important;
+  position: absolute !important;
+  width: 24px !important;
+  height: 24px !important;
+  left: 3px !important;
+  top: 3px !important;
+  border-radius: 50% !important;
+  background: #ffffff !important;
+  box-shadow: 0 3px 8px rgba(15, 23, 42, 0.25) !important;
+  transition: 0.25s ease !important;
+}
+
+.tutor-form .course-check-item input[type="checkbox"]:checked {
+  background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
+}
+
+.tutor-form .course-check-item input[type="checkbox"]:checked::before {
+  transform: translateX(20px) !important;
+}
+
+/* Selected row highlight */
+.tutor-form .course-check-item:has(input[type="checkbox"]:checked) {
+  background:
+    linear-gradient(135deg, rgba(217, 70, 239, 0.13), rgba(124, 58, 237, 0.1)) !important;
+  border-color: rgba(217, 70, 239, 0.26) !important;
+}
+
+/* Course text */
+.tutor-form .course-check-item span {
+  color: #111827 !important;
+  font-size: 15px !important;
+  font-weight: 950 !important;
+  line-height: 1.3 !important;
+  word-break: break-word !important;
+}
+
+/* Empty course text */
+.tutor-form .course-empty-text {
+  margin: 0 !important;
+  padding: 20px !important;
+  color: #6b7280 !important;
+  font-size: 16px !important;
+  font-weight: 900 !important;
+  text-align: center !important;
+}
+
+/* Bottom buttons */
+.tutor-form .form-actions {
+  position: sticky !important;
+  bottom: 0 !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+  gap: 14px !important;
+  margin-top: 18px !important;
+  padding: 16px 0 0 !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.78), #ffffff 45%) !important;
+  z-index: 5 !important;
+}
+
+.tutor-form .primary-btn,
+.tutor-form .secondary-btn {
+  min-width: 126px !important;
+  min-height: 58px !important;
+  border: none !important;
+  border-radius: 18px !important;
+  font-size: 17px !important;
+  font-weight: 950 !important;
+  cursor: pointer !important;
+  transition: 0.24s ease !important;
+}
+
+.tutor-form .primary-btn {
+  background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
+  color: #ffffff !important;
+  box-shadow: 0 14px 32px rgba(168, 85, 247, 0.28) !important;
+}
+
+.tutor-form .primary-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 18px 40px rgba(168, 85, 247, 0.34) !important;
+}
+
+.tutor-form .secondary-btn {
+  background: #eef2f7 !important;
+  color: #111827 !important;
+}
+
+.tutor-form .secondary-btn:hover {
+  background: #e2e8f0 !important;
+}
+
+/* Mobile */
+@media (max-width: 760px) {
+  .tutor-form-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .tutor-photo-preview {
+    width: 120px !important;
+    height: 120px !important;
+    align-self: start !important;
+  }
+
+  .tutor-form .form-actions {
+    flex-direction: column-reverse !important;
+  }
+
+  .tutor-form .primary-btn,
+  .tutor-form .secondary-btn {
+    width: 100% !important;
+  }
+}
