@@ -1167,3 +1167,58 @@
   color: #6b7280;
   font-weight: 700;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.course-checkbox-list {
+  min-height: 140px;
+  max-height: 190px;
+  overflow-y: auto;
+  border: 1px solid #d8deea;
+  border-radius: 14px;
+  padding: 10px;
+  background: #fff;
+}
+
+.course-check-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 8px;
+  font-weight: 700;
+  color: #111827;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.course-check-item:hover {
+  background: #f3f4f6;
+}
+
+.course-check-item input {
+  width: 18px;
+  height: 18px;
+  accent-color: #a855f7;
+  cursor: pointer;
+}
+
+.course-empty-text {
+  margin: 0;
+  padding: 10px;
+  color: #6b7280;
+  font-weight: 700;
+}
