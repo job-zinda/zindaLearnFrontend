@@ -13,7 +13,7 @@ import schoolLogo from "../assets/Online school logo.png";
 import whatsappIcon from "../assets/watsapp icon.png";
 
 const OTP_LEN = 6;
-const TEACHING_TEAM_WHATSAPP_LINK = "https://wa.me/message/XTRJLU7IXTBHI1";
+const TEACHING_TEAM_WHATSAPP_LINK = "https://wa.me/+919847561998?text=onlineschoolteachingdetails";
 
 function normalizeRole(role) {
   return String(role || "").toLowerCase().trim();
