@@ -1184,3 +1184,296 @@
     padding: 18px !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   STUDENT SIDENAV PROFILE EDIT MODAL
+   SAME SIZE AS SETTINGS PAGE MODAL
+   ========================================================= */
+
+.student-profile-edit-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483647 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(3, 7, 18, 0.72) !important;
+  backdrop-filter: blur(6px) !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  padding: 20px !important;
+  overflow-y: auto !important;
+}
+
+.student-profile-edit-modal {
+  width: min(560px, calc(100vw - 40px)) !important;
+
+  max-height: calc(100vh - 40px) !important;
+
+  background: linear-gradient(145deg, #111633, #080b22) !important;
+
+  border: 1px solid rgba(217, 70, 239, 0.25) !important;
+
+  border-radius: 22px !important;
+
+  overflow: hidden !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+
+  color: #ffffff !important;
+
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55) !important;
+}
+
+.student-profile-edit-head {
+  flex-shrink: 0 !important;
+
+  padding: 18px 24px !important;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+.student-profile-edit-head h3 {
+  margin: 0 !important;
+
+  font-size: 22px !important;
+
+  font-weight: 900 !important;
+
+  color: #ffffff !important;
+}
+
+.student-profile-edit-close {
+  width: 42px !important;
+  height: 42px !important;
+
+  border: none !important;
+
+  border-radius: 50% !important;
+
+  background: rgba(217, 70, 239, 0.16) !important;
+
+  color: #ffffff !important;
+
+  font-size: 30px !important;
+
+  cursor: pointer !important;
+}
+
+.student-profile-edit-body {
+  overflow-y: auto !important;
+
+  padding: 24px 26px !important;
+
+  display: grid !important;
+
+  gap: 14px !important;
+}
+
+.student-profile-edit-photo-box {
+  display: grid;
+  place-items: center;
+  gap: 14px;
+}
+
+.student-profile-edit-photo-box img,
+.student-profile-edit-photo-box span {
+  width: 108px;
+  height: 108px;
+
+  border-radius: 50%;
+
+  border: 3px solid rgba(217, 70, 239, 0.35);
+
+  background: rgba(255, 255, 255, 0.06);
+
+  object-fit: cover;
+
+  display: grid;
+  place-items: center;
+
+  font-size: 42px;
+
+  color: #d946ef;
+
+  font-weight: 900;
+}
+
+.student-profile-edit-photo-box label {
+  background: #0ea5a3;
+
+  color: #ffffff;
+
+  padding: 12px 22px;
+
+  border-radius: 12px;
+
+  font-weight: 900;
+
+  cursor: pointer;
+}
+
+.student-profile-edit-body label {
+  color: rgba(255, 255, 255, 0.78);
+
+  font-weight: 900;
+}
+
+.student-profile-edit-body input {
+  width: 100%;
+
+  border: 1px solid rgba(217, 70, 239, 0.25);
+
+  background: rgba(255, 255, 255, 0.08);
+
+  border-radius: 13px;
+
+  padding: 14px 16px;
+
+  outline: none;
+
+  font-size: 15px;
+
+  color: #ffffff;
+}
+
+.student-profile-edit-save {
+  width: 100%;
+
+  min-height: 52px;
+
+  border: none;
+
+  border-radius: 14px;
+
+  background: linear-gradient(135deg, #d946ef, #7c3aed);
+
+  color: #ffffff;
+
+  font-size: 16px;
+
+  font-weight: 900;
+
+  cursor: pointer;
+
+  box-shadow: 0 16px 34px rgba(124, 58, 237, 0.3);
+}
