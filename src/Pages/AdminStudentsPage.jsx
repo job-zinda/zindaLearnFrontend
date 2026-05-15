@@ -129,6 +129,24 @@ export default function AdminStudentsPage() {
 
   const [submitting, setSubmitting] = useState(false);
 
+
+
+
+
+
+
+  const [tutors, setTutors] = useState([]);
+const [assignOpen, setAssignOpen] = useState(false);
+const [assignStudent, setAssignStudent] = useState(null);
+const [assignedTutorIds, setAssignedTutorIds] = useState([]);
+const [assignSearch, setAssignSearch] = useState("");
+const [assignLoading, setAssignLoading] = useState(false);
+
+
+
+
+
+
   const showOnlyNew =
     new URLSearchParams(location.search).get("filter") === "new";
 
@@ -165,10 +183,34 @@ export default function AdminStudentsPage() {
     }
   }
 
-  useEffect(() => {
-    fetchStudents();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+
+
+
+async function fetchTutors() {
+  try {
+    const { data } = await api.get("/admin/tuter/all");
+    setTutors(data.tuters || []);
+  } catch (err) {
+    showAlert(getErrorMessage(err, "Failed to load tutors"), "error");
+  }
+}
+
+
+
+  // useEffect(() => {
+  //   fetchStudents();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+
+
+
+
+useEffect(() => {
+  fetchStudents();
+  fetchTutors();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
+
 
   useEffect(() => {
     if (!loading && showOnlyNew && firstNewCardRef.current) {
@@ -323,6 +365,76 @@ export default function AdminStudentsPage() {
     }
   }
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  const filteredAssignTutors = useMemo(() => {
+  const q = assignSearch.toLowerCase().trim();
+
+  if (!q) return tutors;
+
+  return tutors.filter((tutor) => {
+    return (
+      String(tutor.name || "").toLowerCase().includes(q) ||
+      String(tutor.email || "").toLowerCase().includes(q) ||
+      String(tutor.phone || "").toLowerCase().includes(q) ||
+      String(tutor.qualification || "").toLowerCase().includes(q)
+    );
+  });
+}, [tutors, assignSearch]);
+
+async function openAssignTutorModal(student) {
+  try {
+    setAssignStudent(student);
+    setAssignedTutorIds([]);
+    setAssignSearch("");
+    setAssignOpen(true);
+    setMenuOpenId(null);
+    setAssignLoading(true);
+
+    const { data } = await api.get(
+      `/admin/student/${getStudentId(student)}/assigned-tutors`
+    );
+
+    const ids = (data.tutors || []).map((tutor) => tutor._id);
+    setAssignedTutorIds(ids);
+  } catch (err) {
+    showAlert(getErrorMessage(err, "Failed to load assigned tutors"), "error");
+  } finally {
+    setAssignLoading(false);
+  }
+}
+
+function toggleAssignedTutor(tutorId, checked) {
+  setAssignedTutorIds((prev) => {
+    if (checked) {
+      return Array.from(new Set([...prev, tutorId]));
+    }
+
+    return prev.filter((id) => id !== tutorId);
+  });
+}
+
+async function saveAssignedTutors() {
+  try {
+    if (!assignStudent) return;
+
+    setSubmitting(true);
+
+    await api.post(`/admin/student/${getStudentId(assignStudent)}/assign-tutors`, {
+      tutorIds: assignedTutorIds,
+    });
+
+    showAlert("Tutors assigned successfully", "success");
+    setAssignOpen(false);
+    setAssignStudent(null);
+    setAssignedTutorIds([]);
+  } catch (err) {
+    showAlert(getErrorMessage(err, "Failed to assign tutors"), "error");
+  } finally {
+    setSubmitting(false);
+  }
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   return (
     <div className="student-page" onClick={() => setMenuOpenId(null)}>
       <div className="student-toolbar" onClick={(e) => e.stopPropagation()}>
@@ -429,6 +541,22 @@ export default function AdminStudentsPage() {
                     <span>{student.phone || "No phone added"}</span>
                   </p>
                 </div>
+
+
+
+
+<button
+  type="button"
+  className="student-assign-btn"
+  onClick={() => openAssignTutorModal(student)}
+>
+  Assign Tutors
+</button>
+
+
+
+
+
               </article>
             );
           })}
@@ -596,6 +724,92 @@ export default function AdminStudentsPage() {
           </div>
         </div>
       </Modal>
+
+
+      <Modal
+  open={assignOpen}
+  title={`Assign Tutors${assignStudent?.name ? ` - ${assignStudent.name}` : ""}`}
+  width="760px"
+  onClose={() => {
+    setAssignOpen(false);
+    setAssignStudent(null);
+    setAssignedTutorIds([]);
+  }}
+>
+  <div className="assign-tutor-box">
+    <div className="assign-tutor-search">
+      <span>⌕</span>
+      <input
+        value={assignSearch}
+        onChange={(e) => setAssignSearch(e.target.value)}
+        placeholder="Search tutors..."
+      />
+    </div>
+
+    {assignLoading ? (
+      <div className="assign-tutor-state">Loading tutors...</div>
+    ) : filteredAssignTutors.length === 0 ? (
+      <div className="assign-tutor-state">No tutors found</div>
+    ) : (
+      <div className="assign-tutor-list">
+        {filteredAssignTutors.map((tutor) => {
+          const checked = assignedTutorIds.includes(tutor._id);
+          const photo = tutor.photo ? getMediaUrl(tutor.photo) : "";
+
+          return (
+            <label
+              key={tutor._id}
+              className={`assign-tutor-item ${
+                checked ? "assign-tutor-item--selected" : ""
+              }`}
+            >
+              <input
+                type="checkbox"
+                checked={checked}
+                onChange={(e) =>
+                  toggleAssignedTutor(tutor._id, e.target.checked)
+                }
+              />
+
+              <div className="assign-tutor-avatar">
+                {photo ? (
+                  <img src={photo} alt={tutor.name || "Tutor"} />
+                ) : (
+                  <span>{tutor.name?.charAt(0)?.toUpperCase() || "T"}</span>
+                )}
+              </div>
+
+              <div className="assign-tutor-info">
+                <h4>{tutor.name || "Tutor"}</h4>
+                <p>{tutor.qualification || "Qualification not added"}</p>
+                <small>{tutor.email || tutor.phone || "No contact added"}</small>
+              </div>
+            </label>
+          );
+        })}
+      </div>
+    )}
+
+    <div className="assign-tutor-actions">
+      <button
+        type="button"
+        className="secondary-btn"
+        onClick={() => setAssignOpen(false)}
+      >
+        Cancel
+      </button>
+
+      <button
+        type="button"
+        className="primary-btn"
+        disabled={submitting}
+        onClick={saveAssignedTutors}
+      >
+        {submitting ? "Saving..." : "Save Assignment"}
+      </button>
+    </div>
+  </div>
+</Modal>
     </div>
   );
 }

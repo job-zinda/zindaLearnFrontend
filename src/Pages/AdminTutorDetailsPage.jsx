@@ -1349,6 +1349,12 @@ export default function AdminTutorDetailsPage() {
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
 
+
+const [assignedStudentsOpen, setAssignedStudentsOpen] = useState(false);
+const [assignedStudents, setAssignedStudents] = useState([]);
+const [assignedStudentsLoading, setAssignedStudentsLoading] = useState(false);
+
+
   const [form, setForm] = useState(emptyForm);
   const [preview, setPreview] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -1638,6 +1644,26 @@ export default function AdminTutorDetailsPage() {
     window.open(`tel:${phone}`, "_self");
   }
 
+
+async function openAssignedStudentsModal() {
+  try {
+    setAssignedStudentsOpen(true);
+    setAssignedStudentsLoading(true);
+
+    const { data } = await api.get(
+      `/admin/tuter/${tuterId}/assigned-students`
+    );
+
+    setAssignedStudents(data.students || []);
+  } catch (err) {
+    showAlert(getErrorMessage(err, "Failed to load assigned students"), "error");
+  } finally {
+    setAssignedStudentsLoading(false);
+  }
+}
+
+
+
   if (loading) {
     return (
       <div className="tutor-detail-page">
@@ -1683,6 +1709,14 @@ export default function AdminTutorDetailsPage() {
           >
             ↗ Share
           </button>
+
+          <button
+  type="button"
+  className="detail-assigned-btn"
+  onClick={openAssignedStudentsModal}
+>
+  👥 Assigned Students
+</button>
 
           <button
             type="button"
@@ -2028,6 +2062,48 @@ export default function AdminTutorDetailsPage() {
           </div>
         </div>
       </Modal>
+
+<Modal
+  open={assignedStudentsOpen}
+  title={`Assigned Students${tutor?.name ? ` - ${tutor.name}` : ""}`}
+  width="760px"
+  onClose={() => setAssignedStudentsOpen(false)}
+>
+  <div className="assigned-students-box">
+    {assignedStudentsLoading ? (
+      <div className="assigned-students-state">Loading students...</div>
+    ) : assignedStudents.length === 0 ? (
+      <div className="assigned-students-state">
+        No students assigned to this tutor yet.
+      </div>
+    ) : (
+      <div className="assigned-students-list">
+        {assignedStudents.map((student) => {
+          const photo = student.photo ? getImageSrc(student.photo) : "";
+
+          return (
+            <div key={student._id} className="assigned-student-card">
+              <div className="assigned-student-avatar">
+                {photo ? (
+                  <img src={photo} alt={student.name || "Student"} />
+                ) : (
+                  <span>{student.name?.charAt(0)?.toUpperCase() || "S"}</span>
+                )}
+              </div>
+
+              <div className="assigned-student-info">
+                <h4>{student.name || "Student"}</h4>
+                <p>{student.email || "No email added"}</p>
+                <small>{student.phone || "No phone added"}</small>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    )}
+  </div>
+</Modal>
+
     </div>
   );
 }
