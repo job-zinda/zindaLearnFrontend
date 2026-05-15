@@ -10,8 +10,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import "./Loginpage.css";
 import schoolLogo from "../assets/Online school logo.png";
+import whatsappIcon from "../assets/watsapp icon.png";
 
 const OTP_LEN = 6;
+const TEACHING_TEAM_WHATSAPP_LINK = "https://wa.me/message/XTRJLU7IXTBHI1";
 
 function normalizeRole(role) {
   return String(role || "").toLowerCase().trim();
@@ -469,6 +471,15 @@ export default function LoginPage() {
                 </button>
               </div>
             </form>
+            <a
+  className="zs-teaching-team"
+  href={TEACHING_TEAM_WHATSAPP_LINK}
+  target="_blank"
+  rel="noreferrer"
+>
+  <img src={whatsappIcon} alt="WhatsApp" />
+  <span>Join our teaching team</span>
+</a>
           </div>
         </div>
       </div>
