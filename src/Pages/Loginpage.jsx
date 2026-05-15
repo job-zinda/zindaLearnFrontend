@@ -471,15 +471,7 @@ export default function LoginPage() {
                 </button>
               </div>
             </form>
-     
-          </div>
-
-     
-
-        </div>
-       
-      </div>
-         <a
+       <a
   className="zs-teaching-team"
   href={TEACHING_TEAM_WHATSAPP_LINK}
   target="_blank"
@@ -488,6 +480,14 @@ export default function LoginPage() {
   <img src={whatsappIcon} alt="WhatsApp" />
   <span>Join our teaching team</span>
 </a>
+          </div>
+
+     
+
+        </div>
+       
+      </div>
+       
 
       <Modal open={modal === "signup"} title="Create Account" onClose={closeAll}>
         {signupMsg ? <div className="zs-msg">{signupMsg}</div> : null}
