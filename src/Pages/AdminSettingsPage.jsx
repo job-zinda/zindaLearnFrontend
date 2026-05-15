@@ -1,6 +1,7 @@
 
 
 import React, { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { createPortal } from "react-dom";
 import api from "../api/axios";
 import { useAlert } from "../context/AlertContext";
@@ -72,8 +73,12 @@ const sections = [
   { key: "password", label: "Change Password" },
 ];
 
+// export default function AdminSettingsPage() {
+//   const { showAlert } = useAlert();
+
 export default function AdminSettingsPage() {
   const { showAlert } = useAlert();
+  const [searchParams] = useSearchParams();
 
   const [activeSection, setActiveSection] = useState("profile");
   const [mobileDetailOpen, setMobileDetailOpen] = useState(false);
@@ -126,6 +131,27 @@ export default function AdminSettingsPage() {
     fetchProfile();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+
+
+  useEffect(() => {
+  const section = searchParams.get("section");
+  const edit = searchParams.get("edit");
+
+  if (section === "profile") {
+    setActiveSection("profile");
+    setMobileDetailOpen(true);
+
+    if (edit === "1") {
+      setProfileModalOpen(true);
+    }
+  }
+
+  if (section === "password") {
+    setActiveSection("password");
+    setMobileDetailOpen(true);
+  }
+}, [searchParams]);
 
   function openSection(key) {
     setActiveSection(key);

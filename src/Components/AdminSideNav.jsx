@@ -169,6 +169,19 @@ export default function AdminSideNav({ open, onClose }) {
     getImageSrc(user?.image) ||
     getImageSrc(user?.avatar);
 
+
+
+
+const goToProfileEdit = () => {
+  navigate("/admin/settings?section=profile&edit=1");
+
+  if (typeof onClose === "function") {
+    onClose();
+  }
+};
+
+
+
   const handleLogout = () => {
     localStorage.clear();
     navigate("/");
@@ -181,7 +194,14 @@ export default function AdminSideNav({ open, onClose }) {
           }`}
       >
         <div className="admin-sidenav__top">
-          <div className="admin-profile-card">
+          {/* <div className="admin-profile-card"> */}
+          <button
+  type="button"
+  className="admin-profile-card admin-profile-card--clickable"
+  onClick={goToProfileEdit}
+  title="Edit profile"
+>
+          
             <div
               className="admin-profile-card__avatar"
               style={{
@@ -215,7 +235,9 @@ export default function AdminSideNav({ open, onClose }) {
               <h4>{user?.name || "Admin"}</h4>
               <p>Administrator</p>
             </div>
-          </div>
+            
+          {/* </div> */}
+          </button>
 
           <nav className="admin-nav">
             {navItems.map((item) => (

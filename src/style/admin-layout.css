@@ -1211,3 +1211,69 @@
 .student-content h6 {
   color: #ffffff !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.admin-profile-card--clickable {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.04);
+  transition: 0.25s ease;
+}
+
+.admin-profile-card--clickable:hover {
+  transform: translateY(-2px);
+  border-color: rgba(217, 70, 239, 0.45);
+  background: linear-gradient(
+    135deg,
+    rgba(217, 70, 239, 0.16),
+    rgba(124, 58, 237, 0.12)
+  );
+  box-shadow: 0 16px 34px rgba(124, 58, 237, 0.18);
+}
+
+.admin-profile-card--clickable:active {
+  transform: translateY(0);
+}
