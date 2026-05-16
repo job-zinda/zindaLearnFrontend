@@ -420,56 +420,158 @@ export default function AdminStudentsPage() {
   // }
 
 
-  async function openAssignTutorModal(student) {
-    try {
+  // async function openAssignTutorModal(student) {
+  //   try {
 
-      setAssignStudent(student);
-      setAssignOpen(true);
+  //     setAssignStudent(student);
+  //     setAssignOpen(true);
 
-      setAssignSearch("");
+  //     setAssignSearch("");
 
-      setAssignLoading(true);
+  //     setAssignLoading(true);
 
-      const { data } = await api.get(
-        `/admin/student/${getStudentId(student)}/assigned-tutors`
-      );
+  //     const { data } = await api.get(
+  //       `/admin/student/${getStudentId(student)}/assigned-tutors`
+  //     );
 
-      const obj = {};
+  //     const obj = {};
 
-      (data.assignments || []).forEach(item => {
+  //     (data.assignments || []).forEach(item => {
 
-        obj[item.tutorId] = item.courseIds || [];
+  //       obj[item.tutorId] = item.courseIds || [];
 
-      });
+  //     });
 
-      setAssignedTutors(obj);
+  //     setAssignedTutors(obj);
 
-    } catch (err) {
+  //   } catch (err) {
 
-      showAlert(
-        getErrorMessage(
-          err,
-          "Failed loading assignments"
-        ),
-        "error"
-      )
+  //     showAlert(
+  //       getErrorMessage(
+  //         err,
+  //         "Failed loading assignments"
+  //       ),
+  //       "error"
+  //     )
 
-    } finally {
+  //   } finally {
 
-      setAssignLoading(false)
+  //     setAssignLoading(false)
 
-    }
+  //   }
+  // }
+
+
+
+
+
+
+async function openAssignTutorModal(student) {
+
+  try {
+
+    setAssignStudent(student);
+
+    setAssignOpen(true);
+
+    setAssignSearch("");
+
+    setAssignLoading(true);
+
+    const { data } = await api.get(
+      `/admin/student/${getStudentId(student)}/assigned-tutors`
+    );
+
+    const obj = {};
+
+    (data.assignments || []).forEach((item) => {
+
+      const tutorId =
+        item?.tutorId?._id ||
+        item?.tutorId;
+
+      obj[tutorId] =
+        (item?.courseIds || []).map(
+          course =>
+            course?._id || course
+        );
+
+    });
+
+    setAssignedTutors(obj);
+
+  } catch (err) {
+
+    showAlert(
+      getErrorMessage(
+        err,
+        "Failed loading assignments"
+      ),
+      "error"
+    );
+
+  } finally {
+
+    setAssignLoading(false);
+
   }
 
+}
 
 
-  function openTutorCourses(tutor) {
 
-    setSelectedTutor(tutor)
 
-    setCourseSelectOpen(true)
 
-  }
+
+
+
+
+
+  // function openTutorCourses(tutor) {
+
+  //   setSelectedTutor(tutor)
+
+  //   setCourseSelectOpen(true)
+
+  // }
+
+
+
+
+
+
+function openTutorCourses(
+ tutor
+){
+
+setSelectedTutor(
+ tutor
+);
+
+if(
+!assignedTutors[
+tutor._id
+]
+){
+
+setAssignedTutors(
+prev=>({
+
+...prev,
+
+[tutor._id]:[]
+
+})
+)
+
+}
+
+setCourseSelectOpen(
+true
+)
+
+}
+
 
 
 
@@ -538,27 +640,77 @@ export default function AdminStudentsPage() {
 
 
 
-  function toggleAssignedTutor(tutor, checked) {
+  // function toggleAssignedTutor(tutor, checked) {
 
-    if (!checked) {
+  //   if (!checked) {
 
-      setAssignedTutors(prev => {
+  //     setAssignedTutors(prev => {
 
-        const obj = { ...prev };
+  //       const obj = { ...prev };
 
-        delete obj[tutor._id];
+  //       delete obj[tutor._id];
 
-        return obj;
+  //       return obj;
 
-      })
+  //     })
 
-      return;
+  //     return;
 
-    }
+  //   }
 
-    openTutorCourses(tutor)
+  //   openTutorCourses(tutor)
 
-  }
+  // }
+
+
+
+
+
+
+
+function toggleAssignedTutor(
+ tutor,
+ checked
+){
+
+if(!checked){
+
+const selected=
+assignedTutors[
+ tutor._id
+] || [];
+
+if(selected.length>0){
+
+showAlert(
+"Remove selected courses first",
+"error"
+);
+
+return;
+
+}
+
+setAssignedTutors(prev=>{
+
+const obj={...prev};
+
+delete obj[tutor._id];
+
+return obj;
+
+});
+
+return;
+
+}
+
+openTutorCourses(
+ tutor
+);
+
+}
+
 
 
 
@@ -948,11 +1100,28 @@ export default function AdminStudentsPage() {
         open={assignOpen}
         title={`Assign Tutors${assignStudent?.name ? ` - ${assignStudent.name}` : ""}`}
         width="760px"
-        onClose={() => {
-          setAssignOpen(false);
-          setAssignStudent(null);
-          setAssignedTutorIds([]);
-        }}
+        // onClose={() => {
+        //   setAssignOpen(false);
+        //   setAssignStudent(null);
+        //   setAssignedTutorIds([]);
+        // }}
+
+
+onClose={() => {
+
+  setAssignOpen(false);
+
+  setAssignStudent(null);
+
+  setAssignedTutors({});
+
+  setSelectedTutor(null);
+
+  setCourseSelectOpen(false);
+
+}}
+
+
       >
 
 
@@ -1209,6 +1378,67 @@ export default function AdminStudentsPage() {
             }
 
           </div>
+
+
+<div
+className="course-select-footer"
+>
+
+<button
+
+className="secondary-btn"
+
+onClick={()=>{
+
+setCourseSelectOpen(false)
+
+}}
+
+>
+
+Cancel
+
+</button>
+
+<button
+
+className="primary-btn"
+
+onClick={()=>{
+
+const selected=
+assignedTutors[
+selectedTutor._id
+] || [];
+
+if(
+selected.length===0
+){
+
+showAlert(
+"Select minimum one course",
+"error"
+);
+
+return;
+
+}
+
+setCourseSelectOpen(
+false
+)
+
+}}
+
+>
+
+Select
+
+</button>
+
+</div>
+
+
 
         </div>
 
