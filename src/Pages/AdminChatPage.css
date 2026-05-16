@@ -5050,3 +5050,70 @@
     height: 40px !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+/* ===== FINAL VOICE FIX ===== */
+
+.admin-chat-bubble--audio{
+    display:inline-flex !important;
+    flex-direction:column !important;
+
+    width:auto !important;
+    max-width:none !important;
+    min-width:unset !important;
+
+    padding:8px !important;
+    background:#0f172a !important;
+
+    border-radius:18px !important;
+    overflow:visible !important;
+
+    align-self:flex-end !important;
+}
+
+/* remove inherited large width */
+.admin-chat-row--own .admin-chat-bubble--audio{
+    width:auto !important;
+    max-width:none !important;
+}
+
+/* audio wrapper */
+.admin-chat-bubble--audio .admin-chat-files{
+    width:auto !important;
+    display:inline-block !important;
+    flex:none !important;
+    margin:0 !important;
+    padding:0 !important;
+}
+
+/* actual player width */
+.admin-chat-bubble--audio .admin-chat-file-audio{
+    width:260px !important;
+    min-width:260px !important;
+    max-width:260px !important;
+
+    height:38px !important;
+
+    display:block !important;
+    margin:0 !important;
+}
+
+/* time section close to player */
+.admin-chat-bubble--audio .admin-chat-meta{
+    margin-top:4px !important;
+    justify-content:flex-end !important;
+}
+
+/* delete/edit icon outside */
+.admin-chat-bubble--audio .admin-message-actions-hover{
+    top:-16px !important;
+    right:-12px !important;
+}

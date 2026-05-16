@@ -3822,3 +3822,54 @@ body,
     height: 40px !important;
   }
 }
+
+
+
+
+
+
+
+
+.student-chat-bubble--audio{
+    display:inline-flex !important;
+    flex-direction:column !important;
+
+    width:auto !important;
+    max-width:none !important;
+    min-width:unset !important;
+
+    padding:8px !important;
+    background:#0f172a !important;
+
+    border-radius:18px !important;
+    overflow:visible !important;
+}
+
+.student-chat-row--own .student-chat-bubble--audio{
+    width:auto !important;
+    max-width:none !important;
+}
+
+.student-chat-bubble--audio .student-chat-files{
+    width:auto !important;
+    display:inline-block !important;
+    margin:0 !important;
+    padding:0 !important;
+}
+
+.student-chat-bubble--audio .student-chat-file-audio{
+    width:260px !important;
+    min-width:260px !important;
+    max-width:260px !important;
+
+    height:38px !important;
+}
+
+.student-chat-bubble--audio .student-chat-meta{
+    margin-top:4px !important;
+}
+
+.student-chat-bubble--audio .student-message-actions-hover{
+    top:-16px !important;
+    right:-12px !important;
+}
