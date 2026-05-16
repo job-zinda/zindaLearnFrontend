@@ -173,6 +173,64 @@ function MessageFile({ file }) {
   );
 }
 
+
+
+
+
+
+
+
+
+// function ConnectCard({ message }) {
+//   const navigate = useNavigate();
+//   const card = message?.connectCard || {};
+//   const text = getText(message);
+
+//   function openTutorDetails() {
+//     if (card?.tuterId) {
+//       navigate(`/admin/tutors/${card.tuterId}`);
+//     }
+//   }
+
+//   return (
+//     <>
+//       <div className="admin-connect-card" onClick={openTutorDetails}>
+//         <div className="admin-connect-card__top">
+//           {card?.image ? (
+//             <img src={getImageSrc(card.image)} alt={card.name || "Tutor"} />
+//           ) : (
+//             <div className="admin-connect-card__fallback">
+//               {card?.name?.charAt(0)?.toUpperCase() || "T"}
+//             </div>
+//           )}
+
+//           <div>
+//             <h4>{card?.name || "Tutor Details"}</h4>
+//             <p>{card?.qualification || "Qualification not added"}</p>
+//             <span>Tap to view full tutor details</span>
+//           </div>
+//         </div>
+
+//         <div className="admin-connect-card__details">
+//           <p><b>Course / Class:</b> {card?.courseName || "Not added"}</p>
+//           <p><b>Category:</b> {card?.categoryName || "Not added"}</p>
+//           <p><b>Syllabus:</b> {card?.syllabus || "Not added"}</p>
+//           {card?.email ? <p><b>Email:</b> {card.email}</p> : null}
+//           {card?.phone ? <p><b>Phone:</b> {card.phone}</p> : null}
+//         </div>
+//       </div>
+
+//       {text ? (
+//         <p className="admin-connect-request-text">{renderTextWithLinks(text)}</p>
+//       ) : null}
+//     </>
+//   );
+// }
+
+
+
+
+
 function ConnectCard({ message }) {
   const navigate = useNavigate();
   const card = message?.connectCard || {};
@@ -186,38 +244,35 @@ function ConnectCard({ message }) {
 
   return (
     <>
-      <div className="admin-connect-card" onClick={openTutorDetails}>
-        <div className="admin-connect-card__top">
-          {card?.image ? (
-            <img src={getImageSrc(card.image)} alt={card.name || "Tutor"} />
-          ) : (
-            <div className="admin-connect-card__fallback">
-              {card?.name?.charAt(0)?.toUpperCase() || "T"}
-            </div>
-          )}
-
-          <div>
-            <h4>{card?.name || "Tutor Details"}</h4>
-            <p>{card?.qualification || "Qualification not added"}</p>
-            <span>Tap to view full tutor details</span>
+      <div className="admin-connect-preview-image-card" onClick={openTutorDetails}>
+        {card?.image ? (
+          <img src={getImageSrc(card.image)} alt={card.name || "Tutor"} />
+        ) : (
+          <div className="admin-connect-preview-fallback">
+            {card?.name?.charAt(0)?.toUpperCase() || "T"}
           </div>
-        </div>
+        )}
 
-        <div className="admin-connect-card__details">
-          <p><b>Course / Class:</b> {card?.courseName || "Not added"}</p>
-          <p><b>Category:</b> {card?.categoryName || "Not added"}</p>
-          <p><b>Syllabus:</b> {card?.syllabus || "Not added"}</p>
-          {card?.email ? <p><b>Email:</b> {card.email}</p> : null}
-          {card?.phone ? <p><b>Phone:</b> {card.phone}</p> : null}
+        <div className="admin-connect-preview-overlay">
+          <h4>{card?.name || "Tutor Details"}</h4>
+          <p>{card?.qualification || "Qualification not added"}</p>
+          <span>Tap to view full tutor details</span>
         </div>
       </div>
 
       {text ? (
-        <p className="admin-connect-request-text">{renderTextWithLinks(text)}</p>
+        <p className="admin-connect-request-text">
+          {renderTextWithLinks(text)}
+        </p>
       ) : null}
     </>
   );
 }
+
+
+
+
+
 
 function MessageBubble({ message, onEdit, onDelete }) {
   const own = isOwnMessage(message);

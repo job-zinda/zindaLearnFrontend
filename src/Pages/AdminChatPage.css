@@ -4514,3 +4514,147 @@
     height: calc(100dvh - 145px) !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   ADMIN CONNECT REQUEST CARD - SAME AS STUDENT SIDE
+   Paste at bottom of AdminChatPage.css
+   ========================================================= */
+
+.admin-chat-bubble:has(.admin-connect-preview-image-card) {
+  background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  border-radius: 22px !important;
+  padding: 12px 12px 8px !important;
+  max-width: min(62%, 520px) !important;
+}
+
+.admin-connect-preview-image-card {
+  width: 100% !important;
+  max-width: 100% !important;
+  border-radius: 18px !important;
+  overflow: hidden !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  cursor: pointer !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  padding-top: 18px !important;
+  display: grid !important;
+  justify-items: center !important;
+}
+
+.admin-connect-preview-image-card img {
+  width: 145px !important;
+  height: 145px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  display: block !important;
+  border: 5px solid rgba(217, 70, 239, 0.35) !important;
+}
+
+.admin-connect-preview-fallback {
+  width: 145px !important;
+  height: 145px !important;
+  border-radius: 50% !important;
+  display: grid !important;
+  place-items: center !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #d946ef !important;
+  font-size: 58px !important;
+  font-weight: 900 !important;
+  border: 5px solid rgba(217, 70, 239, 0.35) !important;
+}
+
+.admin-connect-preview-overlay {
+  width: 100% !important;
+  padding: 13px !important;
+  background: rgba(10, 15, 40, 0.92) !important;
+  color: #ffffff !important;
+  text-align: left !important;
+}
+
+.admin-connect-preview-overlay h4 {
+  margin: 0 0 5px !important;
+  font-size: 18px !important;
+  font-weight: 900 !important;
+  color: #ffffff !important;
+}
+
+.admin-connect-preview-overlay p {
+  margin: 0 0 6px !important;
+  color: #c084fc !important;
+  font-weight: 900 !important;
+  overflow-wrap: anywhere !important;
+}
+
+.admin-connect-preview-overlay span {
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  color: rgba(255, 255, 255, 0.62) !important;
+}
+
+.admin-connect-request-text {
+  margin: 10px 0 0 !important;
+  line-height: 1.45 !important;
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+}
+
+/* read message style disturb cheyyathe keep cheyyan */
+.admin-chat-bubble--own-read:has(.admin-connect-preview-image-card) {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+@media (max-width: 800px) {
+  .admin-chat-bubble:has(.admin-connect-preview-image-card) {
+    max-width: 88% !important;
+  }
+
+  .admin-connect-preview-image-card img,
+  .admin-connect-preview-fallback {
+    width: 95px !important;
+    height: 95px !important;
+  }
+
+  .admin-connect-preview-fallback {
+    font-size: 38px !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .admin-chat-bubble:has(.admin-connect-preview-image-card) {
+    max-width: 94% !important;
+  }
+}
