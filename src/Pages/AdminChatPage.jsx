@@ -524,6 +524,7 @@ export default function AdminChatPage() {
     try {
       setLoadingMessages(true);
 
+      
       const { data } = await api.get(`/chat/messages/${roomId}`);
       setMessages(data?.messages || []);
       await api.patch(`/chat/read/${roomId}`);
