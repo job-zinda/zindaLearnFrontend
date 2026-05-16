@@ -3676,3 +3676,149 @@ body,
     top: -34px !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   STUDENT CHAT - WHATSAPP STYLE AUDIO BUBBLE
+   Paste at VERY BOTTOM of StudentChatPage.css
+   ========================================================= */
+
+.student-chat-bubble.student-chat-bubble--audio {
+  width: fit-content !important;
+  max-width: fit-content !important;
+  min-width: 0 !important;
+  padding: 6px 8px 5px !important;
+  border-radius: 16px !important;
+  background: #111827 !important;
+  border: 1px solid rgba(148, 163, 184, 0.22) !important;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.26) !important;
+  color: #ffffff !important;
+  overflow: visible !important;
+}
+
+/* own audio also dark, not purple */
+.student-chat-bubble--own-unread.student-chat-bubble--audio,
+.student-chat-bubble--own-read.student-chat-bubble--audio {
+  background: #111827 !important;
+  border: 1px solid rgba(148, 163, 184, 0.22) !important;
+  color: #ffffff !important;
+}
+
+/* remove extra big file wrapper spacing */
+.student-chat-bubble--audio .student-chat-files {
+  display: block !important;
+  width: fit-content !important;
+  max-width: fit-content !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* only audio player width */
+.student-chat-bubble--audio .student-chat-file-audio {
+  width: 270px !important;
+  max-width: 270px !important;
+  height: 42px !important;
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 999px !important;
+  background: #e5e7eb !important;
+}
+
+/* remove huge purple box effect */
+.student-chat-bubble--audio::before,
+.student-chat-bubble--audio::after {
+  display: none !important;
+}
+
+/* meta small and close */
+.student-chat-bubble--audio .student-chat-meta {
+  margin-top: 3px !important;
+  padding-right: 3px !important;
+  font-size: 10.5px !important;
+  line-height: 1 !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* edit/delete outside top */
+.student-chat-bubble--audio .student-message-actions-hover {
+  top: -34px !important;
+  right: 0 !important;
+  background: rgba(15, 23, 42, 0.96) !important;
+  border: 1px solid rgba(148, 163, 184, 0.2) !important;
+  padding: 4px !important;
+  border-radius: 999px !important;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.35) !important;
+}
+
+.student-chat-bubble--audio .student-message-actions-hover button {
+  width: 28px !important;
+  height: 28px !important;
+  background: #1e293b !important;
+  color: #ffffff !important;
+}
+
+/* mobile */
+@media (max-width: 520px) {
+  .student-chat-bubble.student-chat-bubble--audio {
+    max-width: fit-content !important;
+    padding: 6px 7px 5px !important;
+  }
+
+  .student-chat-bubble--audio .student-chat-file-audio {
+    width: 235px !important;
+    max-width: 235px !important;
+    height: 40px !important;
+  }
+}

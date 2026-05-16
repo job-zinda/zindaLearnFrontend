@@ -255,15 +255,24 @@ function MessageBubble({ message, onEdit, onDelete }) {
     messageType === "connect_request" ||
     message?.isAutomatic;
 
-  const hasFiles = Array.isArray(files) && files.length > 0;
+  // const hasFiles = Array.isArray(files) && files.length > 0;
 
-  const canDelete = own;
-  const canEdit =
-    own && !isAutomatic && messageType !== "connect_card" && !hasFiles;
+  // const canDelete = own;
+  // const canEdit =
+  //   own && !isAutomatic && messageType !== "connect_card" && !hasFiles;
+
+
+const hasFiles = Array.isArray(files) && files.length > 0;
+const hasAudioFiles = hasFiles && files.some((file) => isAudioFile(file));
+
+const canDelete = own;
+const canEdit =
+  own && !isAutomatic && messageType !== "connect_card" && !hasFiles;
+
 
   return (
     <div className={`student-chat-row ${own ? "student-chat-row--own" : ""}`}>
-      <div
+      {/* <div
         className={`student-chat-bubble ${
           own
             ? read
@@ -271,7 +280,20 @@ function MessageBubble({ message, onEdit, onDelete }) {
               : "student-chat-bubble--own-unread"
             : ""
         }`}
-      >
+      > */}
+
+
+
+<div
+  className={`student-chat-bubble ${
+    own
+      ? read
+        ? "student-chat-bubble--own-read"
+        : "student-chat-bubble--own-unread"
+      : ""
+  } ${hasAudioFiles ? "student-chat-bubble--audio" : ""}`}
+>
+
         {own && (canEdit || canDelete) && (
           <div className="student-message-actions-hover">
             {canEdit && (

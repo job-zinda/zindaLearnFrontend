@@ -286,14 +286,22 @@ function MessageBubble({ message, onEdit, onDelete }) {
     messageType === "connect_request" ||
     message?.isAutomatic;
 
-  const hasFiles = Array.isArray(files) && files.length > 0;
+  // const hasFiles = Array.isArray(files) && files.length > 0;
 
-  const canDelete = own && !isAutomatic && messageType !== "connect_card";
-  const canEdit = own && !isAutomatic && messageType !== "connect_card" && !hasFiles;
+  // const canDelete = own && !isAutomatic && messageType !== "connect_card";
+  // const canEdit = own && !isAutomatic && messageType !== "connect_card" && !hasFiles;
+
+
+
+  const hasFiles = Array.isArray(files) && files.length > 0;
+const hasAudioFiles = hasFiles && files.some((file) => isAudioFile(file));
+
+const canDelete = own && !isAutomatic && messageType !== "connect_card";
+const canEdit = own && !isAutomatic && messageType !== "connect_card" && !hasFiles;
 
   return (
     <div className={`admin-chat-row ${own ? "admin-chat-row--own" : ""}`}>
-      <div
+      {/* <div
         className={`admin-chat-bubble ${
           own
             ? read
@@ -301,7 +309,21 @@ function MessageBubble({ message, onEdit, onDelete }) {
               : "admin-chat-bubble--own-unread"
             : ""
         }`}
-      >
+      > */}
+
+
+
+<div
+  className={`admin-chat-bubble ${
+    own
+      ? read
+        ? "admin-chat-bubble--own-read"
+        : "admin-chat-bubble--own-unread"
+      : ""
+  } ${hasAudioFiles ? "admin-chat-bubble--audio" : ""}`}
+>
+
+
         {own && (canEdit || canDelete) && (
           <div className="admin-message-actions-hover">
             {canEdit && (
