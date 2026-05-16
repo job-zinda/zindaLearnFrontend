@@ -75,7 +75,7 @@ function CourseCard({
           title="Edit"
           onClick={() => onEdit(course)}
         >
-         Edit ✎
+          ✎
         </button>
 
         <button
@@ -84,7 +84,7 @@ function CourseCard({
           title="Delete"
           onClick={() => onDelete(course)}
         >
-         Delete 🗑
+          🗑
         </button>
       </div>
 
