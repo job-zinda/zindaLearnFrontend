@@ -3842,3 +3842,618 @@
     max-width: 240px;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   ADMIN CHAT MOBILE WHATSAPP STYLE RESPONSIVE FIX
+   Paste this at the VERY BOTTOM of AdminChatPage.css
+   ========================================================= */
+
+/* Dark scrollbar only for chat page */
+.admin-chat-page,
+.admin-chat-shell,
+.admin-chat-sidebar,
+.admin-chat-room-list,
+.admin-chat-main,
+.admin-chat-app,
+.admin-chat-body,
+.admin-selected-file-list {
+  scrollbar-width: thin;
+  scrollbar-color: #7c3aed #080b22;
+}
+
+.admin-chat-page::-webkit-scrollbar,
+.admin-chat-shell::-webkit-scrollbar,
+.admin-chat-sidebar::-webkit-scrollbar,
+.admin-chat-room-list::-webkit-scrollbar,
+.admin-chat-main::-webkit-scrollbar,
+.admin-chat-app::-webkit-scrollbar,
+.admin-chat-body::-webkit-scrollbar,
+.admin-selected-file-list::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+.admin-chat-page::-webkit-scrollbar-track,
+.admin-chat-shell::-webkit-scrollbar-track,
+.admin-chat-sidebar::-webkit-scrollbar-track,
+.admin-chat-room-list::-webkit-scrollbar-track,
+.admin-chat-main::-webkit-scrollbar-track,
+.admin-chat-app::-webkit-scrollbar-track,
+.admin-chat-body::-webkit-scrollbar-track,
+.admin-selected-file-list::-webkit-scrollbar-track {
+  background: #080b22;
+  border-radius: 999px;
+}
+
+.admin-chat-page::-webkit-scrollbar-thumb,
+.admin-chat-shell::-webkit-scrollbar-thumb,
+.admin-chat-sidebar::-webkit-scrollbar-thumb,
+.admin-chat-room-list::-webkit-scrollbar-thumb,
+.admin-chat-main::-webkit-scrollbar-thumb,
+.admin-chat-app::-webkit-scrollbar-thumb,
+.admin-chat-body::-webkit-scrollbar-thumb,
+.admin-selected-file-list::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #d946ef, #7c3aed);
+  border-radius: 999px;
+  border: 1px solid #080b22;
+}
+
+/* Desktop also clean */
+.admin-chat-page {
+  overflow: hidden !important;
+}
+
+.admin-chat-shell {
+  min-height: 0 !important;
+}
+
+.admin-chat-sidebar,
+.admin-chat-main,
+.admin-chat-app,
+.admin-chat-body {
+  min-height: 0 !important;
+}
+
+/* =========================================================
+   MOBILE: WhatsApp style
+   First screen = student list
+   After selecting student = chat screen
+   ========================================================= */
+
+@media (max-width: 800px) {
+  .admin-chat-page {
+    width: 100% !important;
+    height: calc(100dvh - 118px) !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    border-radius: 0 !important;
+  }
+
+  .admin-chat-shell {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    display: block !important;
+    position: relative !important;
+    overflow: hidden !important;
+    border-radius: 18px !important;
+    background: #080b22 !important;
+  }
+
+  /* Student list screen */
+  .admin-chat-sidebar {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    border-right: none !important;
+    background: linear-gradient(180deg, #111633, #080b22) !important;
+    z-index: 5 !important;
+    transform: translateX(0) !important;
+  }
+
+  .admin-chat-sidebar-head {
+    height: 64px !important;
+    min-height: 64px !important;
+    padding: 0 18px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .admin-chat-sidebar-head h2 {
+    font-size: 24px !important;
+  }
+
+  .admin-chat-search-box {
+    padding: 14px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .admin-chat-search-box input {
+    height: 48px !important;
+    font-size: 14px !important;
+  }
+
+  .admin-chat-room-list {
+    flex: 1 !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding-bottom: 10px !important;
+  }
+
+  .admin-chat-room-item {
+    min-height: 82px !important;
+    padding: 12px 14px !important;
+    gap: 12px !important;
+  }
+
+  .admin-chat-room-avatar {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  .admin-chat-room-avatar span {
+    font-size: 20px !important;
+  }
+
+  .admin-chat-room-top h4 {
+    font-size: 16px !important;
+  }
+
+  .admin-chat-room-top span {
+    font-size: 10px !important;
+  }
+
+  .admin-chat-room-info p {
+    font-size: 12px !important;
+  }
+
+  .admin-chat-room-info small {
+    font-size: 11px !important;
+  }
+
+  /* Chat screen hidden until room selected */
+  .admin-chat-main {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    background: #080b22 !important;
+    z-index: 20 !important;
+    transform: translateX(100%) !important;
+    transition: transform 0.28s ease !important;
+  }
+
+  /* When student selected, show chat screen */
+  .admin-mobile-chat-open .admin-chat-main {
+    transform: translateX(0) !important;
+  }
+
+  .admin-chat-app {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    display: grid !important;
+    grid-template-rows: 64px minmax(0, 1fr) auto auto !important;
+    overflow: hidden !important;
+    background: linear-gradient(180deg, #0b102b, #080b22) !important;
+  }
+
+  .admin-chat-header {
+    height: 64px !important;
+    min-height: 64px !important;
+    padding: 0 12px !important;
+    flex-shrink: 0 !important;
+    gap: 10px !important;
+  }
+
+  .admin-chat-mobile-back {
+    display: grid !important;
+    place-items: center !important;
+    width: 38px !important;
+    height: 38px !important;
+    flex-shrink: 0 !important;
+    font-size: 30px !important;
+  }
+
+  .admin-chat-avatar {
+    width: 42px !important;
+    height: 42px !important;
+  }
+
+  .admin-chat-user {
+    min-width: 0 !important;
+    flex: 1 !important;
+  }
+
+  .admin-chat-user h3 {
+    font-size: 16px !important;
+    max-width: 210px !important;
+  }
+
+  .admin-chat-user p {
+    font-size: 11px !important;
+    max-width: 210px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .admin-chat-body {
+    min-height: 0 !important;
+    height: auto !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding: 14px !important;
+    gap: 12px !important;
+    flex: unset !important;
+  }
+
+  .admin-chat-bubble {
+    max-width: 88% !important;
+    border-radius: 16px !important;
+    padding: 10px 11px 7px !important;
+  }
+
+  .admin-chat-text {
+    font-size: 14px !important;
+    line-height: 1.45 !important;
+  }
+
+  .admin-chat-meta {
+    font-size: 10px !important;
+  }
+
+  .admin-chat-no-message {
+    padding: 18px !important;
+    font-size: 14px !important;
+    border-radius: 16px !important;
+  }
+
+  /* Connect request card mobile */
+  .admin-connect-card {
+    width: 100% !important;
+    max-width: 260px !important;
+    border-radius: 16px !important;
+  }
+
+  .admin-connect-card__top {
+    padding: 12px !important;
+    gap: 10px !important;
+  }
+
+  .admin-connect-card__top img,
+  .admin-connect-card__fallback {
+    width: 58px !important;
+    height: 58px !important;
+    border-width: 3px !important;
+  }
+
+  .admin-connect-card__top h4 {
+    font-size: 15px !important;
+  }
+
+  .admin-connect-card__top p {
+    font-size: 13px !important;
+  }
+
+  .admin-connect-card__top span {
+    font-size: 11px !important;
+  }
+
+  .admin-connect-card__details {
+    margin: 0 12px 12px !important;
+    padding: 12px !important;
+  }
+
+  .admin-connect-card__details p {
+    font-size: 12px !important;
+  }
+
+  .admin-connect-request-text {
+    font-size: 14px !important;
+  }
+
+  /* File previews */
+  .admin-chat-file-img,
+  .admin-chat-file-video {
+    width: 220px !important;
+    max-width: 100% !important;
+  }
+
+  .admin-chat-file-audio {
+    width: 220px !important;
+    max-width: 100% !important;
+  }
+
+  /* Selected file bar */
+  .admin-selected-file-bar {
+    padding: 7px 10px 0 !important;
+    flex-shrink: 0 !important;
+  }
+
+  .admin-selected-file-chip {
+    max-width: 230px !important;
+  }
+
+  /* Recording */
+  .admin-recording-panel {
+    min-height: 50px !important;
+    padding: 7px 10px !important;
+    gap: 8px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .admin-record-trash,
+  .admin-record-stop {
+    width: 34px !important;
+    height: 34px !important;
+  }
+
+  /* Input bar */
+  .admin-chat-inputbar {
+    min-height: 58px !important;
+    padding: 8px 10px !important;
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+    background: #080b22 !important;
+  }
+
+  .admin-chat-icon-btn,
+  .admin-chat-send,
+  .admin-chat-cancel-edit {
+    width: 38px !important;
+    height: 38px !important;
+    font-size: 16px !important;
+  }
+
+  .admin-chat-send {
+    font-size: 21px !important;
+  }
+
+  .admin-chat-inputbar input[type="text"] {
+    height: 42px !important;
+    min-width: 0 !important;
+    font-size: 13px !important;
+    padding: 0 13px !important;
+  }
+
+  .admin-emoji-box {
+    left: 10px !important;
+    bottom: 60px !important;
+    grid-template-columns: repeat(5, 34px) !important;
+    gap: 7px !important;
+    padding: 10px !important;
+  }
+
+  .admin-emoji-box button {
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 18px !important;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 520px) {
+  .admin-chat-page {
+    height: calc(100dvh - 105px) !important;
+    min-height: 0 !important;
+  }
+
+  .admin-chat-shell {
+    border-radius: 14px !important;
+  }
+
+  .admin-chat-sidebar-head {
+    height: 58px !important;
+    min-height: 58px !important;
+    padding: 0 14px !important;
+  }
+
+  .admin-chat-sidebar-head h2 {
+    font-size: 21px !important;
+  }
+
+  .admin-chat-search-box {
+    padding: 12px !important;
+  }
+
+  .admin-chat-search-box input {
+    height: 44px !important;
+  }
+
+  .admin-chat-room-item {
+    min-height: 78px !important;
+    padding: 10px 12px !important;
+  }
+
+  .admin-chat-room-avatar {
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  .admin-chat-room-top h4 {
+    font-size: 15px !important;
+  }
+
+  .admin-chat-room-info p {
+    margin: 4px 0 1px !important;
+    font-size: 12px !important;
+  }
+
+  .admin-chat-app {
+    grid-template-rows: 58px minmax(0, 1fr) auto auto !important;
+  }
+
+  .admin-chat-header {
+    height: 58px !important;
+    min-height: 58px !important;
+    padding: 0 10px !important;
+  }
+
+  .admin-chat-mobile-back {
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 27px !important;
+  }
+
+  .admin-chat-avatar {
+    width: 38px !important;
+    height: 38px !important;
+  }
+
+  .admin-chat-user h3 {
+    font-size: 15px !important;
+    max-width: 170px !important;
+  }
+
+  .admin-chat-user p {
+    max-width: 170px !important;
+  }
+
+  .admin-chat-body {
+    padding: 10px !important;
+    gap: 10px !important;
+  }
+
+  .admin-chat-bubble {
+    max-width: 94% !important;
+    padding: 9px 10px 6px !important;
+  }
+
+  .admin-chat-text {
+    font-size: 13px !important;
+  }
+
+  .admin-connect-card {
+    max-width: 235px !important;
+  }
+
+  .admin-chat-file-img,
+  .admin-chat-file-video,
+  .admin-chat-file-audio {
+    width: 205px !important;
+  }
+
+  .admin-chat-inputbar {
+    padding: 7px 8px !important;
+    gap: 5px !important;
+  }
+
+  .admin-chat-icon-btn,
+  .admin-chat-send,
+  .admin-chat-cancel-edit {
+    width: 34px !important;
+    height: 34px !important;
+  }
+
+  .admin-chat-inputbar input[type="text"] {
+    height: 38px !important;
+    font-size: 12px !important;
+    padding: 0 11px !important;
+  }
+}
+
+/* Very narrow phones */
+@media (max-width: 380px) {
+  .admin-chat-page {
+    height: calc(100dvh - 98px) !important;
+  }
+
+  .admin-chat-room-item {
+    min-height: 74px !important;
+  }
+
+  .admin-chat-room-avatar {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .admin-chat-room-top h4 {
+    font-size: 14px !important;
+  }
+
+  .admin-chat-room-info p,
+  .admin-chat-room-info small {
+    font-size: 11px !important;
+  }
+
+  .admin-chat-user h3 {
+    max-width: 135px !important;
+  }
+
+  .admin-chat-user p {
+    max-width: 135px !important;
+  }
+
+  .admin-chat-icon-btn,
+  .admin-chat-send,
+  .admin-chat-cancel-edit {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  .admin-chat-inputbar input[type="text"] {
+    height: 36px !important;
+  }
+
+  .admin-connect-card {
+    max-width: 220px !important;
+  }
+}
