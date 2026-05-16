@@ -1093,3 +1093,162 @@
     padding: 18px !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   GLOBAL ADMIN + STUDENT DARK SCROLLBAR
+   Paste this at the VERY BOTTOM of admin-layout.css
+   ========================================================= */
+
+/* Firefox */
+html,
+body,
+.admin-content,
+.student-content,
+.admin-sidenav,
+.student-sidenav,
+.modal-card__body,
+.admin-profile-edit-overlay,
+.admin-profile-edit-modal,
+.admin-profile-edit-body,
+.student-profile-edit-overlay,
+.student-profile-edit-modal,
+.student-profile-edit-body {
+  scrollbar-width: thin;
+  scrollbar-color: #8b00ff #070b2d;
+}
+
+/* Chrome, Edge, Brave */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+.admin-content::-webkit-scrollbar,
+.student-content::-webkit-scrollbar,
+.admin-sidenav::-webkit-scrollbar,
+.student-sidenav::-webkit-scrollbar,
+.modal-card__body::-webkit-scrollbar,
+.admin-profile-edit-overlay::-webkit-scrollbar,
+.admin-profile-edit-modal::-webkit-scrollbar,
+.admin-profile-edit-body::-webkit-scrollbar,
+.student-profile-edit-overlay::-webkit-scrollbar,
+.student-profile-edit-modal::-webkit-scrollbar,
+.student-profile-edit-body::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+.admin-content::-webkit-scrollbar-track,
+.student-content::-webkit-scrollbar-track,
+.admin-sidenav::-webkit-scrollbar-track,
+.student-sidenav::-webkit-scrollbar-track,
+.modal-card__body::-webkit-scrollbar-track,
+.admin-profile-edit-overlay::-webkit-scrollbar-track,
+.admin-profile-edit-modal::-webkit-scrollbar-track,
+.admin-profile-edit-body::-webkit-scrollbar-track,
+.student-profile-edit-overlay::-webkit-scrollbar-track,
+.student-profile-edit-modal::-webkit-scrollbar-track,
+.student-profile-edit-body::-webkit-scrollbar-track {
+  background: #070b2d;
+  border-radius: 999px;
+}
+
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+.admin-content::-webkit-scrollbar-thumb,
+.student-content::-webkit-scrollbar-thumb,
+.admin-sidenav::-webkit-scrollbar-thumb,
+.student-sidenav::-webkit-scrollbar-thumb,
+.modal-card__body::-webkit-scrollbar-thumb,
+.admin-profile-edit-overlay::-webkit-scrollbar-thumb,
+.admin-profile-edit-modal::-webkit-scrollbar-thumb,
+.admin-profile-edit-body::-webkit-scrollbar-thumb,
+.student-profile-edit-overlay::-webkit-scrollbar-thumb,
+.student-profile-edit-modal::-webkit-scrollbar-thumb,
+.student-profile-edit-body::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #d946ef, #7c3aed);
+  border-radius: 999px;
+  border: 2px solid #070b2d;
+}
+
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover,
+.admin-content::-webkit-scrollbar-thumb:hover,
+.student-content::-webkit-scrollbar-thumb:hover,
+.admin-sidenav::-webkit-scrollbar-thumb:hover,
+.student-sidenav::-webkit-scrollbar-thumb:hover,
+.modal-card__body::-webkit-scrollbar-thumb:hover,
+.admin-profile-edit-overlay::-webkit-scrollbar-thumb:hover,
+.admin-profile-edit-modal::-webkit-scrollbar-thumb:hover,
+.admin-profile-edit-body::-webkit-scrollbar-thumb:hover,
+.student-profile-edit-overlay::-webkit-scrollbar-thumb:hover,
+.student-profile-edit-modal::-webkit-scrollbar-thumb:hover,
+.student-profile-edit-body::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #f000ff, #8b00ff);
+}
