@@ -7,6 +7,26 @@ import { getMediaUrl } from "../utils/media";
 import api from "../api/axios";
 import "./AdminTutorDetailsPage.css";
 
+// const emptyForm = {
+//   name: "",
+//   email: "",
+//   phone: "",
+//   qualification: "",
+//   about: "",
+//   subjects: "",
+//   categoryId: "",
+//   sectionType: "",
+//   syllabus: "",
+//   courseIds: [],
+//   photo: null,
+// };
+
+
+
+
+
+
+
 const emptyForm = {
   name: "",
   email: "",
@@ -14,16 +34,41 @@ const emptyForm = {
   qualification: "",
   about: "",
   subjects: "",
-  categoryId: "",
-  sectionType: "",
+  categoryIds: [],
   syllabus: "",
   courseIds: [],
   photo: null,
 };
 
+
+
+
 function normalizeId(value) {
   if (!value) return "";
   return typeof value === "object" ? value._id : value;
+}
+
+
+function getCourseCategory(course, categories) {
+  const courseCategoryId = normalizeId(course.categoryId);
+  return categories.find((cat) => cat._id === courseCategoryId);
+}
+
+function getCourseLabel(course, categories) {
+  const category = getCourseCategory(course, categories);
+  const isOnline = category?.key === "online_tuition";
+
+  if (!isOnline) return course.name;
+
+  if (course.sectionType === "one_to_one") {
+    return `${course.name} - One-to-One`;
+  }
+
+  if (course.sectionType === "batch") {
+    return `${course.name} - Batch`;
+  }
+
+  return course.name;
 }
 
 function getName(value) {
@@ -232,33 +277,68 @@ const [assignedStudentsLoading, setAssignedStudentsLoading] = useState(false);
   const [preview, setPreview] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  const selectedCategory = useMemo(
-    () => categories.find((c) => c._id === form.categoryId),
-    [categories, form.categoryId]
+  // const selectedCategory = useMemo(
+  //   () => categories.find((c) => c._id === form.categoryId),
+  //   [categories, form.categoryId]
+  // );
+
+  // const visibleCourses = useMemo(() => {
+  //   return courses.filter((course) => {
+  //     const courseCategoryId = normalizeId(course.categoryId);
+
+  //     if (courseCategoryId !== form.categoryId) return false;
+
+  //     if (selectedCategory?.key === "online_tuition") {
+  //       if (!form.sectionType) return false;
+
+  //       if (form.sectionType === "both") {
+  //         return (
+  //           course.sectionType === "one_to_one" ||
+  //           course.sectionType === "batch"
+  //         );
+  //       }
+
+  //       return course.sectionType === form.sectionType;
+  //     }
+
+  //     return true;
+  //   });
+  // }, [courses, form.categoryId, form.sectionType, selectedCategory]);
+
+
+
+
+
+
+
+
+const selectedCategories = useMemo(() => {
+  return categories.filter((cat) =>
+    form.categoryIds.includes(cat._id)
   );
+}, [categories, form.categoryIds]);
 
-  const visibleCourses = useMemo(() => {
-    return courses.filter((course) => {
-      const courseCategoryId = normalizeId(course.categoryId);
+const isOnlineTuition = useMemo(() => {
+  return selectedCategories.some(
+    (cat) => cat.key === "online_tuition"
+  );
+}, [selectedCategories]);
 
-      if (courseCategoryId !== form.categoryId) return false;
+const visibleCourses = useMemo(() => {
+  if (!Array.isArray(form.categoryIds) || form.categoryIds.length === 0) {
+    return [];
+  }
 
-      if (selectedCategory?.key === "online_tuition") {
-        if (!form.sectionType) return false;
+  return courses.filter((course) => {
+    const courseCategoryId = normalizeId(course.categoryId);
+    return form.categoryIds.includes(courseCategoryId);
+  });
+}, [courses, form.categoryIds]);
 
-        if (form.sectionType === "both") {
-          return (
-            course.sectionType === "one_to_one" ||
-            course.sectionType === "batch"
-          );
-        }
 
-        return course.sectionType === form.sectionType;
-      }
 
-      return true;
-    });
-  }, [courses, form.categoryId, form.sectionType, selectedCategory]);
+
+
 
   const subjects = useMemo(() => {
     if (!tutor?.subjects) return [];
@@ -300,44 +380,101 @@ const [assignedStudentsLoading, setAssignedStudentsLoading] = useState(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tuterId]);
 
-  function openEditModal() {
-    if (!tutor) return;
+  // function openEditModal() {
+  //   if (!tutor) return;
 
-    const categoryId = normalizeId(tutor.categoryId);
+  //   const categoryId = normalizeId(tutor.categoryId);
 
-    const categoryObj =
-      typeof tutor.categoryId === "object"
-        ? tutor.categoryId
-        : categories.find((cat) => cat._id === categoryId);
+  //   const categoryObj =
+  //     typeof tutor.categoryId === "object"
+  //       ? tutor.categoryId
+  //       : categories.find((cat) => cat._id === categoryId);
 
-    const isOnlineTuition = categoryObj?.key === "online_tuition";
+  //   const isOnlineTuition = categoryObj?.key === "online_tuition";
 
-    const existingCourseIds =
-      Array.isArray(tutor.courseIds) && tutor.courseIds.length > 0
-        ? tutor.courseIds.map((course) => normalizeId(course)).filter(Boolean)
-        : tutor.courseId
-        ? [normalizeId(tutor.courseId)]
-        : [];
+  //   const existingCourseIds =
+  //     Array.isArray(tutor.courseIds) && tutor.courseIds.length > 0
+  //       ? tutor.courseIds.map((course) => normalizeId(course)).filter(Boolean)
+  //       : tutor.courseId
+  //       ? [normalizeId(tutor.courseId)]
+  //       : [];
 
-    setForm({
-      name: tutor.name || "",
-      email: tutor.email || "",
-      phone: tutor.phone || "",
-      qualification: tutor.qualification || "",
-      about: tutor.about || "",
-      subjects: Array.isArray(tutor.subjects)
-        ? tutor.subjects.join(", ")
-        : tutor.subjects || "",
-      categoryId,
-      sectionType: isOnlineTuition ? tutor.sectionType || "" : "none",
-      syllabus: isOnlineTuition ? tutor.syllabus || "" : "none",
-      courseIds: existingCourseIds,
-      photo: null,
-    });
+  //   setForm({
+  //     name: tutor.name || "",
+  //     email: tutor.email || "",
+  //     phone: tutor.phone || "",
+  //     qualification: tutor.qualification || "",
+  //     about: tutor.about || "",
+  //     subjects: Array.isArray(tutor.subjects)
+  //       ? tutor.subjects.join(", ")
+  //       : tutor.subjects || "",
+  //     categoryId,
+  //     sectionType: isOnlineTuition ? tutor.sectionType || "" : "none",
+  //     syllabus: isOnlineTuition ? tutor.syllabus || "" : "none",
+  //     courseIds: existingCourseIds,
+  //     photo: null,
+  //   });
 
-    setPreview(tutor.photo ? getImageSrc(tutor.photo) : "");
-    setEditOpen(true);
-  }
+  //   setPreview(tutor.photo ? getImageSrc(tutor.photo) : "");
+  //   setEditOpen(true);
+  // }
+
+
+
+
+
+
+
+function openEditModal() {
+  if (!tutor) return;
+
+  const existingCategoryIds =
+    Array.isArray(tutor.categoryIds) && tutor.categoryIds.length
+      ? tutor.categoryIds.map((cat) => normalizeId(cat))
+      : tutor.categoryId
+      ? [normalizeId(tutor.categoryId)]
+      : [];
+
+  const existingCourseIds =
+    Array.isArray(tutor.courseIds) && tutor.courseIds.length
+      ? tutor.courseIds.map((course) => normalizeId(course))
+      : tutor.courseId
+      ? [normalizeId(tutor.courseId)]
+      : [];
+
+  const onlineSelected = existingCategoryIds.some((catId) => {
+    const cat = categories.find(
+      (item) => String(item._id) === String(catId)
+    );
+    return cat?.key === "online_tuition";
+  });
+
+  setForm({
+    name: tutor.name || "",
+    email: tutor.email || "",
+    phone: tutor.phone || "",
+    qualification: tutor.qualification || "",
+    about: tutor.about || "",
+    subjects: Array.isArray(tutor.subjects)
+      ? tutor.subjects.join(", ")
+      : tutor.subjects || "",
+    categoryIds: existingCategoryIds,
+    syllabus: onlineSelected ? tutor.syllabus || "" : "none",
+    courseIds: existingCourseIds,
+    photo: null,
+  });
+
+  setPreview(tutor.photo ? getImageSrc(tutor.photo) : "");
+  setEditOpen(true);
+}
+
+
+
+
+
+
+
+
 
   useEffect(() => {
     if (!loading && tutor && location.state?.openEdit && !editOpen) {
@@ -351,144 +488,342 @@ const [assignedStudentsLoading, setAssignedStudentsLoading] = useState(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, tutor?._id, location.state?.openEdit, editOpen]);
 
-  function handleChange(e) {
-    const { name, value, files } = e.target;
 
-    if (name === "photo") {
-      const file = files?.[0] || null;
 
-      setForm((prev) => ({
-        ...prev,
-        photo: file,
-      }));
 
-      if (file) {
-        setPreview(URL.createObjectURL(file));
-      }
 
-      return;
-    }
 
-    if (name === "categoryId") {
-      const selectedCat = categories.find((cat) => cat._id === value);
-      const isOnline = selectedCat?.key === "online_tuition";
 
-      setForm((prev) => ({
-        ...prev,
-        categoryId: value,
-        sectionType: isOnline ? "" : "none",
-        syllabus: isOnline ? "" : "none",
-        courseIds: [],
-      }));
 
-      return;
-    }
+  // function handleChange(e) {
+  //   const { name, value, files } = e.target;
 
-    if (name === "sectionType") {
-      setForm((prev) => ({
-        ...prev,
-        sectionType: value,
-        courseIds: [],
-      }));
+  //   if (name === "photo") {
+  //     const file = files?.[0] || null;
 
-      return;
-    }
+  //     setForm((prev) => ({
+  //       ...prev,
+  //       photo: file,
+  //     }));
+
+  //     if (file) {
+  //       setPreview(URL.createObjectURL(file));
+  //     }
+
+  //     return;
+  //   }
+
+  //   if (name === "categoryId") {
+  //     const selectedCat = categories.find((cat) => cat._id === value);
+  //     const isOnline = selectedCat?.key === "online_tuition";
+
+  //     setForm((prev) => ({
+  //       ...prev,
+  //       categoryId: value,
+  //       sectionType: isOnline ? "" : "none",
+  //       syllabus: isOnline ? "" : "none",
+  //       courseIds: [],
+  //     }));
+
+  //     return;
+  //   }
+
+  //   if (name === "sectionType") {
+  //     setForm((prev) => ({
+  //       ...prev,
+  //       sectionType: value,
+  //       courseIds: [],
+  //     }));
+
+  //     return;
+  //   }
+
+  //   setForm((prev) => ({
+  //     ...prev,
+  //     [name]: value,
+  //   }));
+  // }
+
+  // function toggleCourseSelection(courseId, checked) {
+  //   setForm((prev) => {
+  //     const currentCourseIds = Array.isArray(prev.courseIds)
+  //       ? prev.courseIds
+  //       : [];
+
+  //     return {
+  //       ...prev,
+  //       courseIds: checked
+  //         ? Array.from(new Set([...currentCourseIds, courseId]))
+  //         : currentCourseIds.filter((id) => id !== courseId),
+  //     };
+  //   });
+  // }
+
+
+
+
+
+function handleChange(e) {
+  const { name, value, files } = e.target;
+
+  if (name === "photo") {
+    const file = files?.[0] || null;
 
     setForm((prev) => ({
       ...prev,
-      [name]: value,
+      photo: file,
     }));
-  }
 
-  function toggleCourseSelection(courseId, checked) {
-    setForm((prev) => {
-      const currentCourseIds = Array.isArray(prev.courseIds)
-        ? prev.courseIds
-        : [];
-
-      return {
-        ...prev,
-        courseIds: checked
-          ? Array.from(new Set([...currentCourseIds, courseId]))
-          : currentCourseIds.filter((id) => id !== courseId),
-      };
-    });
-  }
-
-  async function updateTutor(e) {
-    e.preventDefault();
-
-    try {
-      if (!form.name.trim()) {
-        return showAlert("Tutor name required", "error");
-      }
-
-      if (!form.phone.trim()) {
-        return showAlert("Phone required", "error");
-      }
-
-      if (!form.categoryId) {
-        return showAlert("Category select cheyyuka", "error");
-      }
-
-      if (selectedCategory?.key === "online_tuition" && !form.sectionType) {
-        return showAlert("One-to-One / Batch select cheyyuka", "error");
-      }
-
-      if (
-        selectedCategory?.key === "online_tuition" &&
-        !String(form.syllabus || "").trim()
-      ) {
-        return showAlert("Syllabus select cheyyuka", "error");
-      }
-
-      if (!Array.isArray(form.courseIds) || form.courseIds.length === 0) {
-        return showAlert("At least one Course / Batch select cheyyuka", "error");
-      }
-
-      setSubmitting(true);
-
-      const finalSectionType =
-        selectedCategory?.key === "online_tuition" ? form.sectionType : "none";
-
-      const finalSyllabus =
-        selectedCategory?.key === "online_tuition"
-          ? String(form.syllabus).trim()
-          : "none";
-
-      const fd = new FormData();
-
-      fd.append("name", form.name.trim());
-      fd.append("email", form.email.trim());
-      fd.append("phone", form.phone.trim());
-      fd.append("qualification", form.qualification.trim());
-      fd.append("about", form.about.trim());
-      fd.append("subjects", form.subjects.trim());
-      fd.append("categoryId", form.categoryId);
-      fd.append("courseId", form.courseIds[0]);
-
-      form.courseIds.forEach((courseId) => {
-        fd.append("courseIds", courseId);
-      });
-
-      fd.append("sectionType", finalSectionType);
-      fd.append("syllabus", finalSyllabus);
-
-      if (form.photo) {
-        fd.append("photo", form.photo);
-      }
-
-      await api.put(`/admin/tuter/update/${tuterId}`, fd);
-
-      showAlert("Tutor updated successfully", "success");
-      setEditOpen(false);
-      fetchData();
-    } catch (err) {
-      showAlert(getErrorMessage(err), "error");
-    } finally {
-      setSubmitting(false);
+    if (file) {
+      setPreview(URL.createObjectURL(file));
     }
+
+    return;
   }
+
+  setForm((prev) => ({
+    ...prev,
+    [name]: value,
+  }));
+}
+
+function toggleCategorySelection(categoryId, checked) {
+  setForm((prev) => {
+    const currentCategoryIds = Array.isArray(prev.categoryIds)
+      ? prev.categoryIds.map(String)
+      : [];
+
+    const currentCourseIds = Array.isArray(prev.courseIds)
+      ? prev.courseIds.map(String)
+      : [];
+
+    const selectedCategoryId = String(categoryId);
+
+    const nextCategoryIds = checked
+      ? Array.from(new Set([...currentCategoryIds, selectedCategoryId]))
+      : currentCategoryIds.filter((id) => id !== selectedCategoryId);
+
+    const allowedCourseIds = courses
+      .filter((course) =>
+        nextCategoryIds.includes(String(normalizeId(course.categoryId)))
+      )
+      .map((course) => String(course._id));
+
+    const nextCourseIds = currentCourseIds.filter((courseId) =>
+      allowedCourseIds.includes(String(courseId))
+    );
+
+    const hasOnlineTuition = nextCategoryIds.some((catId) => {
+      const cat = categories.find(
+        (item) => String(item._id) === String(catId)
+      );
+      return cat?.key === "online_tuition";
+    });
+
+    return {
+      ...prev,
+      categoryIds: nextCategoryIds,
+      courseIds: nextCourseIds,
+      syllabus: hasOnlineTuition
+        ? prev.syllabus === "none"
+          ? ""
+          : prev.syllabus || ""
+        : "none",
+    };
+  });
+}
+
+function toggleCourseSelection(courseId, checked) {
+  setForm((prev) => {
+    const currentCourseIds = Array.isArray(prev.courseIds)
+      ? prev.courseIds.map(String)
+      : [];
+
+    const normalizedCourseId = String(courseId);
+
+    const allowedCourseIds = courses
+      .filter((course) =>
+        prev.categoryIds.includes(String(normalizeId(course.categoryId)))
+      )
+      .map((course) => String(course._id));
+
+    let nextCourseIds = checked
+      ? Array.from(new Set([...currentCourseIds, normalizedCourseId]))
+      : currentCourseIds.filter((id) => id !== normalizedCourseId);
+
+    nextCourseIds = nextCourseIds.filter((id) =>
+      allowedCourseIds.includes(id)
+    );
+
+    return {
+      ...prev,
+      courseIds: nextCourseIds,
+    };
+  });
+}
+
+
+
+
+
+
+
+  // async function updateTutor(e) {
+  //   e.preventDefault();
+
+  //   try {
+  //     if (!form.name.trim()) {
+  //       return showAlert("Tutor name required", "error");
+  //     }
+
+  //     if (!form.phone.trim()) {
+  //       return showAlert("Phone required", "error");
+  //     }
+
+  //     if (!form.categoryId) {
+  //       return showAlert("Category select cheyyuka", "error");
+  //     }
+
+  //     if (selectedCategory?.key === "online_tuition" && !form.sectionType) {
+  //       return showAlert("One-to-One / Batch select cheyyuka", "error");
+  //     }
+
+  //     if (
+  //       selectedCategory?.key === "online_tuition" &&
+  //       !String(form.syllabus || "").trim()
+  //     ) {
+  //       return showAlert("Syllabus select cheyyuka", "error");
+  //     }
+
+  //     if (!Array.isArray(form.courseIds) || form.courseIds.length === 0) {
+  //       return showAlert("At least one Course / Batch select cheyyuka", "error");
+  //     }
+
+  //     setSubmitting(true);
+
+  //     const finalSectionType =
+  //       selectedCategory?.key === "online_tuition" ? form.sectionType : "none";
+
+  //     const finalSyllabus =
+  //       selectedCategory?.key === "online_tuition"
+  //         ? String(form.syllabus).trim()
+  //         : "none";
+
+  //     const fd = new FormData();
+
+  //     fd.append("name", form.name.trim());
+  //     fd.append("email", form.email.trim());
+  //     fd.append("phone", form.phone.trim());
+  //     fd.append("qualification", form.qualification.trim());
+  //     fd.append("about", form.about.trim());
+  //     fd.append("subjects", form.subjects.trim());
+  //     fd.append("categoryId", form.categoryId);
+  //     fd.append("courseId", form.courseIds[0]);
+
+  //     form.courseIds.forEach((courseId) => {
+  //       fd.append("courseIds", courseId);
+  //     });
+
+  //     fd.append("sectionType", finalSectionType);
+  //     fd.append("syllabus", finalSyllabus);
+
+  //     if (form.photo) {
+  //       fd.append("photo", form.photo);
+  //     }
+
+  //     await api.put(`/admin/tuter/update/${tuterId}`, fd);
+
+  //     showAlert("Tutor updated successfully", "success");
+  //     setEditOpen(false);
+  //     fetchData();
+  //   } catch (err) {
+  //     showAlert(getErrorMessage(err), "error");
+  //   } finally {
+  //     setSubmitting(false);
+  //   }
+  // }
+
+
+
+
+
+async function updateTutor(e) {
+  e.preventDefault();
+
+  try {
+    if (!form.name.trim()) {
+      return showAlert("Tutor name required", "error");
+    }
+
+    if (!form.phone.trim()) {
+      return showAlert("Phone required", "error");
+    }
+
+    if (!Array.isArray(form.categoryIds) || form.categoryIds.length === 0) {
+      return showAlert("At least one category select cheyyuka", "error");
+    }
+
+    if (isOnlineTuition && !String(form.syllabus || "").trim()) {
+      return showAlert("Syllabus enter cheyyuka", "error");
+    }
+
+    if (!Array.isArray(form.courseIds) || form.courseIds.length === 0) {
+      return showAlert("At least one Course / Class select cheyyuka", "error");
+    }
+
+    setSubmitting(true);
+
+    const finalSyllabus = isOnlineTuition
+      ? String(form.syllabus).trim()
+      : "none";
+
+    const finalSectionType = isOnlineTuition ? "both" : "none";
+
+    const fd = new FormData();
+
+    fd.append("name", form.name.trim());
+    fd.append("email", form.email.trim());
+    fd.append("phone", form.phone.trim());
+    fd.append("qualification", form.qualification.trim());
+    fd.append("about", form.about.trim());
+    fd.append("subjects", form.subjects.trim());
+
+    form.categoryIds.forEach((categoryId) => {
+      fd.append("categoryIds", categoryId);
+    });
+
+    fd.append("categoryId", form.categoryIds[0]);
+
+    form.courseIds.forEach((courseId) => {
+      fd.append("courseIds", courseId);
+    });
+
+    fd.append("courseId", form.courseIds[0]);
+    fd.append("sectionType", finalSectionType);
+    fd.append("syllabus", finalSyllabus);
+
+    if (form.photo) {
+      fd.append("photo", form.photo);
+    }
+
+    await api.put(`/admin/tuter/update/${tuterId}`, fd);
+
+    showAlert("Tutor updated successfully", "success");
+    setEditOpen(false);
+    fetchData();
+  } catch (err) {
+    showAlert(getErrorMessage(err), "error");
+  } finally {
+    setSubmitting(false);
+  }
+}
+
+
+
+
+
+
+
 
   async function deleteTutor() {
     try {
@@ -727,8 +1062,8 @@ async function openAssignedStudentsModal() {
         width="850px"
         onClose={() => setEditOpen(false)}
       >
-        <form className="detail-form" onSubmit={updateTutor}>
-          <div className="detail-form-grid">
+        <form className="tutor-form" onSubmit={updateTutor}>
+        <div className="tutor-form-grid">
             <label className="form-field">
               <span>Tutor Photo</span>
               <input
@@ -740,7 +1075,7 @@ async function openAssignedStudentsModal() {
             </label>
 
             {preview && (
-              <div className="detail-photo-preview">
+             <div className="tutor-photo-preview">
                 <img src={preview} alt="Preview" />
               </div>
             )}
@@ -901,7 +1236,7 @@ async function openAssignedStudentsModal() {
 
 
 
-
+{/* 
 <div className="form-field form-field--full">
   <span>Categories</span>
 
@@ -982,7 +1317,100 @@ async function openAssignedStudentsModal() {
       })
     )}
   </div>
+</div> */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div className="form-field form-field--full">
+  <span>Categories</span>
+
+  <div className="course-checkbox-list tutor-category-checkbox-list">
+    {categories.length === 0 ? (
+      <p className="course-empty-text">No categories found</p>
+    ) : (
+      categories.map((cat) => {
+        const checked = Array.isArray(form.categoryIds)
+          ? form.categoryIds.includes(cat._id)
+          : false;
+
+        return (
+          <label key={cat._id} className="course-check-item">
+            <input
+              type="checkbox"
+              checked={checked}
+              onChange={(e) =>
+                toggleCategorySelection(cat._id, e.target.checked)
+              }
+            />
+
+            <span>{cat.title}</span>
+          </label>
+        );
+      })
+    )}
+  </div>
 </div>
+
+{isOnlineTuition && (
+  <label className="form-field form-field--full">
+    <span>Syllabus</span>
+    <input
+      type="text"
+      name="syllabus"
+      value={form.syllabus}
+      onChange={handleChange}
+      placeholder="Example: State, CBSE, ICSE"
+    />
+  </label>
+)}
+
+<div className="form-field form-field--full">
+  <span>Courses / Classes</span>
+
+  <div className="course-checkbox-list tutor-course-checkbox-list">
+    {visibleCourses.length === 0 ? (
+      <p className="course-empty-text">No courses found</p>
+    ) : (
+      visibleCourses.map((course) => {
+        const checked = Array.isArray(form.courseIds)
+          ? form.courseIds.includes(course._id)
+          : false;
+
+        return (
+          <label key={course._id} className="course-check-item">
+            <input
+              type="checkbox"
+              checked={checked}
+              onChange={(e) =>
+                toggleCourseSelection(course._id, e.target.checked)
+              }
+            />
+
+            <span>
+              {getCourseLabel(course, categories)}
+
+              <small>
+                {getCourseCategory(course, categories)?.title || ""}
+              </small>
+            </span>
+          </label>
+        );
+      })
+    )}
+  </div>
+</div>
+
+
 
 
 
