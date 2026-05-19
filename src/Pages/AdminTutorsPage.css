@@ -906,11 +906,63 @@
 }
 
 /* Category / Class Type alignment fix */
-.tutor-form .form-field:has(select[name="categoryId"]),
+/* .tutor-form .form-field:has(select[name="categoryId"]),
 .tutor-form .form-field:has(select[name="sectionType"]),
 .tutor-form .form-field:has(input[name="syllabus"]) {
   align-self: start !important;
-}
+} */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Course box */
 .tutor-form .course-checkbox-list {
@@ -1124,6 +1176,32 @@
 
 
 
+
+.tutor-category-checkbox-list,
+.tutor-course-checkbox-list {
+  min-height: 170px !important;
+  max-height: 240px !important;
+}
+
+.course-check-item span {
+  display: grid !important;
+  gap: 3px !important;
+}
+
+.course-category-name {
+  color: #7c3aed !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  line-height: 1.2 !important;
+}
+
+
+
+
+.tutor-form .form-field:has(input[name="syllabus"]),
+.tutor-form .form-field--full {
+  align-self: start !important;
+}
 
 .tutor-category-checkbox-list,
 .tutor-course-checkbox-list {
