@@ -445,38 +445,89 @@ function handleChange(e) {
 
 
 
+// function toggleCategorySelection(categoryId, checked) {
+//   setForm((prev) => {
+//     const currentCategoryIds = Array.isArray(prev.categoryIds)
+//       ? prev.categoryIds
+//       : [];
+
+//     const nextCategoryIds = checked
+//       ? Array.from(new Set([...currentCategoryIds, categoryId]))
+//       : currentCategoryIds.filter((id) => id !== categoryId);
+
+//     const allowedCourseIds = courses
+//       .filter((course) => nextCategoryIds.includes(normalizeId(course.categoryId)))
+//       .map((course) => course._id);
+
+//     return {
+//       ...prev,
+//       categoryIds: nextCategoryIds,
+//       courseIds: prev.courseIds.filter((courseId) =>
+//         allowedCourseIds.includes(courseId)
+//       ),
+//       syllabus: nextCategoryIds.some((catId) => {
+//         const cat = categories.find((item) => item._id === catId);
+//         return cat?.key === "online_tuition";
+//       })
+//         ? prev.syllabus === "none"
+//           ? ""
+//           : prev.syllabus
+//         : "none",
+//     };
+//   });
+// }
+
+
+
+
+
+
+
+
+
 function toggleCategorySelection(categoryId, checked) {
   setForm((prev) => {
     const currentCategoryIds = Array.isArray(prev.categoryIds)
-      ? prev.categoryIds
+      ? prev.categoryIds.map(String)
       : [];
 
+    const currentCourseIds = Array.isArray(prev.courseIds)
+      ? prev.courseIds.map(String)
+      : [];
+
+    const selectedCategoryId = String(categoryId);
+
     const nextCategoryIds = checked
-      ? Array.from(new Set([...currentCategoryIds, categoryId]))
-      : currentCategoryIds.filter((id) => id !== categoryId);
+      ? Array.from(new Set([...currentCategoryIds, selectedCategoryId]))
+      : currentCategoryIds.filter((id) => id !== selectedCategoryId);
 
     const allowedCourseIds = courses
-      .filter((course) => nextCategoryIds.includes(normalizeId(course.categoryId)))
-      .map((course) => course._id);
+      .filter((course) =>
+        nextCategoryIds.includes(String(normalizeId(course.categoryId)))
+      )
+      .map((course) => String(course._id));
+
+    const nextCourseIds = currentCourseIds.filter((courseId) =>
+      allowedCourseIds.includes(String(courseId))
+    );
+
+    const hasOnlineTuition = nextCategoryIds.some((catId) => {
+      const cat = categories.find((item) => String(item._id) === String(catId));
+      return cat?.key === "online_tuition";
+    });
 
     return {
       ...prev,
       categoryIds: nextCategoryIds,
-      courseIds: prev.courseIds.filter((courseId) =>
-        allowedCourseIds.includes(courseId)
-      ),
-      syllabus: nextCategoryIds.some((catId) => {
-        const cat = categories.find((item) => item._id === catId);
-        return cat?.key === "online_tuition";
-      })
+      courseIds: nextCourseIds,
+      syllabus: hasOnlineTuition
         ? prev.syllabus === "none"
           ? ""
-          : prev.syllabus
+          : prev.syllabus || ""
         : "none",
     };
   });
 }
-
 
   function toggleCourseSelection(courseId, checked) {
     setForm((prev) => {
