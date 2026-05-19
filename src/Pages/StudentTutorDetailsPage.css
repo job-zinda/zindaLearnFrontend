@@ -949,3 +949,99 @@ body:has(.student-detail-page) .close-btn {
 .student-all-reviews-list .student-detail-star.filled {
   color: #ffc400 !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===========================
+   EDIT MODAL FIX
+=========================== */
+
+.modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  background: rgba(0,0,0,.68) !important;
+  backdrop-filter: blur(6px) !important;
+  z-index: 999999 !important;
+
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+
+  padding:30px !important;
+}
+
+.modal-content,
+.modal-box,
+.modal-container{
+  width:min(980px,95vw)!important;
+  max-height:90vh !important;
+  overflow-y:auto !important;
+
+  border-radius:28px !important;
+  background:#fff !important;
+
+  padding:30px !important;
+
+  position:relative!important;
+  z-index:999999!important;
+
+  box-shadow:
+      0 30px 70px rgba(0,0,0,.25)!important;
+}
+
+.modal-content::-webkit-scrollbar,
+.modal-box::-webkit-scrollbar,
+.modal-container::-webkit-scrollbar{
+   width:8px;
+}
+
+.modal-content::-webkit-scrollbar-thumb,
+.modal-box::-webkit-scrollbar-thumb,
+.modal-container::-webkit-scrollbar-thumb{
+   background:#c026d3;
+   border-radius:999px;
+}
+
+.detail-form{
+  display:grid!important;
+  gap:20px!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+
+.detail-form-grid{
+   display:grid!important;
+   grid-template-columns:repeat(2,minmax(0,1fr))!important;
+   gap:18px!important;
+}
+
+.detail-form *{
+   visibility:visible!important;
+}
+
+@media(max-width:760px){
+
+.detail-form-grid{
+grid-template-columns:1fr!important;
+}
+
+.modal-content,
+.modal-box,
+.modal-container{
+padding:20px!important;
+max-height:95vh!important;
+}
+}
