@@ -203,7 +203,7 @@ const navItems = [
   { label: "Home", to: "/admin", icon: <HomeIcon /> },
   { label: "Dashboard", to: "/admin/dashboard", icon: <DashboardIcon /> },
   { label: "Student management", to: "/admin/students", icon: <StudentsIcon /> },
-  { label: "tuter management", to: "/admin/tutors", icon: <TutorIcon /> },
+  { label: "tutor management", to: "/admin/tutors", icon: <TutorIcon /> },
   { label: "Feedbacks", to: "/admin/reviews", icon: <ReviewsIcon /> },
   { label: "Chats", to: "/admin/chats", icon: <ChatIcon /> },
   { label: "Settings", to: "/admin/settings", icon: <SettingsIcon /> },
