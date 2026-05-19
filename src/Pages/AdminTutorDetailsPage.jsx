@@ -49,27 +49,67 @@ function normalizeId(value) {
 }
 
 
+// function getCourseCategory(course, categories) {
+//   const courseCategoryId = normalizeId(course.categoryId);
+//   return categories.find((cat) => cat._id === courseCategoryId);
+// }
+
+// function getCourseLabel(course, categories) {
+//   const category = getCourseCategory(course, categories);
+//   const isOnline = category?.key === "online_tuition";
+
+//   if (!isOnline) return course.name;
+
+//   if (course.sectionType === "one_to_one") {
+//     return `${course.name} - One-to-One`;
+//   }
+
+//   if (course.sectionType === "batch") {
+//     return `${course.name} - Batch`;
+//   }
+
+//   return course.name;
+// }
+
+
+
+
+
+
+
+
+
 function getCourseCategory(course, categories) {
-  const courseCategoryId = normalizeId(course.categoryId);
-  return categories.find((cat) => cat._id === courseCategoryId);
+  const categoryId = normalizeId(course?.categoryId);
+
+  return categories.find(
+    (cat) => String(cat._id) === String(categoryId)
+  );
 }
 
 function getCourseLabel(course, categories) {
   const category = getCourseCategory(course, categories);
   const isOnline = category?.key === "online_tuition";
 
-  if (!isOnline) return course.name;
+  if (!isOnline) return course?.name || "Course";
 
-  if (course.sectionType === "one_to_one") {
+  if (course?.sectionType === "one_to_one") {
     return `${course.name} - One-to-One`;
   }
 
-  if (course.sectionType === "batch") {
+  if (course?.sectionType === "batch") {
     return `${course.name} - Batch`;
   }
 
-  return course.name;
+  return course?.name || "Course";
 }
+
+
+
+
+
+
+
 
 function getName(value) {
   if (!value) return "";
@@ -1066,8 +1106,8 @@ async function openAssignedStudentsModal() {
         width="850px"
         onClose={() => setEditOpen(false)}
       >
-        <form className="tutor-form" onSubmit={updateTutor}>
-        <div className="tutor-form-grid">
+      <form className="detail-form" onSubmit={updateTutor}>
+  <div className="detail-form-grid">
             <label className="form-field">
               <span>Tutor Photo</span>
               <input
@@ -1079,7 +1119,7 @@ async function openAssignedStudentsModal() {
             </label>
 
             {preview && (
-             <div className="tutor-photo-preview">
+          <div className="detail-photo-preview">
                 <img src={preview} alt="Preview" />
               </div>
             )}
