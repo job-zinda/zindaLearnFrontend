@@ -10,6 +10,22 @@ import { getMediaUrl } from "../utils/media";
 import api from "../api/axios";
 import "./AdminTutorsPage.css";
 
+// const emptyForm = {
+//   name: "",
+//   email: "",
+//   phone: "",
+//   qualification: "",
+//   about: "",
+//   subjects: "",
+//   categoryId: "",
+//   sectionType: "",
+//   syllabus: "",
+//   courseIds: [],
+//   photo: null,
+// };
+
+
+
 const emptyForm = {
   name: "",
   email: "",
@@ -17,8 +33,7 @@ const emptyForm = {
   qualification: "",
   about: "",
   subjects: "",
-  categoryId: "",
-  sectionType: "",
+  categoryIds: [],
   syllabus: "",
   courseIds: [],
   photo: null,
@@ -28,6 +43,34 @@ function normalizeId(value) {
   if (!value) return "";
   return typeof value === "object" ? value._id : value;
 }
+
+
+
+function getCourseCategory(course, categories) {
+  const courseCategoryId = normalizeId(course.categoryId);
+  return categories.find((cat) => cat._id === courseCategoryId);
+}
+
+function getCourseLabel(course, categories) {
+  const category = getCourseCategory(course, categories);
+  const isOnline = category?.key === "online_tuition";
+
+  if (!isOnline) {
+    return course.name;
+  }
+
+  if (course.sectionType === "one_to_one") {
+    return `${course.name} - One-to-One`;
+  }
+
+  if (course.sectionType === "batch") {
+    return `${course.name} - Batch`;
+  }
+
+  return course.name;
+}
+
+
 
 function isTutorActive(tutor) {
   return tutor?.isActive === true || tutor?.isActive === "true" || tutor?.isActive === 1;
@@ -113,31 +156,63 @@ export default function AdminTutorsPage() {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState(null);
 
-  const selectedCategory = useMemo(() => {
-    return categories.find((cat) => cat._id === form.categoryId);
-  }, [categories, form.categoryId]);
+  // const selectedCategory = useMemo(() => {
+  //   return categories.find((cat) => cat._id === form.categoryId);
+  // }, [categories, form.categoryId]);
 
-  const isOnlineTuition = selectedCategory?.key === "online_tuition";
+  // const isOnlineTuition = selectedCategory?.key === "online_tuition";
 
-  const visibleCourses = useMemo(() => {
-    return courses.filter((course) => {
-      const courseCategoryId = normalizeId(course.categoryId);
+  // const visibleCourses = useMemo(() => {
+  //   return courses.filter((course) => {
+  //     const courseCategoryId = normalizeId(course.categoryId);
 
-      if (courseCategoryId !== form.categoryId) return false;
+  //     if (courseCategoryId !== form.categoryId) return false;
 
-      if (isOnlineTuition) {
-        if (!form.sectionType) return false;
+  //     if (isOnlineTuition) {
+  //       if (!form.sectionType) return false;
 
-        if (form.sectionType === "both") {
-          return course.sectionType === "one_to_one" || course.sectionType === "batch";
-        }
+  //       if (form.sectionType === "both") {
+  //         return course.sectionType === "one_to_one" || course.sectionType === "batch";
+  //       }
 
-        return course.sectionType === form.sectionType;
-      }
+  //       return course.sectionType === form.sectionType;
+  //     }
 
-      return true;
-    });
-  }, [courses, form.categoryId, form.sectionType, isOnlineTuition]);
+  //     return true;
+  //   });
+  // }, [courses, form.categoryId, form.sectionType, isOnlineTuition]);
+
+
+
+
+
+
+const selectedCategories = useMemo(() => {
+  return categories.filter((cat) => form.categoryIds.includes(cat._id));
+}, [categories, form.categoryIds]);
+
+const isOnlineTuition = useMemo(() => {
+  return selectedCategories.some((cat) => cat.key === "online_tuition");
+}, [selectedCategories]);
+
+const visibleCourses = useMemo(() => {
+  if (!Array.isArray(form.categoryIds) || form.categoryIds.length === 0) {
+    return [];
+  }
+
+  return courses.filter((course) => {
+    const courseCategoryId = normalizeId(course.categoryId);
+    return form.categoryIds.includes(courseCategoryId);
+  });
+}, [courses, form.categoryIds]);
+
+
+
+
+
+
+
+
 
   const filteredTutors = useMemo(() => {
     const q = search.toLowerCase().trim();
@@ -172,101 +247,236 @@ export default function AdminTutorsPage() {
     fetchData();
   }, []);
 
-  function openAddModal() {
-    setEditingTutor(null);
-    setForm({ ...emptyForm, courseIds: [] });
-    setPreview("");
-    setModalOpen(true);
-  }
+  // function openAddModal() {
+  //   setEditingTutor(null);
+  //   setForm({ ...emptyForm, courseIds: [] });
+  //   setPreview("");
+  //   setModalOpen(true);
+  // }
 
-  function openEditModal(tutor) {
-    const categoryId = normalizeId(tutor.categoryId);
 
-    const categoryObj =
-      typeof tutor.categoryId === "object"
-        ? tutor.categoryId
-        : categories.find((cat) => cat._id === categoryId);
 
-    const online = categoryObj?.key === "online_tuition";
 
-    const existingCourseIds =
-      Array.isArray(tutor.courseIds) && tutor.courseIds.length
-        ? tutor.courseIds.map((course) => normalizeId(course))
-        : tutor.courseId
-        ? [normalizeId(tutor.courseId)]
-        : [];
 
-    setEditingTutor(tutor);
 
-    setForm({
-      name: tutor.name || "",
-      email: tutor.email || "",
-      phone: tutor.phone || "",
-      qualification: tutor.qualification || "",
-      about: tutor.about || "",
-      subjects: Array.isArray(tutor.subjects)
-        ? tutor.subjects.join(", ")
-        : tutor.subjects || "",
-      categoryId,
-      sectionType: online ? tutor.sectionType || "" : "none",
-      syllabus: online ? tutor.syllabus || "" : "none",
-      courseIds: existingCourseIds,
-      photo: null,
-    });
 
-    setPreview(tutor.photo ? getMediaUrl(tutor.photo) : "");
-    setModalOpen(true);
-    setMenuOpenId(null);
-  }
+function openAddModal() {
+  setEditingTutor(null);
+  setForm({ ...emptyForm, categoryIds: [], courseIds: [] });
+  setPreview("");
+  setModalOpen(true);
+}
 
-  function handleChange(e) {
-    const { name, value, files } = e.target;
 
-    if (name === "photo") {
-      const file = files?.[0] || null;
 
-      setForm((prev) => ({
-        ...prev,
-        photo: file,
-      }));
 
-      if (file) {
-        setPreview(URL.createObjectURL(file));
-      }
 
-      return;
-    }
 
-    if (name === "categoryId") {
-      const selectedCat = categories.find((cat) => cat._id === value);
-      const online = selectedCat?.key === "online_tuition";
+  // function openEditModal(tutor) {
+  //   const categoryId = normalizeId(tutor.categoryId);
 
-      setForm((prev) => ({
-        ...prev,
-        categoryId: value,
-        sectionType: online ? "" : "none",
-        syllabus: online ? "" : "none",
-        courseIds: [],
-      }));
+  //   const categoryObj =
+  //     typeof tutor.categoryId === "object"
+  //       ? tutor.categoryId
+  //       : categories.find((cat) => cat._id === categoryId);
 
-      return;
-    }
+  //   const online = categoryObj?.key === "online_tuition";
 
-    if (name === "sectionType") {
-      setForm((prev) => ({
-        ...prev,
-        sectionType: value,
-        courseIds: [],
-      }));
+  //   const existingCourseIds =
+  //     Array.isArray(tutor.courseIds) && tutor.courseIds.length
+  //       ? tutor.courseIds.map((course) => normalizeId(course))
+  //       : tutor.courseId
+  //       ? [normalizeId(tutor.courseId)]
+  //       : [];
 
-      return;
-    }
+  //   setEditingTutor(tutor);
+
+  //   setForm({
+  //     name: tutor.name || "",
+  //     email: tutor.email || "",
+  //     phone: tutor.phone || "",
+  //     qualification: tutor.qualification || "",
+  //     about: tutor.about || "",
+  //     subjects: Array.isArray(tutor.subjects)
+  //       ? tutor.subjects.join(", ")
+  //       : tutor.subjects || "",
+  //     categoryId,
+  //     sectionType: online ? tutor.sectionType || "" : "none",
+  //     syllabus: online ? tutor.syllabus || "" : "none",
+  //     courseIds: existingCourseIds,
+  //     photo: null,
+  //   });
+
+  //   setPreview(tutor.photo ? getMediaUrl(tutor.photo) : "");
+  //   setModalOpen(true);
+  //   setMenuOpenId(null);
+  // }
+
+
+
+
+
+
+function openEditModal(tutor) {
+  const existingCategoryIds =
+    Array.isArray(tutor.categoryIds) && tutor.categoryIds.length
+      ? tutor.categoryIds.map((cat) => normalizeId(cat))
+      : tutor.categoryId
+      ? [normalizeId(tutor.categoryId)]
+      : [];
+
+  const existingCourseIds =
+    Array.isArray(tutor.courseIds) && tutor.courseIds.length
+      ? tutor.courseIds.map((course) => normalizeId(course))
+      : tutor.courseId
+      ? [normalizeId(tutor.courseId)]
+      : [];
+
+  const onlineSelected = existingCategoryIds.some((catId) => {
+    const cat = categories.find((item) => item._id === catId);
+    return cat?.key === "online_tuition";
+  });
+
+  setEditingTutor(tutor);
+
+  setForm({
+    name: tutor.name || "",
+    email: tutor.email || "",
+    phone: tutor.phone || "",
+    qualification: tutor.qualification || "",
+    about: tutor.about || "",
+    subjects: Array.isArray(tutor.subjects)
+      ? tutor.subjects.join(", ")
+      : tutor.subjects || "",
+    categoryIds: existingCategoryIds,
+    syllabus: onlineSelected ? tutor.syllabus || "" : "none",
+    courseIds: existingCourseIds,
+    photo: null,
+  });
+
+  setPreview(tutor.photo ? getMediaUrl(tutor.photo) : "");
+  setModalOpen(true);
+  setMenuOpenId(null);
+}
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // function handleChange(e) {
+  //   const { name, value, files } = e.target;
+
+  //   if (name === "photo") {
+  //     const file = files?.[0] || null;
+
+  //     setForm((prev) => ({
+  //       ...prev,
+  //       photo: file,
+  //     }));
+
+  //     if (file) {
+  //       setPreview(URL.createObjectURL(file));
+  //     }
+
+  //     return;
+  //   }
+
+  //   if (name === "categoryId") {
+  //     const selectedCat = categories.find((cat) => cat._id === value);
+  //     const online = selectedCat?.key === "online_tuition";
+
+  //     setForm((prev) => ({
+  //       ...prev,
+  //       categoryId: value,
+  //       sectionType: online ? "" : "none",
+  //       syllabus: online ? "" : "none",
+  //       courseIds: [],
+  //     }));
+
+  //     return;
+  //   }
+
+  //   if (name === "sectionType") {
+  //     setForm((prev) => ({
+  //       ...prev,
+  //       sectionType: value,
+  //       courseIds: [],
+  //     }));
+
+  //     return;
+  //   }
+
+  //   setForm((prev) => ({
+  //     ...prev,
+  //     [name]: value,
+  //   }));
+  // }
+
+
+
+
+
+
+function handleChange(e) {
+  const { name, value, files } = e.target;
+
+  if (name === "photo") {
+    const file = files?.[0] || null;
 
     setForm((prev) => ({
       ...prev,
-      [name]: value,
+      photo: file,
     }));
+
+    if (file) {
+      setPreview(URL.createObjectURL(file));
+    }
+
+    return;
   }
+
+  setForm((prev) => ({
+    ...prev,
+    [name]: value,
+  }));
+}
+
+
+
+function toggleCategorySelection(categoryId, checked) {
+  setForm((prev) => {
+    const currentCategoryIds = Array.isArray(prev.categoryIds)
+      ? prev.categoryIds
+      : [];
+
+    const nextCategoryIds = checked
+      ? Array.from(new Set([...currentCategoryIds, categoryId]))
+      : currentCategoryIds.filter((id) => id !== categoryId);
+
+    const allowedCourseIds = courses
+      .filter((course) => nextCategoryIds.includes(normalizeId(course.categoryId)))
+      .map((course) => course._id);
+
+    return {
+      ...prev,
+      categoryIds: nextCategoryIds,
+      courseIds: prev.courseIds.filter((courseId) =>
+        allowedCourseIds.includes(courseId)
+      ),
+      syllabus: nextCategoryIds.some((catId) => {
+        const cat = categories.find((item) => item._id === catId);
+        return cat?.key === "online_tuition";
+      })
+        ? prev.syllabus === "none"
+          ? ""
+          : prev.syllabus
+        : "none",
+    };
+  });
+}
+
 
   function toggleCourseSelection(courseId, checked) {
     setForm((prev) => {
@@ -293,13 +503,34 @@ export default function AdminTutorsPage() {
         return showAlert("Phone required", "error");
       }
 
-      if (!form.categoryId) {
-        return showAlert("Category select cheyyuka", "error");
-      }
+      // if (!form.categoryId) {
+      //   return showAlert("Category select cheyyuka", "error");
+      // }
 
-      if (isOnlineTuition && !form.sectionType) {
-        return showAlert("One-to-One / Batch select cheyyuka", "error");
-      }
+      // if (isOnlineTuition && !form.sectionType) {
+      //   return showAlert("One-to-One / Batch select cheyyuka", "error");
+      // }
+
+
+
+
+
+if (!Array.isArray(form.categoryIds) || form.categoryIds.length === 0) {
+  return showAlert("At least one category select cheyyuka", "error");
+}
+
+if (isOnlineTuition && !String(form.syllabus || "").trim()) {
+  return showAlert("Syllabus enter cheyyuka", "error");
+}
+
+if (!Array.isArray(form.courseIds) || form.courseIds.length === 0) {
+  return showAlert("At least one Course / Class select cheyyuka", "error");
+}
+
+
+
+
+
 
       if (isOnlineTuition && !String(form.syllabus || "").trim()) {
         return showAlert("Syllabus enter cheyyuka", "error");
@@ -309,30 +540,75 @@ export default function AdminTutorsPage() {
         return showAlert("At least one Course / Batch select cheyyuka", "error");
       }
 
-      const finalSectionType = isOnlineTuition ? form.sectionType : "none";
-      const finalSyllabus = isOnlineTuition ? String(form.syllabus).trim() : "none";
+      // const finalSectionType = isOnlineTuition ? form.sectionType : "none";
+      // const finalSyllabus = isOnlineTuition ? String(form.syllabus).trim() : "none";
 
-      const fd = new FormData();
+      // const fd = new FormData();
 
-      fd.append("name", form.name.trim());
-      fd.append("email", form.email.trim());
-      fd.append("phone", form.phone.trim());
-      fd.append("qualification", form.qualification.trim());
-      fd.append("about", form.about.trim());
-      fd.append("subjects", form.subjects.trim());
-      fd.append("categoryId", form.categoryId);
-      fd.append("sectionType", finalSectionType);
-      fd.append("syllabus", finalSyllabus);
+      // fd.append("name", form.name.trim());
+      // fd.append("email", form.email.trim());
+      // fd.append("phone", form.phone.trim());
+      // fd.append("qualification", form.qualification.trim());
+      // fd.append("about", form.about.trim());
+      // fd.append("subjects", form.subjects.trim());
+      // fd.append("categoryId", form.categoryId);
+      // fd.append("sectionType", finalSectionType);
+      // fd.append("syllabus", finalSyllabus);
 
-      form.courseIds.forEach((courseId) => {
-        fd.append("courseIds", courseId);
-      });
+      // form.courseIds.forEach((courseId) => {
+      //   fd.append("courseIds", courseId);
+      // });
 
-      fd.append("courseId", form.courseIds[0]);
+      // fd.append("courseId", form.courseIds[0]);
 
-      if (form.photo) {
-        fd.append("photo", form.photo);
-      }
+      // if (form.photo) {
+      //   fd.append("photo", form.photo);
+      // }
+
+
+
+
+
+
+const finalSyllabus = isOnlineTuition ? String(form.syllabus).trim() : "none";
+const finalSectionType = isOnlineTuition ? "both" : "none";
+
+const fd = new FormData();
+
+fd.append("name", form.name.trim());
+fd.append("email", form.email.trim());
+fd.append("phone", form.phone.trim());
+fd.append("qualification", form.qualification.trim());
+fd.append("about", form.about.trim());
+fd.append("subjects", form.subjects.trim());
+
+form.categoryIds.forEach((categoryId) => {
+  fd.append("categoryIds", categoryId);
+});
+
+fd.append("categoryId", form.categoryIds[0]);
+
+fd.append("sectionType", finalSectionType);
+fd.append("syllabus", finalSyllabus);
+
+form.courseIds.forEach((courseId) => {
+  fd.append("courseIds", courseId);
+});
+
+fd.append("courseId", form.courseIds[0]);
+
+if (form.photo) {
+  fd.append("photo", form.photo);
+}
+
+
+
+
+
+
+
+
+
 
       if (editingTutor) {
         await api.put(`/admin/tuter/update/${editingTutor._id}`, fd);

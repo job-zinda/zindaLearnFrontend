@@ -1097,3 +1097,48 @@
     width: 100% !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.tutor-category-checkbox-list,
+.tutor-course-checkbox-list {
+  min-height: 170px !important;
+  max-height: 240px !important;
+}
+
+.course-check-item span {
+  display: grid !important;
+  gap: 3px !important;
+}
+
+.course-category-name {
+  color: #7c3aed !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  line-height: 1.2 !important;
+}

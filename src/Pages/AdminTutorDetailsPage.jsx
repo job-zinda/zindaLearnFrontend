@@ -794,6 +794,19 @@ async function openAssignedStudentsModal() {
               />
             </label>
 
+
+
+
+
+
+
+
+
+
+
+{/* 
+
+
             <label className="form-field">
               <span>Category</span>
               <select
@@ -883,7 +896,101 @@ async function openAssignedStudentsModal() {
                   })
                 )}
               </div>
-            </div>
+            </div> */}
+
+
+
+
+
+<div className="form-field form-field--full">
+  <span>Categories</span>
+
+  <div className="course-checkbox-list tutor-category-checkbox-list">
+    {categories.length === 0 ? (
+      <p className="course-empty-text">No categories found</p>
+    ) : (
+      categories.map((cat) => {
+        const checked = Array.isArray(form.categoryIds)
+          ? form.categoryIds.includes(cat._id)
+          : false;
+
+        return (
+          <label key={cat._id} className="course-check-item">
+            <input
+              type="checkbox"
+              checked={checked}
+              onChange={(e) =>
+                toggleCategorySelection(cat._id, e.target.checked)
+              }
+            />
+
+            <span>{cat.title}</span>
+          </label>
+        );
+      })
+    )}
+  </div>
+</div>
+
+{isOnlineTuition && (
+  <label className="form-field form-field--full">
+    <span>Syllabus</span>
+    <input
+      type="text"
+      name="syllabus"
+      value={form.syllabus}
+      onChange={handleChange}
+      placeholder="Example: State, CBSE, ICSE"
+    />
+  </label>
+)}
+
+<div className="form-field form-field--full">
+  <span>Courses / Classes</span>
+
+  <div className="course-checkbox-list tutor-course-checkbox-list">
+    {visibleCourses.length === 0 ? (
+      <p className="course-empty-text">No courses found</p>
+    ) : (
+      visibleCourses.map((course) => {
+        const checked = Array.isArray(form.courseIds)
+          ? form.courseIds.includes(course._id)
+          : false;
+
+        const category = getCourseCategory(course, categories);
+
+        return (
+          <label key={course._id} className="course-check-item">
+            <input
+              type="checkbox"
+              checked={checked}
+              onChange={(e) =>
+                toggleCourseSelection(course._id, e.target.checked)
+              }
+            />
+
+            <span>
+              {getCourseLabel(course, categories)}
+              {category?.title ? (
+                <small className="course-category-name">
+                  {category.title}
+                </small>
+              ) : null}
+            </span>
+          </label>
+        );
+      })
+    )}
+  </div>
+</div>
+
+
+
+
+
+
+
+
           </div>
 
           <div className="form-actions">
