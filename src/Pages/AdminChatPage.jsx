@@ -1,4 +1,4 @@
-
+import EmojiPicker from "emoji-picker-react";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import api from "../api/axios";
@@ -346,7 +346,7 @@ function MessageBubble({ message, onEdit, onDelete }) {
   );
 }
 
-const emojis = ["😀", "😂", "😍", "👍", "🙏", "🔥", "❤️", "🎉", "😊", "😎"];
+// const emojis = ["😀", "😂", "😍", "👍", "🙏", "🔥", "❤️", "🎉", "😊", "😎"];
 
 export default function AdminChatPage() {
   const { showAlert } = useAlert();
@@ -382,6 +382,14 @@ export default function AdminChatPage() {
   const recordTimerRef = useRef(null);
   const sendingRef = useRef(false);
   const activeRoomIdRef = useRef("");
+
+
+
+
+const emojiPickerRef = useRef(null);
+
+
+
 
   const activeRoomId = getRoomId(activeRoom);
   const activeStudent = useMemo(() => getStudent(activeRoom), [activeRoom]);
@@ -574,6 +582,29 @@ export default function AdminChatPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+
+
+
+useEffect(() => {
+  function handleOutsideClick(e) {
+    if (
+      emojiOpen &&
+      emojiPickerRef.current &&
+      !emojiPickerRef.current.contains(e.target)
+    ) {
+      setEmojiOpen(false);
+    }
+  }
+
+  document.addEventListener("mousedown", handleOutsideClick);
+
+  return () => {
+    document.removeEventListener("mousedown", handleOutsideClick);
+  };
+}, [emojiOpen]);
+
+
+
   useEffect(() => {
     if (!activeRoomId) return;
 
@@ -717,7 +748,8 @@ export default function AdminChatPage() {
       const { data } = await api.post(`/chat/message/${roomIdToSend}`, {
         text: cleanText,
         message: cleanText,
-        messageType: emojis.includes(cleanText) ? "emoji" : "text",
+        // messageType: emojis.includes(cleanText) ? "emoji" : "text",
+        messageType: "text",
       });
 
       const newMessage = data?.message || data?.chatMessage;
@@ -859,10 +891,18 @@ export default function AdminChatPage() {
     setVoiceReady(false);
   }
 
-  function addEmoji(emoji) {
-    setText((prev) => `${prev}${emoji}`);
-    setEmojiOpen(false);
-  }
+  // function addEmoji(emoji) {
+  //   setText((prev) => `${prev}${emoji}`);
+  //   setEmojiOpen(false);
+  // }
+
+
+
+function addEmoji(emoji) {
+  setText((prev) => `${prev}${emoji}`);
+}
+
+
 
   return (
     <div className="admin-chat-page">
@@ -1058,7 +1098,7 @@ export default function AdminChatPage() {
               )}
 
               <footer className="admin-chat-inputbar">
-                {emojiOpen && (
+                {/* {emojiOpen && (
                   <div className="admin-emoji-box">
                     {emojis.map((emoji) => (
                       <button
@@ -1070,7 +1110,41 @@ export default function AdminChatPage() {
                       </button>
                     ))}
                   </div>
-                )}
+                )} */}
+
+
+
+
+
+
+
+{emojiOpen && (
+  <div
+    className="admin-emoji-picker-wrap"
+    ref={emojiPickerRef}
+    onClick={(e) => e.stopPropagation()}
+  >
+    <EmojiPicker
+      theme="dark"
+      width="100%"
+      height={390}
+      searchPlaceholder="Search emoji"
+      previewConfig={{
+        showPreview: false,
+      }}
+      skinTonesDisabled={false}
+      lazyLoadEmojis={true}
+      onEmojiClick={(emojiData) => {
+        addEmoji(emojiData.emoji);
+      }}
+    />
+  </div>
+)}
+
+
+
+
+
 
                 <button
                   type="button"
