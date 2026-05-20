@@ -362,3 +362,125 @@
     height: auto !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   STUDENT TUTOR CARD ABOUT 4 LINES - SAME CARD WIDTH/HEIGHT
+   Paste at VERY BOTTOM of StudentTutorsPage.css
+   ========================================================= */
+
+.student-tutor-card {
+  min-height: 420px !important;
+  max-height: 420px !important;
+  height: 420px !important;
+  padding: 28px 24px 26px !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* top section little compact */
+.student-tutor-card-top {
+  min-height: 90px !important;
+  max-height: 90px !important;
+  align-items: center !important;
+}
+
+/* avatar same size keep */
+.student-tutor-avatar {
+  width: 88px !important;
+  height: 88px !important;
+  min-width: 88px !important;
+  min-height: 88px !important;
+}
+
+/* name fixed 2 lines */
+.student-tutor-info h3 {
+  font-size: 21px !important;
+  line-height: 1.15 !important;
+  min-height: 48px !important;
+  max-height: 48px !important;
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  line-clamp: 2 !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  word-break: break-word !important;
+}
+
+/* qualification fixed 2 lines */
+.student-tutor-info p {
+  font-size: 16px !important;
+  line-height: 1.25 !important;
+  min-height: 40px !important;
+  max-height: 40px !important;
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  line-clamp: 2 !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  word-break: break-word !important;
+}
+
+/* about 4 lines, card height increase cheyyathe */
+.student-tutor-about {
+  margin: 20px 0 14px !important;
+  font-size: 15px !important;
+  line-height: 1.45 !important;
+
+  min-height: 87px !important;
+  max-height: 87px !important;
+  height: 87px !important;
+
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  line-clamp: 4 !important;
+  -webkit-line-clamp: 4 !important;
+  -webkit-box-orient: vertical !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+}
+
+/* stars and button bottom same place */
+.student-tutor-stars {
+  margin-top: auto !important;
+  margin-bottom: 16px !important;
+  min-height: 26px !important;
+}
+
+.student-view-details-btn {
+  margin-top: 0 !important;
+  min-height: 52px !important;
+  padding: 14px !important;
+  flex-shrink: 0 !important;
+}
+
+/* mobile responsive */
+@media (max-width: 720px) {
+  .student-tutor-card {
+    min-height: 390px !important;
+    max-height: none !important;
+    height: auto !important;
+  }
+
+  .student-tutor-about {
+    min-height: 84px !important;
+    max-height: 84px !important;
+    height: 84px !important;
+    line-clamp: 4 !important;
+    -webkit-line-clamp: 4 !important;
+  }
+}
