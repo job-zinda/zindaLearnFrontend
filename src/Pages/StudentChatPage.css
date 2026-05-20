@@ -3815,3 +3815,45 @@ body,
     height: 360px !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Emoji picker search placeholder/icon fix */
+.student-emoji-picker-wrap .epr-search-container {
+  position: relative !important;
+}
+
+.student-emoji-picker-wrap .epr-search-container input {
+  width: 100% !important;
+  height: 48px !important;
+  padding-left: 48px !important;
+  padding-right: 18px !important;
+  border-radius: 999px !important;
+  box-sizing: border-box !important;
+  line-height: 48px !important;
+}
+
+.student-emoji-picker-wrap .epr-search-container input::placeholder {
+  color: rgba(255, 255, 255, 0.55) !important;
+  opacity: 1 !important;
+}
+
+.student-emoji-picker-wrap .epr-search-container .epr-icn-search {
+  position: absolute !important;
+  left: 18px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  pointer-events: none !important;
+}
