@@ -3530,3 +3530,100 @@ body,
 
 
 
+
+
+
+
+
+
+
+
+/* =========================================================
+   FIX STUDENT CHAT EMOJI POPUP NOT SHOWING
+   Paste at VERY BOTTOM of StudentChatPage.css
+   ========================================================= */
+
+.student-chat-app {
+  overflow: hidden !important;
+  position: relative !important;
+}
+
+/* emoji popup inputbar-inu purath kanan vendi overflow visible */
+.student-chat-inputbar {
+  overflow: visible !important;
+  position: relative !important;
+  z-index: 100 !important;
+}
+
+/* emoji box visible aakkan */
+.student-emoji-box {
+  position: absolute !important;
+  left: 18px !important;
+  bottom: 68px !important;
+  z-index: 9999 !important;
+
+  background: #111633 !important;
+  border: 1px solid rgba(217, 70, 239, 0.35) !important;
+  border-radius: 16px !important;
+  padding: 12px !important;
+
+  display: grid !important;
+  grid-template-columns: repeat(5, 38px) !important;
+  gap: 8px !important;
+
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.55) !important;
+}
+
+.student-emoji-box button {
+  width: 38px !important;
+  height: 38px !important;
+  border: none !important;
+  border-radius: 10px !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  font-size: 21px !important;
+  cursor: pointer !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+.student-emoji-box button:hover {
+  background: rgba(217, 70, 239, 0.22) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* mobile responsive */
+@media screen and (max-width: 768px) {
+  .student-chat-inputbar {
+    overflow: visible !important;
+    z-index: 100 !important;
+  }
+
+  .student-emoji-box {
+    left: 8px !important;
+    bottom: 52px !important;
+    grid-template-columns: repeat(5, 34px) !important;
+    gap: 7px !important;
+    padding: 10px !important;
+    border-radius: 14px !important;
+  }
+
+  .student-emoji-box button {
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 19px !important;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .student-emoji-box {
+    left: 6px !important;
+    bottom: 48px !important;
+    grid-template-columns: repeat(5, 32px) !important;
+  }
+
+  .student-emoji-box button {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 18px !important;
+  }
+}
