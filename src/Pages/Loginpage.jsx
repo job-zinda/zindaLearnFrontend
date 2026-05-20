@@ -35,11 +35,22 @@ function decodeJwt(token) {
   }
 }
 
+// function routeByRole(role) {
+//   const r = normalizeRole(role);
+//   if (r === "admin") return "/admin";
+//   return "/student";
+// }
+
+
 function routeByRole(role) {
   const r = normalizeRole(role);
+
   if (r === "admin") return "/admin";
+  if (r === "tutor") return "/tutor";
+
   return "/student";
 }
+
 
 function OtpInputs({ value, onChange }) {
   const digits = useMemo(

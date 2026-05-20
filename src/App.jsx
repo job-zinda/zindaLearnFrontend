@@ -1,5 +1,18 @@
 
 
+
+
+import TutorWelcomePage from "./Pages/TutorWelcomePage";
+import "./Pages/TutorWelcomePage.css";
+
+
+
+
+
+
+
+
+
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import ProtectedRoute from "./Components/ProtectedRoute";
 
@@ -96,6 +109,42 @@ export default function App() {
           <Route path="chats" element={<StudentChatPage />} />
           <Route path="settings" element={<StudentSettingsPage />} />
         </Route>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<Route
+  path="/tutor"
+  element={
+    <ProtectedRoute allowedRole="tutor">
+      <TutorWelcomePage />
+    </ProtectedRoute>
+  }
+/>
+
+
+
+
+
+
+
+
+
+
+
+
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

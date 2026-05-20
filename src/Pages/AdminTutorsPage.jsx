@@ -26,6 +26,25 @@ import "./AdminTutorsPage.css";
 
 
 
+// const emptyForm = {
+//   name: "",
+//   email: "",
+//   phone: "",
+//   qualification: "",
+//   about: "",
+//   subjects: "",
+//   categoryIds: [],
+//   syllabus: "",
+//   courseIds: [],
+//   photo: null,
+// };
+
+
+
+
+
+
+
 const emptyForm = {
   name: "",
   email: "",
@@ -36,8 +55,15 @@ const emptyForm = {
   categoryIds: [],
   syllabus: "",
   courseIds: [],
+  loginPasswordText: "",
   photo: null,
 };
+
+
+
+
+
+
 
 function normalizeId(value) {
   if (!value) return "";
@@ -153,6 +179,16 @@ export default function AdminTutorsPage() {
   const [form, setForm] = useState(emptyForm);
   const [preview, setPreview] = useState("");
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+const [showTutorPassword, setShowTutorPassword] = useState(false);
+const [passwordLoading, setPasswordLoading] = useState(false);
+////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState(null);
 
@@ -247,6 +283,33 @@ const visibleCourses = useMemo(() => {
     fetchData();
   }, []);
 
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+
+async function fetchTutorPassword() {
+  try {
+    setPasswordLoading(true);
+
+    const { data } = await api.get("/admin/tuter/generate-password");
+
+    return data?.password || "";
+  } catch (err) {
+    showAlert(getErrorMessage(err, "Failed to generate tutor password"), "error");
+    return "";
+  } finally {
+    setPasswordLoading(false);
+  }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
   // function openAddModal() {
   //   setEditingTutor(null);
   //   setForm({ ...emptyForm, courseIds: [] });
@@ -260,15 +323,54 @@ const visibleCourses = useMemo(() => {
 
 
 
-function openAddModal() {
+// function openAddModal() {
+//   setEditingTutor(null);
+//   setForm({ ...emptyForm, categoryIds: [], courseIds: [] });
+//   setPreview("");
+//   setModalOpen(true);
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+async function openAddModal() {
   setEditingTutor(null);
-  setForm({ ...emptyForm, categoryIds: [], courseIds: [] });
   setPreview("");
+  setShowTutorPassword(false);
+
+  setForm({
+    ...emptyForm,
+    categoryIds: [],
+    courseIds: [],
+    loginPasswordText: "",
+  });
+
   setModalOpen(true);
+
+  const password = await fetchTutorPassword();
+
+  setForm((prev) => ({
+    ...prev,
+    loginPasswordText: password,
+  }));
 }
 
 
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -344,6 +446,9 @@ function openEditModal(tutor) {
     email: tutor.email || "",
     phone: tutor.phone || "",
     qualification: tutor.qualification || "",
+
+
+ 
     about: tutor.about || "",
     subjects: Array.isArray(tutor.subjects)
       ? tutor.subjects.join(", ")
@@ -351,6 +456,11 @@ function openEditModal(tutor) {
     categoryIds: existingCategoryIds,
     syllabus: onlineSelected ? tutor.syllabus || "" : "none",
     courseIds: existingCourseIds,
+
+   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+loginPasswordText: tutor.loginPasswordText || "",
+    ///////////////////////////////////////////////////////////////////////////////////////////
+
     photo: null,
   });
 
@@ -648,6 +758,16 @@ form.courseIds.forEach((courseId) => {
 
 fd.append("courseId", form.courseIds[0]);
 
+
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+if (!editingTutor) {
+  fd.append("loginPasswordText", form.loginPasswordText);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
 if (form.photo) {
   fd.append("photo", form.photo);
 }
@@ -860,6 +980,14 @@ if (form.photo) {
               <input name="name" value={form.name} onChange={handleChange} />
             </label>
 
+
+
+
+
+
+
+{/* 
+
             <label className="form-field">
               <span>Email</span>
               <input
@@ -875,6 +1003,15 @@ if (form.photo) {
               <input name="phone" value={form.phone} onChange={handleChange} />
             </label>
 
+
+
+
+
+
+
+
+
+
             <label className="form-field">
               <span>Qualification</span>
               <input
@@ -882,7 +1019,78 @@ if (form.photo) {
                 value={form.qualification}
                 onChange={handleChange}
               />
-            </label>
+            </label> */}
+
+
+
+
+
+
+
+
+<label className="form-field">
+  <span>Email</span>
+  <input
+    name="email"
+    type="email"
+    value={form.email}
+    onChange={handleChange}
+  />
+</label>
+
+<label className="form-field">
+  <span>Phone</span>
+  <input name="phone" value={form.phone} onChange={handleChange} />
+</label>
+
+<label className="form-field">
+  <span>Tutor Login Password</span>
+
+  <div className="tutor-password-field">
+    <input
+      type={showTutorPassword ? "text" : "password"}
+      value={passwordLoading ? "Generating..." : form.loginPasswordText || ""}
+      readOnly
+      placeholder="Auto generated password"
+    />
+
+    <button
+      type="button"
+      className="tutor-password-eye"
+      onClick={() => setShowTutorPassword((prev) => !prev)}
+      title={showTutorPassword ? "Hide password" : "Show password"}
+    >
+      {showTutorPassword ? "🙈" : "👁"}
+    </button>
+  </div>
+
+  {!editingTutor && (
+    <small className="tutor-password-note">
+      This password is auto generated from backend. Tutor can login using email/phone and this password.
+    </small>
+  )}
+
+  {editingTutor && (
+    <small className="tutor-password-note">
+      Password is visible only. Admin cannot edit or delete tutor password.
+    </small>
+  )}
+</label>
+
+<label className="form-field">
+  <span>Qualification</span>
+  <input
+    name="qualification"
+    value={form.qualification}
+    onChange={handleChange}
+  />
+</label>
+
+
+
+
+
+
 
             <label className="form-field form-field--full">
               <span>About / Description</span>
