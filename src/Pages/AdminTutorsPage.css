@@ -1488,3 +1488,199 @@
     height: auto !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   ADMIN TUTOR CARD ABOUT 4 LINES - HEIGHT/WIDTH SAME
+   Paste at VERY BOTTOM of AdminTutorsPage.css
+   ========================================================= */
+
+.tutor-card {
+  height: 420px !important;
+  min-height: 420px !important;
+  max-height: 420px !important;
+}
+
+/* top area little compact - card height same */
+.tutor-card-top {
+  min-height: 92px !important;
+  max-height: 92px !important;
+}
+
+/* name same 2 lines */
+.tutor-card h3 {
+  min-height: 48px !important;
+  max-height: 48px !important;
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  line-clamp: 2 !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+}
+
+/* qualification same 2 lines */
+.tutor-card-top p {
+  min-height: 40px !important;
+  max-height: 40px !important;
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  line-clamp: 2 !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+}
+
+/* about section 4 lines, card height increase aavilla */
+.tutor-about {
+  margin: 18px 0 12px !important;
+  min-height: 96px !important;
+  max-height: 96px !important;
+  height: 96px !important;
+  overflow: hidden !important;
+
+  display: -webkit-box !important;
+  line-clamp: 4 !important;
+  -webkit-line-clamp: 4 !important;
+  -webkit-box-orient: vertical !important;
+
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+  word-break: break-word !important;
+}
+
+/* rating and button bottom fixed */
+.tutor-stars {
+  margin-top: auto !important;
+  margin-bottom: 16px !important;
+  min-height: 26px !important;
+}
+
+.view-details-btn {
+  margin-top: 0 !important;
+  min-height: 54px !important;
+  flex-shrink: 0 !important;
+}
+
+/* mobile responsive */
+@media (max-width: 720px) {
+  .tutor-card {
+    height: auto !important;
+    min-height: 390px !important;
+    max-height: none !important;
+  }
+
+  .tutor-about {
+    min-height: 88px !important;
+    max-height: 88px !important;
+    height: 88px !important;
+    line-clamp: 4 !important;
+    -webkit-line-clamp: 4 !important;
+  }
+}
