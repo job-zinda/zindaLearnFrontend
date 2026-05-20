@@ -691,14 +691,40 @@ async function submitFeedback() {
 
 
 
+// async function deleteMyFeedback() {
+//   try {
+//     if (!myFeedback) {
+//       return showAlert("No feedback found to delete", "error");
+//     }
+
+//     const ok = window.confirm("Do you want to delete your feedback?");
+//     if (!ok) return;
+
+//     setDeletingFeedback(true);
+
+//     await api.delete("/feedback/my");
+
+//     setMyFeedback(null);
+//     setFeedbackRating(5);
+//     setFeedbackMessage("");
+
+//     showAlert("Feedback deleted successfully", "success");
+//     setFeedbackModalOpen(false);
+//   } catch (err) {
+//     showAlert(getErrorMessage(err, "Failed to delete feedback"), "error");
+//   } finally {
+//     setDeletingFeedback(false);
+//   }
+// }
+
+
+
+
 async function deleteMyFeedback() {
   try {
     if (!myFeedback) {
       return showAlert("No feedback found to delete", "error");
     }
-
-    const ok = window.confirm("Do you want to delete your feedback?");
-    if (!ok) return;
 
     setDeletingFeedback(true);
 
@@ -716,11 +742,6 @@ async function deleteMyFeedback() {
     setDeletingFeedback(false);
   }
 }
-
-
-
-
-
 
 
 
@@ -971,7 +992,7 @@ async function deleteMyFeedback() {
 
 
 
-
+{/* 
 <Modal
   open={feedbackModalOpen}
   title="Website Feedback"
@@ -1018,9 +1039,70 @@ async function deleteMyFeedback() {
       </button>
     </div>
   </div>
+</Modal> */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<Modal
+  open={feedbackModalOpen}
+  title="Website Feedback"
+  onClose={() => setFeedbackModalOpen(false)}
+>
+  <div className="student-settings-feedback-form">
+    <label>Rating</label>
+    <StarRating value={feedbackRating} onChange={setFeedbackRating} />
+
+    <label>Feedback</label>
+    <textarea
+      rows={5}
+      placeholder="Write your feedback..."
+      value={feedbackMessage}
+      onChange={(e) => setFeedbackMessage(e.target.value)}
+    />
+
+    <div className="student-settings-feedback-actions">
+      {myFeedback && (
+        <button
+          type="button"
+          className="student-settings-feedback-delete-btn"
+          disabled={savingFeedback || deletingFeedback}
+          onClick={deleteMyFeedback}
+        >
+          {deletingFeedback ? "Deleting..." : "Delete Feedback"}
+        </button>
+      )}
+
+      <button
+        type="button"
+        className="student-settings-primary-btn"
+        disabled={savingFeedback || deletingFeedback || !feedbackMessage.trim()}
+        onClick={submitFeedback}
+      >
+        {savingFeedback
+          ? "Saving..."
+          : myFeedback
+          ? "Update Feedback"
+          : "Submit Feedback"}
+      </button>
+    </div>
+  </div>
 </Modal>
-
-
 
 
 

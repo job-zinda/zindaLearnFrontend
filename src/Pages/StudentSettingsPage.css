@@ -841,3 +841,86 @@
   cursor: not-allowed;
   transform: none;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.student-settings-feedback-form {
+  display: grid;
+  gap: 14px;
+}
+
+.student-settings-feedback-form label {
+  color: rgba(255, 255, 255, 0.78);
+  font-weight: 900;
+}
+
+.student-settings-feedback-form textarea {
+  width: 100%;
+  min-height: 135px;
+  border: 1px solid rgba(217, 70, 239, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 13px;
+  padding: 14px 16px;
+  outline: none;
+  resize: vertical;
+  font-size: 15px;
+  color: #ffffff;
+}
+
+.student-settings-feedback-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.student-settings-feedback-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 4px;
+}
+
+.student-settings-feedback-delete-btn {
+  width: 100%;
+  min-height: 52px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #dc2626, #991b1b);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 16px 34px rgba(220, 38, 38, 0.28);
+}
+
+.student-settings-feedback-delete-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+@media (max-width: 560px) {
+  .student-settings-feedback-actions {
+    grid-template-columns: 1fr;
+  }
+}
