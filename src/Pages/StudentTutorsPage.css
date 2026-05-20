@@ -230,3 +230,135 @@
     padding: 0 18px;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   FIX STUDENT SIDE TUTOR CARD SAME SIZE LIKE ADMIN STUDENT CARD
+   Paste at VERY BOTTOM of StudentTutorsPage.css
+   ========================================================= */
+
+.student-tutor-grid {
+  align-items: stretch !important;
+}
+
+.student-tutor-card {
+  min-height: 420px !important;
+  max-height: 420px !important;
+  height: 420px !important;
+  padding: 32px 24px 28px !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* top section fixed */
+.student-tutor-card-top {
+  min-height: 96px !important;
+  max-height: 96px !important;
+  align-items: center !important;
+}
+
+/* avatar same size */
+.student-tutor-avatar {
+  width: 94px !important;
+  height: 94px !important;
+  min-width: 94px !important;
+  min-height: 94px !important;
+}
+
+/* name clamp */
+.student-tutor-info h3 {
+  font-size: 21px !important;
+  line-height: 1.15 !important;
+  min-height: 48px !important;
+  max-height: 48px !important;
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  line-clamp: 2 !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  word-break: break-word !important;
+}
+
+/* qualification fixed size - long text hide */
+.student-tutor-info p {
+  font-size: 16px !important;
+  line-height: 1.25 !important;
+  min-height: 40px !important;
+  max-height: 40px !important;
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  line-clamp: 2 !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  word-break: break-word !important;
+}
+
+/* about fixed */
+.student-tutor-about {
+  margin: 28px 0 18px !important;
+  min-height: 54px !important;
+  max-height: 54px !important;
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  line-clamp: 2 !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+}
+
+/* stars fixed */
+.student-tutor-stars {
+  margin-top: auto !important;
+  margin-bottom: 20px !important;
+  min-height: 26px !important;
+}
+
+/* button bottom fixed */
+.student-view-details-btn {
+  margin-top: 0 !important;
+  min-height: 54px !important;
+  flex-shrink: 0 !important;
+}
+
+@media (max-width: 720px) {
+  .student-tutor-card {
+    min-height: 390px !important;
+    max-height: none !important;
+    height: auto !important;
+  }
+}
