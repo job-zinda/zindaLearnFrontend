@@ -3857,3 +3857,78 @@ body,
   transform: translateY(-50%) !important;
   pointer-events: none !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===== Emoji picker search icon remove fix ===== */
+
+.student-emoji-picker-wrap .epr-icn-search,
+.student-emoji-picker-wrap svg[class*="search"],
+.student-emoji-picker-wrap .epr-search-container svg {
+  display: none !important;
+}
+
+.student-emoji-picker-wrap .epr-search-container input {
+  padding-left: 18px !important;
+}
+
+.student-emoji-picker-wrap input::placeholder{
+  opacity:1 !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===== Emoji picker search icon remove fix ===== */
+
+.student-emoji-picker-wrap .epr-icn-search,
+.student-emoji-picker-wrap svg[class*="search"],
+.student-emoji-picker-wrap .epr-search-container svg {
+  display: none !important;
+}
+
+.student-emoji-picker-wrap .epr-search-container input {
+  padding-left: 18px !important;
+}
+
+.student-emoji-picker-wrap input::placeholder{
+  opacity:1 !important;
+}
