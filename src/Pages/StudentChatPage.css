@@ -3627,3 +3627,191 @@ body,
     font-size: 18px !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   WHATSAPP STYLE FULL EMOJI PICKER - STUDENT CHAT
+   Paste at VERY BOTTOM of StudentChatPage.css
+   ========================================================= */
+
+.student-chat-app {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.student-chat-inputbar {
+  position: relative !important;
+  overflow: visible !important;
+  z-index: 100 !important;
+}
+
+/* New full emoji picker box */
+.student-emoji-picker-wrap {
+  position: absolute !important;
+  left: 18px !important;
+  bottom: 68px !important;
+  width: 410px !important;
+  max-width: calc(100vw - 40px) !important;
+  height: 430px !important;
+  z-index: 99999 !important;
+
+  background: #111633 !important;
+  border: 1px solid rgba(217, 70, 239, 0.45) !important;
+  border-radius: 18px !important;
+  overflow: hidden !important;
+
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.62),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset !important;
+}
+
+/* emoji-picker-react theme override */
+.student-emoji-picker-wrap .EmojiPickerReact {
+  --epr-bg-color: #111633 !important;
+  --epr-category-label-bg-color: #111633 !important;
+  --epr-text-color: #ffffff !important;
+  --epr-search-input-bg-color: #0b102b !important;
+  --epr-search-input-bg-color-active: #0b102b !important;
+  --epr-search-input-text-color: #ffffff !important;
+  --epr-search-border-color: rgba(217, 70, 239, 0.65) !important;
+  --epr-picker-border-color: transparent !important;
+  --epr-hover-bg-color: rgba(217, 70, 239, 0.22) !important;
+  --epr-focus-bg-color: rgba(217, 70, 239, 0.26) !important;
+  --epr-highlight-color: #d946ef !important;
+
+  width: 100% !important;
+  height: 100% !important;
+  border: none !important;
+  background: #111633 !important;
+}
+
+/* search box */
+.student-emoji-picker-wrap .epr-search-container input {
+  border-radius: 999px !important;
+  border: 1px solid rgba(217, 70, 239, 0.55) !important;
+  background: #0b102b !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+/* category names */
+.student-emoji-picker-wrap .epr-emoji-category-label {
+  background: #111633 !important;
+  color: rgba(255, 255, 255, 0.72) !important;
+  font-weight: 900 !important;
+}
+
+/* emoji buttons */
+.student-emoji-picker-wrap .epr-emoji {
+  border-radius: 10px !important;
+}
+
+.student-emoji-picker-wrap .epr-emoji:hover {
+  background: rgba(217, 70, 239, 0.22) !important;
+}
+
+/* scrollbar */
+.student-emoji-picker-wrap *::-webkit-scrollbar {
+  width: 7px !important;
+}
+
+.student-emoji-picker-wrap *::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #d946ef, #7c3aed) !important;
+  border-radius: 999px !important;
+}
+
+.student-emoji-picker-wrap *::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* old small emoji box hide/conflict avoid */
+.student-emoji-box {
+  display: none !important;
+}
+
+/* mobile responsive */
+@media screen and (max-width: 768px) {
+  .student-emoji-picker-wrap {
+    left: 8px !important;
+    bottom: 56px !important;
+    width: calc(100vw - 32px) !important;
+    height: 390px !important;
+    border-radius: 16px !important;
+  }
+
+  .student-emoji-picker-wrap .EmojiPickerReact {
+    height: 390px !important;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .student-emoji-picker-wrap {
+    left: 6px !important;
+    bottom: 50px !important;
+    width: calc(100vw - 24px) !important;
+    height: 360px !important;
+  }
+
+  .student-emoji-picker-wrap .EmojiPickerReact {
+    height: 360px !important;
+  }
+}

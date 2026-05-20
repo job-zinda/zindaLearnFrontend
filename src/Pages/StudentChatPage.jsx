@@ -41,7 +41,7 @@
 
 
 
-
+import EmojiPicker from "emoji-picker-react";
 
 
 
@@ -359,7 +359,7 @@ function MessageBubble({ message, onEdit, onDelete }) {
   );
 }
 
-const emojis = ["😀", "😂", "😍", "👍", "🙏", "🔥", "❤️", "🎉", "😊", "😎"];
+// const emojis = ["😀", "😂", "😍", "👍", "🙏", "🔥", "❤️", "🎉", "😊", "😎"];
 
 export default function StudentChatPage() {
   const { showAlert } = useAlert();
@@ -385,6 +385,11 @@ export default function StudentChatPage() {
   const recordTimerRef = useRef(null);
   const fileInputRef = useRef(null);
   const bottomRef = useRef(null);
+
+const emojiPickerRef = useRef(null);
+// const emojiPickerRef = useRef(null);
+
+
 
   const activeRoomId = getRoomId(activeRoom);
   const admin = useMemo(() => getAdmin(activeRoom), [activeRoom]);
@@ -449,6 +454,35 @@ export default function StudentChatPage() {
     fetchRooms();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+
+
+
+useEffect(() => {
+  function handleOutsideClick(e) {
+    if (
+      emojiOpen &&
+      emojiPickerRef.current &&
+      !emojiPickerRef.current.contains(e.target)
+    ) {
+      setEmojiOpen(false);
+    }
+  }
+
+  document.addEventListener(
+    "mousedown",
+    handleOutsideClick
+  );
+
+  return () => {
+    document.removeEventListener(
+      "mousedown",
+      handleOutsideClick
+    );
+  };
+}, [emojiOpen]);
+
+
 
   useEffect(() => {
     if (!activeRoomId) return;
@@ -873,7 +907,7 @@ export default function StudentChatPage() {
             😊
           </button>
 
-          {emojiOpen && (
+          {/* {emojiOpen && (
             <div className="student-emoji-box">
               {emojis.map((emoji) => (
                 <button
@@ -885,7 +919,73 @@ export default function StudentChatPage() {
                 </button>
               ))}
             </div>
-          )}
+          )} */}
+
+
+
+
+
+
+
+{/* {emojiOpen && (
+  <div className="student-emoji-picker-wrap">
+    <EmojiPicker
+      theme="dark"
+      width="100%"
+      height={390}
+      searchPlaceholder="Search emoji"
+      previewConfig={{
+        showPreview: false,
+      }}
+      skinTonesDisabled={false}
+      lazyLoadEmojis={true}
+      onEmojiClick={(emojiData) => {
+        setText((prev) => prev + emojiData.emoji);
+      }}
+    />
+  </div>
+)} */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{emojiOpen && (
+  <div
+    className="student-emoji-picker-wrap"
+    ref={emojiPickerRef}
+    onClick={(e) => e.stopPropagation()}
+  >
+    <EmojiPicker
+      theme="dark"
+      width="100%"
+      height={390}
+      searchPlaceholder="Search emoji"
+      previewConfig={{
+        showPreview: false,
+      }}
+      skinTonesDisabled={false}
+      lazyLoadEmojis={true}
+      onEmojiClick={(emojiData) => {
+        setText((prev) => prev + emojiData.emoji);
+      }}
+    />
+  </div>
+)}
+
+
+
+
 
           <button
             type="button"
