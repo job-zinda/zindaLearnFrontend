@@ -1,6 +1,6 @@
 
 
-
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -1054,14 +1054,32 @@ if (form.photo) {
       placeholder="Auto generated password"
     />
 
-    <button
+    {/* <button
       type="button"
       className="tutor-password-eye"
       onClick={() => setShowTutorPassword((prev) => !prev)}
       title={showTutorPassword ? "Hide password" : "Show password"}
     >
       {showTutorPassword ? "🙈" : "👁"}
-    </button>
+    </button> */}
+
+
+
+
+<button
+  type="button"
+  className="tutor-password-eye"
+  onClick={() => setShowTutorPassword((prev) => !prev)}
+  title={showTutorPassword ? "Hide password" : "Show password"}
+>
+  {showTutorPassword ? <FiEyeOff /> : <FiEye />}
+</button>
+
+
+
+
+
+
   </div>
 
   {!editingTutor && (

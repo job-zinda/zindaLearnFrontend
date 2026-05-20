@@ -1334,3 +1334,15 @@
   font-weight: 800;
   line-height: 1.4;
 }
+
+
+
+.tutor-password-eye{
+  border:none;
+  background:transparent;
+  cursor:pointer;
+  font-size:22px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
