@@ -463,10 +463,23 @@ export default function StudentSettingsPage() {
 
   const [savingProfile, setSavingProfile] = useState(false);
 
-  const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
-  const [feedbackRating, setFeedbackRating] = useState(5);
-  const [feedbackMessage, setFeedbackMessage] = useState("");
-  const [savingFeedback, setSavingFeedback] = useState(false);
+  // const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
+  // const [feedbackRating, setFeedbackRating] = useState(5);
+  // const [feedbackMessage, setFeedbackMessage] = useState("");
+  // const [savingFeedback, setSavingFeedback] = useState(false);
+
+
+
+const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
+const [feedbackRating, setFeedbackRating] = useState(5);
+const [feedbackMessage, setFeedbackMessage] = useState("");
+const [savingFeedback, setSavingFeedback] = useState(false);
+const [myFeedback, setMyFeedback] = useState(null);
+const [deletingFeedback, setDeletingFeedback] = useState(false);
+
+
+
+
 
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -496,19 +509,51 @@ export default function StudentSettingsPage() {
     }
   }
 
-  async function fetchMyFeedback() {
-    try {
-      const { data } = await api.get("/feedback/my");
-      const feedback = data?.feedback;
+  // async function fetchMyFeedback() {
+  //   try {
+  //     const { data } = await api.get("/feedback/my");
+  //     const feedback = data?.feedback;
 
-      if (feedback) {
-        setFeedbackRating(feedback.rating || 5);
-        setFeedbackMessage(feedback.message || "");
-      }
-    } catch {
-      // no alert needed
+  //     if (feedback) {
+  //       setFeedbackRating(feedback.rating || 5);
+  //       setFeedbackMessage(feedback.message || "");
+  //     }
+  //   } catch {
+  //     // no alert needed
+  //   }
+  // }
+
+
+
+
+
+
+async function fetchMyFeedback() {
+  try {
+    const { data } = await api.get("/feedback/my");
+    const feedback = data?.feedback || null;
+
+    setMyFeedback(feedback);
+
+    if (feedback) {
+      setFeedbackRating(Number(feedback.rating) || 5);
+      setFeedbackMessage(feedback.message || "");
+    } else {
+      setFeedbackRating(5);
+      setFeedbackMessage("");
     }
+  } catch {
+    setMyFeedback(null);
+    setFeedbackRating(5);
+    setFeedbackMessage("");
   }
+}
+
+
+
+
+
+
 
   useEffect(() => {
     fetchProfile();
@@ -576,23 +621,108 @@ export default function StudentSettingsPage() {
     }
   }
 
-  async function submitFeedback() {
-    try {
-      setSavingFeedback(true);
+  // async function submitFeedback() {
+  //   try {
+  //     setSavingFeedback(true);
 
-      await api.post("/feedback", {
-        rating: feedbackRating,
-        message: feedbackMessage,
-      });
+  //     await api.post("/feedback", {
+  //       rating: feedbackRating,
+  //       message: feedbackMessage,
+  //     });
 
-      showAlert("Feedback submitted successfully", "success");
-      setFeedbackModalOpen(false);
-    } catch (err) {
-      showAlert(getErrorMessage(err, "Failed to submit feedback"), "error");
-    } finally {
-      setSavingFeedback(false);
+  //     showAlert("Feedback submitted successfully", "success");
+  //     setFeedbackModalOpen(false);
+  //   } catch (err) {
+  //     showAlert(getErrorMessage(err, "Failed to submit feedback"), "error");
+  //   } finally {
+  //     setSavingFeedback(false);
+  //   }
+  // }
+
+
+
+
+
+
+
+
+
+
+async function submitFeedback() {
+  try {
+    if (!feedbackRating || Number(feedbackRating) < 1) {
+      return showAlert("Please select rating", "error");
     }
+
+    if (!feedbackMessage.trim()) {
+      return showAlert("Please enter feedback", "error");
+    }
+
+    setSavingFeedback(true);
+
+    const { data } = await api.post("/feedback", {
+      rating: feedbackRating,
+      message: feedbackMessage.trim(),
+    });
+
+    setMyFeedback(data?.feedback || null);
+
+    showAlert(
+      myFeedback ? "Feedback updated successfully" : "Feedback submitted successfully",
+      "success"
+    );
+
+    setFeedbackModalOpen(false);
+  } catch (err) {
+    showAlert(getErrorMessage(err, "Failed to submit feedback"), "error");
+  } finally {
+    setSavingFeedback(false);
   }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+async function deleteMyFeedback() {
+  try {
+    if (!myFeedback) {
+      return showAlert("No feedback found to delete", "error");
+    }
+
+    const ok = window.confirm("Do you want to delete your feedback?");
+    if (!ok) return;
+
+    setDeletingFeedback(true);
+
+    await api.delete("/feedback/my");
+
+    setMyFeedback(null);
+    setFeedbackRating(5);
+    setFeedbackMessage("");
+
+    showAlert("Feedback deleted successfully", "success");
+    setFeedbackModalOpen(false);
+  } catch (err) {
+    showAlert(getErrorMessage(err, "Failed to delete feedback"), "error");
+  } finally {
+    setDeletingFeedback(false);
+  }
+}
+
+
+
+
+
+
+
 
   async function deleteAccount() {
     try {
@@ -658,13 +788,33 @@ export default function StudentSettingsPage() {
           <h2>Feedback</h2>
           <p>Share your experience about Zinda Learn.</p>
 
-          <button
+          {/* <button
             type="button"
             className="student-settings-primary-btn"
             onClick={() => setFeedbackModalOpen(true)}
           >
             Write Feedback
-          </button>
+          </button> */}
+
+
+
+
+
+
+<button
+  type="button"
+  className="student-settings-primary-btn"
+  onClick={() => setFeedbackModalOpen(true)}
+>
+  {myFeedback ? "Edit Feedback" : "Write Feedback"}
+</button>
+
+
+
+
+
+
+
         </div>
       );
     }
@@ -788,7 +938,7 @@ export default function StudentSettingsPage() {
         </div>
       </Modal>
 
-      <Modal
+      {/* <Modal
         open={feedbackModalOpen}
         title="Website Feedback"
         onClose={() => setFeedbackModalOpen(false)}
@@ -814,7 +964,67 @@ export default function StudentSettingsPage() {
             {savingFeedback ? "Submitting..." : "Submit Feedback"}
           </button>
         </div>
-      </Modal>
+      </Modal> */}
+
+
+
+
+
+
+
+<Modal
+  open={feedbackModalOpen}
+  title="Website Feedback"
+  onClose={() => setFeedbackModalOpen(false)}
+>
+  <div className="student-settings-feedback-form">
+    <label>
+      <span>Rating</span>
+      <StarRating value={feedbackRating} onChange={setFeedbackRating} />
+    </label>
+
+    <label>
+      <span>Feedback</span>
+      <textarea
+        value={feedbackMessage}
+        onChange={(e) => setFeedbackMessage(e.target.value)}
+        placeholder="Write your feedback..."
+      />
+    </label>
+
+    <div className="student-settings-feedback-actions">
+      {myFeedback && (
+        <button
+          type="button"
+          className="student-settings-feedback-delete-btn"
+          onClick={deleteMyFeedback}
+          disabled={savingFeedback || deletingFeedback}
+        >
+          {deletingFeedback ? "Deleting..." : "Delete Feedback"}
+        </button>
+      )}
+
+      <button
+        type="button"
+        className="student-settings-primary-btn"
+        onClick={submitFeedback}
+        disabled={savingFeedback || deletingFeedback}
+      >
+        {savingFeedback
+          ? "Saving..."
+          : myFeedback
+          ? "Update Feedback"
+          : "Submit Feedback"}
+      </button>
+    </div>
+  </div>
+</Modal>
+
+
+
+
+
+
 
       <Modal
         open={deleteModalOpen}
