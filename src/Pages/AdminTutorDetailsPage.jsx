@@ -1738,6 +1738,20 @@ function isTutorActive(tutor) {
   return tutor?.isActive === true || tutor?.isActive === "true" || tutor?.isActive === 1;
 }
 
+
+
+
+function isTutorBlocked(tutor) {
+  return (
+    tutor?.isBlocked === true ||
+    tutor?.isBlocked === "true" ||
+    tutor?.isBlocked === 1
+  );
+}
+
+
+
+
 function formatSyllabus(value) {
   if (!value || value === "none") return "Not added";
 
@@ -1870,6 +1884,15 @@ export default function AdminTutorDetailsPage() {
   const [form, setForm] = useState(emptyForm);
   const [preview, setPreview] = useState("");
   const [submitting, setSubmitting] = useState(false);
+
+
+
+const [detailMenuOpen, setDetailMenuOpen] = useState(false);
+
+
+
+
+
 
   const selectedCategories = useMemo(() => {
     return categories.filter((cat) =>
@@ -2155,6 +2178,55 @@ export default function AdminTutorDetailsPage() {
     }
   }
 
+
+
+
+
+async function toggleTutorStatus() {
+  try {
+    await api.patch(`/admin/tuter/status/${tuterId}`, {
+      isActive: !isTutorActive(tutor),
+    });
+
+    showAlert(
+      isTutorActive(tutor)
+        ? "Tutor deactivated successfully"
+        : "Tutor activated successfully",
+      "success"
+    );
+
+    setDetailMenuOpen(false);
+    fetchData();
+  } catch (err) {
+    showAlert(getErrorMessage(err), "error");
+  }
+}
+
+async function toggleTutorBlock() {
+  try {
+    await api.patch(`/admin/tuter/block/${tuterId}`, {
+      isBlocked: !isTutorBlocked(tutor),
+    });
+
+    showAlert(
+      isTutorBlocked(tutor)
+        ? "Tutor unblocked successfully"
+        : "Tutor blocked successfully",
+      "success"
+    );
+
+    setDetailMenuOpen(false);
+    fetchData();
+  } catch (err) {
+    showAlert(getErrorMessage(err), "error");
+  }
+}
+
+
+
+
+
+
   async function openAssignedStudentsModal() {
     try {
       setAssignedStudentsOpen(true);
@@ -2215,7 +2287,7 @@ export default function AdminTutorDetailsPage() {
       </div>
 
       <div className="detail-card">
-        <div className="detail-actions">
+        {/* <div className="detail-actions">
           {!active && <span className="detail-inactive-badge">Inactive</span>}
 
           <button type="button" className="detail-edit-btn" onClick={openEditModal}>
@@ -2245,7 +2317,85 @@ export default function AdminTutorDetailsPage() {
           >
             🗑 Delete
           </button>
-        </div>
+        </div> */}
+
+
+
+
+
+
+
+<div className="detail-actions detail-actions-menu-wrap">
+  {isTutorBlocked(tutor) ? (
+    <span className="detail-blocked-badge">Blocked</span>
+  ) : !active ? (
+    <span className="detail-inactive-badge">Inactive</span>
+  ) : null}
+
+  <button
+    type="button"
+    className="detail-menu-btn"
+    onClick={() => setDetailMenuOpen((prev) => !prev)}
+  >
+    ⋮
+  </button>
+
+  {detailMenuOpen && (
+    <div className="detail-menu">
+      <button
+        type="button"
+        onClick={() => {
+          setDetailMenuOpen(false);
+          openEditModal();
+        }}
+      >
+        ✎ Edit
+      </button>
+
+      <button
+        type="button"
+        onClick={() => {
+          setDetailMenuOpen(false);
+          shareTutorDetails(tutor, showAlert);
+        }}
+      >
+        ↗ Share
+      </button>
+
+      <button
+        type="button"
+        onClick={() => {
+          setDetailMenuOpen(false);
+          openAssignedStudentsModal();
+        }}
+      >
+        👥 Assigned Students
+      </button>
+
+      <button type="button" onClick={toggleTutorStatus}>
+        ⏻ {active ? "Deactive" : "Active"}
+      </button>
+
+      <button type="button" onClick={toggleTutorBlock}>
+        ⛔ {isTutorBlocked(tutor) ? "Unblock" : "Block"}
+      </button>
+
+      <button
+        type="button"
+        onClick={() => {
+          setDetailMenuOpen(false);
+          setDeleteOpen(true);
+        }}
+      >
+        🗑 Delete
+      </button>
+    </div>
+  )}
+</div>
+
+
+
+
 
         <div className="detail-head">
           <div className="detail-avatar">
