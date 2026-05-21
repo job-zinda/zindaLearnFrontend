@@ -1625,6 +1625,28 @@ function isNewStudent(student) {
   return Date.now() - createdTime <= 24 * 60 * 60 * 1000;
 }
 
+
+
+
+
+
+
+function isStudentBlocked(student){
+
+return (
+student?.isBlocked===true ||
+student?.isBlocked==="true" ||
+student?.isBlocked===1
+)
+
+}
+
+
+
+
+
+
+
 function resizeImageToBase64(file, maxSize = 420, quality = 0.72) {
   return new Promise((resolve, reject) => {
     if (!file.type.startsWith("image/")) {
@@ -1930,6 +1952,101 @@ useEffect(() => {
   }
 
 
+
+
+
+
+
+
+
+
+
+async function toggleStudentBlock(student){
+
+try{
+
+const nextBlocked=
+!isStudentBlocked(student);
+
+const {data}=await api.patch(
+
+`/admin/student/block/${getStudentId(student)}`,
+
+{
+isBlocked:nextBlocked
+}
+
+);
+
+setStudents(prev=>
+
+prev.map(item=>
+
+getStudentId(item)===
+getStudentId(student)
+
+?
+
+{
+...item,
+
+isBlocked:
+data?.student?.isBlocked
+??
+
+nextBlocked
+
+}
+
+:item
+
+)
+
+)
+
+setMenuOpenId(null);
+
+showAlert(
+
+nextBlocked
+?
+"Student blocked"
+:
+"Student unblocked",
+
+"success"
+
+)
+
+}catch(err){
+
+showAlert(
+
+getErrorMessage(
+err,
+"Failed blocking student"
+),
+
+"error"
+
+)
+
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
   const filteredAssignTutors = useMemo(() => {
   const q = assignSearch.toLowerCase().trim();
@@ -2045,14 +2162,76 @@ async function saveAssignedTutors() {
               <article
                 key={studentId}
                 ref={newStudent && index === 0 ? firstNewCardRef : null}
-                className={`student-card ${
-                  newStudent ? "student-card--new" : ""
-                }`}
+                // className={`student-card ${
+                //   newStudent ? "student-card--new" : ""
+                // }`}
+
+
+
+
+className={`student-card
+
+${newStudent
+?
+"student-card--new"
+:
+""
+}
+
+${isStudentBlocked(student)
+?
+"student-card--blocked"
+:
+""
+}
+`}
+
+
+
+
+
+
                 onClick={(e) => e.stopPropagation()}
               >
-                {newStudent && (
+                {/* {newStudent && (
                   <span className="student-new-badge">New 24h</span>
-                )}
+                )} */}
+
+
+
+
+
+{
+isStudentBlocked(student)
+
+?
+
+<span className="student-blocked-badge">
+
+Blocked
+
+</span>
+
+:
+
+newStudent && (
+
+<span className="student-new-badge">
+
+New 24h
+
+</span>
+
+)
+
+}
+
+
+
+
+
+
+
 
                 <div className="student-menu-wrap">
                   <button
@@ -2066,21 +2245,91 @@ async function saveAssignedTutors() {
                   </button>
 
                   {menuOpenId === studentId && (
-                    <div className="student-menu">
-                      <button
-                        type="button"
-                        onClick={() => openEditModal(student)}
-                      >
-                        ✎ Edit
-                      </button>
+                    // <div className="student-menu">
+                    //   <button
+                    //     type="button"
+                    //     onClick={() => openEditModal(student)}
+                    //   >
+                    //     ✎ Edit
+                    //   </button>
 
-                      <button
-                        type="button"
-                        onClick={() => askDeleteStudent(student)}
-                      >
-                        🗑 Delete Account
-                      </button>
-                    </div>
+                    //   <button
+                    //     type="button"
+                    //     onClick={() => askDeleteStudent(student)}
+                    //   >
+                    //     🗑 Delete Account
+                    //   </button>
+                    // </div>
+
+
+
+
+
+
+
+<div className="student-menu">
+
+<button
+type="button"
+onClick={() =>
+openEditModal(student)
+}
+>
+
+✎ Edit
+
+</button>
+
+
+<button
+type="button"
+onClick={()=>
+toggleStudentBlock(
+student
+)
+}
+>
+
+{
+isStudentBlocked(
+student
+)
+
+?
+
+"🔓 Unblock"
+
+:
+
+"⛔ Block"
+
+}
+
+</button>
+
+
+<button
+type="button"
+onClick={() =>
+askDeleteStudent(
+student
+)
+}
+>
+
+🗑 Delete Account
+
+</button>
+
+</div>
+
+
+
+
+
+
+
+
                   )}
                 </div>
 
