@@ -1072,9 +1072,7 @@ return (
                         ✎ Edit
                       </button>
 
-                      <button type="button" onClick={() => askDeleteTutor(tutor)}>
-                        🗑 Delete
-                      </button>
+                     
 
                       <button
                         type="button"
@@ -1102,6 +1100,11 @@ return (
 <button type="button" onClick={() => toggleTutorBlockStatus(tutor)}>
   {isTutorBlocked(tutor) ? "🔓 Unblock" : "⛔ Block"}
 </button>
+
+
+ <button type="button" onClick={() => askDeleteTutor(tutor)}>
+                        🗑 Delete
+                      </button>
 
 
 
