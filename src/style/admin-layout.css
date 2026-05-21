@@ -1252,3 +1252,154 @@ body::-webkit-scrollbar-thumb:hover,
 .student-profile-edit-body::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #f000ff, #8b00ff);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   TUTOR LAYOUT SUPPORT
+   Paste at the VERY BOTTOM of admin-layout.css
+   ========================================================= */
+
+.tutor-sidenav {
+  background: var(--dark-panel);
+}
+
+.tutor-nav {
+  display: grid;
+  gap: 14px;
+}
+
+.tutor-nav__link svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tutor-nav__link--active {
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--purple), var(--pink));
+  box-shadow: 0 12px 28px rgba(155, 0, 255, 0.28);
+}
+
+.tutor-profile-card {
+  width: 100%;
+}
+
+.tutor-logout-btn {
+  background: var(--logout);
+  color: var(--logout-text);
+}
+
+.tutor-content {
+  background: var(--dark-bg);
+}
+
+.tutor-footer {
+  color: var(--text-muted);
+}
+
+@media (max-width: 860px) {
+  .tutor-sidenav {
+    transform: translateX(-100%);
+  }
+
+  .tutor-sidenav.admin-sidenav--open {
+    transform: translateX(0);
+  }
+}

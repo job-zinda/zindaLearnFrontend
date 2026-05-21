@@ -1,0 +1,24 @@
+import React from "react";
+import schoolLogo from "../assets/0f69b18d-3eae-4db8-adac-e59af718d6f9.png";
+
+export default function TutorTopNav({ title, onMenuClick }) {
+  return (
+    <header className="admin-topnav tutor-topnav">
+      <div className="admin-topnav__left">
+        <button type="button" className="admin-menu-btn" onClick={onMenuClick}>
+          ☰
+        </button>
+
+        <h1>{title}</h1>
+      </div>
+
+      <div className="admin-topnav__right">
+        <img
+          src={schoolLogo}
+          alt="Zindalearn Online School"
+          className="admin-topnav__full-logo"
+        />
+      </div>
+    </header>
+  );
+}
