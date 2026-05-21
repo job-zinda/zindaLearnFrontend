@@ -1864,6 +1864,12 @@ export default function AdminTutorDetailsPage() {
   const { tuterId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+const backTo = location.state?.backTo || "/admin/tutors";
+const backLabel = location.state?.courseName || "View details";
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   const { showAlert } = useAlert();
 
   const backTo = location.state?.backTo || "/admin/tutors";
@@ -2279,9 +2285,22 @@ async function toggleTutorBlock() {
   return (
     <div className="tutor-detail-page">
       <div className="detail-breadcrumb">
-        <button type="button" onClick={() => navigate(backTo)}>
+        {/* <button type="button" onClick={() => navigate(backTo)}>
           ← Tutors
-        </button>
+        </button> */}
+
+
+
+<button type="button" onClick={() => navigate(backTo)}>
+  ← Tutors
+</button>
+<span>»</span>
+<b>{backLabel}</b>
+
+
+
+
+
         <span>»</span>
         <b>View details</b>
       </div>

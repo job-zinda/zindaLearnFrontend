@@ -1136,7 +1136,18 @@ return (
                 <button
                   type="button"
                   className="view-details-btn"
-                  onClick={() => navigate(`/admin/tutors/${tutor._id}`)}
+                  // onClick={() => navigate(`/admin/tutors/${tutor._id}`)}
+
+
+onClick={() =>
+  navigate(`/admin/tutors/${tutor._id}`, {
+    state: {
+      backTo: "/admin/tutors",
+      from: "all-tutors",
+    },
+  })
+}
+
                 >
                   View Details
                 </button>
