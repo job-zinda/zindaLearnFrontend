@@ -102,6 +102,21 @@ function isTutorActive(tutor) {
   return tutor?.isActive === true || tutor?.isActive === "true" || tutor?.isActive === 1;
 }
 
+
+
+
+function isTutorBlocked(tutor) {
+  return (
+    tutor?.isBlocked === true ||
+    tutor?.isBlocked === "true" ||
+    tutor?.isBlocked === 1
+  );
+}
+
+
+
+
+
 function getErrorMessage(error, fallback = "Something went wrong") {
   return (
     error?.response?.data?.msg ||
@@ -845,6 +860,109 @@ if (form.photo) {
     }
   }
 
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// async function toggleTutorBlockStatus(tutor) {
+//   try {
+//     const nextBlocked = !isTutorBlocked(tutor);
+
+//     const { data } = await api.patch(`/admin/tuter/block/${tutor._id}`, {
+//       isBlocked: nextBlocked,
+//     });
+
+//     setTutors((prev) =>
+//       prev.map((item) =>
+//         item._id === tutor._id
+//           ? {
+//               ...item,
+//               isBlocked: data?.tuter?.isBlocked ?? nextBlocked,
+//             }
+//           : item
+//       )
+//     );
+
+//     setMenuOpenId(null);
+
+//     showAlert(
+//       nextBlocked
+//         ? "Tutor blocked successfully. Tutor cannot login now."
+//         : "Tutor unblocked successfully. Tutor can login now.",
+//       "success"
+//     );
+//   } catch (err) {
+//     showAlert(getErrorMessage(err, "Failed to update tutor block status"), "error");
+//   }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+async function toggleTutorBlockStatus(tutor) {
+  try {
+    const nextBlocked = !isTutorBlocked(tutor);
+
+    const { data } = await api.patch(`/admin/tuter/block/${tutor._id}`, {
+      isBlocked: nextBlocked,
+    });
+
+    setTutors((prev) =>
+      prev.map((item) =>
+        item._id === tutor._id
+          ? {
+              ...item,
+              isBlocked: data?.tuter?.isBlocked ?? nextBlocked,
+            }
+          : item
+      )
+    );
+
+    setMenuOpenId(null);
+
+    showAlert(
+      nextBlocked
+        ? "Tutor blocked successfully"
+        : "Tutor unblocked successfully",
+      "success"
+    );
+  } catch (err) {
+    showAlert(getErrorMessage(err, "Failed to update block status"), "error");
+  }
+}
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     <div className="tutor-page" onClick={() => setMenuOpenId(null)}>
       <div className="tutor-toolbar" onClick={(e) => e.stopPropagation()}>
@@ -869,15 +987,73 @@ if (form.photo) {
       ) : (
         <div className="tutor-grid">
           {filteredTutors.map((tutor) => {
+            // const active = isTutorActive(tutor);
+
+            // return (
+            //   <article
+            //     key={tutor._id}
+            //     className={`tutor-card ${!active ? "tutor-card--inactive" : ""}`}
+            //     onClick={(e) => e.stopPropagation()}
+            //   >
+            //     {!active && <span className="inactive-badge">Inactive</span>}
+
+
+
+
             const active = isTutorActive(tutor);
 
-            return (
-              <article
-                key={tutor._id}
-                className={`tutor-card ${!active ? "tutor-card--inactive" : ""}`}
-                onClick={(e) => e.stopPropagation()}
-              >
-                {!active && <span className="inactive-badge">Inactive</span>}
+return (
+  // <article
+  //   key={tutor._id}
+  //   className={`tutor-card ${
+  //     isTutorBlocked(tutor)
+  //       ? "tutor-card--blocked"
+  //       : !active
+  //       ? "tutor-card--inactive"
+  //       : ""
+  //   }`}
+  //   onClick={(e) => e.stopPropagation()}
+  // >
+
+
+
+
+
+<article
+  key={tutor._id}
+  className={`tutor-card ${
+    isTutorBlocked(tutor)
+      ? "tutor-card--blocked"
+      : !isTutorActive(tutor)
+      ? "tutor-card--inactive"
+      : ""
+  }`}
+  onClick={(e) => e.stopPropagation()}
+>
+
+
+
+
+    {/* {isTutorBlocked(tutor) ? (
+      <span className="blocked-badge">Blocked</span>
+    ) : !active ? (
+      <span className="inactive-badge">Inactive</span>
+    ) : null} */}
+
+
+
+
+
+{isTutorBlocked(tutor) ? (
+  <span className="blocked-badge">Blocked</span>
+) : !isTutorActive(tutor) ? (
+  <span className="inactive-badge">Inactive</span>
+) : null}
+
+
+
+
+
 
                 <div className="tutor-menu-wrap">
                   <button
@@ -913,6 +1089,22 @@ if (form.photo) {
                       <button type="button" onClick={() => toggleStatus(tutor)}>
                         {active ? "⏻ Deactive" : "✓ Active"}
                       </button>
+
+
+{/* <button type="button" onClick={() => toggleTutorBlockStatus(tutor)}>
+  {isTutorBlocked(tutor) ? "🔓 Unblock" : "⛔ Block"}
+</button> */}
+
+
+
+
+
+<button type="button" onClick={() => toggleTutorBlockStatus(tutor)}>
+  {isTutorBlocked(tutor) ? "🔓 Unblock" : "⛔ Block"}
+</button>
+
+
+
                     </div>
                   )}
                 </div>
