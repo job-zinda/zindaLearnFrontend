@@ -212,11 +212,11 @@ const content = {
     body: [
       "Introduction",
 
-      "https://zinda-learn-frontend-rntj.vercel.app/student/settings is an online school platform designed to help students learn from home by connecting them with tutors, online classes, study support, and learning resources. The platform provides digital learning services for school students across different subjects and levels.",
+      "https://www.zindaonlineschool.com/student/settings is an online school platform designed to help students learn from home by connecting them with tutors, online classes, study support, and learning resources. The platform provides digital learning services for school students across different subjects and levels.",
 
       "General",
 
-      "https://zinda-learn-frontend-rntj.vercel.app/student/settings, hereinafter referred to as the Website, is owned and operated by Zinda Learn, an online education service provider. By accessing or using the Website, you agree that you have read, understood, and accepted these Terms and Conditions, along with the Privacy Policy and other policies of the platform.",
+      "https://www.zindaonlineschool.com/student/settings, hereinafter referred to as the Website, is owned and operated by Zinda Learn, an online education service provider. By accessing or using the Website, you agree that you have read, understood, and accepted these Terms and Conditions, along with the Privacy Policy and other policies of the platform.",
 
       "These Terms form a legally binding agreement between you, the User, and Zinda Learn, the Company. The terms We, Us, and Our shall refer to Zinda Learn. The terms You, Your, and User shall refer to any person visiting, accessing, browsing, registering, or using the Website.",
 
