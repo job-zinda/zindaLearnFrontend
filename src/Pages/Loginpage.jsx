@@ -410,13 +410,13 @@ export default function LoginPage() {
               <li>Student-teacher interaction</li>
             </ul>
 
-            <button className="zs-contact-btn" type="button">
-<a
+           <a
   href="https://wa.me/message/XTRJLU7IXTBHI1"
   style={{ color: "#fff", textDecoration: "none", fontWeight: "800" }}
->
+> <button className="zs-contact-btn" type="button">
+
   Contact us
-</a>            </button>
+           </button></a>
           </div>
         </div>
 
