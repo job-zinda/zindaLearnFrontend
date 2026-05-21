@@ -125,9 +125,9 @@ function StudentFeedbackPreview() {
       </div>
 
       {loading ? (
-        <div className="state-card">Loading student reviews...</div>
+        <div className="state-card">Loading student feedbacks...</div>
       ) : feedbacks.length === 0 ? (
-        <div className="state-card">No student reviews found.</div>
+        <div className="state-card">No student feedbacks found.</div>
       ) : (
         <>
           <div className="home-feedback-slider">
