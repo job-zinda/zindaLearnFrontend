@@ -1192,6 +1192,25 @@ function isTutorActive(tutor) {
   );
 }
 
+
+
+
+
+
+function isTutorBlocked(tutor) {
+  return (
+    tutor?.isBlocked === true ||
+    tutor?.isBlocked === "true" ||
+    tutor?.isBlocked === 1
+  );
+}
+
+
+
+
+
+
+
 function getErrorMessage(error, fallback = "Something went wrong") {
   return (
     error?.response?.data?.msg ||
@@ -1620,6 +1639,61 @@ export default function AdminCourseTutorsPage() {
     }
   }
 
+
+
+
+
+
+
+
+
+
+async function toggleTutorBlockStatus(tutor) {
+  try {
+    const nextBlocked = !isTutorBlocked(tutor);
+
+    const { data } = await api.patch(`/admin/tuter/block/${tutor._id}`, {
+      isBlocked: nextBlocked,
+    });
+
+    setTutors((prev) =>
+      prev.map((item) =>
+        item._id === tutor._id
+          ? {
+              ...item,
+              isBlocked: data?.tuter?.isBlocked ?? nextBlocked,
+            }
+          : item
+      )
+    );
+
+    setAllTutors((prev) =>
+      prev.map((item) =>
+        item._id === tutor._id
+          ? {
+              ...item,
+              isBlocked: data?.tuter?.isBlocked ?? nextBlocked,
+            }
+          : item
+      )
+    );
+
+    setMenuOpenId(null);
+
+    showAlert(
+      nextBlocked ? "Tutor blocked successfully" : "Tutor unblocked successfully",
+      "success"
+    );
+  } catch (err) {
+    showAlert(getErrorMessage(err, "Failed to update block status"), "error");
+  }
+}
+
+
+
+
+
+
   function goToDetails(tutor) {
     navigate(`/admin/tutors/${tutor._id}`, {
       state: {
@@ -1662,10 +1736,31 @@ export default function AdminCourseTutorsPage() {
             return (
               <article
                 key={tutor._id}
-                className={`tutor-card ${!active ? "tutor-card--inactive" : ""}`}
+                // className={`tutor-card ${!active ? "tutor-card--inactive" : ""}`}
+
+
+className={`tutor-card ${
+  isTutorBlocked(tutor)
+    ? "tutor-card--blocked"
+    : !active
+    ? "tutor-card--inactive"
+    : ""
+}`}
+
+
                 onClick={(e) => e.stopPropagation()}
               >
-                {!active && <span className="inactive-badge">Inactive</span>}
+                {/* {!active && <span className="inactive-badge">Inactive</span>} */}
+
+
+{isTutorBlocked(tutor) ? (
+  <span className="blocked-badge">Blocked</span>
+) : !active ? (
+  <span className="inactive-badge">Inactive</span>
+) : null}
+
+
+
 
                 <div className="tutor-menu-wrap">
                   <button
@@ -1679,29 +1774,67 @@ export default function AdminCourseTutorsPage() {
                   </button>
 
                   {menuOpenId === tutor._id && (
-                    <div className="tutor-menu">
-                      <button type="button" onClick={() => openEditModal(tutor)}>
-                        ✎ Edit
-                      </button>
+                    // <div className="tutor-menu">
+                    //   <button type="button" onClick={() => openEditModal(tutor)}>
+                    //     ✎ Edit
+                    //   </button>
 
-                      <button type="button" onClick={() => askDeleteTutor(tutor)}>
-                        🗑 Delete
-                      </button>
+                    //   <button type="button" onClick={() => askDeleteTutor(tutor)}>
+                    //     🗑 Delete
+                    //   </button>
 
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setMenuOpenId(null);
-                          shareTutorLink(tutor, showAlert);
-                        }}
-                      >
-                        ↗ Share
-                      </button>
+                    //   <button
+                    //     type="button"
+                    //     onClick={() => {
+                    //       setMenuOpenId(null);
+                    //       shareTutorLink(tutor, showAlert);
+                    //     }}
+                    //   >
+                    //     ↗ Share
+                    //   </button>
 
-                      <button type="button" onClick={() => toggleStatus(tutor)}>
-                        {active ? "⏻ Deactive" : "✓ Active"}
-                      </button>
-                    </div>
+                    //   <button type="button" onClick={() => toggleStatus(tutor)}>
+                    //     {active ? "⏻ Deactive" : "✓ Active"}
+                    //   </button>
+                    // </div>
+
+
+
+
+
+<div className="tutor-menu">
+  <button type="button" onClick={() => openEditModal(tutor)}>
+    ✎ Edit
+  </button>
+
+  <button
+    type="button"
+    onClick={() => {
+      setMenuOpenId(null);
+      shareTutorLink(tutor, showAlert);
+    }}
+  >
+    ↗ Share
+  </button>
+
+  <button type="button" onClick={() => toggleStatus(tutor)}>
+    {active ? "⏻ Deactive" : "✓ Active"}
+  </button>
+
+  <button type="button" onClick={() => toggleTutorBlockStatus(tutor)}>
+    {isTutorBlocked(tutor) ? "🔓 Unblock" : "⛔ Block"}
+  </button>
+
+  <button type="button" onClick={() => askDeleteTutor(tutor)}>
+    🗑 Delete
+  </button>
+</div>
+
+
+
+
+
+
                   )}
                 </div>
 
