@@ -2377,7 +2377,7 @@ async function toggleTutorBlock() {
       </button>
 
       <button type="button" onClick={toggleTutorBlock}>
-        ⛔ {isTutorBlocked(tutor) ? "Unblock" : "Block"}
+        ⊘ {isTutorBlocked(tutor) ? "Unblock" : "Block"}
       </button>
 
       <button

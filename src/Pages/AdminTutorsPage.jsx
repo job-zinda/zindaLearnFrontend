@@ -1090,7 +1090,7 @@ return (
 
 
 {/* <button type="button" onClick={() => toggleTutorBlockStatus(tutor)}>
-  {isTutorBlocked(tutor) ? "🔓 Unblock" : "⛔ Block"}
+  {isTutorBlocked(tutor) ? "◯ Unblock" : "⊘ Block"}
 </button> */}
 
 
@@ -1098,7 +1098,7 @@ return (
 
 
 <button type="button" onClick={() => toggleTutorBlockStatus(tutor)}>
-  {isTutorBlocked(tutor) ? "🔓 Unblock" : "⛔ Block"}
+  {isTutorBlocked(tutor) ? "◯ Unblock" : "⊘ Block"}
 </button>
 
 

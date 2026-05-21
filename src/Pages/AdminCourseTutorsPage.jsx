@@ -1822,7 +1822,7 @@ className={`tutor-card ${
   </button>
 
   <button type="button" onClick={() => toggleTutorBlockStatus(tutor)}>
-    {isTutorBlocked(tutor) ? "🔓 Unblock" : "⛔ Block"}
+    {isTutorBlocked(tutor) ? "◯ Unblock" : "⊘ Block"}
   </button>
 
   <button type="button" onClick={() => askDeleteTutor(tutor)}>
