@@ -129,7 +129,19 @@ export default function StudentCourseTutorsPage() {
               <button
                 type="button"
                 className="student-course-view-details-btn"
-                onClick={() => navigate(`/student/tutors/${tutor._id}`)}
+                // onClick={() => navigate(`/student/tutors/${tutor._id}`)}
+
+
+                onClick={() =>
+  navigate(`/student/tutors/${tutor._id}`, {
+    state: {
+      backTo: `/student/courses/${categoryId}/tutors/${courseId}`,
+      courseName,
+    },
+  })
+}
+
+
               >
                 View Details
               </button>

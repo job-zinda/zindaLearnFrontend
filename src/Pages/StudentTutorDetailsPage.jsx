@@ -2,7 +2,9 @@
 
 
 import React, { useEffect, useMemo, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+// import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+
 import Modal from "../Components/Modal";
 import api from "../api/axios";
 import { useAlert } from "../context/AlertContext";
@@ -142,6 +144,16 @@ function ReviewCard({ review }) {
 export default function StudentTutorDetailsPage() {
   const { tuterId } = useParams();
   const navigate = useNavigate();
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const location = useLocation();
+
+const backTo = location.state?.backTo || "/student/tutors";
+const backLabel = location.state?.courseName || "View details";
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   const { showAlert } = useAlert();
 
   const [tutor, setTutor] = useState(null);
@@ -293,11 +305,25 @@ export default function StudentTutorDetailsPage() {
   return (
     <div className="student-detail-page">
       <div className="student-detail-breadcrumb">
-        <button type="button" onClick={() => navigate("/student/tutors")}>
+        {/* <button type="button" onClick={() => navigate("/student/tutors")}>
           ← Tutors
         </button>
         <span>»</span>
-        <b>View details</b>
+        <b>View details</b> */}
+
+
+
+
+
+<button type="button" onClick={() => navigate(backTo)}>
+  ← Tutors
+</button>
+<span>»</span>
+<b>{backLabel}</b>
+
+
+
+
       </div>
 
       <div className="student-detail-card">
