@@ -367,13 +367,266 @@
 
 
 
+// import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+// import ProtectedRoute from "./Components/ProtectedRoute";
+
+// /* ---------------- ADMIN ---------------- */
+
+// import AdminLayout from "./Components/AdminLayout";
+
+// import LoginPage from "./Pages/Loginpage";
+// import AdminHome from "./Pages/AdminHome";
+// import AdminCoursesPage from "./Pages/AdminCoursesPage";
+// import AdminTutorsPage from "./Pages/AdminTutorsPage";
+// import AdminTutorDetailsPage from "./Pages/AdminTutorDetailsPage";
+// import AdminCourseTutorsPage from "./Pages/AdminCourseTutorsPage";
+// import AdminStudentsPage from "./Pages/AdminStudentsPage";
+// import AdminChatPage from "./Pages/AdminChatPage";
+// import AdminDashboardPage from "./Pages/AdminDashboardPage";
+// import AdminSettingsPage from "./Pages/AdminSettingsPage";
+// import AdminFeedbackPage from "./Pages/AdminFeedbackPage";
+
+// /* ---------------- STUDENT ---------------- */
+
+// import StudentLayout from "./Components/StudentLayout";
+
+// import StudentHome from "./Pages/StudentHome";
+// import StudentTutorsPage from "./Pages/StudentTutorsPage";
+// import StudentTutorDetailsPage from "./Pages/StudentTutorDetailsPage";
+// import StudentCoursesPage from "./Pages/StudentCoursesPage";
+// import StudentCourseTutorsPage from "./Pages/StudentCourseTutorsPage";
+// import StudentChatPage from "./Pages/StudentChatPage";
+// import StudentSettingsPage from "./Pages/StudentSettingsPage";
+
+// /* ---------------- TUTOR ---------------- */
+
+// import TutorLayout from "./Components/TutorLayout";
+
+// import TutorHomePage from "./Pages/TutorHomePage";
+// import TutorPlaceholderPage from "./Pages/TutorPlaceholderPage";
+
+// /* ---------------- CSS ---------------- */
+
+// import "./style/admin-layout.css";
+
+// /* admin css */
+
+// import "./Pages/AdminCoursesPage.css";
+// import "./Pages/AdminTutorsPage.css";
+// import "./Pages/AdminTutorDetailsPage.css";
+// import "./Pages/AdminStudentsPage.css";
+// import "./Pages/AdminChatPage.css";
+// import "./Pages/AdminDashboardPage.css";
+// import "./Pages/AdminSettingsPage.css";
+// import "./Pages/AdminFeedbackPage.css";
+
+// /* student css */
+
+// import "./Pages/StudentHome.css";
+// import "./Pages/StudentTutorsPage.css";
+// import "./Pages/StudentTutorDetailsPage.css";
+// import "./Pages/StudentCoursesPage.css";
+// import "./Pages/StudentCourseTutorsPage.css";
+// import "./Pages/StudentChatPage.css";
+// import "./Pages/StudentSettingsPage.css";
+
+// import "./Components/StudentBannerSection.css";
+// import "./Components/StudentCategorySection.css";
+
+// /* tutor css */
+
+// import "./Pages/TutorHomePage.css";
+// import "./Pages/TutorPlaceholderPage.css";
+
+// import "./Components/TutorBannerSection.css";
+// import "./Components/TutorCategorySection.css";
+
+// export default function App() {
+//   return (
+//     <BrowserRouter>
+//       <Routes>
+
+//         {/* ---------------- LOGIN ---------------- */}
+
+//         <Route path="/" element={<LoginPage />} />
+//         <Route path="/invite-login" element={<LoginPage />} />
+
+//         {/* ---------------- ADMIN ---------------- */}
+
+//         <Route
+//           path="/admin"
+//           element={
+//             <ProtectedRoute allowedRole="admin">
+//               <AdminLayout />
+//             </ProtectedRoute>
+//           }
+//         >
+//           <Route index element={<AdminHome />} />
+
+//           <Route path="dashboard" element={<AdminDashboardPage />} />
+
+//           <Route path="students" element={<AdminStudentsPage />} />
+
+//           <Route path="tutors" element={<AdminTutorsPage />} />
+
+//           <Route
+//             path="tutors/:tuterId"
+//             element={<AdminTutorDetailsPage />}
+//           />
+
+//           <Route
+//             path="courses/:categoryId"
+//             element={<AdminCoursesPage />}
+//           />
+
+//           <Route
+//             path="courses/:categoryId/tutors/:courseId"
+//             element={<AdminCourseTutorsPage />}
+//           />
+
+//           <Route path="reviews" element={<AdminFeedbackPage />} />
+
+//           <Route path="chats" element={<AdminChatPage />} />
+
+//           <Route path="settings" element={<AdminSettingsPage />} />
+//         </Route>
+
+//         {/* ---------------- STUDENT ---------------- */}
+
+//         <Route
+//           path="/student"
+//           element={
+//             <ProtectedRoute allowedRole="student">
+//               <StudentLayout />
+//             </ProtectedRoute>
+//           }
+//         >
+//           <Route index element={<StudentHome />} />
+
+//           <Route
+//             path="courses/:categoryId"
+//             element={<StudentCoursesPage />}
+//           />
+
+//           <Route
+//             path="courses/:categoryId/tutors/:courseId"
+//             element={<StudentCourseTutorsPage />}
+//           />
+
+//           <Route path="tutors" element={<StudentTutorsPage />} />
+
+//           <Route
+//             path="tutors/:tuterId"
+//             element={<StudentTutorDetailsPage />}
+//           />
+
+//           <Route path="chats" element={<StudentChatPage />} />
+
+//           <Route path="settings" element={<StudentSettingsPage />} />
+//         </Route>
+
+//         {/* ---------------- TUTOR ---------------- */}
+
+//         <Route
+//           path="/tutor"
+//           element={
+//             <ProtectedRoute allowedRole="tutor">
+//               <TutorLayout />
+//             </ProtectedRoute>
+//           }
+//         >
+//           <Route index element={<TutorHomePage />} />
+
+//           <Route
+//             path="tutors"
+//             element={<TutorPlaceholderPage title="Tutors" />}
+//           />
+
+//           <Route
+//             path="about"
+//             element={<TutorPlaceholderPage title="About" />}
+//           />
+
+//           <Route
+//             path="chats"
+//             element={<TutorPlaceholderPage title="Chats" />}
+//           />
+
+//           <Route
+//             path="settings"
+//             element={<TutorPlaceholderPage title="Settings" />}
+//           />
+//         </Route>
+
+//         {/* ---------------- FALLBACK ---------------- */}
+
+//         <Route path="*" element={<Navigate to="/" replace />} />
+
+//       </Routes>
+//     </BrowserRouter>
+//   );
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import ProtectedRoute from "./Components/ProtectedRoute";
 
-/* ---------------- ADMIN ---------------- */
-
+/* ADMIN */
 import AdminLayout from "./Components/AdminLayout";
-
 import LoginPage from "./Pages/Loginpage";
 import AdminHome from "./Pages/AdminHome";
 import AdminCoursesPage from "./Pages/AdminCoursesPage";
@@ -386,10 +639,8 @@ import AdminDashboardPage from "./Pages/AdminDashboardPage";
 import AdminSettingsPage from "./Pages/AdminSettingsPage";
 import AdminFeedbackPage from "./Pages/AdminFeedbackPage";
 
-/* ---------------- STUDENT ---------------- */
-
+/* STUDENT */
 import StudentLayout from "./Components/StudentLayout";
-
 import StudentHome from "./Pages/StudentHome";
 import StudentTutorsPage from "./Pages/StudentTutorsPage";
 import StudentTutorDetailsPage from "./Pages/StudentTutorDetailsPage";
@@ -398,18 +649,14 @@ import StudentCourseTutorsPage from "./Pages/StudentCourseTutorsPage";
 import StudentChatPage from "./Pages/StudentChatPage";
 import StudentSettingsPage from "./Pages/StudentSettingsPage";
 
-/* ---------------- TUTOR ---------------- */
-
+/* TUTOR */
 import TutorLayout from "./Components/TutorLayout";
-
 import TutorHomePage from "./Pages/TutorHomePage";
+import TutorCoursesPage from "./Pages/TutorCoursesPage";
 import TutorPlaceholderPage from "./Pages/TutorPlaceholderPage";
 
-/* ---------------- CSS ---------------- */
-
+/* CSS */
 import "./style/admin-layout.css";
-
-/* admin css */
 
 import "./Pages/AdminCoursesPage.css";
 import "./Pages/AdminTutorsPage.css";
@@ -419,8 +666,6 @@ import "./Pages/AdminChatPage.css";
 import "./Pages/AdminDashboardPage.css";
 import "./Pages/AdminSettingsPage.css";
 import "./Pages/AdminFeedbackPage.css";
-
-/* student css */
 
 import "./Pages/StudentHome.css";
 import "./Pages/StudentTutorsPage.css";
@@ -433,9 +678,8 @@ import "./Pages/StudentSettingsPage.css";
 import "./Components/StudentBannerSection.css";
 import "./Components/StudentCategorySection.css";
 
-/* tutor css */
-
 import "./Pages/TutorHomePage.css";
+import "./Pages/TutorCoursesPage.css";
 import "./Pages/TutorPlaceholderPage.css";
 
 import "./Components/TutorBannerSection.css";
@@ -445,13 +689,8 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-
-        {/* ---------------- LOGIN ---------------- */}
-
         <Route path="/" element={<LoginPage />} />
         <Route path="/invite-login" element={<LoginPage />} />
-
-        {/* ---------------- ADMIN ---------------- */}
 
         <Route
           path="/admin"
@@ -462,36 +701,19 @@ export default function App() {
           }
         >
           <Route index element={<AdminHome />} />
-
           <Route path="dashboard" element={<AdminDashboardPage />} />
-
           <Route path="students" element={<AdminStudentsPage />} />
-
           <Route path="tutors" element={<AdminTutorsPage />} />
-
-          <Route
-            path="tutors/:tuterId"
-            element={<AdminTutorDetailsPage />}
-          />
-
-          <Route
-            path="courses/:categoryId"
-            element={<AdminCoursesPage />}
-          />
-
+          <Route path="tutors/:tuterId" element={<AdminTutorDetailsPage />} />
+          <Route path="courses/:categoryId" element={<AdminCoursesPage />} />
           <Route
             path="courses/:categoryId/tutors/:courseId"
             element={<AdminCourseTutorsPage />}
           />
-
           <Route path="reviews" element={<AdminFeedbackPage />} />
-
           <Route path="chats" element={<AdminChatPage />} />
-
           <Route path="settings" element={<AdminSettingsPage />} />
         </Route>
-
-        {/* ---------------- STUDENT ---------------- */}
 
         <Route
           path="/student"
@@ -502,30 +724,16 @@ export default function App() {
           }
         >
           <Route index element={<StudentHome />} />
-
-          <Route
-            path="courses/:categoryId"
-            element={<StudentCoursesPage />}
-          />
-
+          <Route path="courses/:categoryId" element={<StudentCoursesPage />} />
           <Route
             path="courses/:categoryId/tutors/:courseId"
             element={<StudentCourseTutorsPage />}
           />
-
           <Route path="tutors" element={<StudentTutorsPage />} />
-
-          <Route
-            path="tutors/:tuterId"
-            element={<StudentTutorDetailsPage />}
-          />
-
+          <Route path="tutors/:tuterId" element={<StudentTutorDetailsPage />} />
           <Route path="chats" element={<StudentChatPage />} />
-
           <Route path="settings" element={<StudentSettingsPage />} />
         </Route>
-
-        {/* ---------------- TUTOR ---------------- */}
 
         <Route
           path="/tutor"
@@ -536,32 +744,26 @@ export default function App() {
           }
         >
           <Route index element={<TutorHomePage />} />
-
+          <Route path="courses/:categoryId" element={<TutorCoursesPage />} />
           <Route
             path="tutors"
             element={<TutorPlaceholderPage title="Tutors" />}
           />
-
           <Route
             path="about"
             element={<TutorPlaceholderPage title="About" />}
           />
-
           <Route
             path="chats"
             element={<TutorPlaceholderPage title="Chats" />}
           />
-
           <Route
             path="settings"
             element={<TutorPlaceholderPage title="Settings" />}
           />
         </Route>
 
-        {/* ---------------- FALLBACK ---------------- */}
-
         <Route path="*" element={<Navigate to="/" replace />} />
-
       </Routes>
     </BrowserRouter>
   );
