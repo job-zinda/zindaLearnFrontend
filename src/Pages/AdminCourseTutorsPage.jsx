@@ -1694,24 +1694,65 @@ async function toggleTutorBlockStatus(tutor) {
 
 
 
-  function goToDetails(tutor) {
-    navigate(`/admin/tutors/${tutor._id}`, {
-      state: {
-        backTo: `/admin/courses/${categoryId}/tutors/${courseId}`,
-        courseName,
-      },
-    });
-  }
+  // function goToDetails(tutor) {
+  //   navigate(`/admin/tutors/${tutor._id}`, {
+  //     state: {
+  //       backTo: `/admin/courses/${categoryId}/tutors/${courseId}`,
+  //       courseName,
+  //     },
+  //   });
+  // }
+
+
+
+
+
+function goToDetails(tutor) {
+  navigate(`/admin/tutors/${tutor._id}`, {
+    state: {
+      backTo: `/admin/courses/${categoryId}/tutors/${courseId}`,
+      backLabel: "View details",
+      courseName,
+    },
+  });
+}
+
+
+// const backTo = location.state?.backTo || "/admin/tutors";
+// const backLabel = location.state?.courseName || "View details";
+
+
+
+
 
   return (
     <div className="tutor-page" onClick={() => setMenuOpenId(null)}>
-      <div className="detail-breadcrumb">
+      {/* <div className="detail-breadcrumb">
         <button type="button" onClick={() => navigate(backTo)}>
           ← Tutors
         </button>
         <span>»</span>
         <b>{courseName}</b>
-      </div>
+      </div> */}
+
+
+
+
+
+
+
+<div className="detail-breadcrumb">
+  <button type="button" onClick={() => navigate(backTo)}>
+    ← Courses
+  </button>
+  <span>»</span>
+  <b>{courseName}</b>
+</div>
+
+
+
+
+
 
       <div className="tutor-toolbar" onClick={(e) => e.stopPropagation()}>
         <div className="tutor-search">

@@ -1866,8 +1866,23 @@ export default function AdminTutorDetailsPage() {
   const location = useLocation();
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
+// const backTo = location.state?.backTo || "/admin/tutors";
+// const backLabel = location.state?.courseName || "View details";
+
+
+
+
+
+
+
 const backTo = location.state?.backTo || "/admin/tutors";
-const backLabel = location.state?.courseName || "View details";
+const backLabel = location.state?.backLabel || "View details";
+
+
+
+
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   const { showAlert } = useAlert();
