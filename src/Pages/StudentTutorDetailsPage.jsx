@@ -166,8 +166,25 @@ const savedBackData = (() => {
   }
 })();
 
-const backTo = location.state?.backTo || savedBackData?.backTo || "/student/tutors";
-const backLabel = location.state?.courseName || savedBackData?.courseName || "View details";
+// const backTo = location.state?.backTo || savedBackData?.backTo || "/student/tutors";
+// const backLabel = location.state?.courseName || savedBackData?.courseName || "View details";
+
+
+
+
+
+
+
+const backTo =
+  location.state?.backTo || savedBackData?.backTo || "/student/tutors";
+
+const backButtonLabel =
+  location.state?.backButtonLabel ||
+  savedBackData?.backButtonLabel ||
+  "Tutors";
+
+const backLabel =
+  location.state?.backLabel || savedBackData?.backLabel || "View details";
 
 
 
@@ -335,8 +352,22 @@ const backLabel = location.state?.courseName || savedBackData?.courseName || "Vi
 
 
 
-<button type="button" onClick={() => navigate(backTo)}>
+{/* <button type="button" onClick={() => navigate(backTo)}>
   ← Tutors
+</button>
+<span>»</span>
+<b>{backLabel}</b> */}
+
+
+
+
+
+
+
+
+
+<button type="button" onClick={() => navigate(backTo)}>
+  ← {backButtonLabel}
 </button>
 <span>»</span>
 <b>{backLabel}</b>

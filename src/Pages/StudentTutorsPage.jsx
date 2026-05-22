@@ -131,7 +131,7 @@ export default function StudentTutorsPage() {
 
 
 
-<button
+{/* <button
   type="button"
   className="student-view-details-btn"
   onClick={() => {
@@ -148,7 +148,39 @@ export default function StudentTutorsPage() {
   }}
 >
   View Details
+</button> */}
+
+
+
+
+
+
+
+
+<button
+  type="button"
+  className="student-view-details-btn"
+  onClick={() => {
+    const backData = {
+      backTo: "/student/tutors",
+      backButtonLabel: "Tutors",
+      backLabel: "View details",
+    };
+
+    sessionStorage.setItem("studentTutorBackData", JSON.stringify(backData));
+
+    navigate(`/student/tutors/${tutor._id}`, {
+      state: backData,
+    });
+  }}
+>
+  View Details
 </button>
+
+
+
+
+
 
 
 
