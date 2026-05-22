@@ -1,0 +1,192 @@
+.tutor-home-page {
+  width: 100%;
+  background: transparent;
+  color: #ffffff;
+}
+
+.tutor-home-stack {
+  display: grid;
+  gap: 42px;
+}
+
+.tutor-home-feedback-section {
+  width: 100%;
+  padding-bottom: 40px;
+}
+
+.tutor-home-feedback-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.tutor-home-feedback-header h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 950;
+}
+
+.tutor-home-feedback-slider {
+  width: 100%;
+  overflow: hidden;
+}
+
+.tutor-home-feedback-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  animation: tutorFeedbackSlideIn 0.7s ease;
+}
+
+@keyframes tutorFeedbackSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(80px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.tutor-home-feedback-card {
+  background: linear-gradient(145deg, #111633, #080b22);
+  border-radius: 22px;
+  padding: 24px;
+  min-height: 190px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.28);
+  transition: 0.28s ease;
+}
+
+.tutor-home-feedback-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 22px 48px rgba(217, 70, 239, 0.22);
+}
+
+.tutor-home-feedback-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.tutor-home-feedback-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.tutor-home-feedback-avatar {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba(217, 70, 239, 0.12);
+  border: 2px solid rgba(217, 70, 239, 0.35);
+  display: grid;
+  place-items: center;
+}
+
+.tutor-home-feedback-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tutor-home-feedback-avatar span {
+  color: #d946ef;
+  font-size: 23px;
+  font-weight: 950;
+}
+
+.tutor-home-feedback-user h3 {
+  margin: 0 0 4px;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 950;
+  word-break: break-word;
+}
+
+.tutor-home-feedback-stars {
+  display: flex;
+  gap: 2px;
+  white-space: nowrap;
+}
+
+.tutor-home-feedback-stars span {
+  color: rgba(255, 255, 255, 0.22);
+  font-size: 18px;
+}
+
+.tutor-home-feedback-stars span.filled {
+  color: #f5b301;
+}
+
+.tutor-home-feedback-message {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.7;
+  word-break: break-word;
+}
+
+.tutor-home-feedback-state {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  padding: 36px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 900;
+}
+
+.tutor-home-feedback-dots {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.tutor-home-feedback-dot {
+  width: 10px;
+  height: 10px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.22);
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.tutor-home-feedback-dot.active {
+  width: 32px;
+  background: linear-gradient(135deg, #d946ef, #7c3aed);
+}
+
+@media (max-width: 1200px) {
+  .tutor-home-feedback-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .tutor-home-stack {
+    gap: 30px;
+  }
+
+  .tutor-home-feedback-row {
+    grid-template-columns: 1fr;
+  }
+
+  .tutor-home-feedback-header h2 {
+    font-size: 26px;
+  }
+}

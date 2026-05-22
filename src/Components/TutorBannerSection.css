@@ -1,0 +1,273 @@
+/* .tutor-banner-section {
+  width: 100%;
+}
+
+.tutor-banner-head {
+  margin-bottom: 22px;
+}
+
+.tutor-banner-head h2 {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 950;
+  color: #ffffff;
+}
+
+.tutor-banner-head p {
+  margin: 8px 0 0;
+  font-size: 16px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.tutor-banner-wrapper,
+.tutor-banner-carousel {
+  width: 100%;
+}
+
+.tutor-banner-card {
+  position: relative;
+  width: 100%;
+  height: 430px;
+  border-radius: 28px;
+  overflow: hidden;
+  background: #111633;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+
+.tutor-banner-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tutor-banner-title {
+  position: absolute;
+  left: 28px;
+  bottom: 28px;
+  background: rgba(7, 10, 32, 0.72);
+  color: #ffffff;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-weight: 900;
+}
+
+.tutor-banner-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.tutor-banner-dot {
+  width: 12px;
+  height: 8px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  cursor: pointer;
+}
+
+.tutor-banner-dot--active {
+  width: 42px;
+  background: linear-gradient(135deg, #d946ef, #7c3aed);
+}
+
+.tutor-state-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  padding: 36px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.72);
+  font-weight: 900;
+}
+
+@media (max-width: 900px) {
+  .tutor-banner-card {
+    height: 280px;
+    border-radius: 22px;
+  }
+
+  .tutor-banner-head h2 {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 560px) {
+  .tutor-banner-card {
+    height: 220px;
+  }
+} */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.tutor-banner-section {
+  width: 100%;
+}
+
+.tutor-banner-head {
+  margin-bottom: 22px;
+}
+
+.tutor-banner-head h2 {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 950;
+  color: #ffffff;
+}
+
+.tutor-banner-head p {
+  margin: 8px 0 0;
+  font-size: 16px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.tutor-banner-wrapper,
+.tutor-banner-carousel {
+  width: 100%;
+}
+
+.tutor-banner-card {
+  position: relative;
+  width: 100%;
+  height: 430px;
+  border-radius: 28px;
+  overflow: hidden;
+  background: #111633;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+
+.tutor-banner-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tutor-banner-title {
+  position: absolute;
+  left: 28px;
+  bottom: 28px;
+  background: rgba(7, 10, 32, 0.72);
+  color: #ffffff;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-weight: 900;
+}
+
+.tutor-banner-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.tutor-banner-dot {
+  width: 12px;
+  height: 8px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  cursor: pointer;
+}
+
+.tutor-banner-dot--active {
+  width: 42px;
+  background: linear-gradient(135deg, #d946ef, #7c3aed);
+}
+
+.tutor-state-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  padding: 36px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.72);
+  font-weight: 900;
+}
+
+@media (max-width: 900px) {
+  .tutor-banner-card {
+    height: 280px;
+    border-radius: 22px;
+  }
+
+  .tutor-banner-head h2 {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 560px) {
+  .tutor-banner-card {
+    height: 220px;
+  }
+}
