@@ -43,7 +43,40 @@ export default function StudentCourseTutorsPage() {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
 
-  const courseName = location.state?.courseName || "Tutors";
+  // const courseName = location.state?.courseName || "Tutors";
+
+
+
+
+
+
+const savedCourseData = (() => {
+  try {
+    return JSON.parse(sessionStorage.getItem(`studentCourseTutor_${courseId}`) || "{}");
+  } catch {
+    return {};
+  }
+})();
+
+const courseName =
+  location.state?.courseName ||
+  savedCourseData?.courseName ||
+  "Selected Course";
+
+useEffect(() => {
+  if (courseName && courseName !== "Selected Course") {
+    sessionStorage.setItem(
+      `studentCourseTutor_${courseId}`,
+      JSON.stringify({ courseName })
+    );
+  }
+}, [courseId, courseName]);
+
+
+
+
+
+
 
   async function fetchTutors() {
     try {
@@ -84,7 +117,16 @@ export default function StudentCourseTutorsPage() {
            ← Courses
         </button>
         <span>»</span>
-        <b>{courseName}</b>
+        {/* <b>{courseName}</b> */}
+
+
+<b>{courseName} tutors</b>
+
+
+
+
+
+
       </div>
 
       <div className="student-course-tutors-search">
@@ -176,12 +218,28 @@ onClick={() => {
   type="button"
   className="student-course-view-details-btn"
   onClick={() => {
-    const backData = {
-      backTo: `/student/courses/${categoryId}/tutors/${courseId}`,
-      backButtonLabel: "Tutors",
-      backLabel: "View details",
-      courseName: courseName || "Selected Course",
-    };
+    // const backData = {
+    //   backTo: `/student/courses/${categoryId}/tutors/${courseId}`,
+    //   backButtonLabel: "Tutors",
+    //   backLabel: "View details",
+    //   courseName: courseName || "Selected Course",
+    // };
+
+
+
+
+
+
+const backData = {
+  backTo: `/student/courses/${categoryId}/tutors/${courseId}`,
+  backButtonLabel: "Tutors",
+  backLabel: "View details",
+  courseName: courseName || "Selected Course",
+};
+
+
+
+
 
     sessionStorage.setItem("studentTutorBackData", JSON.stringify(backData));
 

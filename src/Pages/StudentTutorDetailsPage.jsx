@@ -366,7 +366,34 @@ const backLabel =
 
 
 
-<button type="button" onClick={() => navigate(backTo)}>
+{/* <button type="button" onClick={() => navigate(backTo)}>
+  ← {backButtonLabel}
+</button>
+<span>»</span>
+<b>{backLabel}</b> */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+<button
+  type="button"
+  onClick={() =>
+    navigate(backTo, {
+      state: {
+        courseName: location.state?.courseName || savedBackData?.courseName,
+      },
+    })
+  }
+>
   ← {backButtonLabel}
 </button>
 <span>»</span>
