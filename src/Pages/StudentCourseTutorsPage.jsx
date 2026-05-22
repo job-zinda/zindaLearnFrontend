@@ -43,34 +43,33 @@ export default function StudentCourseTutorsPage() {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
 
-  // const courseName = location.state?.courseName || "Tutors";
 
 
 
 
 
 
-const savedCourseData = (() => {
-  try {
-    return JSON.parse(sessionStorage.getItem(`studentCourseTutor_${courseId}`) || "{}");
-  } catch {
-    return {};
-  }
-})();
+  const savedCourseData = (() => {
+    try {
+      return JSON.parse(sessionStorage.getItem(`studentCourseTutor_${courseId}`) || "{}");
+    } catch {
+      return {};
+    }
+  })();
 
-const courseName =
-  location.state?.courseName ||
-  savedCourseData?.courseName ||
-  "Selected Course";
+  const courseName =
+    location.state?.courseName ||
+    savedCourseData?.courseName ||
+    "Selected Course";
 
-useEffect(() => {
-  if (courseName && courseName !== "Selected Course") {
-    sessionStorage.setItem(
-      `studentCourseTutor_${courseId}`,
-      JSON.stringify({ courseName })
-    );
-  }
-}, [courseId, courseName]);
+  useEffect(() => {
+    if (courseName && courseName !== "Selected Course") {
+      sessionStorage.setItem(
+        `studentCourseTutor_${courseId}`,
+        JSON.stringify({ courseName })
+      );
+    }
+  }, [courseId, courseName]);
 
 
 
@@ -114,13 +113,12 @@ useEffect(() => {
           type="button"
           onClick={() => navigate(`/student/courses/${categoryId}`)}
         >
-           ← Courses
+          ← Courses
         </button>
         <span>»</span>
-        {/* <b>{courseName}</b> */}
 
 
-<b>{courseName} tutors</b>
+        <b>{courseName} tutors</b>
 
 
 
@@ -168,20 +166,15 @@ useEffect(() => {
 
               <Stars rating={tutor.averageRating} />
 
-              {/* <button
+
+
+
+
+
+              <button
                 type="button"
                 className="student-course-view-details-btn"
-                // onClick={() => navigate(`/student/tutors/${tutor._id}`)}
-
-
-//                 onClick={() =>
-//   navigate(`/student/tutors/${tutor._id}`, {
-//     state: {
-//       backTo: `/student/courses/${categoryId}/tutors/${courseId}`,
-//       courseName,
-//     },
-//   })
-// }
+                onClick={() => {
 
 
 
@@ -189,67 +182,26 @@ useEffect(() => {
 
 
 
-onClick={() => {
-  const backData = {
-    backTo: `/student/courses/${categoryId}/tutors/${courseId}`,
-    courseName: courseName || "Selected Course",
-  };
-
-  sessionStorage.setItem("studentTutorBackData", JSON.stringify(backData));
-
-  navigate(`/student/tutors/${tutor._id}`, {
-    state: backData,
-  });
-}}
+                  const backData = {
+                    backTo: `/student/courses/${categoryId}/tutors/${courseId}`,
+                    backButtonLabel: "Tutors",
+                    backLabel: "View details",
+                    courseName: courseName || "Selected Course",
+                  };
 
 
 
 
 
+                  sessionStorage.setItem("studentTutorBackData", JSON.stringify(backData));
+
+                  navigate(`/student/tutors/${tutor._id}`, {
+                    state: backData,
+                  });
+                }}
               >
                 View Details
-              </button> */}
-
-
-
-
-
-<button
-  type="button"
-  className="student-course-view-details-btn"
-  onClick={() => {
-    // const backData = {
-    //   backTo: `/student/courses/${categoryId}/tutors/${courseId}`,
-    //   backButtonLabel: "Tutors",
-    //   backLabel: "View details",
-    //   courseName: courseName || "Selected Course",
-    // };
-
-
-
-
-
-
-const backData = {
-  backTo: `/student/courses/${categoryId}/tutors/${courseId}`,
-  backButtonLabel: "Tutors",
-  backLabel: "View details",
-  courseName: courseName || "Selected Course",
-};
-
-
-
-
-
-    sessionStorage.setItem("studentTutorBackData", JSON.stringify(backData));
-
-    navigate(`/student/tutors/${tutor._id}`, {
-      state: backData,
-    });
-  }}
->
-  View Details
-</button>
+              </button>
 
 
 
