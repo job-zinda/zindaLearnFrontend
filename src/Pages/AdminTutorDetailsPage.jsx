@@ -2301,8 +2301,8 @@ async function toggleTutorBlock() {
 
 
 
-        <span>»</span>
-        <b>View details</b>
+        {/* <span>»</span>
+        <b>View details</b> */}
       </div>
 
       <div className="detail-card">
