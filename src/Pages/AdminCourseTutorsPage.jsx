@@ -1296,8 +1296,44 @@ export default function AdminCourseTutorsPage() {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState(null);
 
-  const courseName = location.state?.courseName || "Selected Course";
-  const backTo = location.state?.backTo || `/admin/courses/${categoryId}`;
+  // const courseName = location.state?.courseName || "Selected Course";
+  // const backTo = location.state?.backTo || `/admin/courses/${categoryId}`;
+
+
+
+
+const savedCourseData = (() => {
+  try {
+    return JSON.parse(
+      sessionStorage.getItem(`adminCourseTutor_${courseId}`) || "{}"
+    );
+  } catch {
+    return {};
+  }
+})();
+
+const courseName =
+  location.state?.courseName ||
+  savedCourseData?.courseName ||
+  "Selected Course";
+
+const backTo = location.state?.backTo || `/admin/courses/${categoryId}`;
+
+useEffect(() => {
+  if (courseName && courseName !== "Selected Course") {
+    sessionStorage.setItem(
+      `adminCourseTutor_${courseId}`,
+      JSON.stringify({ courseName })
+    );
+  }
+}, [courseId, courseName]);
+
+
+
+
+
+
+
 
   const selectedCategories = useMemo(() => {
     return categories.filter((cat) =>
@@ -1707,13 +1743,41 @@ async function toggleTutorBlockStatus(tutor) {
 
 
 
-function goToDetails(tutor) {
+// function goToDetails(tutor) {
+//   navigate(`/admin/tutors/${tutor._id}`, {
+//     state: {
+//       backTo: `/admin/courses/${categoryId}/tutors/${courseId}`,
+//       backLabel: "View details",
+//       courseName,
+//     },
+//   });
+// }
+
+
+
+
+
+
+
+
+function goToDetails(tutor, openEdit = false) {
+  const backData = {
+    backTo: `/admin/courses/${categoryId}/tutors/${courseId}`,
+    backButtonLabel: "Tutors",
+    backLabel: "View details",
+    courseName: courseName || "Selected Course",
+    openEdit,
+  };
+
+  sessionStorage.setItem("adminTutorBackData", JSON.stringify(backData));
+
+  sessionStorage.setItem(
+    `adminCourseTutor_${courseId}`,
+    JSON.stringify({ courseName: courseName || "Selected Course" })
+  );
+
   navigate(`/admin/tutors/${tutor._id}`, {
-    state: {
-      backTo: `/admin/courses/${categoryId}/tutors/${courseId}`,
-      backLabel: "View details",
-      courseName,
-    },
+    state: backData,
   });
 }
 
@@ -1746,7 +1810,7 @@ function goToDetails(tutor) {
     ← Courses
   </button>
   <span>»</span>
-  <b>{courseName}</b>
+  <b>{courseName} tutors</b>
 </div>
 
 

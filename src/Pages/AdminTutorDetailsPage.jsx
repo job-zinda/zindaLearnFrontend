@@ -1875,8 +1875,39 @@ export default function AdminTutorDetailsPage() {
 
 
 
-const backTo = location.state?.backTo || "/admin/tutors";
-const backLabel = location.state?.backLabel || "View details";
+// const backTo = location.state?.backTo || "/admin/tutors";
+
+
+
+const savedBackData = (() => {
+  try {
+    return JSON.parse(sessionStorage.getItem("adminTutorBackData") || "{}");
+  } catch {
+    return {};
+  }
+})();
+
+const backTo =
+  location.state?.backTo || savedBackData?.backTo || "/admin/tutors";
+
+const backButtonLabel =
+  location.state?.backButtonLabel ||
+  savedBackData?.backButtonLabel ||
+  "Tutors";
+
+const backLabel =
+  location.state?.backLabel || savedBackData?.backLabel || "View details";
+
+const savedCourseName =
+  location.state?.courseName || savedBackData?.courseName || "";
+
+
+
+
+
+
+
+// const backLabel = location.state?.backLabel || "View details";
 
 
 
@@ -2021,7 +2052,23 @@ const [detailMenuOpen, setDetailMenuOpen] = useState(false);
   useEffect(() => {
     if (!loading && tutor && location.state?.openEdit && !editOpen) {
       openEditModal();
-      navigate(location.pathname, { replace: true, state: {} });
+      // navigate(location.pathname, { replace: true, state: {} });
+
+
+
+navigate(location.pathname, {
+  replace: true,
+  state: {
+    backTo,
+    backButtonLabel,
+    backLabel,
+    courseName: savedCourseName,
+  },
+});
+
+
+
+
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, tutor?._id, location.state?.openEdit, editOpen]);
@@ -2299,26 +2346,23 @@ async function toggleTutorBlock() {
 
   return (
     <div className="tutor-detail-page">
-      <div className="detail-breadcrumb">
-        {/* <button type="button" onClick={() => navigate(backTo)}>
-          ← Tutors
-        </button> */}
+     <div className="detail-breadcrumb">
+  <button
+    type="button"
+    onClick={() =>
+      navigate(backTo, {
+        state: {
+          courseName: savedCourseName,
+        },
+      })
+    }
+  >
+    ← {backButtonLabel}
+  </button>
 
-
-
-<button type="button" onClick={() => navigate(backTo)}>
-  ← Tutors
-</button>
-<span>»</span>
-<b>{backLabel}</b>
-
-
-
-
-
-        {/* <span>»</span>
-        <b>View details</b> */}
-      </div>
+  <span>»</span>
+  <b>{backLabel}</b>
+</div>
 
       <div className="detail-card">
         {/* <div className="detail-actions">
