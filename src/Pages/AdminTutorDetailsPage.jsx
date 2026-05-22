@@ -1872,7 +1872,7 @@ const backLabel = location.state?.courseName || "View details";
 
   const { showAlert } = useAlert();
 
-  const backTo = location.state?.backTo || "/admin/tutors";
+  // const backTo = location.state?.backTo || "/admin/tutors";
 
   const [tutor, setTutor] = useState(null);
   const [categories, setCategories] = useState([]);

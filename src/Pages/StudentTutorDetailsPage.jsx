@@ -147,10 +147,30 @@ export default function StudentTutorDetailsPage() {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// const location = useLocation();
+
+// const backTo = location.state?.backTo || "/student/tutors";
+// const backLabel = location.state?.courseName || "View details";
+
+
+
+
+
 const location = useLocation();
 
-const backTo = location.state?.backTo || "/student/tutors";
-const backLabel = location.state?.courseName || "View details";
+const savedBackData = (() => {
+  try {
+    return JSON.parse(sessionStorage.getItem("studentTutorBackData") || "{}");
+  } catch {
+    return {};
+  }
+})();
+
+const backTo = location.state?.backTo || savedBackData?.backTo || "/student/tutors";
+const backLabel = location.state?.courseName || savedBackData?.courseName || "View details";
+
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

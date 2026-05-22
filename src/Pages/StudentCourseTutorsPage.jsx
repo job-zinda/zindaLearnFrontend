@@ -132,14 +132,36 @@ export default function StudentCourseTutorsPage() {
                 // onClick={() => navigate(`/student/tutors/${tutor._id}`)}
 
 
-                onClick={() =>
+//                 onClick={() =>
+//   navigate(`/student/tutors/${tutor._id}`, {
+//     state: {
+//       backTo: `/student/courses/${categoryId}/tutors/${courseId}`,
+//       courseName,
+//     },
+//   })
+// }
+
+
+
+
+
+
+
+onClick={() => {
+  const backData = {
+    backTo: `/student/courses/${categoryId}/tutors/${courseId}`,
+    courseName: courseName || "Selected Course",
+  };
+
+  sessionStorage.setItem("studentTutorBackData", JSON.stringify(backData));
+
   navigate(`/student/tutors/${tutor._id}`, {
-    state: {
-      backTo: `/student/courses/${categoryId}/tutors/${courseId}`,
-      courseName,
-    },
-  })
-}
+    state: backData,
+  });
+}}
+
+
+
 
 
               >

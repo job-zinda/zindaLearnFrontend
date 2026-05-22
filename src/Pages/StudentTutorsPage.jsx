@@ -119,13 +119,42 @@ export default function StudentTutorsPage() {
 
               <Stars rating={tutor.averageRating} />
 
-              <button
+              {/* <button
                 type="button"
                 className="student-view-details-btn"
                 onClick={() => navigate(`/student/tutors/${tutor._id}`)}
               >
                 View Details
-              </button>
+              </button> */}
+
+
+
+
+
+<button
+  type="button"
+  className="student-view-details-btn"
+  onClick={() => {
+    const backData = {
+      backTo: "/student/tutors",
+      courseName: "View details",
+    };
+
+    sessionStorage.setItem("studentTutorBackData", JSON.stringify(backData));
+
+    navigate(`/student/tutors/${tutor._id}`, {
+      state: backData,
+    });
+  }}
+>
+  View Details
+</button>
+
+
+
+
+
+
             </article>
           ))}
         </div>
