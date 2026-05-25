@@ -4,6 +4,20 @@ import api from "../api/axios";
 import { useAlert } from "../context/AlertContext";
 import InlineAlert from "../Components/InlineAlert";
 
+
+
+import { getMediaUrl } from "../utils/media";
+
+
+
+
+
+
+
+
+
+
+
 function getErrorMessage(err) {
   return (
     err?.response?.data?.msg ||
@@ -16,21 +30,47 @@ function getStudent(feedback) {
   return feedback?.studentId || {};
 }
 
+// function getPhotoSrc(photo) {
+//   if (!photo) return "";
+//   const src = String(photo).trim();
+
+//   if (
+//     src.startsWith("data:image") ||
+//     src.startsWith("blob:") ||
+//     src.startsWith("http://") ||
+//     src.startsWith("https://")
+//   ) {
+//     return src;
+//   }
+
+//   return src;
+// }
+
+
+
+
+
+
 function getPhotoSrc(photo) {
   if (!photo) return "";
-  const src = String(photo).trim();
+
+  const src = String(photo || "").trim();
 
   if (
-    src.startsWith("data:image") ||
-    src.startsWith("blob:") ||
-    src.startsWith("http://") ||
-    src.startsWith("https://")
+    !src ||
+    src === "null" ||
+    src === "undefined" ||
+    src === "false" ||
+    src === "NaN"
   ) {
-    return src;
+    return "";
   }
 
-  return src;
+  return getMediaUrl(src);
 }
+
+
+
 
 function Stars({ rating }) {
   const value = Math.round(Number(rating) || 0);
