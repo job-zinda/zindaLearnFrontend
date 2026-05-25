@@ -615,15 +615,35 @@ export default function TutorTutorsPage() {
           return isTutorActive(tutor);
         });
 
-        const sortedTutors = [...visibleTutors].sort((a, b) => {
-          const aIsMe = isCurrentTutor(a, loggedUser);
-          const bIsMe = isCurrentTutor(b, loggedUser);
+        // const sortedTutors = [...visibleTutors].sort((a, b) => {
+        //   const aIsMe = isCurrentTutor(a, loggedUser);
+        //   const bIsMe = isCurrentTutor(b, loggedUser);
 
-          if (aIsMe && !bIsMe) return -1;
-          if (!aIsMe && bIsMe) return 1;
+        //   if (aIsMe && !bIsMe) return -1;
+        //   if (!aIsMe && bIsMe) return 1;
 
-          return 0;
-        });
+        //   return 0;
+        // });
+
+
+
+
+
+
+const sortedTutors = [...visibleTutors].sort((a, b) => {
+  const aIsMe = isCurrentTutor(a, loggedUser);
+  const bIsMe = isCurrentTutor(b, loggedUser);
+
+  if (aIsMe && !bIsMe) return -1;
+  if (!aIsMe && bIsMe) return 1;
+
+  return 0;
+});
+
+
+
+
+
 
         if (alive) {
           setTutors(sortedTutors);
