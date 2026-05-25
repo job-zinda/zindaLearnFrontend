@@ -1794,9 +1794,41 @@ function getStudentName(review) {
   return review?.studentId?.name || review?.studentName || "Student";
 }
 
+// function getStudentPhoto(review) {
+//   return review?.studentId?.photo || review?.studentPhoto || review?.photo || "";
+// }
+
+
+
+
+
 function getStudentPhoto(review) {
-  return review?.studentId?.photo || review?.studentPhoto || review?.photo || "";
+  const photo =
+    review?.studentId?.photo ||
+    review?.studentPhoto ||
+    review?.photo ||
+    "";
+
+  const cleanPhoto = String(photo || "").trim();
+
+  if (!cleanPhoto) return "";
+
+  if (
+    cleanPhoto === "null" ||
+    cleanPhoto === "undefined" ||
+    cleanPhoto === "false" ||
+    cleanPhoto === "NaN"
+  ) {
+    return "";
+  }
+
+  return cleanPhoto;
 }
+
+
+
+
+
 
 function getTutorShareLink(tutor) {
   return `${window.location.origin}/student/tutors/${tutor._id}`;

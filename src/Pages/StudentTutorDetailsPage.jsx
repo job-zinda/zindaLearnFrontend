@@ -56,26 +56,72 @@ function getStudentName(review) {
   return review?.studentId?.name || review?.studentName || "Student";
 }
 
+// function getStudentPhoto(review) {
+//   return review?.studentId?.photo || review?.studentPhoto || review?.photo || "";
+// }
+
+// function getReviewPhotoUrl(photo) {
+//   if (!photo) return "";
+
+//   const cleanPhoto = String(photo).trim();
+
+//   if (
+//     cleanPhoto.startsWith("data:image") ||
+//     cleanPhoto.startsWith("blob:") ||
+//     cleanPhoto.startsWith("http://") ||
+//     cleanPhoto.startsWith("https://")
+//   ) {
+//     return cleanPhoto;
+//   }
+
+//   return getMediaUrl(cleanPhoto);
+// }
+
+
+
+
+
+
+
 function getStudentPhoto(review) {
-  return review?.studentId?.photo || review?.studentPhoto || review?.photo || "";
+  const photo =
+    review?.studentId?.photo ||
+    review?.studentPhoto ||
+    review?.photo ||
+    "";
+
+  const cleanPhoto = String(photo || "").trim();
+
+  if (!cleanPhoto) return "";
+
+  // backend/database il null, undefined, empty okke string aayi save aayittundenkil ignore cheyyan
+  if (
+    cleanPhoto === "null" ||
+    cleanPhoto === "undefined" ||
+    cleanPhoto === "false" ||
+    cleanPhoto === "NaN"
+  ) {
+    return "";
+  }
+
+  return cleanPhoto;
 }
 
 function getReviewPhotoUrl(photo) {
-  if (!photo) return "";
+  const cleanPhoto = String(photo || "").trim();
 
-  const cleanPhoto = String(photo).trim();
-
-  if (
-    cleanPhoto.startsWith("data:image") ||
-    cleanPhoto.startsWith("blob:") ||
-    cleanPhoto.startsWith("http://") ||
-    cleanPhoto.startsWith("https://")
-  ) {
-    return cleanPhoto;
-  }
+  if (!cleanPhoto) return "";
 
   return getMediaUrl(cleanPhoto);
 }
+
+
+
+
+
+
+
+
 
 function getCurrentUserId() {
   const user = JSON.parse(localStorage.getItem("user") || "{}");

@@ -66,34 +66,159 @@
 
 
 
+// const API_BASE_URL =
+//   import.meta.env.VITE_API_URL || "https://zindalearnbackend.onrender.com";
+
+// export function getMediaUrl(path) {
+//   if (!path) return "";
+
+//   const value = String(path);
+
+//   if (
+//     value.startsWith("http://") ||
+//     value.startsWith("https://") ||
+//     value.startsWith("data:image/")
+//   ) {
+//     return value;
+//   }
+
+//   if (value.startsWith("/9j/")) {
+//     return `data:image/jpeg;base64,${value}`;
+//   }
+
+//   if (value.startsWith("iVBOR")) {
+//     return `data:image/png;base64,${value}`;
+//   }
+
+//   if (value.startsWith("R0lGOD")) {
+//     return `data:image/gif;base64,${value}`;
+//   }
+
+//   const cleanPath = value.startsWith("/") ? value : `/${value}`;
+//   return `${API_BASE_URL}${cleanPath}`;
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "https://zindalearnbackend.onrender.com";
+
+function isProbablyBase64Image(value) {
+  const clean = String(value || "").trim();
+
+  if (!clean) return false;
+
+  // jpeg base64 normally starts like this
+  if (clean.startsWith("/9j/")) return true;
+  if (clean.startsWith("9j/")) return true;
+
+  // png base64 normally starts like this
+  if (clean.startsWith("iVBOR")) return true;
+
+  // gif base64 normally starts like this
+  if (clean.startsWith("R0lGOD")) return true;
+
+  // webp base64 sometimes starts like this
+  if (clean.startsWith("UklGR")) return true;
+
+  return false;
+}
+
+function getBase64Mime(value) {
+  const clean = String(value || "").trim();
+
+  if (clean.startsWith("/9j/") || clean.startsWith("9j/")) {
+    return "image/jpeg";
+  }
+
+  if (clean.startsWith("iVBOR")) {
+    return "image/png";
+  }
+
+  if (clean.startsWith("R0lGOD")) {
+    return "image/gif";
+  }
+
+  if (clean.startsWith("UklGR")) {
+    return "image/webp";
+  }
+
+  return "image/jpeg";
+}
 
 export function getMediaUrl(path) {
   if (!path) return "";
 
-  const value = String(path);
+  let value = String(path).trim();
+
+  if (!value) return "";
 
   if (
+    value.startsWith("data:image/") ||
+    value.startsWith("blob:") ||
     value.startsWith("http://") ||
-    value.startsWith("https://") ||
-    value.startsWith("data:image/")
+    value.startsWith("https://")
   ) {
     return value;
   }
 
-  if (value.startsWith("/9j/")) {
-    return `data:image/jpeg;base64,${value}`;
+  // sometimes data:image prefix broken aayi save aakum
+  if (value.startsWith("dataimage/")) {
+    value = value.replace("dataimage/", "data:image/");
+    return value;
   }
 
-  if (value.startsWith("iVBOR")) {
-    return `data:image/png;base64,${value}`;
-  }
-
-  if (value.startsWith("R0lGOD")) {
-    return `data:image/gif;base64,${value}`;
+  // raw base64 image aanenkil URL aakkaruth
+  if (isProbablyBase64Image(value)) {
+    return `data:${getBase64Mime(value)};base64,${value}`;
   }
 
   const cleanPath = value.startsWith("/") ? value : `/${value}`;
-  return `${API_BASE_URL}${cleanPath}`;
+  return `${API_BASE_URL.replace(/\/$/, "")}${cleanPath}`;
 }
