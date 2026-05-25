@@ -48,7 +48,11 @@ function CourseFallback({ seedValue, categoryKey, sectionType }) {
   );
 }
 
-function CourseCard({ course, categoryKey }) {
+function CourseCard({
+  course,
+  categoryKey,
+  navigate,
+}) {
   return (
     <article className="tutor-course-card">
       <div className="tutor-course-card__image">
@@ -71,7 +75,21 @@ function CourseCard({ course, categoryKey }) {
           <button
             type="button"
             className="tutor-course-action-btn"
-            onClick={() => {}}
+            // onClick={() => {}}
+
+
+onClick={() => {
+  navigate(
+    `/tutor/courses/${course.categoryId}/tutors/${course._id}`,
+    {
+      state: {
+        courseName: course.name,
+      },
+    }
+  );
+}}
+
+
           >
             View Tutors
           </button>
@@ -211,11 +229,25 @@ export default function TutorCoursesPage() {
       ) : (
         <div className="tutor-course-grid">
           {displayedCourses.map((course) => (
-            <CourseCard
-              key={course._id}
-              course={course}
-              categoryKey={categoryKey}
-            />
+            // <CourseCard
+            //   key={course._id}
+            //   course={course}
+            //   categoryKey={categoryKey}
+            // />
+
+
+
+
+<CourseCard
+  key={course._id}
+  course={course}
+  categoryKey={categoryKey}
+  navigate={navigate}
+/>
+
+
+
+
           ))}
         </div>
       )}
