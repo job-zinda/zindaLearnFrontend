@@ -402,27 +402,68 @@ export default function TutorSettingsPage() {
         photo: profileForm.photo,
       });
 
-      const updated = data?.user || {
-        ...profile,
-        ...profileForm,
-      };
 
-      setProfile(updated);
 
-      const oldUser = JSON.parse(localStorage.getItem("user") || "{}");
 
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          ...oldUser,
-          name: updated.name,
-          email: updated.email,
-          phone: updated.phone,
-          photo: updated.photo,
-        })
-      );
 
-      window.dispatchEvent(new Event("storage"));
+
+
+      // const updated = data?.user || {
+      //   ...profile,
+      //   ...profileForm,
+      // };
+
+      // setProfile(updated);
+
+      // const oldUser = JSON.parse(localStorage.getItem("user") || "{}");
+
+      // localStorage.setItem(
+      //   "user",
+      //   JSON.stringify({
+      //     ...oldUser,
+      //     name: updated.name,
+      //     email: updated.email,
+      //     phone: updated.phone,
+      //     photo: updated.photo,
+      //   })
+      // );
+
+      // window.dispatchEvent(new Event("storage"));
+
+
+
+
+const updatedUser = data?.user || {
+  ...profile,
+  ...profileForm,
+};
+
+setProfile(updatedUser);
+
+setProfileForm({
+  name: updatedUser.name || "",
+  email: updatedUser.email || "",
+  phone: updatedUser.phone || "",
+  photo: updatedUser.photo || "",
+});
+
+const oldUser = JSON.parse(localStorage.getItem("user") || "{}");
+
+localStorage.setItem(
+  "user",
+  JSON.stringify({
+    ...oldUser,
+    ...updatedUser,
+  })
+);
+
+window.dispatchEvent(new Event("storage"));
+
+
+
+
+
+
 
       showAlert("Profile updated successfully", "success");
       setProfileModalOpen(false);
