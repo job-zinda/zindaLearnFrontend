@@ -1634,7 +1634,7 @@
 
 
 
-
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 
 import React, {
@@ -1960,6 +1960,16 @@ const savedCourseName =
   const [reviewsOpen, setReviewsOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const [passwordOpen, setPasswordOpen] = useState(false);
+const [showPassword, setShowPassword] = useState(false);
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
   const [assignedStudentsOpen, setAssignedStudentsOpen] = useState(false);
   const [assignedStudents, setAssignedStudents] = useState([]);
@@ -2462,6 +2472,22 @@ async function toggleTutorBlock() {
         ✎ Edit
       </button>
 
+
+
+
+<button
+  type="button"
+  onClick={() => {
+    setPasswordOpen(true);
+    setDetailMenuOpen(false);
+    setShowPassword(false);
+  }}
+>
+  🔐 Password
+</button>
+
+
+
       <button
         type="button"
         onClick={() => {
@@ -2863,6 +2889,54 @@ async function toggleTutorBlock() {
           )}
         </div>
       </Modal>
+
+
+
+
+
+<Modal
+  open={passwordOpen}
+  title="Tutor Login Password"
+  width="430px"
+  onClose={() => setPasswordOpen(false)}
+>
+  <div className="tutor-password-view-box">
+    <p>
+      <b>{tutor?.name}</b> login password
+    </p>
+
+    <div className="tutor-password-field">
+      <input
+        type={showPassword ? "text" : "password"}
+        value={tutor?.loginPasswordText || "Password not available"}
+        readOnly
+      />
+
+      <button
+        type="button"
+        className="tutor-password-eye"
+        onClick={() => setShowPassword((prev) => !prev)}
+      >
+        {showPassword ? <FiEyeOff /> : <FiEye />}
+      </button>
+    </div>
+
+    <button
+      type="button"
+      className="primary-btn"
+      onClick={() => {
+        navigator.clipboard.writeText(tutor?.loginPasswordText || "");
+        showAlert("Password copied successfully", "success");
+      }}
+      disabled={!tutor?.loginPasswordText}
+    >
+      Copy Password
+    </button>
+  </div>
+</Modal>
+
+
+
     </div>
   );
 }
