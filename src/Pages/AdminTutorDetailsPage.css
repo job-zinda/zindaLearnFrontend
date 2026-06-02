@@ -1775,3 +1775,58 @@
     width: 190px;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.tutor-password-view-box {
+  display: grid;
+  gap: 18px;
+  color: #111827;
+}
+
+.tutor-password-view-box p {
+  margin: 0;
+  color: #111827;
+  font-weight: 800;
+}
+
+.tutor-password-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tutor-password-field input {
+  flex: 1;
+  border: 1px solid #d8deea;
+  border-radius: 14px;
+  padding: 13px 14px;
+  background: #ffffff;
+  color: #111827;
+  font-weight: 900;
+}
+
+.tutor-password-eye {
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 14px;
+  background: #f3e8ff;
+  color: #7c3aed;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  font-size: 20px;
+}
