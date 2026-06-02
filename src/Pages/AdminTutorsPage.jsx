@@ -1,6 +1,6 @@
 
 
-// import { FiEye, FiEyeOff } from "react-icons/fi";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -55,7 +55,7 @@ const emptyForm = {
   categoryIds: [],
   syllabus: "",
   courseIds: [],
-  // loginPasswordText: "",
+  loginPasswordText: "",
   photo: null,
 };
 
@@ -197,8 +197,8 @@ export default function AdminTutorsPage() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-// const [showTutorPassword, setShowTutorPassword] = useState(false);
-// const [passwordLoading, setPasswordLoading] = useState(false);
+const [showTutorPassword, setShowTutorPassword] = useState(false);
+const [passwordLoading, setPasswordLoading] = useState(false);
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -305,20 +305,20 @@ const visibleCourses = useMemo(() => {
 //////////////////////////////////////////////////////////////////////////////////////////
 
 
-// async function fetchTutorPassword() {
-//   try {
-//     setPasswordLoading(true);
+async function fetchTutorPassword() {
+  try {
+    setPasswordLoading(true);
 
-//     const { data } = await api.get("/admin/tuter/generate-password");
+    const { data } = await api.get("/admin/tuter/generate-password");
 
-//     return data?.password || "";
-//   } catch (err) {
-//     showAlert(getErrorMessage(err, "Failed to generate tutor password"), "error");
-//     return "";
-//   } finally {
-//     setPasswordLoading(false);
-//   }
-// }
+    return data?.password || "";
+  } catch (err) {
+    showAlert(getErrorMessage(err, "Failed to generate tutor password"), "error");
+    return "";
+  } finally {
+    setPasswordLoading(false);
+  }
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -362,51 +362,27 @@ const visibleCourses = useMemo(() => {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-// async function openAddModal() {
-//   setEditingTutor(null);
-//   setPreview("");
-//   setShowTutorPassword(false);
-
-//   setForm({
-//     ...emptyForm,
-//     categoryIds: [],
-//     courseIds: [],
-//     // loginPasswordText: "",
-//   });
-
-//   setModalOpen(true);
-
-//   const password = await fetchTutorPassword();
-
-//   setForm((prev) => ({
-//     ...prev,
-//     loginPasswordText: password,
-//   }));
-// }
-
-
-
-
-
-
-
-function openAddModal() {
+async function openAddModal() {
   setEditingTutor(null);
   setPreview("");
+  setShowTutorPassword(false);
 
   setForm({
     ...emptyForm,
     categoryIds: [],
     courseIds: [],
+    loginPasswordText: "",
   });
 
   setModalOpen(true);
+
+  const password = await fetchTutorPassword();
+
+  setForm((prev) => ({
+    ...prev,
+    loginPasswordText: password,
+  }));
 }
-
-
-
-
-
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -497,9 +473,8 @@ function openEditModal(tutor) {
     courseIds: existingCourseIds,
 
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// loginPasswordText: tutor.loginPasswordText || "",
-// const [showTutorPassword, setShowTutorPassword] = useState(false);
-const [passwordLoading, setPasswordLoading] = useState(false);    ///////////////////////////////////////////////////////////////////////////////////////////
+loginPasswordText: tutor.loginPasswordText || "",
+    ///////////////////////////////////////////////////////////////////////////////////////////
 
     photo: null,
   });
@@ -802,9 +777,9 @@ fd.append("courseId", form.courseIds[0]);
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
-// if (!editingTutor) {
-//   fd.append("loginPasswordText", form.loginPasswordText);
-// }
+if (!editingTutor) {
+  fd.append("loginPasswordText", form.loginPasswordText);
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1274,46 +1249,57 @@ onClick={() =>
   <input name="phone" value={form.phone} onChange={handleChange} />
 </label>
 
+<label className="form-field">
+  <span>Tutor Login Password</span>
+
+  <div className="tutor-password-field">
+    <input
+      type={showTutorPassword ? "text" : "password"}
+      value={passwordLoading ? "Generating..." : form.loginPasswordText || ""}
+      readOnly
+      placeholder="Auto generated password"
+    />
+
+    {/* <button
+      type="button"
+      className="tutor-password-eye"
+      onClick={() => setShowTutorPassword((prev) => !prev)}
+      title={showTutorPassword ? "Hide password" : "Show password"}
+    >
+      {showTutorPassword ? "🙈" : "👁"}
+    </button> */}
+
+
+
+
+<button
+  type="button"
+  className="tutor-password-eye"
+  onClick={() => setShowTutorPassword((prev) => !prev)}
+  title={showTutorPassword ? "Hide password" : "Show password"}
+>
+  {showTutorPassword ? <FiEyeOff /> : <FiEye />}
+</button>
 
 
 
 
 
 
-{/* {!editingTutor && (
-  <label className="form-field">
-    <span>Tutor Login Password</span>
+  </div>
 
-    <div className="tutor-password-field">
-      <input
-        type={showTutorPassword ? "text" : "password"}
-        value={passwordLoading ? "Generating..." : form.loginPasswordText || ""}
-        readOnly
-        placeholder="Auto generated password"
-      />
-
-      <button
-        type="button"
-        className="tutor-password-eye"
-        onClick={() => setShowTutorPassword((prev) => !prev)}
-        title={showTutorPassword ? "Hide password" : "Show password"}
-      >
-        {showTutorPassword ? <FiEyeOff /> : <FiEye />}
-      </button>
-    </div>
-
+  {!editingTutor && (
     <small className="tutor-password-note">
       This password is auto generated from backend. Tutor can login using email/phone and this password.
     </small>
-  </label>
-)} */}
+  )}
 
-
-
-
-
-
-
+  {editingTutor && (
+    <small className="tutor-password-note">
+      Password is visible only. Admin cannot edit or delete tutor password.
+    </small>
+  )}
+</label>
 
 <label className="form-field">
   <span>Qualification</span>
