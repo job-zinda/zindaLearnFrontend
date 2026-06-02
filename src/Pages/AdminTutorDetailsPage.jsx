@@ -2475,16 +2475,7 @@ async function toggleTutorBlock() {
 
 
 
-<button
-  type="button"
-  onClick={() => {
-    setPasswordOpen(true);
-    setDetailMenuOpen(false);
-    setShowPassword(false);
-  }}
->
-  🔐 Password
-</button>
+
 
 
 
@@ -2497,6 +2488,20 @@ async function toggleTutorBlock() {
       >
         ↗ Share
       </button>
+
+
+
+<button
+  type="button"
+  onClick={() => {
+    setPasswordOpen(true);
+    setDetailMenuOpen(false);
+    setShowPassword(false);
+  }}
+>
+  🔐 Password
+</button>
+
 
       <button
         type="button"
