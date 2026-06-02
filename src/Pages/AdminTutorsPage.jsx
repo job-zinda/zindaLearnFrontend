@@ -473,7 +473,9 @@ function openEditModal(tutor) {
     courseIds: existingCourseIds,
 
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-loginPasswordText: tutor.loginPasswordText || "",
+// loginPasswordText: tutor.loginPasswordText || "",
+loginPasswordText: "",
+
     ///////////////////////////////////////////////////////////////////////////////////////////
 
     photo: null,
@@ -1249,57 +1251,50 @@ onClick={() =>
   <input name="phone" value={form.phone} onChange={handleChange} />
 </label>
 
-<label className="form-field">
-  <span>Tutor Login Password</span>
-
-  <div className="tutor-password-field">
-    <input
-      type={showTutorPassword ? "text" : "password"}
-      value={passwordLoading ? "Generating..." : form.loginPasswordText || ""}
-      readOnly
-      placeholder="Auto generated password"
-    />
-
-    {/* <button
-      type="button"
-      className="tutor-password-eye"
-      onClick={() => setShowTutorPassword((prev) => !prev)}
-      title={showTutorPassword ? "Hide password" : "Show password"}
-    >
-      {showTutorPassword ? "🙈" : "👁"}
-    </button> */}
-
-
-
-
-<button
-  type="button"
-  className="tutor-password-eye"
-  onClick={() => setShowTutorPassword((prev) => !prev)}
-  title={showTutorPassword ? "Hide password" : "Show password"}
->
-  {showTutorPassword ? <FiEyeOff /> : <FiEye />}
-</button>
 
 
 
 
 
 
-  </div>
 
-  {!editingTutor && (
+
+{!editingTutor && (
+  <label className="form-field">
+    <span>Tutor Login Password</span>
+
+    <div className="tutor-password-field">
+      <input
+        type={showTutorPassword ? "text" : "password"}
+        value={passwordLoading ? "Generating..." : form.loginPasswordText || ""}
+        readOnly
+        placeholder="Auto generated password"
+      />
+
+      <button
+        type="button"
+        className="tutor-password-eye"
+        onClick={() => setShowTutorPassword((prev) => !prev)}
+        title={showTutorPassword ? "Hide password" : "Show password"}
+      >
+        {showTutorPassword ? <FiEyeOff /> : <FiEye />}
+      </button>
+    </div>
+
     <small className="tutor-password-note">
       This password is auto generated from backend. Tutor can login using email/phone and this password.
     </small>
-  )}
+  </label>
+)}
 
-  {editingTutor && (
-    <small className="tutor-password-note">
-      Password is visible only. Admin cannot edit or delete tutor password.
-    </small>
-  )}
-</label>
+
+
+
+
+
+
+
+
 
 <label className="form-field">
   <span>Qualification</span>
