@@ -188,3 +188,156 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   TUTOR COURSE TUTOR CARD SAME AS TUTOR TUTORS PAGE
+   Paste at VERY BOTTOM of TutorCourseTutorsPage.css
+   ========================================================= */
+
+.tutor-course-tutor-grid {
+  align-items: stretch !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 24px !important;
+}
+
+.tutor-course-tutor-card {
+  position: relative !important;
+  min-height: 420px !important;
+  max-height: 420px !important;
+  height: 420px !important;
+  padding: 28px 24px 26px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  border-radius: 26px !important;
+}
+
+.tutor-course-tutor-card-top {
+  min-height: 90px !important;
+  max-height: 90px !important;
+  align-items: center !important;
+}
+
+.tutor-course-tutor-avatar {
+  width: 88px !important;
+  height: 88px !important;
+  min-width: 88px !important;
+  min-height: 88px !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+.tutor-course-tutor-avatar span {
+  font-size: 30px !important;
+  font-weight: 900 !important;
+  color: #d946ef !important;
+}
+
+.tutor-course-tutor-info {
+  min-width: 0 !important;
+}
+
+.tutor-course-tutor-info h3 {
+  font-size: 21px !important;
+  line-height: 1.15 !important;
+  min-height: 48px !important;
+  max-height: 48px !important;
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  line-clamp: 2 !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  word-break: break-word !important;
+}
+
+.tutor-course-tutor-info p {
+  font-size: 16px !important;
+  line-height: 1.25 !important;
+  min-height: 40px !important;
+  max-height: 40px !important;
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  line-clamp: 2 !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  word-break: break-word !important;
+  color: #c084fc !important;
+}
+
+.tutor-course-tutor-about {
+  margin: 20px 0 14px !important;
+  color: rgba(255, 255, 255, 0.72) !important;
+  font-size: 15px !important;
+  line-height: 1.45 !important;
+
+  min-height: 87px !important;
+  max-height: 87px !important;
+  height: 87px !important;
+  flex: unset !important;
+
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  line-clamp: 4 !important;
+  -webkit-line-clamp: 4 !important;
+  -webkit-box-orient: vertical !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+}
+
+.tutor-course-tutor-stars {
+  margin-top: auto !important;
+  margin-bottom: 16px !important;
+  min-height: 26px !important;
+}
+
+.tutor-course-view-details-btn {
+  margin-top: 0 !important;
+  min-height: 52px !important;
+  padding: 14px !important;
+  flex-shrink: 0 !important;
+  border-radius: 15px !important;
+}
+
+@media (max-width: 1500px) {
+  .tutor-course-tutor-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 1150px) {
+  .tutor-course-tutor-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .tutor-course-tutor-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .tutor-course-tutor-card {
+    min-height: 390px !important;
+    max-height: none !important;
+    height: auto !important;
+  }
+
+  .tutor-course-tutor-about {
+    min-height: 84px !important;
+    max-height: 84px !important;
+    height: 84px !important;
+    line-clamp: 4 !important;
+    -webkit-line-clamp: 4 !important;
+  }
+}
