@@ -420,3 +420,204 @@
     padding: 18px !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   TUTOR SIDENAV PROFILE EDIT MODAL
+   SAME AS STUDENT SIDENAV PROFILE EDIT MODAL
+   Paste at VERY BOTTOM of TutorSettingsPage.css
+   ========================================================= */
+
+.tutor-profile-card--clickable {
+  width: 100%;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.tutor-profile-edit-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483647 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(3, 7, 18, 0.72) !important;
+  backdrop-filter: blur(6px) !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  padding: 20px !important;
+  overflow-y: auto !important;
+}
+
+.tutor-profile-edit-modal {
+  width: min(560px, calc(100vw - 40px)) !important;
+  max-height: calc(100vh - 40px) !important;
+
+  background: linear-gradient(145deg, #111633, #080b22) !important;
+  border: 1px solid rgba(217, 70, 239, 0.25) !important;
+  border-radius: 22px !important;
+
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+
+  color: #ffffff !important;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55) !important;
+}
+
+.tutor-profile-edit-head {
+  flex-shrink: 0 !important;
+  padding: 18px 24px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+.tutor-profile-edit-head h3 {
+  margin: 0 !important;
+  font-size: 22px !important;
+  font-weight: 900 !important;
+  color: #ffffff !important;
+}
+
+.tutor-profile-edit-close {
+  width: 42px !important;
+  height: 42px !important;
+  border: none !important;
+  border-radius: 50% !important;
+  background: rgba(217, 70, 239, 0.16) !important;
+  color: #ffffff !important;
+  font-size: 30px !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+.tutor-profile-edit-body {
+  overflow-y: auto !important;
+  padding: 24px 26px !important;
+  display: grid !important;
+  gap: 14px !important;
+}
+
+.tutor-profile-edit-photo-box {
+  display: grid !important;
+  place-items: center !important;
+  gap: 14px !important;
+}
+
+.tutor-profile-edit-photo-box img,
+.tutor-profile-edit-photo-box span {
+  width: 108px !important;
+  height: 108px !important;
+  border-radius: 50% !important;
+  border: 3px solid rgba(217, 70, 239, 0.35) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  object-fit: cover !important;
+
+  display: grid !important;
+  place-items: center !important;
+
+  font-size: 42px !important;
+  color: #d946ef !important;
+  font-weight: 900 !important;
+}
+
+.tutor-profile-edit-photo-box label {
+  background: #0ea5a3 !important;
+  color: #ffffff !important;
+  padding: 12px 22px !important;
+  border-radius: 12px !important;
+  font-weight: 900 !important;
+  cursor: pointer !important;
+}
+
+.tutor-profile-edit-body label {
+  color: rgba(255, 255, 255, 0.78) !important;
+  font-weight: 900 !important;
+}
+
+.tutor-profile-edit-body input {
+  width: 100% !important;
+  border: 1px solid rgba(217, 70, 239, 0.25) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-radius: 13px !important;
+  padding: 14px 16px !important;
+  outline: none !important;
+  font-size: 15px !important;
+  color: #ffffff !important;
+}
+
+.tutor-profile-edit-save {
+  width: 100% !important;
+  min-height: 52px !important;
+  border: none !important;
+  border-radius: 14px !important;
+  background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
+  color: #ffffff !important;
+  font-size: 16px !important;
+  font-weight: 900 !important;
+  cursor: pointer !important;
+  box-shadow: 0 16px 34px rgba(124, 58, 237, 0.3) !important;
+}
+
+.tutor-profile-edit-save:disabled {
+  opacity: 0.65 !important;
+  cursor: not-allowed !important;
+}
