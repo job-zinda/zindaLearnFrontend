@@ -846,11 +846,26 @@ export default function TutorSideNav({ open, onClose }) {
         }`}
       >
         <div className="admin-sidenav__top">
-          <button
+          {/* <button
             type="button"
             className="admin-profile-card tutor-profile-card tutor-profile-card--clickable"
             onClick={openProfileEditModal}
-          >
+          > */}
+
+
+
+
+<button
+  type="button"
+  className="admin-profile-card admin-profile-card--clickable tutor-profile-card tutor-profile-card--clickable"
+  onClick={openProfileEditModal}
+>
+
+
+
+
+
+
             <div className="admin-profile-card__avatar">
               {profilePhoto ? (
                 <img src={profilePhoto} alt={user?.name || "Tutor"} />
