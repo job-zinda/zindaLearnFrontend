@@ -300,6 +300,386 @@
 
 
 
+// import React, { useEffect, useMemo, useState } from "react";
+// import { createPortal } from "react-dom";
+// import api from "../api/axios";
+// import { useAlert } from "../context/AlertContext";
+// import InlineAlert from "../Components/InlineAlert";
+// import { getMediaUrl } from "../utils/media";
+// import "./AdminFeedbackPage.css";
+
+// function getErrorMessage(err) {
+//   return (
+//     err?.response?.data?.msg ||
+//     err?.response?.data?.error ||
+//     "Something went wrong"
+//   );
+// }
+
+// function getStudent(feedback) {
+//   return feedback?.studentId || {};
+// }
+
+// function getPhotoSrc(photo) {
+//   if (!photo) return "";
+
+//   const src = String(photo || "").trim();
+
+//   if (
+//     !src ||
+//     src === "null" ||
+//     src === "undefined" ||
+//     src === "false" ||
+//     src === "NaN"
+//   ) {
+//     return "";
+//   }
+
+//   return getMediaUrl(src);
+// }
+
+// function Stars({ rating }) {
+//   const value = Math.round(Number(rating) || 0);
+
+//   return (
+//     <div className="admin-feedback-stars">
+//       {[1, 2, 3, 4, 5].map((star) => (
+//         <span key={star} className={star <= value ? "filled" : ""}>
+//           ★
+//         </span>
+//       ))}
+//     </div>
+//   );
+// }
+
+// function StudentAvatar({ student }) {
+//   const [error, setError] = useState(false);
+//   const photo = getPhotoSrc(student?.photo);
+//   const name = student?.name || "Student";
+
+//   return (
+//     <div className="admin-feedback-avatar">
+//       {photo && !error ? (
+//         <img src={photo} alt={name} onError={() => setError(true)} />
+//       ) : (
+//         <span>{name.charAt(0).toUpperCase()}</span>
+//       )}
+//     </div>
+//   );
+// }
+
+// function FeedbackModal({ feedback, onClose }) {
+//   if (!feedback) return null;
+
+//   const student = getStudent(feedback);
+
+//   return createPortal(
+//     <div className="admin-feedback-modal-overlay" onMouseDown={onClose}>
+//       <div
+//         className="admin-feedback-modal"
+//         onMouseDown={(e) => e.stopPropagation()}
+//       >
+//         <div className="admin-feedback-modal-header">
+//           <h2>Review Details</h2>
+//           <button type="button" onClick={onClose}>
+//             ×
+//           </button>
+//         </div>
+
+//         <div className="admin-feedback-modal-body">
+//           <div className="admin-feedback-modal-user">
+//             <StudentAvatar student={student} />
+
+//             <div>
+//               <h3>{student?.name || "Student"}</h3>
+//             </div>
+
+//             <Stars rating={feedback?.rating} />
+//           </div>
+
+//           <div className="admin-feedback-full-review">
+//             {feedback?.message || "No review added."}
+//           </div>
+//         </div>
+//       </div>
+//     </div>,
+//     document.body
+//   );
+// }
+
+// export default function AdminFeedbackPage() {
+//   const { showAlert } = useAlert();
+
+//   const [feedbacks, setFeedbacks] = useState([]);
+//   const [search, setSearch] = useState("");
+//   const [loading, setLoading] = useState(true);
+//   const [selectedFeedback, setSelectedFeedback] = useState(null);
+//   const [openMenuId, setOpenMenuId] = useState(null);
+//   const [deletingId, setDeletingId] = useState(null);
+
+//   async function fetchFeedbacks() {
+//     try {
+//       setLoading(true);
+//       const { data } = await api.get("/get/feedback/all");
+//       setFeedbacks(data?.feedbacks || []);
+//     } catch (err) {
+//       showAlert(getErrorMessage(err), "error");
+//     } finally {
+//       setLoading(false);
+//     }
+//   }
+
+// //   async function handleDeleteFeedback(feedbackId) {
+// //     // const confirmDelete = window.confirm(
+// //     //   "Are you sure you want to delete this feedback?"
+// //     // );
+
+// //     // if (!confirmDelete) return;
+
+
+// // const [deleteTarget, setDeleteTarget] = useState(null);
+
+
+// //     try {
+// //       setDeletingId(feedbackId);
+// //       await api.delete(`/admin/feedback/delete/${feedbackId}`);
+
+// //       setFeedbacks((prev) =>
+// //         prev.filter((feedback) => feedback?._id !== feedbackId)
+// //       );
+
+// //       setOpenMenuId(null);
+// //       showAlert("Feedback deleted successfully", "success");
+// //     } catch (err) {
+// //       showAlert(getErrorMessage(err), "error");
+// //     } finally {
+// //       setDeletingId(null);
+// //     }
+// //   }
+
+
+
+
+
+// async function handleDeleteFeedback() {
+//   if (!deleteTarget?._id) return;
+
+//   try {
+//     setDeletingId(deleteTarget._id);
+
+//     await api.delete(`/admin/feedback/delete/${deleteTarget._id}`);
+
+//     setFeedbacks((prev) =>
+//       prev.filter((feedback) => feedback?._id !== deleteTarget._id)
+//     );
+
+//     setDeleteTarget(null);
+//     showAlert("Feedback deleted successfully", "success");
+//   } catch (err) {
+//     showAlert(getErrorMessage(err), "error");
+//   } finally {
+//     setDeletingId(null);
+//   }
+// }
+
+
+
+
+
+//   useEffect(() => {
+//     fetchFeedbacks();
+//   }, []);
+
+//   const filteredFeedbacks = useMemo(() => {
+//     const key = search.trim().toLowerCase();
+
+//     if (!key) return feedbacks;
+
+//     return feedbacks.filter((feedback) => {
+//       const student = getStudent(feedback);
+//       return String(student?.name || "").toLowerCase().includes(key);
+//     });
+//   }, [feedbacks, search]);
+
+//   return (
+//     <div className="admin-feedback-page">
+//       <InlineAlert />
+
+//       <div className="admin-feedback-toolbar">
+//         <div className="admin-feedback-search">
+//           <span>⌕</span>
+//           <input
+//             type="text"
+//             placeholder="Search student name..."
+//             value={search}
+//             onChange={(e) => setSearch(e.target.value)}
+//           />
+//         </div>
+
+//         {/* <button
+//           type="button"
+//           className="admin-feedback-refresh-btn"
+//           onClick={fetchFeedbacks}
+//         >
+//           Refresh
+//         </button> */}
+//       </div>
+
+//       {loading ? (
+//         <div className="admin-feedback-state">Loading reviews...</div>
+//       ) : filteredFeedbacks.length === 0 ? (
+//         <div className="admin-feedback-state">No reviews found</div>
+//       ) : (
+//         <div className="admin-feedback-grid">
+//           {filteredFeedbacks.map((feedback) => {
+//             const student = getStudent(feedback);
+//             const review = feedback?.message || "";
+//             const isLong = review.length > 150;
+
+//             return (
+//               <div className="admin-feedback-card" key={feedback?._id}>
+//                 <div className="admin-feedback-menu-wrap">
+//                   <button
+//                     type="button"
+//                     className="admin-feedback-menu-btn"
+//                     onClick={() =>
+//                       setOpenMenuId(
+//                         openMenuId === feedback?._id ? null : feedback?._id
+//                       )
+//                     }
+//                   >
+//                     ⋮
+//                   </button>
+
+//                   {openMenuId === feedback?._id && (
+//                     <div className="admin-feedback-menu">
+//                       <button
+//                         type="button"
+//                         // onClick={() => handleDeleteFeedback(feedback?._id)}
+//                         onClick={() => askDeleteFeedback(feedback)}
+//                         disabled={deletingId === feedback?._id}
+//                       >
+//                         {deletingId === feedback?._id ? "Deleting..." : "Delete"}
+//                       </button>
+//                     </div>
+//                   )}
+//                 </div>
+
+//                 {/* <div className="admin-feedback-card-top">
+//                   <div className="admin-feedback-student-info">
+//                     <StudentAvatar student={student} />
+//                     <h3>{student?.name || "Student"}</h3>
+//                   </div>
+
+//                   <Stars rating={feedback?.rating} />
+//                 </div> */}
+
+
+
+
+//                 <div className="admin-feedback-card-top">
+//   <div className="admin-feedback-student-info">
+//     <StudentAvatar student={student} />
+//     <h3>{student?.name || "Student"}</h3>
+//   </div>
+
+//   <div className="admin-feedback-stars-wrap">
+//     <Stars rating={feedback?.rating} />
+//   </div>
+// </div>
+
+//                 <p className="admin-feedback-message">
+//                   {isLong ? `${review.slice(0, 150)}...` : review}
+//                 </p>
+
+//                 {isLong && (
+//                   <button
+//                     type="button"
+//                     className="admin-feedback-show-more"
+//                     onClick={() => setSelectedFeedback(feedback)}
+//                   >
+//                     Show more
+//                   </button>
+//                 )}
+//               </div>
+//             );
+//           })}
+//         </div>
+//       )}
+
+//       <FeedbackModal
+//         feedback={selectedFeedback}
+//         onClose={() => setSelectedFeedback(null)}
+//       />
+
+
+// {deleteTarget && (
+//   <div className="admin-feedback-delete-overlay">
+//     <div className="admin-feedback-delete-box">
+//       <h3>Delete Feedback?</h3>
+//       <p>Are you sure you want to delete this feedback?</p>
+
+//       <div className="admin-feedback-delete-actions">
+//         <button
+//           type="button"
+//           className="admin-feedback-cancel-btn"
+//           onClick={() => setDeleteTarget(null)}
+//         >
+//           Cancel
+//         </button>
+
+//         <button
+//           type="button"
+//           className="admin-feedback-confirm-delete-btn"
+//           onClick={handleDeleteFeedback}
+//           disabled={deletingId === deleteTarget?._id}
+//         >
+//           {deletingId === deleteTarget?._id ? "Deleting..." : "Delete"}
+//         </button>
+//       </div>
+//     </div>
+//   </div>
+// )}
+
+
+//     </div>
+//   );
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import React, { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import api from "../api/axios";
@@ -416,6 +796,7 @@ export default function AdminFeedbackPage() {
   const [selectedFeedback, setSelectedFeedback] = useState(null);
   const [openMenuId, setOpenMenuId] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
+  const [deleteTarget, setDeleteTarget] = useState(null);
 
   async function fetchFeedbacks() {
     try {
@@ -429,62 +810,31 @@ export default function AdminFeedbackPage() {
     }
   }
 
-//   async function handleDeleteFeedback(feedbackId) {
-//     // const confirmDelete = window.confirm(
-//     //   "Are you sure you want to delete this feedback?"
-//     // );
-
-//     // if (!confirmDelete) return;
-
-
-// const [deleteTarget, setDeleteTarget] = useState(null);
-
-
-//     try {
-//       setDeletingId(feedbackId);
-//       await api.delete(`/admin/feedback/delete/${feedbackId}`);
-
-//       setFeedbacks((prev) =>
-//         prev.filter((feedback) => feedback?._id !== feedbackId)
-//       );
-
-//       setOpenMenuId(null);
-//       showAlert("Feedback deleted successfully", "success");
-//     } catch (err) {
-//       showAlert(getErrorMessage(err), "error");
-//     } finally {
-//       setDeletingId(null);
-//     }
-//   }
-
-
-
-
-
-async function handleDeleteFeedback() {
-  if (!deleteTarget?._id) return;
-
-  try {
-    setDeletingId(deleteTarget._id);
-
-    await api.delete(`/admin/feedback/delete/${deleteTarget._id}`);
-
-    setFeedbacks((prev) =>
-      prev.filter((feedback) => feedback?._id !== deleteTarget._id)
-    );
-
-    setDeleteTarget(null);
-    showAlert("Feedback deleted successfully", "success");
-  } catch (err) {
-    showAlert(getErrorMessage(err), "error");
-  } finally {
-    setDeletingId(null);
+  function askDeleteFeedback(feedback) {
+    setDeleteTarget(feedback);
+    setOpenMenuId(null);
   }
-}
 
+  async function handleDeleteFeedback() {
+    if (!deleteTarget?._id) return;
 
+    try {
+      setDeletingId(deleteTarget._id);
 
+      await api.delete(`/admin/feedback/delete/${deleteTarget._id}`);
 
+      setFeedbacks((prev) =>
+        prev.filter((feedback) => feedback?._id !== deleteTarget._id)
+      );
+
+      setDeleteTarget(null);
+      showAlert("Feedback deleted successfully", "success");
+    } catch (err) {
+      showAlert(getErrorMessage(err), "error");
+    } finally {
+      setDeletingId(null);
+    }
+  }
 
   useEffect(() => {
     fetchFeedbacks();
@@ -515,14 +865,6 @@ async function handleDeleteFeedback() {
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-
-        {/* <button
-          type="button"
-          className="admin-feedback-refresh-btn"
-          onClick={fetchFeedbacks}
-        >
-          Refresh
-        </button> */}
       </div>
 
       {loading ? (
@@ -555,7 +897,6 @@ async function handleDeleteFeedback() {
                     <div className="admin-feedback-menu">
                       <button
                         type="button"
-                        // onClick={() => handleDeleteFeedback(feedback?._id)}
                         onClick={() => askDeleteFeedback(feedback)}
                         disabled={deletingId === feedback?._id}
                       >
@@ -565,28 +906,16 @@ async function handleDeleteFeedback() {
                   )}
                 </div>
 
-                {/* <div className="admin-feedback-card-top">
+                <div className="admin-feedback-card-top">
                   <div className="admin-feedback-student-info">
                     <StudentAvatar student={student} />
                     <h3>{student?.name || "Student"}</h3>
                   </div>
 
-                  <Stars rating={feedback?.rating} />
-                </div> */}
-
-
-
-
-                <div className="admin-feedback-card-top">
-  <div className="admin-feedback-student-info">
-    <StudentAvatar student={student} />
-    <h3>{student?.name || "Student"}</h3>
-  </div>
-
-  <div className="admin-feedback-stars-wrap">
-    <Stars rating={feedback?.rating} />
-  </div>
-</div>
+                  <div className="admin-feedback-stars-wrap">
+                    <Stars rating={feedback?.rating} />
+                  </div>
+                </div>
 
                 <p className="admin-feedback-message">
                   {isLong ? `${review.slice(0, 150)}...` : review}
@@ -612,36 +941,33 @@ async function handleDeleteFeedback() {
         onClose={() => setSelectedFeedback(null)}
       />
 
+      {deleteTarget && (
+        <div className="admin-feedback-delete-overlay">
+          <div className="admin-feedback-delete-box">
+            <h3>Delete Feedback?</h3>
+            <p>Are you sure you want to delete this feedback?</p>
 
-{deleteTarget && (
-  <div className="admin-feedback-delete-overlay">
-    <div className="admin-feedback-delete-box">
-      <h3>Delete Feedback?</h3>
-      <p>Are you sure you want to delete this feedback?</p>
+            <div className="admin-feedback-delete-actions">
+              <button
+                type="button"
+                className="admin-feedback-cancel-btn"
+                onClick={() => setDeleteTarget(null)}
+              >
+                Cancel
+              </button>
 
-      <div className="admin-feedback-delete-actions">
-        <button
-          type="button"
-          className="admin-feedback-cancel-btn"
-          onClick={() => setDeleteTarget(null)}
-        >
-          Cancel
-        </button>
-
-        <button
-          type="button"
-          className="admin-feedback-confirm-delete-btn"
-          onClick={handleDeleteFeedback}
-          disabled={deletingId === deleteTarget?._id}
-        >
-          {deletingId === deleteTarget?._id ? "Deleting..." : "Delete"}
-        </button>
-      </div>
-    </div>
-  </div>
-)}
-
-
+              <button
+                type="button"
+                className="admin-feedback-confirm-delete-btn"
+                onClick={handleDeleteFeedback}
+                disabled={deletingId === deleteTarget?._id}
+              >
+                {deletingId === deleteTarget?._id ? "Deleting..." : "Delete"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
