@@ -531,14 +531,28 @@ export default function AdminFeedbackPage() {
                   )}
                 </div>
 
-                <div className="admin-feedback-card-top">
+                {/* <div className="admin-feedback-card-top">
                   <div className="admin-feedback-student-info">
                     <StudentAvatar student={student} />
                     <h3>{student?.name || "Student"}</h3>
                   </div>
 
                   <Stars rating={feedback?.rating} />
-                </div>
+                </div> */}
+
+
+
+
+                <div className="admin-feedback-card-top">
+  <div className="admin-feedback-student-info">
+    <StudentAvatar student={student} />
+    <h3>{student?.name || "Student"}</h3>
+  </div>
+
+  <div className="admin-feedback-stars-wrap">
+    <Stars rating={feedback?.rating} />
+  </div>
+</div>
 
                 <p className="admin-feedback-message">
                   {isLong ? `${review.slice(0, 150)}...` : review}

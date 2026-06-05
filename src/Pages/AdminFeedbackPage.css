@@ -366,7 +366,7 @@
 
 
 
-
+/* 
 
 .admin-feedback-menu-wrap {
   position: absolute;
@@ -421,6 +421,98 @@
 .admin-feedback-menu button:hover {
   background: rgba(239, 68, 68, 0.28);
   color: #ffffff;
+}
+
+.admin-feedback-menu button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+} */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.admin-feedback-card {
+  overflow: visible;
+}
+
+.admin-feedback-card-top {
+  padding-right: 54px;
+}
+
+.admin-feedback-stars-wrap {
+  margin-right: 24px;
+}
+
+.admin-feedback-menu-wrap {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 20;
+}
+
+.admin-feedback-menu-btn {
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.09);
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 900;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  line-height: 1;
+}
+
+.admin-feedback-menu-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.admin-feedback-menu {
+  position: absolute;
+  top: 46px;
+  right: 0;
+  width: 190px;
+  background: #111633;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.42);
+}
+
+.admin-feedback-menu button {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 11px 12px;
+  font-size: 15px;
+  font-weight: 950;
+  cursor: pointer;
+  text-align: left;
+}
+
+.admin-feedback-menu button::before {
+  content: "🗑 ";
+  margin-right: 6px;
+}
+
+.admin-feedback-menu button:hover {
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .admin-feedback-menu button:disabled {
