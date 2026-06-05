@@ -483,13 +483,13 @@ export default function AdminFeedbackPage() {
           />
         </div>
 
-        <button
+        {/* <button
           type="button"
           className="admin-feedback-refresh-btn"
           onClick={fetchFeedbacks}
         >
           Refresh
-        </button>
+        </button> */}
       </div>
 
       {loading ? (

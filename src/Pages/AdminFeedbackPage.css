@@ -519,3 +519,65 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+
+
+
+
+
+
+
+
+/* search full width - refresh removed */
+.admin-feedback-toolbar {
+  grid-template-columns: 1fr !important;
+}
+
+.admin-feedback-refresh-btn {
+  display: none !important;
+}
+
+/* card top spacing */
+.admin-feedback-card-top {
+  padding-right: 46px !important;
+}
+
+.admin-feedback-stars-wrap {
+  margin-right: 8px !important;
+}
+
+/* 3 dots same tutor page style */
+.admin-feedback-menu-btn:hover {
+  background: rgba(217, 70, 239, 0.22) !important;
+}
+
+/* menu same tutor page style */
+.admin-feedback-menu {
+  width: 175px !important;
+  background: #111633 !important;
+  border-radius: 14px !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  padding: 8px !important;
+  display: grid !important;
+  gap: 4px !important;
+}
+
+.admin-feedback-menu button {
+  border: none !important;
+  background: transparent !important;
+  text-align: left !important;
+  padding: 10px 12px !important;
+  border-radius: 10px !important;
+  font-weight: 800 !important;
+  color: rgba(255, 255, 255, 0.82) !important;
+}
+
+.admin-feedback-menu button:hover {
+  background: rgba(217, 70, 239, 0.16) !important;
+  color: #ffffff !important;
+}
+
+.admin-feedback-menu button::before {
+  content: "🗑 ";
+  margin-right: 6px;
+}
