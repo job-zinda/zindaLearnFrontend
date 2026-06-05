@@ -1040,233 +1040,151 @@ rgba(
 
 
 
-/* =========================================================
-   ADMIN STUDENT MODALS - DARK THEME OVERRIDE
-   Invite Student + Delete Student Account + Edit Student
-   Paste this at the VERY BOTTOM of AdminStudentsPage.css
-========================================================= */
 
-/* Modal main box */
-.modal-content,
-.modal-box,
-.modal-container {
-  background: linear-gradient(145deg, #111633, #080b22) !important;
-  color: #ffffff !important;
-  border: 1px solid rgba(217, 70, 239, 0.28) !important;
-  border-radius: 22px !important;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45) !important;
-  overflow: hidden !important;
-}
 
-/* Modal header */
-.modal-content h2,
-.modal-box h2,
-.modal-container h2,
-.modal-title {
-  color: #ffffff !important;
-  font-weight: 950 !important;
-}
 
-/* Modal close button */
-.modal-content button,
-.modal-box button,
-.modal-container button {
-  font-family: inherit;
-}
 
-/* Student form */
-.student-form {
-  display: grid;
-  gap: 18px;
-  color: #ffffff !important;
-}
 
-/* Labels */
-.student-form label,
-.student-form span,
-.student-form p {
-  color: #ffffff !important;
-  font-weight: 900 !important;
-}
 
-/* Inputs */
-.student-form input,
-.student-form textarea,
-.student-form select {
-  width: 100%;
-  background: rgba(255, 255, 255, 0.06) !important;
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.14) !important;
-  border-radius: 14px !important;
-  padding: 14px 16px !important;
-  outline: none !important;
-  font-size: 15px !important;
-  font-weight: 800 !important;
-}
 
-.student-form input::placeholder,
-.student-form textarea::placeholder {
-  color: rgba(255, 255, 255, 0.48) !important;
-  -webkit-text-fill-color: rgba(255, 255, 255, 0.48) !important;
-}
 
-.student-form input:focus,
-.student-form textarea:focus,
-.student-form select:focus {
-  border-color: rgba(217, 70, 239, 0.65) !important;
-  box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.18) !important;
-}
 
-.student-form input:disabled,
-.student-form select:disabled {
-  background: rgba(255, 255, 255, 0.08) !important;
-  color: rgba(255, 255, 255, 0.65) !important;
-  -webkit-text-fill-color: rgba(255, 255, 255, 0.65) !important;
-  opacity: 1 !important;
-}
 
-/* Delete student modal text */
-.student-delete-box,
-.student-delete-box p,
-.student-delete-box b,
-.student-delete-box strong {
-  color: #ffffff !important;
-}
 
-.student-delete-box p {
-  margin: 0 0 18px !important;
-  color: rgba(255, 255, 255, 0.82) !important;
-  font-size: 16px !important;
-  font-weight: 800 !important;
-  line-height: 1.6 !important;
-}
 
-.student-delete-box b,
-.student-delete-box strong {
-  color: #ffffff !important;
-  font-weight: 950 !important;
-}
 
-/* Form buttons layout */
-.form-actions {
-  display: flex !important;
-  justify-content: flex-end !important;
-  gap: 12px !important;
-  margin-top: 8px !important;
-}
 
-/* Cancel button */
-.secondary-btn {
-  border: none !important;
-  border-radius: 14px !important;
-  padding: 13px 22px !important;
-  background: rgba(255, 255, 255, 0.1) !important;
-  color: #ffffff !important;
-  font-weight: 950 !important;
-  cursor: pointer !important;
-  transition: 0.25s ease !important;
-}
 
-/* Primary button */
-.primary-btn {
-  border: none !important;
-  border-radius: 14px !important;
-  padding: 13px 22px !important;
-  background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
-  color: #ffffff !important;
-  font-weight: 950 !important;
-  cursor: pointer !important;
-  box-shadow: 0 14px 30px rgba(217, 70, 239, 0.24) !important;
-  transition: 0.25s ease !important;
-}
 
-/* Delete button also purple theme */
-.danger-btn {
-  border: none !important;
-  border-radius: 14px !important;
-  padding: 13px 22px !important;
-  background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
-  color: #ffffff !important;
-  font-weight: 950 !important;
-  cursor: pointer !important;
-  box-shadow: 0 14px 30px rgba(217, 70, 239, 0.24) !important;
-  transition: 0.25s ease !important;
-}
 
-.secondary-btn:hover,
-.primary-btn:hover,
-.danger-btn:hover {
-  transform: translateY(-1px) !important;
-  opacity: 0.95 !important;
-}
 
-.secondary-btn:disabled,
-.primary-btn:disabled,
-.danger-btn:disabled {
-  opacity: 0.6 !important;
-  cursor: not-allowed !important;
-  transform: none !important;
-}
 
-/* Photo preview */
-.student-photo-preview {
-  border: 1px solid rgba(217, 70, 239, 0.35) !important;
-  background: rgba(255, 255, 255, 0.06) !important;
-}
 
-/* Assign tutor modal dark support */
-.assign-tutor-box {
-  color: #ffffff !important;
-}
 
-.assign-tutor-search {
-  background: rgba(255, 255, 255, 0.06) !important;
-  border: 1px solid rgba(255, 255, 255, 0.14) !important;
-}
 
-.assign-tutor-search input {
-  background: transparent !important;
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-}
 
-.assign-tutor-search input::placeholder {
-  color: rgba(255, 255, 255, 0.48) !important;
-  -webkit-text-fill-color: rgba(255, 255, 255, 0.48) !important;
-}
 
-.assign-tutor-item {
-  background: rgba(255, 255, 255, 0.06) !important;
-  border: 1px solid rgba(255, 255, 255, 0.14) !important;
-  color: #ffffff !important;
-}
 
-.assign-tutor-info h4 {
-  color: #ffffff !important;
-}
 
-.assign-tutor-info p {
-  color: #d8b4fe !important;
-}
 
-.assign-tutor-info small {
-  color: rgba(255, 255, 255, 0.62) !important;
-}
 
-.assign-tutor-state {
-  background: rgba(255, 255, 255, 0.06) !important;
-  border: 1px dashed rgba(217, 70, 239, 0.42) !important;
-  color: rgba(255, 255, 255, 0.72) !important;
-}
 
-/* Mobile */
-@media (max-width: 640px) {
-  .form-actions {
-    flex-direction: column-reverse !important;
-  }
 
-  .form-actions button {
-    width: 100% !important;
-  }
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
