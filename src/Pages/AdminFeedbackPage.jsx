@@ -429,29 +429,62 @@ export default function AdminFeedbackPage() {
     }
   }
 
-  async function handleDeleteFeedback(feedbackId) {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this feedback?"
+//   async function handleDeleteFeedback(feedbackId) {
+//     // const confirmDelete = window.confirm(
+//     //   "Are you sure you want to delete this feedback?"
+//     // );
+
+//     // if (!confirmDelete) return;
+
+
+// const [deleteTarget, setDeleteTarget] = useState(null);
+
+
+//     try {
+//       setDeletingId(feedbackId);
+//       await api.delete(`/admin/feedback/delete/${feedbackId}`);
+
+//       setFeedbacks((prev) =>
+//         prev.filter((feedback) => feedback?._id !== feedbackId)
+//       );
+
+//       setOpenMenuId(null);
+//       showAlert("Feedback deleted successfully", "success");
+//     } catch (err) {
+//       showAlert(getErrorMessage(err), "error");
+//     } finally {
+//       setDeletingId(null);
+//     }
+//   }
+
+
+
+
+
+async function handleDeleteFeedback() {
+  if (!deleteTarget?._id) return;
+
+  try {
+    setDeletingId(deleteTarget._id);
+
+    await api.delete(`/admin/feedback/delete/${deleteTarget._id}`);
+
+    setFeedbacks((prev) =>
+      prev.filter((feedback) => feedback?._id !== deleteTarget._id)
     );
 
-    if (!confirmDelete) return;
-
-    try {
-      setDeletingId(feedbackId);
-      await api.delete(`/admin/feedback/delete/${feedbackId}`);
-
-      setFeedbacks((prev) =>
-        prev.filter((feedback) => feedback?._id !== feedbackId)
-      );
-
-      setOpenMenuId(null);
-      showAlert("Feedback deleted successfully", "success");
-    } catch (err) {
-      showAlert(getErrorMessage(err), "error");
-    } finally {
-      setDeletingId(null);
-    }
+    setDeleteTarget(null);
+    showAlert("Feedback deleted successfully", "success");
+  } catch (err) {
+    showAlert(getErrorMessage(err), "error");
+  } finally {
+    setDeletingId(null);
   }
+}
+
+
+
+
 
   useEffect(() => {
     fetchFeedbacks();
@@ -522,7 +555,8 @@ export default function AdminFeedbackPage() {
                     <div className="admin-feedback-menu">
                       <button
                         type="button"
-                        onClick={() => handleDeleteFeedback(feedback?._id)}
+                        // onClick={() => handleDeleteFeedback(feedback?._id)}
+                        onClick={() => askDeleteFeedback(feedback)}
                         disabled={deletingId === feedback?._id}
                       >
                         {deletingId === feedback?._id ? "Deleting..." : "Delete"}
@@ -577,6 +611,37 @@ export default function AdminFeedbackPage() {
         feedback={selectedFeedback}
         onClose={() => setSelectedFeedback(null)}
       />
+
+
+{deleteTarget && (
+  <div className="admin-feedback-delete-overlay">
+    <div className="admin-feedback-delete-box">
+      <h3>Delete Feedback?</h3>
+      <p>Are you sure you want to delete this feedback?</p>
+
+      <div className="admin-feedback-delete-actions">
+        <button
+          type="button"
+          className="admin-feedback-cancel-btn"
+          onClick={() => setDeleteTarget(null)}
+        >
+          Cancel
+        </button>
+
+        <button
+          type="button"
+          className="admin-feedback-confirm-delete-btn"
+          onClick={handleDeleteFeedback}
+          disabled={deletingId === deleteTarget?._id}
+        >
+          {deletingId === deleteTarget?._id ? "Deleting..." : "Delete"}
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
+
     </div>
   );
 }
