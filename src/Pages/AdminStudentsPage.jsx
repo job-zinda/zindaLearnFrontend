@@ -2513,7 +2513,7 @@ student
       >
         <div className="student-delete-box">
           <p>
-            <b>{deleteTarget?.name || "This student"}</b> delete account?
+            <b>{deleteTarget?.name || "This student"}</b> Do you want to delete this student?
           </p>
 
           <div className="form-actions">

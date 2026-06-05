@@ -1105,7 +1105,7 @@ return (
 
 
  <button type="button" onClick={() => askDeleteTutor(tutor)}>
-                        🗑 Delete
+                        🗑 Delete Account
                       </button>
 
 

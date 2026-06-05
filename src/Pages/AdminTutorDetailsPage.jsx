@@ -2528,7 +2528,7 @@ async function toggleTutorBlock() {
           setDeleteOpen(true);
         }}
       >
-        🗑 Delete
+        🗑 Delete Account
       </button>
     </div>
   )}
