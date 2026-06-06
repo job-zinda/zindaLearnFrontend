@@ -1730,7 +1730,10 @@ rgba(
 
 
 
-
+.student-dark-modal .student-dark-form input[type="file"]::file-selector-button {
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+}
 
 
 
