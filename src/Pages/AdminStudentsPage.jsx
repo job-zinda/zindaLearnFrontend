@@ -2792,7 +2792,7 @@ student
 
 
 
-
+{/* 
       <Modal
   open={assignOpen}
   title={`Assign Tutors${assignStudent?.name ? ` - ${assignStudent.name}` : ""}`}
@@ -2876,7 +2876,113 @@ student
       </button>
     </div>
   </div>
-</Modal>
+</Modal> */}
+
+
+
+
+<StudentDarkModal
+  open={assignOpen}
+  title={`Assign Tutors${assignStudent?.name ? ` - ${assignStudent.name}` : ""}`}
+  width="760px"
+  onClose={() => {
+    setAssignOpen(false);
+    setAssignStudent(null);
+    setAssignedTutorIds([]);
+  }}
+>
+  <div className="assign-tutor-box assign-tutor-box-dark">
+    <div className="assign-tutor-search assign-tutor-search-dark">
+      <span>⌕</span>
+      <input
+        value={assignSearch}
+        onChange={(e) => setAssignSearch(e.target.value)}
+        placeholder="Search tutors..."
+      />
+    </div>
+
+    {assignLoading ? (
+      <div className="assign-tutor-state assign-tutor-state-dark">
+        Loading tutors...
+      </div>
+    ) : filteredAssignTutors.length === 0 ? (
+      <div className="assign-tutor-state assign-tutor-state-dark">
+        No tutors found
+      </div>
+    ) : (
+      <div className="assign-tutor-list assign-tutor-list-dark">
+        {filteredAssignTutors.map((tutor) => {
+          const checked = assignedTutorIds.includes(tutor._id);
+          const photo = tutor.photo ? getMediaUrl(tutor.photo) : "";
+
+          return (
+            <label
+              key={tutor._id}
+              className={`assign-tutor-item assign-tutor-item-dark ${
+                checked ? "assign-tutor-item--selected" : ""
+              }`}
+            >
+              <input
+                type="checkbox"
+                checked={checked}
+                onChange={(e) =>
+                  toggleAssignedTutor(tutor._id, e.target.checked)
+                }
+              />
+
+              <div className="assign-tutor-avatar">
+                {photo ? (
+                  <img src={photo} alt={tutor.name || "Tutor"} />
+                ) : (
+                  <span>{tutor.name?.charAt(0)?.toUpperCase() || "T"}</span>
+                )}
+              </div>
+
+              <div className="assign-tutor-info assign-tutor-info-dark">
+                <h4>{tutor.name || "Tutor"}</h4>
+                <p>{tutor.qualification || "Qualification not added"}</p>
+                <small>
+                  {tutor.email || tutor.phone || "No contact added"}
+                </small>
+              </div>
+            </label>
+          );
+        })}
+      </div>
+    )}
+
+    <div className="assign-tutor-actions">
+      <button
+        type="button"
+        className="secondary-btn"
+        onClick={() => {
+          setAssignOpen(false);
+          setAssignStudent(null);
+          setAssignedTutorIds([]);
+        }}
+        disabled={submitting}
+      >
+        Cancel
+      </button>
+
+      <button
+        type="button"
+        className="primary-btn"
+        disabled={submitting}
+        onClick={saveAssignedTutors}
+      >
+        {submitting ? "Saving..." : "Save Assignment"}
+      </button>
+    </div>
+  </div>
+</StudentDarkModal>
+
+
+
+
+
+
+
     </div>
   );
 }

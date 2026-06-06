@@ -1412,6 +1412,333 @@ rgba(
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   FINAL FIX: Student dark modal text + inputs + assign tutors
+   Paste at the VERY BOTTOM of AdminStudentsPage.css
+========================================================= */
+
+/* Make all dark modal text clearly visible */
+.student-dark-modal,
+.student-dark-modal * {
+  color: #ffffff;
+}
+
+.student-dark-modal .student-dark-form label,
+.student-dark-modal .student-dark-form .form-field,
+.student-dark-modal .student-dark-form .form-field > span,
+.student-dark-modal .student-dark-form label > span {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  font-weight: 950 !important;
+}
+
+/* Inputs: typed text white, placeholder light */
+.student-dark-modal .student-dark-form input,
+.student-dark-modal .student-dark-form textarea,
+.student-dark-modal .student-dark-form select {
+  background: rgba(255, 255, 255, 0.07) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  box-shadow: none !important;
+}
+
+.student-dark-modal .student-dark-form input::placeholder,
+.student-dark-modal .student-dark-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.58) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.58) !important;
+  opacity: 1 !important;
+}
+
+.student-dark-modal .student-dark-form input:focus,
+.student-dark-modal .student-dark-form textarea:focus,
+.student-dark-modal .student-dark-form select:focus {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border-color: rgba(217, 70, 239, 0.75) !important;
+  box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.2) !important;
+}
+
+/* Browser autofill fix */
+.student-dark-modal .student-dark-form input:-webkit-autofill,
+.student-dark-modal .student-dark-form input:-webkit-autofill:hover,
+.student-dark-modal .student-dark-form input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+  box-shadow: 0 0 0 1000px #1a1f3a inset !important;
+  border: 1px solid rgba(217, 70, 239, 0.55) !important;
+}
+
+/* File input text fix */
+.student-dark-modal .student-dark-form input[type="file"] {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.student-dark-modal .student-dark-form input[type="file"]::file-selector-button {
+  border: none !important;
+  border-radius: 10px !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  color: #111827 !important;
+  font-weight: 900 !important;
+  padding: 9px 13px !important;
+  margin-right: 12px !important;
+  cursor: pointer !important;
+}
+
+/* Assign Tutors dark modal */
+.student-dark-modal .assign-tutor-box,
+.student-dark-modal .assign-tutor-box-dark {
+  display: grid !important;
+  gap: 18px !important;
+  color: #ffffff !important;
+}
+
+.student-dark-modal .assign-tutor-search,
+.student-dark-modal .assign-tutor-search-dark {
+  height: 56px !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-radius: 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 0 18px !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+.student-dark-modal .assign-tutor-search span {
+  color: rgba(255, 255, 255, 0.62) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.62) !important;
+  font-size: 22px !important;
+}
+
+.student-dark-modal .assign-tutor-search input {
+  width: 100% !important;
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+  font-size: 16px !important;
+  font-weight: 850 !important;
+}
+
+.student-dark-modal .assign-tutor-search input::placeholder {
+  color: rgba(255, 255, 255, 0.52) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.52) !important;
+}
+
+.student-dark-modal .assign-tutor-list,
+.student-dark-modal .assign-tutor-list-dark {
+  max-height: 420px !important;
+  overflow-y: auto !important;
+  display: grid !important;
+  gap: 12px !important;
+  padding-right: 6px !important;
+}
+
+.student-dark-modal .assign-tutor-item,
+.student-dark-modal .assign-tutor-item-dark {
+  display: grid !important;
+  grid-template-columns: 54px 58px 1fr !important;
+  align-items: center !important;
+  gap: 14px !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 20px !important;
+  padding: 14px !important;
+  background: rgba(255, 255, 255, 0.055) !important;
+  cursor: pointer !important;
+  transition: 0.22s ease !important;
+}
+
+.student-dark-modal .assign-tutor-item:hover,
+.student-dark-modal .assign-tutor-item--selected {
+  border-color: rgba(217, 70, 239, 0.5) !important;
+  background: linear-gradient(
+    135deg,
+    rgba(217, 70, 239, 0.16),
+    rgba(124, 58, 237, 0.12)
+  ) !important;
+}
+
+.student-dark-modal .assign-tutor-item input[type="checkbox"] {
+  appearance: none !important;
+  width: 48px !important;
+  height: 28px !important;
+  border-radius: 999px !important;
+  background: #475569 !important;
+  position: relative !important;
+  cursor: pointer !important;
+  transition: 0.25s ease !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.student-dark-modal .assign-tutor-item input[type="checkbox"]::before {
+  content: "" !important;
+  position: absolute !important;
+  width: 22px !important;
+  height: 22px !important;
+  top: 3px !important;
+  left: 3px !important;
+  border-radius: 50% !important;
+  background: #ffffff !important;
+  transition: 0.25s ease !important;
+}
+
+.student-dark-modal .assign-tutor-item input[type="checkbox"]:checked {
+  background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
+}
+
+.student-dark-modal .assign-tutor-item input[type="checkbox"]:checked::before {
+  transform: translateX(20px) !important;
+}
+
+.student-dark-modal .assign-tutor-avatar {
+  width: 54px !important;
+  height: 54px !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+  background: rgba(217, 70, 239, 0.14) !important;
+  border: 2px solid rgba(217, 70, 239, 0.35) !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+.student-dark-modal .assign-tutor-avatar img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+.student-dark-modal .assign-tutor-avatar span {
+  color: #d946ef !important;
+  -webkit-text-fill-color: #d946ef !important;
+  font-size: 22px !important;
+  font-weight: 950 !important;
+}
+
+.student-dark-modal .assign-tutor-info h4,
+.student-dark-modal .assign-tutor-info-dark h4 {
+  margin: 0 0 4px !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-size: 17px !important;
+  font-weight: 950 !important;
+}
+
+.student-dark-modal .assign-tutor-info p,
+.student-dark-modal .assign-tutor-info-dark p {
+  margin: 0 0 4px !important;
+  color: #d8b4fe !important;
+  -webkit-text-fill-color: #d8b4fe !important;
+  font-weight: 850 !important;
+}
+
+.student-dark-modal .assign-tutor-info small,
+.student-dark-modal .assign-tutor-info-dark small {
+  color: rgba(255, 255, 255, 0.62) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.62) !important;
+  font-weight: 750 !important;
+}
+
+.student-dark-modal .assign-tutor-state,
+.student-dark-modal .assign-tutor-state-dark {
+  border: 1px dashed rgba(216, 180, 254, 0.45) !important;
+  border-radius: 18px !important;
+  padding: 26px !important;
+  text-align: center !important;
+  color: rgba(255, 255, 255, 0.72) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.72) !important;
+  font-weight: 900 !important;
+}
+
+.student-dark-modal .assign-tutor-actions {
+  display: flex !important;
+  justify-content: flex-end !important;
+  gap: 12px !important;
+}
+
+/* Scrollbar for assign list */
+.student-dark-modal .assign-tutor-list::-webkit-scrollbar,
+.student-dark-modal .student-dark-modal-body::-webkit-scrollbar {
+  width: 8px !important;
+}
+
+.student-dark-modal .assign-tutor-list::-webkit-scrollbar-track,
+.student-dark-modal .student-dark-modal-body::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-radius: 999px !important;
+}
+
+.student-dark-modal .assign-tutor-list::-webkit-scrollbar-thumb,
+.student-dark-modal .student-dark-modal-body::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
+  border-radius: 999px !important;
+}
+
+@media (max-width: 640px) {
+  .student-dark-modal .assign-tutor-item {
+    grid-template-columns: 48px 48px 1fr !important;
+    padding: 12px !important;
+  }
+
+  .student-dark-modal .assign-tutor-actions {
+    flex-direction: column-reverse !important;
+  }
+
+  .student-dark-modal .assign-tutor-actions button {
+    width: 100% !important;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* 
 
 .modal-content,
