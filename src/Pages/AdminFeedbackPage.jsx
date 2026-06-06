@@ -868,7 +868,7 @@ export default function AdminFeedbackPage() {
       </div>
 
       {loading ? (
-        <div className="admin-feedback-state">Loading reviews...</div>
+        <div className="admin-feedback-state">Loading feedbacks...</div>
       ) : filteredFeedbacks.length === 0 ? (
         <div className="admin-feedback-state">No reviews found</div>
       ) : (

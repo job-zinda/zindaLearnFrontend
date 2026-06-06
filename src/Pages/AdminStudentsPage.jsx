@@ -1566,6 +1566,10 @@
 
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+
+
+
 import { useLocation } from "react-router-dom";
 import Modal from "../Components/Modal";
 import { useAlert } from "../context/AlertContext";
@@ -1691,6 +1695,50 @@ function resizeImageToBase64(file, maxSize = 420, quality = 0.72) {
     reader.readAsDataURL(file);
   });
 }
+
+
+
+
+
+
+
+
+function StudentDarkModal({ open, title, width = "560px", onClose, children }) {
+  if (!open) return null;
+
+  return createPortal(
+    <div className="student-dark-modal-overlay" onMouseDown={onClose}>
+      <div
+        className="student-dark-modal"
+        style={{ width }}
+        onMouseDown={(e) => e.stopPropagation()}
+      >
+        <div className="student-dark-modal-header">
+          <h2>{title}</h2>
+
+          <button
+            type="button"
+            className="student-dark-modal-close"
+            onClick={onClose}
+          >
+            ×
+          </button>
+        </div>
+
+        <div className="student-dark-modal-body">{children}</div>
+      </div>
+    </div>,
+    document.body
+  );
+}
+
+
+
+
+
+
+
+
 
 export default function AdminStudentsPage() {
   const { showAlert } = useAlert();
@@ -2376,6 +2424,12 @@ student
         </div>
       )}
 
+
+
+
+
+
+{/* 
       <Modal
         open={inviteOpen}
         title="Invite Student"
@@ -2433,8 +2487,79 @@ student
             </button>
           </div>
         </form>
-      </Modal>
+      </Modal> */}
 
+
+
+
+
+
+
+<StudentDarkModal
+  open={inviteOpen}
+  title="Invite Student"
+  width="560px"
+  onClose={() => setInviteOpen(false)}
+>
+  <form className="student-form student-dark-form" onSubmit={sendInvite}>
+    <label className="form-field">
+      <span>Student Name</span>
+      <input
+        value={inviteForm.name}
+        onChange={(e) =>
+          setInviteForm((prev) => ({ ...prev, name: e.target.value }))
+        }
+        placeholder="Enter student name"
+      />
+    </label>
+
+    <label className="form-field">
+      <span>Student Email</span>
+      <input
+        type="email"
+        value={inviteForm.email}
+        onChange={(e) =>
+          setInviteForm((prev) => ({ ...prev, email: e.target.value }))
+        }
+        placeholder="Enter student email"
+      />
+    </label>
+
+    <label className="form-field">
+      <span>Student Phone</span>
+      <input
+        type="tel"
+        value={inviteForm.phone}
+        onChange={(e) =>
+          setInviteForm((prev) => ({ ...prev, phone: e.target.value }))
+        }
+        placeholder="Enter student phone"
+      />
+    </label>
+
+    <div className="form-actions">
+      <button
+        type="button"
+        className="secondary-btn"
+        onClick={() => setInviteOpen(false)}
+        disabled={submitting}
+      >
+        Cancel
+      </button>
+
+      <button type="submit" className="primary-btn" disabled={submitting}>
+        {submitting ? "Sending..." : "Send Mail"}
+      </button>
+    </div>
+  </form>
+</StudentDarkModal>
+
+
+
+
+
+
+{/* 
       <Modal
         open={editOpen}
         title="Edit Student"
@@ -2503,8 +2628,90 @@ student
             </button>
           </div>
         </form>
-      </Modal>
+      </Modal> */}
 
+
+
+
+
+
+
+<StudentDarkModal
+  open={editOpen}
+  title="Edit Student"
+  width="620px"
+  onClose={() => setEditOpen(false)}
+>
+  <form className="student-form student-dark-form" onSubmit={updateStudent}>
+    <label className="form-field">
+      <span>Student Photo</span>
+      <input type="file" accept="image/*" onChange={handlePhotoChange} />
+    </label>
+
+    {preview && (
+      <div className="student-photo-preview">
+        <img src={preview} alt="Preview" />
+      </div>
+    )}
+
+    <label className="form-field">
+      <span>Name</span>
+      <input
+        value={editForm.name}
+        onChange={(e) =>
+          setEditForm((prev) => ({ ...prev, name: e.target.value }))
+        }
+        placeholder="Enter student name"
+      />
+    </label>
+
+    <label className="form-field">
+      <span>Email</span>
+      <input
+        type="email"
+        value={editForm.email}
+        onChange={(e) =>
+          setEditForm((prev) => ({ ...prev, email: e.target.value }))
+        }
+        placeholder="Enter student email"
+      />
+    </label>
+
+    <label className="form-field">
+      <span>Phone</span>
+      <input
+        type="tel"
+        value={editForm.phone}
+        onChange={(e) =>
+          setEditForm((prev) => ({ ...prev, phone: e.target.value }))
+        }
+        placeholder="Enter student phone"
+      />
+    </label>
+
+    <div className="form-actions">
+      <button
+        type="button"
+        className="secondary-btn"
+        onClick={() => setEditOpen(false)}
+        disabled={submitting}
+      >
+        Cancel
+      </button>
+
+      <button type="submit" className="primary-btn" disabled={submitting}>
+        {submitting ? "Updating..." : "Update"}
+      </button>
+    </div>
+  </form>
+</StudentDarkModal>
+
+
+
+
+
+
+{/* 
       <Modal
         open={deleteOpen}
         title="Delete Student Account"
@@ -2536,7 +2743,54 @@ student
             </button>
           </div>
         </div>
-      </Modal>
+      </Modal> */}
+
+
+
+
+
+
+
+
+<StudentDarkModal
+  open={deleteOpen}
+  title="Delete Student Account"
+  width="460px"
+  onClose={() => setDeleteOpen(false)}
+>
+  <div className="student-delete-box student-dark-delete-box">
+    <p>
+      <b>{deleteTarget?.name || "This student"}</b> Do you want to delete this
+      student?
+    </p>
+
+    <div className="form-actions">
+      <button
+        type="button"
+        className="secondary-btn"
+        onClick={() => setDeleteOpen(false)}
+        disabled={submitting}
+      >
+        Cancel
+      </button>
+
+      <button
+        type="button"
+        className="danger-btn"
+        onClick={deleteStudent}
+        disabled={submitting}
+      >
+        {submitting ? "Deleting..." : "Delete"}
+      </button>
+    </div>
+  </div>
+</StudentDarkModal>
+
+
+
+
+
+
 
 
       <Modal

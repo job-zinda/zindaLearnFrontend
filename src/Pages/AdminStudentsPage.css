@@ -1164,6 +1164,228 @@ rgba(
 
 
 
+/* =========================================================
+   STUDENT PAGE CUSTOM DARK MODALS
+   Invite Student + Edit Student + Delete Student Account
+   Paste at VERY BOTTOM of AdminStudentsPage.css
+========================================================= */
+
+.student-dark-modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483647 !important;
+  background: rgba(2, 6, 23, 0.72) !important;
+  backdrop-filter: blur(7px) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 20px !important;
+}
+
+.student-dark-modal {
+  max-width: calc(100vw - 40px) !important;
+  max-height: calc(100vh - 40px) !important;
+  background: linear-gradient(145deg, #111633, #080b22) !important;
+  color: #ffffff !important;
+  border-radius: 22px !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(217, 70, 239, 0.28) !important;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45) !important;
+}
+
+.student-dark-modal-header {
+  padding: 18px 22px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+.student-dark-modal-header h2 {
+  margin: 0 !important;
+  font-size: 22px !important;
+  color: #ffffff !important;
+  font-weight: 950 !important;
+}
+
+.student-dark-modal-close {
+  width: 42px !important;
+  height: 42px !important;
+  border: none !important;
+  border-radius: 50% !important;
+  background: rgba(217, 70, 239, 0.16) !important;
+  color: #f0abfc !important;
+  font-size: 30px !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+.student-dark-modal-close:hover {
+  background: rgba(217, 70, 239, 0.28) !important;
+  color: #ffffff !important;
+}
+
+.student-dark-modal-body {
+  padding: 24px !important;
+  max-height: calc(100vh - 120px) !important;
+  overflow-y: auto !important;
+}
+
+/* Form dark theme */
+.student-dark-form {
+  display: grid !important;
+  gap: 18px !important;
+}
+
+.student-dark-form .form-field {
+  display: grid !important;
+  gap: 8px !important;
+}
+
+.student-dark-form label,
+.student-dark-form span,
+.student-dark-form p {
+  color: #ffffff !important;
+  font-weight: 900 !important;
+}
+
+.student-dark-form input,
+.student-dark-form textarea,
+.student-dark-form select {
+  width: 100% !important;
+  height: 54px !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-radius: 14px !important;
+  padding: 0 16px !important;
+  outline: none !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+}
+
+.student-dark-form input[type="file"] {
+  height: auto !important;
+  padding: 12px !important;
+  cursor: pointer !important;
+}
+
+.student-dark-form input::placeholder,
+.student-dark-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.48) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.48) !important;
+}
+
+.student-dark-form input:focus,
+.student-dark-form textarea:focus,
+.student-dark-form select:focus {
+  border-color: rgba(217, 70, 239, 0.65) !important;
+  box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.18) !important;
+}
+
+/* Delete modal text */
+.student-dark-delete-box,
+.student-dark-delete-box p,
+.student-dark-delete-box b {
+  color: #ffffff !important;
+}
+
+.student-dark-delete-box p {
+  margin: 0 0 18px !important;
+  color: rgba(255, 255, 255, 0.82) !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  line-height: 1.6 !important;
+}
+
+.student-dark-delete-box b {
+  color: #ffffff !important;
+  font-weight: 950 !important;
+}
+
+/* Buttons */
+.student-dark-modal .form-actions {
+  display: flex !important;
+  justify-content: flex-end !important;
+  gap: 12px !important;
+  margin-top: 10px !important;
+}
+
+.student-dark-modal .secondary-btn {
+  border: none !important;
+  border-radius: 14px !important;
+  min-width: 110px !important;
+  height: 50px !important;
+  padding: 0 22px !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+  font-weight: 950 !important;
+  cursor: pointer !important;
+  transition: 0.25s ease !important;
+}
+
+.student-dark-modal .primary-btn,
+.student-dark-modal .danger-btn {
+  border: none !important;
+  border-radius: 14px !important;
+  min-width: 110px !important;
+  height: 50px !important;
+  padding: 0 22px !important;
+  background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
+  color: #ffffff !important;
+  font-weight: 950 !important;
+  cursor: pointer !important;
+  box-shadow: 0 14px 30px rgba(217, 70, 239, 0.24) !important;
+  transition: 0.25s ease !important;
+}
+
+.student-dark-modal .secondary-btn:hover,
+.student-dark-modal .primary-btn:hover,
+.student-dark-modal .danger-btn:hover {
+  transform: translateY(-1px) !important;
+  opacity: 0.95 !important;
+}
+
+.student-dark-modal .secondary-btn:disabled,
+.student-dark-modal .primary-btn:disabled,
+.student-dark-modal .danger-btn:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+}
+
+/* Photo preview */
+.student-dark-modal .student-photo-preview {
+  width: 130px !important;
+  height: 130px !important;
+  border-radius: 18px !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(217, 70, 239, 0.35) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+.student-dark-modal .student-photo-preview img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+@media (max-width: 640px) {
+  .student-dark-modal {
+    width: calc(100vw - 28px) !important;
+  }
+
+  .student-dark-modal .form-actions {
+    flex-direction: column-reverse !important;
+  }
+
+  .student-dark-modal .form-actions button {
+    width: 100% !important;
+  }
+}
 
 
 
@@ -1188,3 +1410,217 @@ rgba(
 
 
 
+
+
+/* 
+
+.modal-content,
+.modal-box,
+.modal-container {
+  background: linear-gradient(145deg, #111633, #080b22) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(217, 70, 239, 0.28) !important;
+  border-radius: 22px !important;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45) !important;
+  overflow: hidden !important;
+}
+
+.modal-content h2,
+.modal-box h2,
+.modal-container h2,
+.modal-title {
+  color: #ffffff !important;
+  font-weight: 950 !important;
+}
+
+.modal-content button,
+.modal-box button,
+.modal-container button {
+  font-family: inherit;
+}
+
+.student-form {
+  display: grid;
+  gap: 18px;
+  color: #ffffff !important;
+}
+
+.student-form label,
+.student-form span,
+.student-form p {
+  color: #ffffff !important;
+  font-weight: 900 !important;
+}
+
+.student-form input,
+.student-form textarea,
+.student-form select {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-radius: 14px !important;
+  padding: 14px 16px !important;
+  outline: none !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+}
+
+.student-form input::placeholder,
+.student-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.48) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.48) !important;
+}
+
+.student-form input:focus,
+.student-form textarea:focus,
+.student-form select:focus {
+  border-color: rgba(217, 70, 239, 0.65) !important;
+  box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.18) !important;
+}
+
+.student-form input:disabled,
+.student-form select:disabled {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: rgba(255, 255, 255, 0.65) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.65) !important;
+  opacity: 1 !important;
+}
+
+.student-delete-box,
+.student-delete-box p,
+.student-delete-box b,
+.student-delete-box strong {
+  color: #ffffff !important;
+}
+
+.student-delete-box p {
+  margin: 0 0 18px !important;
+  color: rgba(255, 255, 255, 0.82) !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  line-height: 1.6 !important;
+}
+
+.student-delete-box b,
+.student-delete-box strong {
+  color: #ffffff !important;
+  font-weight: 950 !important;
+}
+
+.form-actions {
+  display: flex !important;
+  justify-content: flex-end !important;
+  gap: 12px !important;
+  margin-top: 8px !important;
+}
+
+.secondary-btn {
+  border: none !important;
+  border-radius: 14px !important;
+  padding: 13px 22px !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+  font-weight: 950 !important;
+  cursor: pointer !important;
+  transition: 0.25s ease !important;
+}
+
+.primary-btn {
+  border: none !important;
+  border-radius: 14px !important;
+  padding: 13px 22px !important;
+  background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
+  color: #ffffff !important;
+  font-weight: 950 !important;
+  cursor: pointer !important;
+  box-shadow: 0 14px 30px rgba(217, 70, 239, 0.24) !important;
+  transition: 0.25s ease !important;
+}
+
+.danger-btn {
+  border: none !important;
+  border-radius: 14px !important;
+  padding: 13px 22px !important;
+  background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
+  color: #ffffff !important;
+  font-weight: 950 !important;
+  cursor: pointer !important;
+  box-shadow: 0 14px 30px rgba(217, 70, 239, 0.24) !important;
+  transition: 0.25s ease !important;
+}
+
+.secondary-btn:hover,
+.primary-btn:hover,
+.danger-btn:hover {
+  transform: translateY(-1px) !important;
+  opacity: 0.95 !important;
+}
+
+.secondary-btn:disabled,
+.primary-btn:disabled,
+.danger-btn:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+}
+
+.student-photo-preview {
+  border: 1px solid rgba(217, 70, 239, 0.35) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+.assign-tutor-box {
+  color: #ffffff !important;
+}
+
+.assign-tutor-search {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+.assign-tutor-search input {
+  background: transparent !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.assign-tutor-search input::placeholder {
+  color: rgba(255, 255, 255, 0.48) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.48) !important;
+}
+
+.assign-tutor-item {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  color: #ffffff !important;
+}
+
+.assign-tutor-info h4 {
+  color: #ffffff !important;
+}
+
+.assign-tutor-info p {
+  color: #d8b4fe !important;
+}
+
+.assign-tutor-info small {
+  color: rgba(255, 255, 255, 0.62) !important;
+}
+
+.assign-tutor-state {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px dashed rgba(217, 70, 239, 0.42) !important;
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+@media (max-width: 640px) {
+  .form-actions {
+    flex-direction: column-reverse !important;
+  }
+
+  .form-actions button {
+    width: 100% !important;
+  }
+} */
