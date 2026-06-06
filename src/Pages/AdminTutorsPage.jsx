@@ -185,15 +185,15 @@ export default function AdminTutorsPage() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const emptyInviteTutorForm = {
-  name: "",
-  email: "",
-  phone: "",
-};
+// const emptyInviteTutorForm = {
+//   name: "",
+//   email: "",
+//   phone: "",
+// };
 
-const [inviteTutorOpen, setInviteTutorOpen] = useState(false);
-const [inviteTutorForm, setInviteTutorForm] = useState(emptyInviteTutorForm);
-const [inviteTutorLoading, setInviteTutorLoading] = useState(false);
+// const [inviteTutorOpen, setInviteTutorOpen] = useState(false);
+// const [inviteTutorForm, setInviteTutorForm] = useState(emptyInviteTutorForm);
+// const [inviteTutorLoading, setInviteTutorLoading] = useState(false);
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -286,61 +286,61 @@ const [inviteTutorLoading, setInviteTutorLoading] = useState(false);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function openInviteTutorModal() {
-  setInviteTutorForm(emptyInviteTutorForm);
-  setInviteTutorOpen(true);
-}
+// function openInviteTutorModal() {
+//   setInviteTutorForm(emptyInviteTutorForm);
+//   setInviteTutorOpen(true);
+// }
 
-function handleInviteTutorChange(e) {
-  const { name, value } = e.target;
+// function handleInviteTutorChange(e) {
+//   const { name, value } = e.target;
 
-  setInviteTutorForm((prev) => ({
-    ...prev,
-    [name]: value,
-  }));
-}
+//   setInviteTutorForm((prev) => ({
+//     ...prev,
+//     [name]: value,
+//   }));
+// }
 
-async function sendTutorInvite(e) {
-  e.preventDefault();
+// async function sendTutorInvite(e) {
+//   e.preventDefault();
 
-  try {
-    if (!inviteTutorForm.name.trim()) {
-      return showAlert("Tutor name required", "error");
-    }
+//   try {
+//     if (!inviteTutorForm.name.trim()) {
+//       return showAlert("Tutor name required", "error");
+//     }
 
-    if (!inviteTutorForm.email.trim()) {
-      return showAlert("Tutor email required", "error");
-    }
+//     if (!inviteTutorForm.email.trim()) {
+//       return showAlert("Tutor email required", "error");
+//     }
 
-    if (!inviteTutorForm.phone.trim()) {
-      return showAlert("Tutor phone required", "error");
-    }
+//     if (!inviteTutorForm.phone.trim()) {
+//       return showAlert("Tutor phone required", "error");
+//     }
 
-    setInviteTutorLoading(true);
+//     setInviteTutorLoading(true);
 
-    await api.post("/admin/tuter/invite", {
-      name: inviteTutorForm.name.trim(),
-      email: inviteTutorForm.email.trim(),
-      phone: inviteTutorForm.phone.trim(),
-    });
+//     await api.post("/admin/tuter/invite", {
+//       name: inviteTutorForm.name.trim(),
+//       email: inviteTutorForm.email.trim(),
+//       phone: inviteTutorForm.phone.trim(),
+//     });
 
-    showAlert("Tutor invite mail sent successfully", "success");
-    setInviteTutorOpen(false);
-    setInviteTutorForm(emptyInviteTutorForm);
-    fetchData();
-  } catch (err) {
-    showAlert(getErrorMessage(err, "Failed to invite tutor"), "error");
-  } finally {
-    setInviteTutorLoading(false);
-  }
-}
+//     showAlert("Tutor invite mail sent successfully", "success");
+//     setInviteTutorOpen(false);
+//     setInviteTutorForm(emptyInviteTutorForm);
+//     fetchData();
+//   } catch (err) {
+//     showAlert(getErrorMessage(err, "Failed to invite tutor"), "error");
+//   } finally {
+//     setInviteTutorLoading(false);
+//   }
+// }
 
-function tutorHasCategoryAndCourse(tutor) {
-  const categoryIds = Array.isArray(tutor?.categoryIds) ? tutor.categoryIds : [];
-  const courseIds = Array.isArray(tutor?.courseIds) ? tutor.courseIds : [];
+// function tutorHasCategoryAndCourse(tutor) {
+//   const categoryIds = Array.isArray(tutor?.categoryIds) ? tutor.categoryIds : [];
+//   const courseIds = Array.isArray(tutor?.courseIds) ? tutor.courseIds : [];
 
-  return categoryIds.length > 0 && courseIds.length > 0;
-}
+//   return categoryIds.length > 0 && courseIds.length > 0;
+// }
 
 
 
@@ -659,64 +659,64 @@ function tutorHasCategoryAndCourse(tutor) {
     }
   }
 
-  // async function toggleStatus(tutor) {
-  //   try {
-  //     const currentActive = isTutorActive(tutor);
+  async function toggleStatus(tutor) {
+    try {
+      const currentActive = isTutorActive(tutor);
 
-  //     await api.patch(`/admin/tuter/status/${tutor._id}`, {
-  //       isActive: !currentActive,
-  //     });
+      await api.patch(`/admin/tuter/status/${tutor._id}`, {
+        isActive: !currentActive,
+      });
 
-  //     showAlert(
-  //       currentActive
-  //         ? "Tutor deactivated successfully"
-  //         : "Tutor activated successfully",
-  //       "success"
-  //     );
+      showAlert(
+        currentActive
+          ? "Tutor deactivated successfully"
+          : "Tutor activated successfully",
+        "success"
+      );
 
-  //     setMenuOpenId(null);
-  //     fetchData();
-  //   } catch (err) {
-  //     showAlert(getErrorMessage(err), "error");
-  //   }
-  // }
+      setMenuOpenId(null);
+      fetchData();
+    } catch (err) {
+      showAlert(getErrorMessage(err), "error");
+    }
+  }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-async function toggleTutorStatus(tutor) {
-  try {
-    if (!isTutorActive(tutor) && !tutorHasCategoryAndCourse(tutor)) {
-      showAlert(
-        "Tutor active aakkan at least one category and one course select cheyyanam",
-        "error"
-      );
+// async function toggleTutorStatus(tutor) {
+//   try {
+//     if (!isTutorActive(tutor) && !tutorHasCategoryAndCourse(tutor)) {
+//       showAlert(
+//         "Tutor active aakkan at least one category and one course select cheyyanam",
+//         "error"
+//       );
 
-      openEditModal(tutor);
-      return;
-    }
+//       openEditModal(tutor);
+//       return;
+//     }
 
-    await api.patch(`/admin/tuter/status/${tutor._id}`);
+//     await api.patch(`/admin/tuter/status/${tutor._id}`);
 
-    showAlert(
-      isTutorActive(tutor)
-        ? "Tutor deactivated successfully"
-        : "Tutor activated successfully",
-      "success"
-    );
+//     showAlert(
+//       isTutorActive(tutor)
+//         ? "Tutor deactivated successfully"
+//         : "Tutor activated successfully",
+//       "success"
+//     );
 
-    setMenuOpenId(null);
-    fetchData();
-  } catch (err) {
-    if (err?.response?.data?.needProfileCompletion) {
-      showAlert(err.response.data.msg, "error");
-      openEditModal(tutor);
-      return;
-    }
+//     setMenuOpenId(null);
+//     fetchData();
+//   } catch (err) {
+//     if (err?.response?.data?.needProfileCompletion) {
+//       showAlert(err.response.data.msg, "error");
+//       openEditModal(tutor);
+//       return;
+//     }
 
-    showAlert(getErrorMessage(err, "Failed to update tutor status"), "error");
-  }
-}
+//     showAlert(getErrorMessage(err, "Failed to update tutor status"), "error");
+//   }
+// }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -759,7 +759,7 @@ async function toggleTutorStatus(tutor) {
 
 
 
-      {/* <div className="tutor-toolbar" onClick={(e) => e.stopPropagation()}>
+      <div className="tutor-toolbar" onClick={(e) => e.stopPropagation()}>
         <div className="tutor-search">
           <span>⌕</span>
           <input
@@ -772,13 +772,13 @@ async function toggleTutorStatus(tutor) {
         <button type="button" className="tutor-add-btn" onClick={openAddModal}>
           + Add Tutor
         </button>
-      </div> */}
+      </div>
 
 
 
 
 
-
+{/* 
 
 
       <div className="tutor-toolbar">
@@ -805,7 +805,7 @@ async function toggleTutorStatus(tutor) {
       + Add Tutor
     </button>
   </div>
-</div>
+</div> */}
 
 
 
@@ -887,15 +887,15 @@ async function toggleTutorStatus(tutor) {
                         ↗ Share
                       </button>
 
-                      {/* <button type="button" onClick={() => toggleStatus(tutor)}>
+                      <button type="button" onClick={() => toggleStatus(tutor)}>
                         {active ? "⏻ Deactive" : "✓ Active"}
-                      </button> */}
+                      </button>
 
 
-
+{/* 
                       <button type="button" onClick={() => toggleTutorStatus(tutor)}>
   {isTutorActive(tutor) ? "⏻ Deactive" : "✓ Active"}
-</button>
+</button> */}
 
 
 
@@ -1239,7 +1239,7 @@ async function toggleTutorStatus(tutor) {
 
 
 
-
+{/* 
 <Modal
   open={inviteTutorOpen}
   title="Invite Tutor"
@@ -1299,7 +1299,7 @@ async function toggleTutorStatus(tutor) {
       </button>
     </div>
   </form>
-</Modal>
+</Modal> */}
 
 
     </div>

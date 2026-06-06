@@ -2292,46 +2292,11 @@ navigate(location.pathname, {
 
 
 
-// async function toggleTutorStatus() {
-//   try {
-//     await api.patch(`/admin/tuter/status/${tuterId}`, {
-//       isActive: !isTutorActive(tutor),
-//     });
-
-//     showAlert(
-//       isTutorActive(tutor)
-//         ? "Tutor deactivated successfully"
-//         : "Tutor activated successfully",
-//       "success"
-//     );
-
-//     setDetailMenuOpen(false);
-//     fetchData();
-//   } catch (err) {
-//     showAlert(getErrorMessage(err), "error");
-//   }
-// }
-
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-async function toggleTutorStatus(tutor) {
+async function toggleTutorStatus() {
   try {
-    if (!isTutorActive(tutor) && !tutorHasCategoryAndCourse(tutor)) {
-      showAlert(
-        "Tutor active aakkan at least one category and one course select cheyyanam",
-        "error"
-      );
-
-      openEditModal(tutor);
-      return;
-    }
-
-    await api.patch(`/admin/tuter/status/${tutor._id}`);
+    await api.patch(`/admin/tuter/status/${tuterId}`, {
+      isActive: !isTutorActive(tutor),
+    });
 
     showAlert(
       isTutorActive(tutor)
@@ -2340,18 +2305,53 @@ async function toggleTutorStatus(tutor) {
       "success"
     );
 
-    setMenuOpenId(null);
+    setDetailMenuOpen(false);
     fetchData();
   } catch (err) {
-    if (err?.response?.data?.needProfileCompletion) {
-      showAlert(err.response.data.msg, "error");
-      openEditModal(tutor);
-      return;
-    }
-
-    showAlert(getErrorMessage(err, "Failed to update tutor status"), "error");
+    showAlert(getErrorMessage(err), "error");
   }
 }
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// async function toggleTutorStatus(tutor) {
+//   try {
+//     if (!isTutorActive(tutor) && !tutorHasCategoryAndCourse(tutor)) {
+//       showAlert(
+//         "Tutor active aakkan at least one category and one course select cheyyanam",
+//         "error"
+//       );
+
+//       openEditModal(tutor);
+//       return;
+//     }
+
+//     await api.patch(`/admin/tuter/status/${tutor._id}`);
+
+//     showAlert(
+//       isTutorActive(tutor)
+//         ? "Tutor deactivated successfully"
+//         : "Tutor activated successfully",
+//       "success"
+//     );
+
+//     setMenuOpenId(null);
+//     fetchData();
+//   } catch (err) {
+//     if (err?.response?.data?.needProfileCompletion) {
+//       showAlert(err.response.data.msg, "error");
+//       openEditModal(tutor);
+//       return;
+//     }
+
+//     showAlert(getErrorMessage(err, "Failed to update tutor status"), "error");
+//   }
+// }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
