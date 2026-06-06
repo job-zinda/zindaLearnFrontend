@@ -846,11 +846,7 @@ export default function TutorSideNav({ open, onClose }) {
         }`}
       >
         <div className="admin-sidenav__top">
-          {/* <button
-            type="button"
-            className="admin-profile-card tutor-profile-card tutor-profile-card--clickable"
-            onClick={openProfileEditModal}
-          > */}
+        
 
 
 

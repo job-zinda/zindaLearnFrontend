@@ -10,34 +10,11 @@ import { getMediaUrl } from "../utils/media";
 import api from "../api/axios";
 import "./AdminTutorsPage.css";
 
-// const emptyForm = {
-//   name: "",
-//   email: "",
-//   phone: "",
-//   qualification: "",
-//   about: "",
-//   subjects: "",
-//   categoryId: "",
-//   sectionType: "",
-//   syllabus: "",
-//   courseIds: [],
-//   photo: null,
-// };
 
 
 
-// const emptyForm = {
-//   name: "",
-//   email: "",
-//   phone: "",
-//   qualification: "",
-//   about: "",
-//   subjects: "",
-//   categoryIds: [],
-//   syllabus: "",
-//   courseIds: [],
-//   photo: null,
-// };
+
+
 
 
 
@@ -195,11 +172,9 @@ export default function AdminTutorsPage() {
   const [preview, setPreview] = useState("");
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////
 
-const [showTutorPassword, setShowTutorPassword] = useState(false);
-const [passwordLoading, setPasswordLoading] = useState(false);
-////////////////////////////////////////////////////////////////////////////////////////////
+  const [showTutorPassword, setShowTutorPassword] = useState(false);
+  const [passwordLoading, setPasswordLoading] = useState(false);
 
 
 
@@ -207,55 +182,27 @@ const [passwordLoading, setPasswordLoading] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState(null);
 
-  // const selectedCategory = useMemo(() => {
-  //   return categories.find((cat) => cat._id === form.categoryId);
-  // }, [categories, form.categoryId]);
-
-  // const isOnlineTuition = selectedCategory?.key === "online_tuition";
-
-  // const visibleCourses = useMemo(() => {
-  //   return courses.filter((course) => {
-  //     const courseCategoryId = normalizeId(course.categoryId);
-
-  //     if (courseCategoryId !== form.categoryId) return false;
-
-  //     if (isOnlineTuition) {
-  //       if (!form.sectionType) return false;
-
-  //       if (form.sectionType === "both") {
-  //         return course.sectionType === "one_to_one" || course.sectionType === "batch";
-  //       }
-
-  //       return course.sectionType === form.sectionType;
-  //     }
-
-  //     return true;
-  //   });
-  // }, [courses, form.categoryId, form.sectionType, isOnlineTuition]);
 
 
 
+  const selectedCategories = useMemo(() => {
+    return categories.filter((cat) => form.categoryIds.includes(cat._id));
+  }, [categories, form.categoryIds]);
 
+  const isOnlineTuition = useMemo(() => {
+    return selectedCategories.some((cat) => cat.key === "online_tuition");
+  }, [selectedCategories]);
 
+  const visibleCourses = useMemo(() => {
+    if (!Array.isArray(form.categoryIds) || form.categoryIds.length === 0) {
+      return [];
+    }
 
-const selectedCategories = useMemo(() => {
-  return categories.filter((cat) => form.categoryIds.includes(cat._id));
-}, [categories, form.categoryIds]);
-
-const isOnlineTuition = useMemo(() => {
-  return selectedCategories.some((cat) => cat.key === "online_tuition");
-}, [selectedCategories]);
-
-const visibleCourses = useMemo(() => {
-  if (!Array.isArray(form.categoryIds) || form.categoryIds.length === 0) {
-    return [];
-  }
-
-  return courses.filter((course) => {
-    const courseCategoryId = normalizeId(course.categoryId);
-    return form.categoryIds.includes(courseCategoryId);
-  });
-}, [courses, form.categoryIds]);
+    return courses.filter((course) => {
+      const courseCategoryId = normalizeId(course.categoryId);
+      return form.categoryIds.includes(courseCategoryId);
+    });
+  }, [courses, form.categoryIds]);
 
 
 
@@ -302,359 +249,189 @@ const visibleCourses = useMemo(() => {
 
 
 
-//////////////////////////////////////////////////////////////////////////////////////////
 
 
-async function fetchTutorPassword() {
-  try {
-    setPasswordLoading(true);
+  async function fetchTutorPassword() {
+    try {
+      setPasswordLoading(true);
 
-    const { data } = await api.get("/admin/tuter/generate-password");
+      const { data } = await api.get("/admin/tuter/generate-password");
 
-    return data?.password || "";
-  } catch (err) {
-    showAlert(getErrorMessage(err, "Failed to generate tutor password"), "error");
-    return "";
-  } finally {
-    setPasswordLoading(false);
+      return data?.password || "";
+    } catch (err) {
+      showAlert(getErrorMessage(err, "Failed to generate tutor password"), "error");
+      return "";
+    } finally {
+      setPasswordLoading(false);
+    }
   }
-}
 
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
-  // function openAddModal() {
-  //   setEditingTutor(null);
-  //   setForm({ ...emptyForm, courseIds: [] });
-  //   setPreview("");
-  //   setModalOpen(true);
-  // }
 
 
+  async function openAddModal() {
+    setEditingTutor(null);
+    setPreview("");
+    setShowTutorPassword(false);
 
+    setForm({
+      ...emptyForm,
+      categoryIds: [],
+      courseIds: [],
+      loginPasswordText: "",
+    });
 
+    setModalOpen(true);
 
-
-
-// function openAddModal() {
-//   setEditingTutor(null);
-//   setForm({ ...emptyForm, categoryIds: [], courseIds: [] });
-//   setPreview("");
-//   setModalOpen(true);
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-async function openAddModal() {
-  setEditingTutor(null);
-  setPreview("");
-  setShowTutorPassword(false);
-
-  setForm({
-    ...emptyForm,
-    categoryIds: [],
-    courseIds: [],
-    loginPasswordText: "",
-  });
-
-  setModalOpen(true);
-
-  const password = await fetchTutorPassword();
-
-  setForm((prev) => ({
-    ...prev,
-    loginPasswordText: password,
-  }));
-}
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-  // function openEditModal(tutor) {
-  //   const categoryId = normalizeId(tutor.categoryId);
-
-  //   const categoryObj =
-  //     typeof tutor.categoryId === "object"
-  //       ? tutor.categoryId
-  //       : categories.find((cat) => cat._id === categoryId);
-
-  //   const online = categoryObj?.key === "online_tuition";
-
-  //   const existingCourseIds =
-  //     Array.isArray(tutor.courseIds) && tutor.courseIds.length
-  //       ? tutor.courseIds.map((course) => normalizeId(course))
-  //       : tutor.courseId
-  //       ? [normalizeId(tutor.courseId)]
-  //       : [];
-
-  //   setEditingTutor(tutor);
-
-  //   setForm({
-  //     name: tutor.name || "",
-  //     email: tutor.email || "",
-  //     phone: tutor.phone || "",
-  //     qualification: tutor.qualification || "",
-  //     about: tutor.about || "",
-  //     subjects: Array.isArray(tutor.subjects)
-  //       ? tutor.subjects.join(", ")
-  //       : tutor.subjects || "",
-  //     categoryId,
-  //     sectionType: online ? tutor.sectionType || "" : "none",
-  //     syllabus: online ? tutor.syllabus || "" : "none",
-  //     courseIds: existingCourseIds,
-  //     photo: null,
-  //   });
-
-  //   setPreview(tutor.photo ? getMediaUrl(tutor.photo) : "");
-  //   setModalOpen(true);
-  //   setMenuOpenId(null);
-  // }
-
-
-
-
-
-
-function openEditModal(tutor) {
-  const existingCategoryIds =
-    Array.isArray(tutor.categoryIds) && tutor.categoryIds.length
-      ? tutor.categoryIds.map((cat) => normalizeId(cat))
-      : tutor.categoryId
-      ? [normalizeId(tutor.categoryId)]
-      : [];
-
-  const existingCourseIds =
-    Array.isArray(tutor.courseIds) && tutor.courseIds.length
-      ? tutor.courseIds.map((course) => normalizeId(course))
-      : tutor.courseId
-      ? [normalizeId(tutor.courseId)]
-      : [];
-
-  const onlineSelected = existingCategoryIds.some((catId) => {
-    const cat = categories.find((item) => item._id === catId);
-    return cat?.key === "online_tuition";
-  });
-
-  setEditingTutor(tutor);
-
-  setForm({
-    name: tutor.name || "",
-    email: tutor.email || "",
-    phone: tutor.phone || "",
-    qualification: tutor.qualification || "",
-
-
- 
-    about: tutor.about || "",
-    subjects: Array.isArray(tutor.subjects)
-      ? tutor.subjects.join(", ")
-      : tutor.subjects || "",
-    categoryIds: existingCategoryIds,
-    syllabus: onlineSelected ? tutor.syllabus || "" : "none",
-    courseIds: existingCourseIds,
-
-   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// loginPasswordText: tutor.loginPasswordText || "",
-loginPasswordText: "",
-
-    ///////////////////////////////////////////////////////////////////////////////////////////
-
-    photo: null,
-  });
-
-  setPreview(tutor.photo ? getMediaUrl(tutor.photo) : "");
-  setModalOpen(true);
-  setMenuOpenId(null);
-}
-
-
-
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // function handleChange(e) {
-  //   const { name, value, files } = e.target;
-
-  //   if (name === "photo") {
-  //     const file = files?.[0] || null;
-
-  //     setForm((prev) => ({
-  //       ...prev,
-  //       photo: file,
-  //     }));
-
-  //     if (file) {
-  //       setPreview(URL.createObjectURL(file));
-  //     }
-
-  //     return;
-  //   }
-
-  //   if (name === "categoryId") {
-  //     const selectedCat = categories.find((cat) => cat._id === value);
-  //     const online = selectedCat?.key === "online_tuition";
-
-  //     setForm((prev) => ({
-  //       ...prev,
-  //       categoryId: value,
-  //       sectionType: online ? "" : "none",
-  //       syllabus: online ? "" : "none",
-  //       courseIds: [],
-  //     }));
-
-  //     return;
-  //   }
-
-  //   if (name === "sectionType") {
-  //     setForm((prev) => ({
-  //       ...prev,
-  //       sectionType: value,
-  //       courseIds: [],
-  //     }));
-
-  //     return;
-  //   }
-
-  //   setForm((prev) => ({
-  //     ...prev,
-  //     [name]: value,
-  //   }));
-  // }
-
-
-
-
-
-
-function handleChange(e) {
-  const { name, value, files } = e.target;
-
-  if (name === "photo") {
-    const file = files?.[0] || null;
+    const password = await fetchTutorPassword();
 
     setForm((prev) => ({
       ...prev,
-      photo: file,
+      loginPasswordText: password,
     }));
-
-    if (file) {
-      setPreview(URL.createObjectURL(file));
-    }
-
-    return;
   }
 
-  setForm((prev) => ({
-    ...prev,
-    [name]: value,
-  }));
-}
-
-
-
-// function toggleCategorySelection(categoryId, checked) {
-//   setForm((prev) => {
-//     const currentCategoryIds = Array.isArray(prev.categoryIds)
-//       ? prev.categoryIds
-//       : [];
-
-//     const nextCategoryIds = checked
-//       ? Array.from(new Set([...currentCategoryIds, categoryId]))
-//       : currentCategoryIds.filter((id) => id !== categoryId);
-
-//     const allowedCourseIds = courses
-//       .filter((course) => nextCategoryIds.includes(normalizeId(course.categoryId)))
-//       .map((course) => course._id);
-
-//     return {
-//       ...prev,
-//       categoryIds: nextCategoryIds,
-//       courseIds: prev.courseIds.filter((courseId) =>
-//         allowedCourseIds.includes(courseId)
-//       ),
-//       syllabus: nextCategoryIds.some((catId) => {
-//         const cat = categories.find((item) => item._id === catId);
-//         return cat?.key === "online_tuition";
-//       })
-//         ? prev.syllabus === "none"
-//           ? ""
-//           : prev.syllabus
-//         : "none",
-//     };
-//   });
-// }
 
 
 
 
 
+  function openEditModal(tutor) {
+    const existingCategoryIds =
+      Array.isArray(tutor.categoryIds) && tutor.categoryIds.length
+        ? tutor.categoryIds.map((cat) => normalizeId(cat))
+        : tutor.categoryId
+          ? [normalizeId(tutor.categoryId)]
+          : [];
 
+    const existingCourseIds =
+      Array.isArray(tutor.courseIds) && tutor.courseIds.length
+        ? tutor.courseIds.map((course) => normalizeId(course))
+        : tutor.courseId
+          ? [normalizeId(tutor.courseId)]
+          : [];
 
-
-
-function toggleCategorySelection(categoryId, checked) {
-  setForm((prev) => {
-    const currentCategoryIds = Array.isArray(prev.categoryIds)
-      ? prev.categoryIds.map(String)
-      : [];
-
-    const currentCourseIds = Array.isArray(prev.courseIds)
-      ? prev.courseIds.map(String)
-      : [];
-
-    const selectedCategoryId = String(categoryId);
-
-    const nextCategoryIds = checked
-      ? Array.from(new Set([...currentCategoryIds, selectedCategoryId]))
-      : currentCategoryIds.filter((id) => id !== selectedCategoryId);
-
-    const allowedCourseIds = courses
-      .filter((course) =>
-        nextCategoryIds.includes(String(normalizeId(course.categoryId)))
-      )
-      .map((course) => String(course._id));
-
-    const nextCourseIds = currentCourseIds.filter((courseId) =>
-      allowedCourseIds.includes(String(courseId))
-    );
-
-    const hasOnlineTuition = nextCategoryIds.some((catId) => {
-      const cat = categories.find((item) => String(item._id) === String(catId));
+    const onlineSelected = existingCategoryIds.some((catId) => {
+      const cat = categories.find((item) => item._id === catId);
       return cat?.key === "online_tuition";
     });
 
-    return {
+    setEditingTutor(tutor);
+
+    setForm({
+      name: tutor.name || "",
+      email: tutor.email || "",
+      phone: tutor.phone || "",
+      qualification: tutor.qualification || "",
+
+
+
+      about: tutor.about || "",
+      subjects: Array.isArray(tutor.subjects)
+        ? tutor.subjects.join(", ")
+        : tutor.subjects || "",
+      categoryIds: existingCategoryIds,
+      syllabus: onlineSelected ? tutor.syllabus || "" : "none",
+      courseIds: existingCourseIds,
+
+
+      loginPasswordText: "",
+
+
+      photo: null,
+    });
+
+    setPreview(tutor.photo ? getMediaUrl(tutor.photo) : "");
+    setModalOpen(true);
+    setMenuOpenId(null);
+  }
+
+
+
+
+
+
+
+
+
+
+  function handleChange(e) {
+    const { name, value, files } = e.target;
+
+    if (name === "photo") {
+      const file = files?.[0] || null;
+
+      setForm((prev) => ({
+        ...prev,
+        photo: file,
+      }));
+
+      if (file) {
+        setPreview(URL.createObjectURL(file));
+      }
+
+      return;
+    }
+
+    setForm((prev) => ({
       ...prev,
-      categoryIds: nextCategoryIds,
-      courseIds: nextCourseIds,
-      syllabus: hasOnlineTuition
-        ? prev.syllabus === "none"
-          ? ""
-          : prev.syllabus || ""
-        : "none",
-    };
-  });
-}
+      [name]: value,
+    }));
+  }
+
+
+
+
+
+
+
+
+  function toggleCategorySelection(categoryId, checked) {
+    setForm((prev) => {
+      const currentCategoryIds = Array.isArray(prev.categoryIds)
+        ? prev.categoryIds.map(String)
+        : [];
+
+      const currentCourseIds = Array.isArray(prev.courseIds)
+        ? prev.courseIds.map(String)
+        : [];
+
+      const selectedCategoryId = String(categoryId);
+
+      const nextCategoryIds = checked
+        ? Array.from(new Set([...currentCategoryIds, selectedCategoryId]))
+        : currentCategoryIds.filter((id) => id !== selectedCategoryId);
+
+      const allowedCourseIds = courses
+        .filter((course) =>
+          nextCategoryIds.includes(String(normalizeId(course.categoryId)))
+        )
+        .map((course) => String(course._id));
+
+      const nextCourseIds = currentCourseIds.filter((courseId) =>
+        allowedCourseIds.includes(String(courseId))
+      );
+
+      const hasOnlineTuition = nextCategoryIds.some((catId) => {
+        const cat = categories.find((item) => String(item._id) === String(catId));
+        return cat?.key === "online_tuition";
+      });
+
+      return {
+        ...prev,
+        categoryIds: nextCategoryIds,
+        courseIds: nextCourseIds,
+        syllabus: hasOnlineTuition
+          ? prev.syllabus === "none"
+            ? ""
+            : prev.syllabus || ""
+          : "none",
+      };
+    });
+  }
 
   function toggleCourseSelection(courseId, checked) {
     setForm((prev) => {
@@ -681,29 +458,23 @@ function toggleCategorySelection(categoryId, checked) {
         return showAlert("Phone required", "error");
       }
 
-      // if (!form.categoryId) {
-      //   return showAlert("Category select cheyyuka", "error");
-      // }
-
-      // if (isOnlineTuition && !form.sectionType) {
-      //   return showAlert("One-to-One / Batch select cheyyuka", "error");
-      // }
 
 
 
 
 
-if (!Array.isArray(form.categoryIds) || form.categoryIds.length === 0) {
-  return showAlert("At least one category select cheyyuka", "error");
-}
 
-if (isOnlineTuition && !String(form.syllabus || "").trim()) {
-  return showAlert("Syllabus enter cheyyuka", "error");
-}
+      if (!Array.isArray(form.categoryIds) || form.categoryIds.length === 0) {
+        return showAlert("At least one category select cheyyuka", "error");
+      }
 
-if (!Array.isArray(form.courseIds) || form.courseIds.length === 0) {
-  return showAlert("At least one Course / Class select cheyyuka", "error");
-}
+      if (isOnlineTuition && !String(form.syllabus || "").trim()) {
+        return showAlert("Syllabus enter cheyyuka", "error");
+      }
+
+      if (!Array.isArray(form.courseIds) || form.courseIds.length === 0) {
+        return showAlert("At least one Course / Class select cheyyuka", "error");
+      }
 
 
 
@@ -718,76 +489,49 @@ if (!Array.isArray(form.courseIds) || form.courseIds.length === 0) {
         return showAlert("At least one Course / Batch select cheyyuka", "error");
       }
 
-      // const finalSectionType = isOnlineTuition ? form.sectionType : "none";
-      // const finalSyllabus = isOnlineTuition ? String(form.syllabus).trim() : "none";
-
-      // const fd = new FormData();
-
-      // fd.append("name", form.name.trim());
-      // fd.append("email", form.email.trim());
-      // fd.append("phone", form.phone.trim());
-      // fd.append("qualification", form.qualification.trim());
-      // fd.append("about", form.about.trim());
-      // fd.append("subjects", form.subjects.trim());
-      // fd.append("categoryId", form.categoryId);
-      // fd.append("sectionType", finalSectionType);
-      // fd.append("syllabus", finalSyllabus);
-
-      // form.courseIds.forEach((courseId) => {
-      //   fd.append("courseIds", courseId);
-      // });
-
-      // fd.append("courseId", form.courseIds[0]);
-
-      // if (form.photo) {
-      //   fd.append("photo", form.photo);
-      // }
 
 
 
 
 
+      const finalSyllabus = isOnlineTuition ? String(form.syllabus).trim() : "none";
+      const finalSectionType = isOnlineTuition ? "both" : "none";
 
-const finalSyllabus = isOnlineTuition ? String(form.syllabus).trim() : "none";
-const finalSectionType = isOnlineTuition ? "both" : "none";
+      const fd = new FormData();
 
-const fd = new FormData();
+      fd.append("name", form.name.trim());
+      fd.append("email", form.email.trim());
+      fd.append("phone", form.phone.trim());
+      fd.append("qualification", form.qualification.trim());
+      fd.append("about", form.about.trim());
+      fd.append("subjects", form.subjects.trim());
 
-fd.append("name", form.name.trim());
-fd.append("email", form.email.trim());
-fd.append("phone", form.phone.trim());
-fd.append("qualification", form.qualification.trim());
-fd.append("about", form.about.trim());
-fd.append("subjects", form.subjects.trim());
+      form.categoryIds.forEach((categoryId) => {
+        fd.append("categoryIds", categoryId);
+      });
 
-form.categoryIds.forEach((categoryId) => {
-  fd.append("categoryIds", categoryId);
-});
+      fd.append("categoryId", form.categoryIds[0]);
 
-fd.append("categoryId", form.categoryIds[0]);
+      fd.append("sectionType", finalSectionType);
+      fd.append("syllabus", finalSyllabus);
 
-fd.append("sectionType", finalSectionType);
-fd.append("syllabus", finalSyllabus);
+      form.courseIds.forEach((courseId) => {
+        fd.append("courseIds", courseId);
+      });
 
-form.courseIds.forEach((courseId) => {
-  fd.append("courseIds", courseId);
-});
-
-fd.append("courseId", form.courseIds[0]);
-
+      fd.append("courseId", form.courseIds[0]);
 
 
-///////////////////////////////////////////////////////////////////////////////////////
 
-if (!editingTutor) {
-  fd.append("loginPasswordText", form.loginPasswordText);
-}
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
+      if (!editingTutor) {
+        fd.append("loginPasswordText", form.loginPasswordText);
+      }
 
-if (form.photo) {
-  fd.append("photo", form.photo);
-}
+
+      if (form.photo) {
+        fd.append("photo", form.photo);
+      }
 
 
 
@@ -864,93 +608,48 @@ if (form.photo) {
 
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// async function toggleTutorBlockStatus(tutor) {
-//   try {
-//     const nextBlocked = !isTutorBlocked(tutor);
-
-//     const { data } = await api.patch(`/admin/tuter/block/${tutor._id}`, {
-//       isBlocked: nextBlocked,
-//     });
-
-//     setTutors((prev) =>
-//       prev.map((item) =>
-//         item._id === tutor._id
-//           ? {
-//               ...item,
-//               isBlocked: data?.tuter?.isBlocked ?? nextBlocked,
-//             }
-//           : item
-//       )
-//     );
-
-//     setMenuOpenId(null);
-
-//     showAlert(
-//       nextBlocked
-//         ? "Tutor blocked successfully. Tutor cannot login now."
-//         : "Tutor unblocked successfully. Tutor can login now.",
-//       "success"
-//     );
-//   } catch (err) {
-//     showAlert(getErrorMessage(err, "Failed to update tutor block status"), "error");
-//   }
-// }
 
 
 
 
 
+  async function toggleTutorBlockStatus(tutor) {
+    try {
+      const nextBlocked = !isTutorBlocked(tutor);
 
+      const { data } = await api.patch(`/admin/tuter/block/${tutor._id}`, {
+        isBlocked: nextBlocked,
+      });
 
-
-
-
-
-
-async function toggleTutorBlockStatus(tutor) {
-  try {
-    const nextBlocked = !isTutorBlocked(tutor);
-
-    const { data } = await api.patch(`/admin/tuter/block/${tutor._id}`, {
-      isBlocked: nextBlocked,
-    });
-
-    setTutors((prev) =>
-      prev.map((item) =>
-        item._id === tutor._id
-          ? {
+      setTutors((prev) =>
+        prev.map((item) =>
+          item._id === tutor._id
+            ? {
               ...item,
               isBlocked: data?.tuter?.isBlocked ?? nextBlocked,
             }
-          : item
-      )
-    );
+            : item
+        )
+      );
 
-    setMenuOpenId(null);
+      setMenuOpenId(null);
 
-    showAlert(
-      nextBlocked
-        ? "Tutor blocked successfully"
-        : "Tutor unblocked successfully",
-      "success"
-    );
-  } catch (err) {
-    showAlert(getErrorMessage(err, "Failed to update block status"), "error");
+      showAlert(
+        nextBlocked
+          ? "Tutor blocked successfully"
+          : "Tutor unblocked successfully",
+        "success"
+      );
+    } catch (err) {
+      showAlert(getErrorMessage(err, "Failed to update block status"), "error");
+    }
   }
-}
 
 
 
 
 
 
-
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -989,68 +688,41 @@ async function toggleTutorBlockStatus(tutor) {
       ) : (
         <div className="tutor-grid">
           {filteredTutors.map((tutor) => {
-            // const active = isTutorActive(tutor);
-
-            // return (
-            //   <article
-            //     key={tutor._id}
-            //     className={`tutor-card ${!active ? "tutor-card--inactive" : ""}`}
-            //     onClick={(e) => e.stopPropagation()}
-            //   >
-            //     {!active && <span className="inactive-badge">Inactive</span>}
 
 
 
 
             const active = isTutorActive(tutor);
 
-return (
-  // <article
-  //   key={tutor._id}
-  //   className={`tutor-card ${
-  //     isTutorBlocked(tutor)
-  //       ? "tutor-card--blocked"
-  //       : !active
-  //       ? "tutor-card--inactive"
-  //       : ""
-  //   }`}
-  //   onClick={(e) => e.stopPropagation()}
-  // >
+            return (
 
 
 
 
 
-<article
-  key={tutor._id}
-  className={`tutor-card ${
-    isTutorBlocked(tutor)
-      ? "tutor-card--blocked"
-      : !isTutorActive(tutor)
-      ? "tutor-card--inactive"
-      : ""
-  }`}
-  onClick={(e) => e.stopPropagation()}
->
-
-
-
-
-    {/* {isTutorBlocked(tutor) ? (
-      <span className="blocked-badge">Blocked</span>
-    ) : !active ? (
-      <span className="inactive-badge">Inactive</span>
-    ) : null} */}
+              <article
+                key={tutor._id}
+                className={`tutor-card ${isTutorBlocked(tutor)
+                    ? "tutor-card--blocked"
+                    : !isTutorActive(tutor)
+                      ? "tutor-card--inactive"
+                      : ""
+                  }`}
+                onClick={(e) => e.stopPropagation()}
+              >
 
 
 
 
 
-{isTutorBlocked(tutor) ? (
-  <span className="blocked-badge">Blocked</span>
-) : !isTutorActive(tutor) ? (
-  <span className="inactive-badge">Inactive</span>
-) : null}
+
+
+
+                {isTutorBlocked(tutor) ? (
+                  <span className="blocked-badge">Blocked</span>
+                ) : !isTutorActive(tutor) ? (
+                  <span className="inactive-badge">Inactive</span>
+                ) : null}
 
 
 
@@ -1074,7 +746,7 @@ return (
                         ✎ Edit
                       </button>
 
-                     
+
 
                       <button
                         type="button"
@@ -1091,20 +763,16 @@ return (
                       </button>
 
 
-{/* <button type="button" onClick={() => toggleTutorBlockStatus(tutor)}>
-  {isTutorBlocked(tutor) ? "◯ Unblock" : "⊘ Block"}
-</button> */}
 
 
 
 
+                      <button type="button" onClick={() => toggleTutorBlockStatus(tutor)}>
+                        {isTutorBlocked(tutor) ? "◯ Unblock" : "⊘ Block"}
+                      </button>
 
-<button type="button" onClick={() => toggleTutorBlockStatus(tutor)}>
-  {isTutorBlocked(tutor) ? "◯ Unblock" : "⊘ Block"}
-</button>
 
-
- <button type="button" onClick={() => askDeleteTutor(tutor)}>
+                      <button type="button" onClick={() => askDeleteTutor(tutor)}>
                         🗑 Delete Account
                       </button>
 
@@ -1138,17 +806,16 @@ return (
                 <button
                   type="button"
                   className="view-details-btn"
-                  // onClick={() => navigate(`/admin/tutors/${tutor._id}`)}
 
 
-onClick={() =>
-  navigate(`/admin/tutors/${tutor._id}`, {
-    state: {
-      backTo: "/admin/tutors",
-      from: "all-tutors",
-    },
-  })
-}
+                  onClick={() =>
+                    navigate(`/admin/tutors/${tutor._id}`, {
+                      state: {
+                        backTo: "/admin/tutors",
+                        from: "all-tutors",
+                      },
+                    })
+                  }
 
                 >
                   View Details
@@ -1194,7 +861,6 @@ onClick={() =>
 
 
 
-{/* 
 
             <label className="form-field">
               <span>Email</span>
@@ -1219,6 +885,42 @@ onClick={() =>
 
 
 
+            {!editingTutor && (
+              <label className="form-field">
+                <span>Tutor Login Password</span>
+
+                <div className="tutor-password-field">
+                  <input
+                    type={showTutorPassword ? "text" : "password"}
+                    value={passwordLoading ? "Generating..." : form.loginPasswordText || ""}
+                    readOnly
+                    placeholder="Auto generated password"
+                  />
+
+                  <button
+                    type="button"
+                    className="tutor-password-eye"
+                    onClick={() => setShowTutorPassword((prev) => !prev)}
+                    title={showTutorPassword ? "Hide password" : "Show password"}
+                  >
+                    {showTutorPassword ? <FiEyeOff /> : <FiEye />}
+                  </button>
+                </div>
+
+                <small className="tutor-password-note">
+                  This password is auto generated from backend. Tutor can login using email/phone and this password.
+                </small>
+              </label>
+            )}
+
+
+
+
+
+
+
+
+
 
             <label className="form-field">
               <span>Qualification</span>
@@ -1227,83 +929,7 @@ onClick={() =>
                 value={form.qualification}
                 onChange={handleChange}
               />
-            </label> */}
-
-
-
-
-
-
-
-
-<label className="form-field">
-  <span>Email</span>
-  <input
-    name="email"
-    type="email"
-    value={form.email}
-    onChange={handleChange}
-  />
-</label>
-
-<label className="form-field">
-  <span>Phone</span>
-  <input name="phone" value={form.phone} onChange={handleChange} />
-</label>
-
-
-
-
-
-
-
-
-
-{!editingTutor && (
-  <label className="form-field">
-    <span>Tutor Login Password</span>
-
-    <div className="tutor-password-field">
-      <input
-        type={showTutorPassword ? "text" : "password"}
-        value={passwordLoading ? "Generating..." : form.loginPasswordText || ""}
-        readOnly
-        placeholder="Auto generated password"
-      />
-
-      <button
-        type="button"
-        className="tutor-password-eye"
-        onClick={() => setShowTutorPassword((prev) => !prev)}
-        title={showTutorPassword ? "Hide password" : "Show password"}
-      >
-        {showTutorPassword ? <FiEyeOff /> : <FiEye />}
-      </button>
-    </div>
-
-    <small className="tutor-password-note">
-      This password is auto generated from backend. Tutor can login using email/phone and this password.
-    </small>
-  </label>
-)}
-
-
-
-
-
-
-
-
-
-
-<label className="form-field">
-  <span>Qualification</span>
-  <input
-    name="qualification"
-    value={form.qualification}
-    onChange={handleChange}
-  />
-</label>
+            </label>
 
 
 
@@ -1338,41 +964,39 @@ onClick={() =>
 
 
 
-{/* 
-            <label className="form-field">
-              <span>Category</span>
-              <select
-                name="categoryId"
-                value={form.categoryId}
-                onChange={handleChange}
-              >
-                <option value="">Select category</option>
-                {categories.map((cat) => (
-                  <option key={cat._id} value={cat._id}>
-                    {cat.title}
-                  </option>
-                ))}
-              </select>
-            </label>
+
+            <div className="form-field form-field--full">
+              <span>Categories</span>
+
+              <div className="course-checkbox-list tutor-category-checkbox-list">
+                {categories.length === 0 ? (
+                  <p className="course-empty-text">No categories found</p>
+                ) : (
+                  categories.map((cat) => {
+                    const checked = Array.isArray(form.categoryIds)
+                      ? form.categoryIds.includes(cat._id)
+                      : false;
+
+                    return (
+                      <label key={cat._id} className="course-check-item">
+                        <input
+                          type="checkbox"
+                          checked={checked}
+                          onChange={(e) =>
+                            toggleCategorySelection(cat._id, e.target.checked)
+                          }
+                        />
+
+                        <span>{cat.title}</span>
+                      </label>
+                    );
+                  })
+                )}
+              </div>
+            </div>
 
             {isOnlineTuition && (
-              <label className="form-field">
-                <span>Class Type</span>
-                <select
-                  name="sectionType"
-                  value={form.sectionType}
-                  onChange={handleChange}
-                >
-                  <option value="">Select class type</option>
-                  <option value="one_to_one">One-to-One</option>
-                  <option value="batch">Batch</option>
-                  <option value="both">Both</option>
-                </select>
-              </label>
-            )}
-
-            {isOnlineTuition && (
-              <label className="form-field">
+              <label className="form-field form-field--full">
                 <span>Syllabus</span>
                 <input
                   type="text"
@@ -1384,16 +1008,10 @@ onClick={() =>
               </label>
             )}
 
-            <div className="form-field">
-              <span>
-                {isOnlineTuition && form.sectionType === "batch"
-                  ? "Batch"
-                  : isOnlineTuition && form.sectionType === "both"
-                  ? "Courses / Batches"
-                  : "Course / Class"}
-              </span>
+            <div className="form-field form-field--full">
+              <span>Courses / Classes</span>
 
-              <div className="course-checkbox-list">
+              <div className="course-checkbox-list tutor-course-checkbox-list">
                 {visibleCourses.length === 0 ? (
                   <p className="course-empty-text">No courses found</p>
                 ) : (
@@ -1401,6 +1019,8 @@ onClick={() =>
                     const checked = Array.isArray(form.courseIds)
                       ? form.courseIds.includes(course._id)
                       : false;
+
+                    const category = getCourseCategory(course, categories);
 
                     return (
                       <label key={course._id} className="course-check-item">
@@ -1413,106 +1033,19 @@ onClick={() =>
                         />
 
                         <span>
-                          {course.name}
-                          {isOnlineTuition && form.sectionType === "both"
-                            ? course.sectionType === "batch"
-                              ? " - Batch"
-                              : " - One-to-One"
-                            : ""}
+                          {getCourseLabel(course, categories)}
+                          {category?.title ? (
+                            <small className="course-category-name">
+                              {category.title}
+                            </small>
+                          ) : null}
                         </span>
                       </label>
                     );
                   })
                 )}
               </div>
-            </div> */}
-
-
-
-
-
-
-<div className="form-field form-field--full">
-  <span>Categories</span>
-
-  <div className="course-checkbox-list tutor-category-checkbox-list">
-    {categories.length === 0 ? (
-      <p className="course-empty-text">No categories found</p>
-    ) : (
-      categories.map((cat) => {
-        const checked = Array.isArray(form.categoryIds)
-          ? form.categoryIds.includes(cat._id)
-          : false;
-
-        return (
-          <label key={cat._id} className="course-check-item">
-            <input
-              type="checkbox"
-              checked={checked}
-              onChange={(e) =>
-                toggleCategorySelection(cat._id, e.target.checked)
-              }
-            />
-
-            <span>{cat.title}</span>
-          </label>
-        );
-      })
-    )}
-  </div>
-</div>
-
-{isOnlineTuition && (
-  <label className="form-field form-field--full">
-    <span>Syllabus</span>
-    <input
-      type="text"
-      name="syllabus"
-      value={form.syllabus}
-      onChange={handleChange}
-      placeholder="Example: State, CBSE, ICSE"
-    />
-  </label>
-)}
-
-<div className="form-field form-field--full">
-  <span>Courses / Classes</span>
-
-  <div className="course-checkbox-list tutor-course-checkbox-list">
-    {visibleCourses.length === 0 ? (
-      <p className="course-empty-text">No courses found</p>
-    ) : (
-      visibleCourses.map((course) => {
-        const checked = Array.isArray(form.courseIds)
-          ? form.courseIds.includes(course._id)
-          : false;
-
-        const category = getCourseCategory(course, categories);
-
-        return (
-          <label key={course._id} className="course-check-item">
-            <input
-              type="checkbox"
-              checked={checked}
-              onChange={(e) =>
-                toggleCourseSelection(course._id, e.target.checked)
-              }
-            />
-
-            <span>
-              {getCourseLabel(course, categories)}
-              {category?.title ? (
-                <small className="course-category-name">
-                  {category.title}
-                </small>
-              ) : null}
-            </span>
-          </label>
-        );
-      })
-    )}
-  </div>
-</div>
+            </div>
 
 
 
