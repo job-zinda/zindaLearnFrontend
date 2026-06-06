@@ -1983,3 +1983,82 @@
   box-shadow: 0 10px 22px rgba(225, 29, 72, 0.26);
   z-index: 2;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.tutor-toolbar {
+  grid-template-columns: 1fr auto;
+}
+
+.tutor-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.tutor-invite-btn {
+  min-width: 190px;
+  height: 60px;
+  border: none;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #d946ef, #7c3aed);
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 16px;
+  box-shadow: 0 16px 30px rgba(124, 58, 237, 0.28);
+  transition: 0.25s ease;
+}
+
+.tutor-invite-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+
+@media (max-width: 850px) {
+  .tutor-toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .tutor-toolbar-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .tutor-invite-btn,
+  .tutor-add-btn {
+    width: 100%;
+  }
+}

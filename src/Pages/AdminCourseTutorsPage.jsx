@@ -1922,9 +1922,15 @@ className={`tutor-card ${
     ↗ Share
   </button>
 
-  <button type="button" onClick={() => toggleStatus(tutor)}>
+  {/* <button type="button" onClick={() => toggleStatus(tutor)}>
     {active ? "⏻ Deactive" : "✓ Active"}
-  </button>
+  </button> */}
+
+
+<button type="button" onClick={() => toggleTutorStatus(tutor)}>
+  {isTutorActive(tutor) ? "⏻ Deactive" : "✓ Active"}
+</button>
+
 
   <button type="button" onClick={() => toggleTutorBlockStatus(tutor)}>
     {isTutorBlocked(tutor) ? "◯ Unblock" : "⊘ Block"}

@@ -166,45 +166,107 @@ export default function LoginPage() {
   const [resetMsg, setResetMsg] = useState("");
   const [resetLoading, setResetLoading] = useState(false);
 
-  useEffect(() => {
-    async function verifyInviteLogin() {
-      try {
-        const params = new URLSearchParams(location.search);
-        const inviteToken = params.get("token");
 
-        if (!inviteToken) return;
 
-        setLoginMsg("Verifying invite link...");
 
-        const { data } = await api.get(
-          `/student/invite/${encodeURIComponent(inviteToken)}`
-        );
 
-        const loginData = data?.loginData;
 
-        if (loginData?.email && loginData?.pass) {
-          setLoginForm((prev) => ({
-            ...prev,
-            input: loginData.email,
-            pass: loginData.pass,
-          }));
 
-          setLoginMsg("Invite verified ✅ Please click Sign In");
-        } else {
-          setLoginMsg("Invite verified, but login data not received");
-        }
-      } catch (err) {
-        setLoginMsg(
-          err?.response?.data?.msg ||
-            err?.response?.data?.error ||
-            err?.message ||
-            "Invalid or expired invite link"
-        );
+  // useEffect(() => {
+  //   async function verifyInviteLogin() {
+  //     try {
+  //       const params = new URLSearchParams(location.search);
+  //       const inviteToken = params.get("token");
+
+  //       if (!inviteToken) return;
+
+  //       setLoginMsg("Verifying invite link...");
+
+  //       const { data } = await api.get(
+  //         `/student/invite/${encodeURIComponent(inviteToken)}`
+  //       );
+
+  //       const loginData = data?.loginData;
+
+  //       if (loginData?.email && loginData?.pass) {
+  //         setLoginForm((prev) => ({
+  //           ...prev,
+  //           input: loginData.email,
+  //           pass: loginData.pass,
+  //         }));
+
+  //         setLoginMsg("Invite verified ✅ Please click Sign In");
+  //       } else {
+  //         setLoginMsg("Invite verified, but login data not received");
+  //       }
+  //     } catch (err) {
+  //       setLoginMsg(
+  //         err?.response?.data?.msg ||
+  //           err?.response?.data?.error ||
+  //           err?.message ||
+  //           "Invalid or expired invite link"
+  //       );
+  //     }
+  //   }
+
+  //   verifyInviteLogin();
+  // }, [location.search]);
+
+
+
+
+
+
+useEffect(() => {
+  async function verifyInviteLogin() {
+    try {
+      const params = new URLSearchParams(location.search);
+      const inviteToken = params.get("token");
+
+      if (!inviteToken) return;
+
+      setLoginMsg("Verifying invite link...");
+
+      const decodedInvite = decodeJwt(inviteToken);
+      const inviteType = decodedInvite?.type;
+
+      const verifyUrl =
+        inviteType === "tutor_invite"
+          ? `/tutor/invite/${encodeURIComponent(inviteToken)}`
+          : `/student/invite/${encodeURIComponent(inviteToken)}`;
+
+      const { data } = await api.get(verifyUrl);
+
+      const loginData = data?.loginData;
+
+      if (loginData?.email && loginData?.pass) {
+        setLoginForm((prev) => ({
+          ...prev,
+          input: loginData.email,
+          pass: loginData.pass,
+        }));
+
+        setLoginMsg("Invite verified ✅ Please click Sign In");
+      } else {
+        setLoginMsg("Invite verified, but login data not received");
       }
+    } catch (err) {
+      setLoginMsg(
+        err?.response?.data?.msg ||
+          err?.response?.data?.error ||
+          err?.message ||
+          "Invalid or expired invite link"
+      );
     }
+  }
 
-    verifyInviteLogin();
-  }, [location.search]);
+  verifyInviteLogin();
+}, [location.search]);
+
+
+
+
+
 
   const closeAll = () => {
     setModal(null);
