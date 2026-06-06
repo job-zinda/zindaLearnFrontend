@@ -383,3 +383,35 @@
     width: 100%;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.tutor-about-field input[type="file"] {
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+}
+
+.tutor-about-field input[type="file"]::file-selector-button {
+  border: none;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+  font-weight: 950;
+  padding: 10px 14px;
+  margin-right: 12px;
+  cursor: pointer;
+}

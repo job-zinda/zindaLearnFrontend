@@ -439,7 +439,7 @@ export default function TutorAboutPage() {
           </div>
 
           <div>
-            <span className="tutor-about-pill">Tutor Profile</span>
+            {/* <span className="tutor-about-pill">Tutor Profile</span> */}
             <h2>{form.name || "Tutor"}</h2>
             <p>{form.qualification || "Qualification not added"}</p>
           </div>
