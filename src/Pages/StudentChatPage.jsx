@@ -907,19 +907,6 @@ useEffect(() => {
             😊
           </button>
 
-          {/* {emojiOpen && (
-            <div className="student-emoji-box">
-              {emojis.map((emoji) => (
-                <button
-                  key={emoji}
-                  type="button"
-                  onClick={() => setText((prev) => prev + emoji)}
-                >
-                  {emoji}
-                </button>
-              ))}
-            </div>
-          )} */}
 
 
 
@@ -927,24 +914,6 @@ useEffect(() => {
 
 
 
-{/* {emojiOpen && (
-  <div className="student-emoji-picker-wrap">
-    <EmojiPicker
-      theme="dark"
-      width="100%"
-      height={390}
-      searchPlaceholder="Search emoji"
-      previewConfig={{
-        showPreview: false,
-      }}
-      skinTonesDisabled={false}
-      lazyLoadEmojis={true}
-      onEmojiClick={(emojiData) => {
-        setText((prev) => prev + emojiData.emoji);
-      }}
-    />
-  </div>
-)} */}
 
 
 

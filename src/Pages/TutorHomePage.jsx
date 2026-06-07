@@ -302,22 +302,7 @@ function getStudent(feedback) {
   return feedback?.studentId || {};
 }
 
-// function getPhotoSrc(photo) {
-//   if (!photo) return "";
 
-//   const src = String(photo).trim();
-
-//   if (
-//     src.startsWith("data:image") ||
-//     src.startsWith("blob:") ||
-//     src.startsWith("http://") ||
-//     src.startsWith("https://")
-//   ) {
-//     return src;
-//   }
-
-//   return src;
-// }
 
 
 

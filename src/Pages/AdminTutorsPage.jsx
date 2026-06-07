@@ -183,20 +183,8 @@ export default function AdminTutorsPage() {
   const [deleteTarget, setDeleteTarget] = useState(null);
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// const emptyInviteTutorForm = {
-//   name: "",
-//   email: "",
-//   phone: "",
-// };
-
-// const [inviteTutorOpen, setInviteTutorOpen] = useState(false);
-// const [inviteTutorForm, setInviteTutorForm] = useState(emptyInviteTutorForm);
-// const [inviteTutorLoading, setInviteTutorLoading] = useState(false);
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -284,67 +272,9 @@ export default function AdminTutorsPage() {
   }
 
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// function openInviteTutorModal() {
-//   setInviteTutorForm(emptyInviteTutorForm);
-//   setInviteTutorOpen(true);
-// }
-
-// function handleInviteTutorChange(e) {
-//   const { name, value } = e.target;
-
-//   setInviteTutorForm((prev) => ({
-//     ...prev,
-//     [name]: value,
-//   }));
-// }
-
-// async function sendTutorInvite(e) {
-//   e.preventDefault();
-
-//   try {
-//     if (!inviteTutorForm.name.trim()) {
-//       return showAlert("Tutor name required", "error");
-//     }
-
-//     if (!inviteTutorForm.email.trim()) {
-//       return showAlert("Tutor email required", "error");
-//     }
-
-//     if (!inviteTutorForm.phone.trim()) {
-//       return showAlert("Tutor phone required", "error");
-//     }
-
-//     setInviteTutorLoading(true);
-
-//     await api.post("/admin/tuter/invite", {
-//       name: inviteTutorForm.name.trim(),
-//       email: inviteTutorForm.email.trim(),
-//       phone: inviteTutorForm.phone.trim(),
-//     });
-
-//     showAlert("Tutor invite mail sent successfully", "success");
-//     setInviteTutorOpen(false);
-//     setInviteTutorForm(emptyInviteTutorForm);
-//     fetchData();
-//   } catch (err) {
-//     showAlert(getErrorMessage(err, "Failed to invite tutor"), "error");
-//   } finally {
-//     setInviteTutorLoading(false);
-//   }
-// }
-
-// function tutorHasCategoryAndCourse(tutor) {
-//   const categoryIds = Array.isArray(tutor?.categoryIds) ? tutor.categoryIds : [];
-//   const courseIds = Array.isArray(tutor?.courseIds) ? tutor.courseIds : [];
-
-//   return categoryIds.length > 0 && courseIds.length > 0;
-// }
 
 
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
   async function openAddModal() {
@@ -682,43 +612,8 @@ export default function AdminTutorsPage() {
   }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// async function toggleTutorStatus(tutor) {
-//   try {
-//     if (!isTutorActive(tutor) && !tutorHasCategoryAndCourse(tutor)) {
-//       showAlert(
-//         "Tutor active aakkan at least one category and one course select cheyyanam",
-//         "error"
-//       );
 
-//       openEditModal(tutor);
-//       return;
-//     }
-
-//     await api.patch(`/admin/tuter/status/${tutor._id}`);
-
-//     showAlert(
-//       isTutorActive(tutor)
-//         ? "Tutor deactivated successfully"
-//         : "Tutor activated successfully",
-//       "success"
-//     );
-
-//     setMenuOpenId(null);
-//     fetchData();
-//   } catch (err) {
-//     if (err?.response?.data?.needProfileCompletion) {
-//       showAlert(err.response.data.msg, "error");
-//       openEditModal(tutor);
-//       return;
-//     }
-
-//     showAlert(getErrorMessage(err, "Failed to update tutor status"), "error");
-//   }
-// }
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   async function toggleTutorBlockStatus(tutor) {
     try {
@@ -778,34 +673,6 @@ export default function AdminTutorsPage() {
 
 
 
-{/* 
-
-
-      <div className="tutor-toolbar">
-  <div className="tutor-search">
-    <span>⌕</span>
-    <input
-      type="text"
-      placeholder="Search tutors..."
-      value={search}
-      onChange={(e) => setSearch(e.target.value)}
-    />
-  </div>
-
-  <div className="tutor-toolbar-actions">
-    <button
-      type="button"
-      className="tutor-invite-btn"
-      onClick={openInviteTutorModal}
-    >
-      + Invite Tutor
-    </button>
-
-    <button type="button" className="tutor-add-btn" onClick={openAddModal}>
-      + Add Tutor
-    </button>
-  </div>
-</div> */}
 
 
 
@@ -832,10 +699,10 @@ export default function AdminTutorsPage() {
               <article
                 key={tutor._id}
                 className={`tutor-card ${isTutorBlocked(tutor)
-                    ? "tutor-card--blocked"
-                    : !isTutorActive(tutor)
-                      ? "tutor-card--inactive"
-                      : ""
+                  ? "tutor-card--blocked"
+                  : !isTutorActive(tutor)
+                    ? "tutor-card--inactive"
+                    : ""
                   }`}
                 onClick={(e) => e.stopPropagation()}
               >
@@ -892,10 +759,7 @@ export default function AdminTutorsPage() {
                       </button>
 
 
-{/* 
-                      <button type="button" onClick={() => toggleTutorStatus(tutor)}>
-  {isTutorActive(tutor) ? "⏻ Deactive" : "✓ Active"}
-</button> */}
+
 
 
 
@@ -1239,67 +1103,7 @@ export default function AdminTutorsPage() {
 
 
 
-{/* 
-<Modal
-  open={inviteTutorOpen}
-  title="Invite Tutor"
-  onClose={() => {
-    setInviteTutorOpen(false);
-    setInviteTutorForm(emptyInviteTutorForm);
-  }}
->
-  <form className="tutor-form" onSubmit={sendTutorInvite}>
-    <label className="form-field form-field--full">
-      <span>Tutor Name</span>
-      <input
-        type="text"
-        name="name"
-        placeholder="Enter tutor name"
-        value={inviteTutorForm.name}
-        onChange={handleInviteTutorChange}
-      />
-    </label>
 
-    <label className="form-field form-field--full">
-      <span>Tutor Email</span>
-      <input
-        type="email"
-        name="email"
-        placeholder="Enter tutor email"
-        value={inviteTutorForm.email}
-        onChange={handleInviteTutorChange}
-      />
-    </label>
-
-    <label className="form-field form-field--full">
-      <span>Tutor Phone</span>
-      <input
-        type="text"
-        name="phone"
-        placeholder="Enter tutor phone"
-        value={inviteTutorForm.phone}
-        onChange={handleInviteTutorChange}
-      />
-    </label>
-
-    <div className="form-actions">
-      <button
-        type="button"
-        className="secondary-btn"
-        onClick={() => {
-          setInviteTutorOpen(false);
-          setInviteTutorForm(emptyInviteTutorForm);
-        }}
-      >
-        Cancel
-      </button>
-
-      <button type="submit" className="primary-btn" disabled={inviteTutorLoading}>
-        {inviteTutorLoading ? "Sending..." : "Send Mail"}
-      </button>
-    </div>
-  </form>
-</Modal> */}
 
 
     </div>

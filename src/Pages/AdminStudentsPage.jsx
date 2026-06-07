@@ -1583,12 +1583,26 @@ const emptyInviteForm = {
   phone: "",
 };
 
+// const emptyEditForm = {
+//   name: "",
+//   email: "",
+//   phone: "",
+//   photo: "",
+// };
+
+
+
+
+
 const emptyEditForm = {
   name: "",
   email: "",
   phone: "",
   photo: "",
+  photoFile: null,
 };
+
+
 
 function getErrorMessage(error, fallback = "Something went wrong") {
   return (
@@ -1635,13 +1649,13 @@ function isNewStudent(student) {
 
 
 
-function isStudentBlocked(student){
+function isStudentBlocked(student) {
 
-return (
-student?.isBlocked===true ||
-student?.isBlocked==="true" ||
-student?.isBlocked===1
-)
+  return (
+    student?.isBlocked === true ||
+    student?.isBlocked === "true" ||
+    student?.isBlocked === 1
+  )
 
 }
 
@@ -1651,50 +1665,50 @@ student?.isBlocked===1
 
 
 
-function resizeImageToBase64(file, maxSize = 420, quality = 0.72) {
-  return new Promise((resolve, reject) => {
-    if (!file.type.startsWith("image/")) {
-      reject(new Error("Please select an image file"));
-      return;
-    }
+// function resizeImageToBase64(file, maxSize = 420, quality = 0.72) {
+//   return new Promise((resolve, reject) => {
+//     if (!file.type.startsWith("image/")) {
+//       reject(new Error("Please select an image file"));
+//       return;
+//     }
 
-    const reader = new FileReader();
+//     const reader = new FileReader();
 
-    reader.onload = () => {
-      const img = new Image();
+//     reader.onload = () => {
+//       const img = new Image();
 
-      img.onload = () => {
-        const canvas = document.createElement("canvas");
+//       img.onload = () => {
+//         const canvas = document.createElement("canvas");
 
-        let { width, height } = img;
+//         let { width, height } = img;
 
-        if (width > height) {
-          if (width > maxSize) {
-            height = Math.round((height * maxSize) / width);
-            width = maxSize;
-          }
-        } else if (height > maxSize) {
-          width = Math.round((width * maxSize) / height);
-          height = maxSize;
-        }
+//         if (width > height) {
+//           if (width > maxSize) {
+//             height = Math.round((height * maxSize) / width);
+//             width = maxSize;
+//           }
+//         } else if (height > maxSize) {
+//           width = Math.round((width * maxSize) / height);
+//           height = maxSize;
+//         }
 
-        canvas.width = width;
-        canvas.height = height;
+//         canvas.width = width;
+//         canvas.height = height;
 
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0, width, height);
+//         const ctx = canvas.getContext("2d");
+//         ctx.drawImage(img, 0, 0, width, height);
 
-        resolve(canvas.toDataURL("image/jpeg", quality));
-      };
+//         resolve(canvas.toDataURL("image/jpeg", quality));
+//       };
 
-      img.onerror = () => reject(new Error("Image load failed"));
-      img.src = reader.result;
-    };
+//       img.onerror = () => reject(new Error("Image load failed"));
+//       img.src = reader.result;
+//     };
 
-    reader.onerror = () => reject(new Error("Image read failed"));
-    reader.readAsDataURL(file);
-  });
-}
+//     reader.onerror = () => reject(new Error("Image read failed"));
+//     reader.readAsDataURL(file);
+//   });
+// }
 
 
 
@@ -1770,11 +1784,11 @@ export default function AdminStudentsPage() {
 
 
   const [tutors, setTutors] = useState([]);
-const [assignOpen, setAssignOpen] = useState(false);
-const [assignStudent, setAssignStudent] = useState(null);
-const [assignedTutorIds, setAssignedTutorIds] = useState([]);
-const [assignSearch, setAssignSearch] = useState("");
-const [assignLoading, setAssignLoading] = useState(false);
+  const [assignOpen, setAssignOpen] = useState(false);
+  const [assignStudent, setAssignStudent] = useState(null);
+  const [assignedTutorIds, setAssignedTutorIds] = useState([]);
+  const [assignSearch, setAssignSearch] = useState("");
+  const [assignLoading, setAssignLoading] = useState(false);
 
 
 
@@ -1820,30 +1834,22 @@ const [assignLoading, setAssignLoading] = useState(false);
 
 
 
-async function fetchTutors() {
-  try {
-    const { data } = await api.get("/admin/tuter/all");
-    setTutors(data.tuters || []);
-  } catch (err) {
-    showAlert(getErrorMessage(err, "Failed to load tutors"), "error");
+  async function fetchTutors() {
+    try {
+      const { data } = await api.get("/admin/tuter/all");
+      setTutors(data.tuters || []);
+    } catch (err) {
+      showAlert(getErrorMessage(err, "Failed to load tutors"), "error");
+    }
   }
-}
-
-
-
-  // useEffect(() => {
-  //   fetchStudents();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
 
 
 
 
-useEffect(() => {
-  fetchStudents();
-  fetchTutors();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, []);
+  useEffect(() => {
+    fetchStudents();
+    fetchTutors();
+  }, []);
 
 
   useEffect(() => {
@@ -1904,35 +1910,63 @@ useEffect(() => {
       email: student.email || "",
       phone: student.phone || "",
       photo: student.photo || "",
+      photoFile: null,
     });
     setPreview(getStudentPhoto(student.photo));
     setEditOpen(true);
     setMenuOpenId(null);
   }
 
-  async function handlePhotoChange(e) {
-    const file = e.target.files?.[0];
+  // async function handlePhotoChange(e) {
+  //   const file = e.target.files?.[0];
 
-    if (!file) return;
+  //   if (!file) return;
 
-    try {
-      if (file.size > 5 * 1024 * 1024) {
-        showAlert("Image size 5MB-il താഴെ ആയിരിക്കണം", "error");
-        return;
-      }
+  //   try {
+  //     if (file.size > 5 * 1024 * 1024) {
+  //       showAlert("Image size 5MB-il താഴെ ആയിരിക്കണം", "error");
+  //       return;
+  //     }
 
-      const compressedBase64 = await resizeImageToBase64(file, 420, 0.72);
+  //     const compressedBase64 = await resizeImageToBase64(file, 420, 0.72);
 
-      setEditForm((prev) => ({
-        ...prev,
-        photo: compressedBase64,
-      }));
+  //     setEditForm((prev) => ({
+  //       ...prev,
+  //       photo: compressedBase64,
+  //     }));
 
-      setPreview(compressedBase64);
-    } catch (err) {
-      showAlert(err.message || "Photo select cheyyan kazhinjilla", "error");
-    }
+  //     setPreview(compressedBase64);
+  //   } catch (err) {
+  //     showAlert(err.message || "Photo select cheyyan kazhinjilla", "error");
+  //   }
+  // }
+
+
+
+
+
+function handlePhotoChange(e) {
+  const file = e.target.files?.[0];
+
+  if (!file) return;
+
+  if (file.size > 5 * 1024 * 1024) {
+    showAlert("Image size 5MB-il താഴെ ആയിരിക്കണം", "error");
+    return;
   }
+
+  setEditForm((prev) => ({
+    ...prev,
+    photo: URL.createObjectURL(file),
+    photoFile: file,
+  }));
+
+  setPreview(URL.createObjectURL(file));
+}
+
+
+
+
 
   async function updateStudent(e) {
     e.preventDefault();
@@ -1954,12 +1988,40 @@ useEffect(() => {
 
       setSubmitting(true);
 
-      await api.put(`/admin/student/update/${getStudentId(editingStudent)}`, {
-        name: editForm.name.trim(),
-        email: editForm.email.trim(),
-        phone: editForm.phone.trim(),
-        photo: editForm.photo || "",
-      });
+      // await api.put(`/admin/student/update/${getStudentId(editingStudent)}`, {
+      //   name: editForm.name.trim(),
+      //   email: editForm.email.trim(),
+      //   phone: editForm.phone.trim(),
+      //   photo: editForm.photo || "",
+      // });
+
+
+
+
+
+const formData = new FormData();
+formData.append("name", editForm.name.trim());
+formData.append("email", editForm.email.trim());
+formData.append("phone", editForm.phone.trim());
+
+if (editForm.photoFile) {
+  formData.append("photo", editForm.photoFile);
+}
+
+await api.put(
+  `/admin/student/update/${getStudentId(editingStudent)}`,
+  formData,
+  {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  }
+);
+
+
+
+
+
 
       showAlert("Student updated successfully", "success");
       setEditOpen(false);
@@ -2009,161 +2071,160 @@ useEffect(() => {
 
 
 
-async function toggleStudentBlock(student){
+  async function toggleStudentBlock(student) {
 
-try{
+    try {
 
-const nextBlocked=
-!isStudentBlocked(student);
+      const nextBlocked =
+        !isStudentBlocked(student);
 
-const {data}=await api.patch(
+      const { data } = await api.patch(
 
-`/admin/student/block/${getStudentId(student)}`,
+        `/admin/student/block/${getStudentId(student)}`,
 
-{
-isBlocked:nextBlocked
-}
+        {
+          isBlocked: nextBlocked
+        }
 
-);
+      );
 
-setStudents(prev=>
+      setStudents(prev =>
 
-prev.map(item=>
+        prev.map(item =>
 
-getStudentId(item)===
-getStudentId(student)
+          getStudentId(item) ===
+            getStudentId(student)
 
-?
+            ?
 
-{
-...item,
+            {
+              ...item,
 
-isBlocked:
-data?.student?.isBlocked
-??
+              isBlocked:
+                data?.student?.isBlocked
+                ??
 
-nextBlocked
+                nextBlocked
 
-}
+            }
 
-:item
+            : item
 
-)
+        )
 
-)
+      )
 
-setMenuOpenId(null);
+      setMenuOpenId(null);
 
-showAlert(
+      showAlert(
 
-nextBlocked
-?
-"Student blocked"
-:
-"Student unblocked",
+        nextBlocked
+          ?
+          "Student blocked"
+          :
+          "Student unblocked",
 
-"success"
+        "success"
 
-)
+      )
 
-}catch(err){
+    } catch (err) {
 
-showAlert(
+      showAlert(
 
-getErrorMessage(
-err,
-"Failed blocking student"
-),
+        getErrorMessage(
+          err,
+          "Failed blocking student"
+        ),
 
-"error"
+        "error"
 
-)
+      )
 
-}
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  const filteredAssignTutors = useMemo(() => {
-  const q = assignSearch.toLowerCase().trim();
-
-  if (!q) return tutors;
-
-  return tutors.filter((tutor) => {
-    return (
-      String(tutor.name || "").toLowerCase().includes(q) ||
-      String(tutor.email || "").toLowerCase().includes(q) ||
-      String(tutor.phone || "").toLowerCase().includes(q) ||
-      String(tutor.qualification || "").toLowerCase().includes(q)
-    );
-  });
-}, [tutors, assignSearch]);
-
-async function openAssignTutorModal(student) {
-  try {
-    setAssignStudent(student);
-    setAssignedTutorIds([]);
-    setAssignSearch("");
-    setAssignOpen(true);
-    setMenuOpenId(null);
-    setAssignLoading(true);
-
-    const { data } = await api.get(
-      `/admin/student/${getStudentId(student)}/assigned-tutors`
-    );
-
-    const ids = (data.tutors || []).map((tutor) => tutor._id);
-    setAssignedTutorIds(ids);
-  } catch (err) {
-    showAlert(getErrorMessage(err, "Failed to load assigned tutors"), "error");
-  } finally {
-    setAssignLoading(false);
-  }
-}
-
-function toggleAssignedTutor(tutorId, checked) {
-  setAssignedTutorIds((prev) => {
-    if (checked) {
-      return Array.from(new Set([...prev, tutorId]));
     }
 
-    return prev.filter((id) => id !== tutorId);
-  });
-}
-
-async function saveAssignedTutors() {
-  try {
-    if (!assignStudent) return;
-
-    setSubmitting(true);
-
-    await api.post(`/admin/student/${getStudentId(assignStudent)}/assign-tutors`, {
-      tutorIds: assignedTutorIds,
-    });
-
-    showAlert("Tutors assigned successfully", "success");
-    setAssignOpen(false);
-    setAssignStudent(null);
-    setAssignedTutorIds([]);
-  } catch (err) {
-    showAlert(getErrorMessage(err, "Failed to assign tutors"), "error");
-  } finally {
-    setSubmitting(false);
   }
-}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+  const filteredAssignTutors = useMemo(() => {
+    const q = assignSearch.toLowerCase().trim();
+
+    if (!q) return tutors;
+
+    return tutors.filter((tutor) => {
+      return (
+        String(tutor.name || "").toLowerCase().includes(q) ||
+        String(tutor.email || "").toLowerCase().includes(q) ||
+        String(tutor.phone || "").toLowerCase().includes(q) ||
+        String(tutor.qualification || "").toLowerCase().includes(q)
+      );
+    });
+  }, [tutors, assignSearch]);
+
+  async function openAssignTutorModal(student) {
+    try {
+      setAssignStudent(student);
+      setAssignedTutorIds([]);
+      setAssignSearch("");
+      setAssignOpen(true);
+      setMenuOpenId(null);
+      setAssignLoading(true);
+
+      const { data } = await api.get(
+        `/admin/student/${getStudentId(student)}/assigned-tutors`
+      );
+
+      const ids = (data.tutors || []).map((tutor) => tutor._id);
+      setAssignedTutorIds(ids);
+    } catch (err) {
+      showAlert(getErrorMessage(err, "Failed to load assigned tutors"), "error");
+    } finally {
+      setAssignLoading(false);
+    }
+  }
+
+  function toggleAssignedTutor(tutorId, checked) {
+    setAssignedTutorIds((prev) => {
+      if (checked) {
+        return Array.from(new Set([...prev, tutorId]));
+      }
+
+      return prev.filter((id) => id !== tutorId);
+    });
+  }
+
+  async function saveAssignedTutors() {
+    try {
+      if (!assignStudent) return;
+
+      setSubmitting(true);
+
+      await api.post(`/admin/student/${getStudentId(assignStudent)}/assign-tutors`, {
+        tutorIds: assignedTutorIds,
+      });
+
+      showAlert("Tutors assigned successfully", "success");
+      setAssignOpen(false);
+      setAssignStudent(null);
+      setAssignedTutorIds([]);
+    } catch (err) {
+      showAlert(getErrorMessage(err, "Failed to assign tutors"), "error");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   return (
     <div className="student-page" onClick={() => setMenuOpenId(null)}>
       <div className="student-toolbar" onClick={(e) => e.stopPropagation()}>
@@ -2210,28 +2271,26 @@ async function saveAssignedTutors() {
               <article
                 key={studentId}
                 ref={newStudent && index === 0 ? firstNewCardRef : null}
-                // className={`student-card ${
-                //   newStudent ? "student-card--new" : ""
-                // }`}
 
 
 
 
-className={`student-card
+
+                className={`student-card
 
 ${newStudent
-?
-"student-card--new"
-:
-""
-}
+                    ?
+                    "student-card--new"
+                    :
+                    ""
+                  }
 
 ${isStudentBlocked(student)
-?
-"student-card--blocked"
-:
-""
-}
+                    ?
+                    "student-card--blocked"
+                    :
+                    ""
+                  }
 `}
 
 
@@ -2241,38 +2300,36 @@ ${isStudentBlocked(student)
 
                 onClick={(e) => e.stopPropagation()}
               >
-                {/* {newStudent && (
-                  <span className="student-new-badge">New 24h</span>
-                )} */}
 
 
 
 
 
-{
-isStudentBlocked(student)
 
-?
+                {
+                  isStudentBlocked(student)
 
-<span className="student-blocked-badge">
+                    ?
 
-Blocked
+                    <span className="student-blocked-badge">
 
-</span>
+                      Blocked
 
-:
+                    </span>
 
-newStudent && (
+                    :
 
-<span className="student-new-badge">
+                    newStudent && (
 
-New 24h
+                      <span className="student-new-badge">
 
-</span>
+                        New 24h
 
-)
+                      </span>
 
-}
+                    )
+
+                }
 
 
 
@@ -2293,21 +2350,6 @@ New 24h
                   </button>
 
                   {menuOpenId === studentId && (
-                    // <div className="student-menu">
-                    //   <button
-                    //     type="button"
-                    //     onClick={() => openEditModal(student)}
-                    //   >
-                    //     ✎ Edit
-                    //   </button>
-
-                    //   <button
-                    //     type="button"
-                    //     onClick={() => askDeleteStudent(student)}
-                    //   >
-                    //     🗑 Delete Account
-                    //   </button>
-                    // </div>
 
 
 
@@ -2315,61 +2357,62 @@ New 24h
 
 
 
-<div className="student-menu">
 
-<button
-type="button"
-onClick={() =>
-openEditModal(student)
-}
->
+                    <div className="student-menu">
 
-✎ Edit
+                      <button
+                        type="button"
+                        onClick={() =>
+                          openEditModal(student)
+                        }
+                      >
 
-</button>
+                        ✎ Edit
 
-
-<button
-type="button"
-onClick={()=>
-toggleStudentBlock(
-student
-)
-}
->
-
-{
-isStudentBlocked(
-student
-)
-
-?
-
-"◯ Unblock"
-
-:
-
- "⊘ Block"
-
-}
-
-</button>
+                      </button>
 
 
-<button
-type="button"
-onClick={() =>
-askDeleteStudent(
-student
-)
-}
->
+                      <button
+                        type="button"
+                        onClick={() =>
+                          toggleStudentBlock(
+                            student
+                          )
+                        }
+                      >
 
-🗑 Delete Account
+                        {
+                          isStudentBlocked(
+                            student
+                          )
 
-</button>
+                            ?
 
-</div>
+                            "◯ Unblock"
+
+                            :
+
+                            "⊘ Block"
+
+                        }
+
+                      </button>
+
+
+                      <button
+                        type="button"
+                        onClick={() =>
+                          askDeleteStudent(
+                            student
+                          )
+                        }
+                      >
+
+                        🗑 Delete Account
+
+                      </button>
+
+                    </div>
 
 
 
@@ -2406,13 +2449,13 @@ student
 
 
 
-<button
-  type="button"
-  className="student-assign-btn"
-  onClick={() => openAssignTutorModal(student)}
->
-  Assign Tutors
-</button>
+                <button
+                  type="button"
+                  className="student-assign-btn"
+                  onClick={() => openAssignTutorModal(student)}
+                >
+                  Assign Tutors
+                </button>
 
 
 
@@ -2429,14 +2472,16 @@ student
 
 
 
-{/* 
-      <Modal
+
+
+
+      <StudentDarkModal
         open={inviteOpen}
         title="Invite Student"
         width="560px"
         onClose={() => setInviteOpen(false)}
       >
-        <form className="student-form" onSubmit={sendInvite}>
+        <form className="student-form student-dark-form" onSubmit={sendInvite}>
           <label className="form-field">
             <span>Student Name</span>
             <input
@@ -2487,7 +2532,7 @@ student
             </button>
           </div>
         </form>
-      </Modal> */}
+      </StudentDarkModal>
 
 
 
@@ -2495,78 +2540,16 @@ student
 
 
 
-<StudentDarkModal
-  open={inviteOpen}
-  title="Invite Student"
-  width="560px"
-  onClose={() => setInviteOpen(false)}
->
-  <form className="student-form student-dark-form" onSubmit={sendInvite}>
-    <label className="form-field">
-      <span>Student Name</span>
-      <input
-        value={inviteForm.name}
-        onChange={(e) =>
-          setInviteForm((prev) => ({ ...prev, name: e.target.value }))
-        }
-        placeholder="Enter student name"
-      />
-    </label>
-
-    <label className="form-field">
-      <span>Student Email</span>
-      <input
-        type="email"
-        value={inviteForm.email}
-        onChange={(e) =>
-          setInviteForm((prev) => ({ ...prev, email: e.target.value }))
-        }
-        placeholder="Enter student email"
-      />
-    </label>
-
-    <label className="form-field">
-      <span>Student Phone</span>
-      <input
-        type="tel"
-        value={inviteForm.phone}
-        onChange={(e) =>
-          setInviteForm((prev) => ({ ...prev, phone: e.target.value }))
-        }
-        placeholder="Enter student phone"
-      />
-    </label>
-
-    <div className="form-actions">
-      <button
-        type="button"
-        className="secondary-btn"
-        onClick={() => setInviteOpen(false)}
-        disabled={submitting}
-      >
-        Cancel
-      </button>
-
-      <button type="submit" className="primary-btn" disabled={submitting}>
-        {submitting ? "Sending..." : "Send Mail"}
-      </button>
-    </div>
-  </form>
-</StudentDarkModal>
 
 
 
-
-
-
-{/* 
-      <Modal
+      <StudentDarkModal
         open={editOpen}
         title="Edit Student"
         width="620px"
         onClose={() => setEditOpen(false)}
       >
-        <form className="student-form" onSubmit={updateStudent}>
+        <form className="student-form student-dark-form" onSubmit={updateStudent}>
           <label className="form-field">
             <span>Student Photo</span>
             <input type="file" accept="image/*" onChange={handlePhotoChange} />
@@ -2628,7 +2611,7 @@ student
             </button>
           </div>
         </form>
-      </Modal> */}
+      </StudentDarkModal>
 
 
 
@@ -2636,91 +2619,21 @@ student
 
 
 
-<StudentDarkModal
-  open={editOpen}
-  title="Edit Student"
-  width="620px"
-  onClose={() => setEditOpen(false)}
->
-  <form className="student-form student-dark-form" onSubmit={updateStudent}>
-    <label className="form-field">
-      <span>Student Photo</span>
-      <input type="file" accept="image/*" onChange={handlePhotoChange} />
-    </label>
-
-    {preview && (
-      <div className="student-photo-preview">
-        <img src={preview} alt="Preview" />
-      </div>
-    )}
-
-    <label className="form-field">
-      <span>Name</span>
-      <input
-        value={editForm.name}
-        onChange={(e) =>
-          setEditForm((prev) => ({ ...prev, name: e.target.value }))
-        }
-        placeholder="Enter student name"
-      />
-    </label>
-
-    <label className="form-field">
-      <span>Email</span>
-      <input
-        type="email"
-        value={editForm.email}
-        onChange={(e) =>
-          setEditForm((prev) => ({ ...prev, email: e.target.value }))
-        }
-        placeholder="Enter student email"
-      />
-    </label>
-
-    <label className="form-field">
-      <span>Phone</span>
-      <input
-        type="tel"
-        value={editForm.phone}
-        onChange={(e) =>
-          setEditForm((prev) => ({ ...prev, phone: e.target.value }))
-        }
-        placeholder="Enter student phone"
-      />
-    </label>
-
-    <div className="form-actions">
-      <button
-        type="button"
-        className="secondary-btn"
-        onClick={() => setEditOpen(false)}
-        disabled={submitting}
-      >
-        Cancel
-      </button>
-
-      <button type="submit" className="primary-btn" disabled={submitting}>
-        {submitting ? "Updating..." : "Update"}
-      </button>
-    </div>
-  </form>
-</StudentDarkModal>
 
 
 
 
 
-
-{/* 
-      <Modal
+      <StudentDarkModal
         open={deleteOpen}
         title="Delete Student Account"
-        width="440px"
+        width="460px"
         onClose={() => setDeleteOpen(false)}
       >
-        <div className="student-delete-box">
+        <div className="student-delete-box student-dark-delete-box">
           <p>
-            <b>{deleteTarget?.name || "This student"}</b> Do you want to delete this student?
+            <b>{deleteTarget?.name || "This student"}</b> Do you want to delete this
+            student?
           </p>
 
           <div className="form-actions">
@@ -2743,7 +2656,7 @@ student
             </button>
           </div>
         </div>
-      </Modal> */}
+      </StudentDarkModal>
 
 
 
@@ -2752,230 +2665,103 @@ student
 
 
 
-<StudentDarkModal
-  open={deleteOpen}
-  title="Delete Student Account"
-  width="460px"
-  onClose={() => setDeleteOpen(false)}
->
-  <div className="student-delete-box student-dark-delete-box">
-    <p>
-      <b>{deleteTarget?.name || "This student"}</b> Do you want to delete this
-      student?
-    </p>
-
-    <div className="form-actions">
-      <button
-        type="button"
-        className="secondary-btn"
-        onClick={() => setDeleteOpen(false)}
-        disabled={submitting}
-      >
-        Cancel
-      </button>
-
-      <button
-        type="button"
-        className="danger-btn"
-        onClick={deleteStudent}
-        disabled={submitting}
-      >
-        {submitting ? "Deleting..." : "Delete"}
-      </button>
-    </div>
-  </div>
-</StudentDarkModal>
 
 
 
-
-
-
-
-{/* 
-      <Modal
-  open={assignOpen}
-  title={`Assign Tutors${assignStudent?.name ? ` - ${assignStudent.name}` : ""}`}
-  width="760px"
-  onClose={() => {
-    setAssignOpen(false);
-    setAssignStudent(null);
-    setAssignedTutorIds([]);
-  }}
->
-  <div className="assign-tutor-box">
-    <div className="assign-tutor-search">
-      <span>⌕</span>
-      <input
-        value={assignSearch}
-        onChange={(e) => setAssignSearch(e.target.value)}
-        placeholder="Search tutors..."
-      />
-    </div>
-
-    {assignLoading ? (
-      <div className="assign-tutor-state">Loading tutors...</div>
-    ) : filteredAssignTutors.length === 0 ? (
-      <div className="assign-tutor-state">No tutors found</div>
-    ) : (
-      <div className="assign-tutor-list">
-        {filteredAssignTutors.map((tutor) => {
-          const checked = assignedTutorIds.includes(tutor._id);
-          const photo = tutor.photo ? getMediaUrl(tutor.photo) : "";
-
-          return (
-            <label
-              key={tutor._id}
-              className={`assign-tutor-item ${
-                checked ? "assign-tutor-item--selected" : ""
-              }`}
-            >
-              <input
-                type="checkbox"
-                checked={checked}
-                onChange={(e) =>
-                  toggleAssignedTutor(tutor._id, e.target.checked)
-                }
-              />
-
-              <div className="assign-tutor-avatar">
-                {photo ? (
-                  <img src={photo} alt={tutor.name || "Tutor"} />
-                ) : (
-                  <span>{tutor.name?.charAt(0)?.toUpperCase() || "T"}</span>
-                )}
-              </div>
-
-              <div className="assign-tutor-info">
-                <h4>{tutor.name || "Tutor"}</h4>
-                <p>{tutor.qualification || "Qualification not added"}</p>
-                <small>{tutor.email || tutor.phone || "No contact added"}</small>
-              </div>
-            </label>
-          );
-        })}
-      </div>
-    )}
-
-    <div className="assign-tutor-actions">
-      <button
-        type="button"
-        className="secondary-btn"
-        onClick={() => setAssignOpen(false)}
-      >
-        Cancel
-      </button>
-
-      <button
-        type="button"
-        className="primary-btn"
-        disabled={submitting}
-        onClick={saveAssignedTutors}
-      >
-        {submitting ? "Saving..." : "Save Assignment"}
-      </button>
-    </div>
-  </div>
-</Modal> */}
-
-
-
-
-<StudentDarkModal
-  open={assignOpen}
-  title={`Assign Tutors${assignStudent?.name ? ` - ${assignStudent.name}` : ""}`}
-  width="760px"
-  onClose={() => {
-    setAssignOpen(false);
-    setAssignStudent(null);
-    setAssignedTutorIds([]);
-  }}
->
-  <div className="assign-tutor-box assign-tutor-box-dark">
-    <div className="assign-tutor-search assign-tutor-search-dark">
-      <span>⌕</span>
-      <input
-        value={assignSearch}
-        onChange={(e) => setAssignSearch(e.target.value)}
-        placeholder="Search tutors..."
-      />
-    </div>
-
-    {assignLoading ? (
-      <div className="assign-tutor-state assign-tutor-state-dark">
-        Loading tutors...
-      </div>
-    ) : filteredAssignTutors.length === 0 ? (
-      <div className="assign-tutor-state assign-tutor-state-dark">
-        No tutors found
-      </div>
-    ) : (
-      <div className="assign-tutor-list assign-tutor-list-dark">
-        {filteredAssignTutors.map((tutor) => {
-          const checked = assignedTutorIds.includes(tutor._id);
-          const photo = tutor.photo ? getMediaUrl(tutor.photo) : "";
-
-          return (
-            <label
-              key={tutor._id}
-              className={`assign-tutor-item assign-tutor-item-dark ${
-                checked ? "assign-tutor-item--selected" : ""
-              }`}
-            >
-              <input
-                type="checkbox"
-                checked={checked}
-                onChange={(e) =>
-                  toggleAssignedTutor(tutor._id, e.target.checked)
-                }
-              />
-
-              <div className="assign-tutor-avatar">
-                {photo ? (
-                  <img src={photo} alt={tutor.name || "Tutor"} />
-                ) : (
-                  <span>{tutor.name?.charAt(0)?.toUpperCase() || "T"}</span>
-                )}
-              </div>
-
-              <div className="assign-tutor-info assign-tutor-info-dark">
-                <h4>{tutor.name || "Tutor"}</h4>
-                <p>{tutor.qualification || "Qualification not added"}</p>
-                <small>
-                  {tutor.email || tutor.phone || "No contact added"}
-                </small>
-              </div>
-            </label>
-          );
-        })}
-      </div>
-    )}
-
-    <div className="assign-tutor-actions">
-      <button
-        type="button"
-        className="secondary-btn"
-        onClick={() => {
+      <StudentDarkModal
+        open={assignOpen}
+        title={`Assign Tutors${assignStudent?.name ? ` - ${assignStudent.name}` : ""}`}
+        width="760px"
+        onClose={() => {
           setAssignOpen(false);
           setAssignStudent(null);
           setAssignedTutorIds([]);
         }}
-        disabled={submitting}
       >
-        Cancel
-      </button>
+        <div className="assign-tutor-box assign-tutor-box-dark">
+          <div className="assign-tutor-search assign-tutor-search-dark">
+            <span>⌕</span>
+            <input
+              value={assignSearch}
+              onChange={(e) => setAssignSearch(e.target.value)}
+              placeholder="Search tutors..."
+            />
+          </div>
 
-      <button
-        type="button"
-        className="primary-btn"
-        disabled={submitting}
-        onClick={saveAssignedTutors}
-      >
-        {submitting ? "Saving..." : "Save Assignment"}
-      </button>
-    </div>
-  </div>
-</StudentDarkModal>
+          {assignLoading ? (
+            <div className="assign-tutor-state assign-tutor-state-dark">
+              Loading tutors...
+            </div>
+          ) : filteredAssignTutors.length === 0 ? (
+            <div className="assign-tutor-state assign-tutor-state-dark">
+              No tutors found
+            </div>
+          ) : (
+            <div className="assign-tutor-list assign-tutor-list-dark">
+              {filteredAssignTutors.map((tutor) => {
+                const checked = assignedTutorIds.includes(tutor._id);
+                const photo = tutor.photo ? getMediaUrl(tutor.photo) : "";
+
+                return (
+                  <label
+                    key={tutor._id}
+                    className={`assign-tutor-item assign-tutor-item-dark ${checked ? "assign-tutor-item--selected" : ""
+                      }`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      onChange={(e) =>
+                        toggleAssignedTutor(tutor._id, e.target.checked)
+                      }
+                    />
+
+                    <div className="assign-tutor-avatar">
+                      {photo ? (
+                        <img src={photo} alt={tutor.name || "Tutor"} />
+                      ) : (
+                        <span>{tutor.name?.charAt(0)?.toUpperCase() || "T"}</span>
+                      )}
+                    </div>
+
+                    <div className="assign-tutor-info assign-tutor-info-dark">
+                      <h4>{tutor.name || "Tutor"}</h4>
+                      <p>{tutor.qualification || "Qualification not added"}</p>
+                      <small>
+                        {tutor.email || tutor.phone || "No contact added"}
+                      </small>
+                    </div>
+                  </label>
+                );
+              })}
+            </div>
+          )}
+
+          <div className="assign-tutor-actions">
+            <button
+              type="button"
+              className="secondary-btn"
+              onClick={() => {
+                setAssignOpen(false);
+                setAssignStudent(null);
+                setAssignedTutorIds([]);
+              }}
+              disabled={submitting}
+            >
+              Cancel
+            </button>
+
+            <button
+              type="button"
+              className="primary-btn"
+              disabled={submitting}
+              onClick={saveAssignedTutors}
+            >
+              {submitting ? "Saving..." : "Save Assignment"}
+            </button>
+          </div>
+        </div>
+      </StudentDarkModal>
 
 
 

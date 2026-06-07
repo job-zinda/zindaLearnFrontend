@@ -202,9 +202,9 @@ export default function LoginPage() {
       } catch (err) {
         setLoginMsg(
           err?.response?.data?.msg ||
-            err?.response?.data?.error ||
-            err?.message ||
-            "Invalid or expired invite link"
+          err?.response?.data?.error ||
+          err?.message ||
+          "Invalid or expired invite link"
         );
       }
     }
@@ -215,53 +215,6 @@ export default function LoginPage() {
 
 
 
-
-
-// useEffect(() => {
-//   async function verifyInviteLogin() {
-//     try {
-//       const params = new URLSearchParams(location.search);
-//       const inviteToken = params.get("token");
-
-//       if (!inviteToken) return;
-
-//       setLoginMsg("Verifying invite link...");
-
-//       const decodedInvite = decodeJwt(inviteToken);
-//       const inviteType = decodedInvite?.type;
-
-//       const verifyUrl =
-//         inviteType === "tutor_invite"
-//           ? `/tutor/invite/${encodeURIComponent(inviteToken)}`
-//           : `/student/invite/${encodeURIComponent(inviteToken)}`;
-
-//       const { data } = await api.get(verifyUrl);
-
-//       const loginData = data?.loginData;
-
-//       if (loginData?.email && loginData?.pass) {
-//         setLoginForm((prev) => ({
-//           ...prev,
-//           input: loginData.email,
-//           pass: loginData.pass,
-//         }));
-
-//         setLoginMsg("Invite verified ✅ Please click Sign In");
-//       } else {
-//         setLoginMsg("Invite verified, but login data not received");
-//       }
-//     } catch (err) {
-//       setLoginMsg(
-//         err?.response?.data?.msg ||
-//           err?.response?.data?.error ||
-//           err?.message ||
-//           "Invalid or expired invite link"
-//       );
-//     }
-//   }
-
-//   verifyInviteLogin();
-// }, [location.search]);
 
 
 
@@ -326,9 +279,9 @@ export default function LoginPage() {
     } catch (err) {
       setLoginMsg(
         err?.response?.data?.msg ||
-          err?.response?.data?.error ||
-          err?.message ||
-          "Login failed"
+        err?.response?.data?.error ||
+        err?.message ||
+        "Login failed"
       );
     } finally {
       setLoginLoading(false);
@@ -361,9 +314,9 @@ export default function LoginPage() {
     } catch (err) {
       setSignupMsg(
         err?.response?.data?.msg ||
-          err?.response?.data?.error ||
-          err?.message ||
-          "Register failed"
+        err?.response?.data?.error ||
+        err?.message ||
+        "Register failed"
       );
     } finally {
       setSignupLoading(false);
@@ -385,9 +338,9 @@ export default function LoginPage() {
     } catch (err) {
       setForgotMsg(
         err?.response?.data?.msg ||
-          err?.response?.data?.error ||
-          err?.message ||
-          "Send OTP failed"
+        err?.response?.data?.error ||
+        err?.message ||
+        "Send OTP failed"
       );
     } finally {
       setForgotLoading(false);
@@ -414,9 +367,9 @@ export default function LoginPage() {
     } catch (err) {
       setOtpMsg(
         err?.response?.data?.msg ||
-          err?.response?.data?.error ||
-          err?.message ||
-          "OTP verify failed"
+        err?.response?.data?.error ||
+        err?.message ||
+        "OTP verify failed"
       );
     } finally {
       setOtpLoading(false);
@@ -448,9 +401,9 @@ export default function LoginPage() {
     } catch (err) {
       setResetMsg(
         err?.response?.data?.msg ||
-          err?.response?.data?.error ||
-          err?.message ||
-          "Reset failed"
+        err?.response?.data?.error ||
+        err?.message ||
+        "Reset failed"
       );
     } finally {
       setResetLoading(false);
@@ -472,13 +425,13 @@ export default function LoginPage() {
               <li>Student-teacher interaction</li>
             </ul>
 
-           <a
-  href="https://wa.me/message/XTRJLU7IXTBHI1"
-  style={{ color: "#fff", textDecoration: "none", fontWeight: "800" }}
-> <button className="zs-contact-btn" type="button">
+            <a
+              href="https://wa.me/message/XTRJLU7IXTBHI1"
+              style={{ color: "#fff", textDecoration: "none", fontWeight: "800" }}
+            > <button className="zs-contact-btn" type="button">
 
-  Contact us
-           </button></a>
+                Contact us
+              </button></a>
           </div>
         </div>
 
@@ -544,23 +497,23 @@ export default function LoginPage() {
                 </button>
               </div>
             </form>
-       <a
-  className="zs-teaching-team"
-  href={TEACHING_TEAM_WHATSAPP_LINK}
-  target="_blank"
-  rel="noreferrer"
->
-  <img src={whatsappIcon} alt="WhatsApp" />
-  <span>Join our teaching team</span>
-</a>
+            <a
+              className="zs-teaching-team"
+              href={TEACHING_TEAM_WHATSAPP_LINK}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img src={whatsappIcon} alt="WhatsApp" />
+              <span>Join our teaching team</span>
+            </a>
           </div>
 
-     
+
 
         </div>
-       
+
       </div>
-       
+
 
       <Modal open={modal === "signup"} title="Create Account" onClose={closeAll}>
         {signupMsg ? <div className="zs-msg">{signupMsg}</div> : null}

@@ -80,16 +80,16 @@ function getImageSrc(value) {
   return getMediaUrl(src);
 }
 
-function fileToBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
+// function fileToBase64(file) {
+//   return new Promise((resolve, reject) => {
+//     const reader = new FileReader();
 
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
+//     reader.onload = () => resolve(reader.result);
+//     reader.onerror = reject;
 
-    reader.readAsDataURL(file);
-  });
-}
+//     reader.readAsDataURL(file);
+//   });
+// }
 
 function ProfileEditModal({
   open,
@@ -192,12 +192,24 @@ export default function StudentSideNav({ open, onClose }) {
 
   const [savingProfile, setSavingProfile] = useState(false);
 
-  const [profileForm, setProfileForm] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    photo: "",
-  });
+  // const [profileForm, setProfileForm] = useState({
+  //   name: "",
+  //   email: "",
+  //   phone: "",
+  //   photo: "",
+  // });
+
+
+
+const [profileForm, setProfileForm] = useState({
+  name: "",
+  email: "",
+  phone: "",
+  photo: "",
+  photoFile: null,
+});
+
+
 
   const profilePhoto =
     getImageSrc(user?.photo) ||
@@ -236,6 +248,7 @@ export default function StudentSideNav({ open, onClose }) {
             mergedProfile.image ||
             mergedProfile.avatar ||
             "",
+            photoFile: null,
         });
 
         localStorage.setItem("user", JSON.stringify(mergedProfile));
@@ -261,6 +274,7 @@ export default function StudentSideNav({ open, onClose }) {
         user?.image ||
         user?.avatar ||
         "",
+        photoFile: null,
     });
 
     setProfileModalOpen(true);
@@ -277,51 +291,118 @@ export default function StudentSideNav({ open, onClose }) {
     }));
   }
 
-  async function handleProfilePhotoSelect(event) {
-    const file = event.target.files?.[0];
+  // async function handleProfilePhotoSelect(event) {
+  //   const file = event.target.files?.[0];
 
-    if (!file) return;
+  //   if (!file) return;
 
-    const base64 = await fileToBase64(file);
+  //   const base64 = await fileToBase64(file);
 
-    setProfileForm((prev) => ({
-      ...prev,
-      photo: base64,
-    }));
-  }
+  //   setProfileForm((prev) => ({
+  //     ...prev,
+  //     photo: base64,
+  //   }));
+  // }
 
-  async function saveProfile() {
-    try {
-      setSavingProfile(true);
 
-      const { data } = await api.put("/update_my_profile", {
-        name: profileForm.name,
-        email: profileForm.email,
-        phone: profileForm.phone,
-        photo: profileForm.photo,
-      });
 
-      const updated = data?.user || {
-        ...user,
-        ...profileForm,
-      };
 
-      const finalUser = {
-        ...getStoredUser(),
-        ...updated,
-      };
+function handleProfilePhotoSelect(event) {
+  const file = event.target.files?.[0];
 
-      setUser(finalUser);
+  if (!file) return;
 
-      localStorage.setItem("user", JSON.stringify(finalUser));
+  setProfileForm((prev) => ({
+    ...prev,
+    photo: URL.createObjectURL(file),
+    photoFile: file,
+  }));
+}
 
-      setProfileModalOpen(false);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setSavingProfile(false);
+
+
+
+
+
+  // async function saveProfile() {
+  //   try {
+  //     setSavingProfile(true);
+
+  //     const { data } = await api.put("/update_my_profile", {
+  //       name: profileForm.name,
+  //       email: profileForm.email,
+  //       phone: profileForm.phone,
+  //       photo: profileForm.photo,
+  //     });
+
+  //     const updated = data?.user || {
+  //       ...user,
+  //       ...profileForm,
+  //     };
+
+  //     const finalUser = {
+  //       ...getStoredUser(),
+  //       ...updated,
+  //     };
+
+  //     setUser(finalUser);
+
+  //     localStorage.setItem("user", JSON.stringify(finalUser));
+
+  //     setProfileModalOpen(false);
+  //   } catch (err) {
+  //     console.log(err);
+  //   } finally {
+  //     setSavingProfile(false);
+  //   }
+  // }
+
+
+
+
+async function saveProfile() {
+  try {
+    setSavingProfile(true);
+
+    const formData = new FormData();
+    formData.append("name", profileForm.name);
+    formData.append("email", profileForm.email);
+    formData.append("phone", profileForm.phone);
+
+    if (profileForm.photoFile) {
+      formData.append("photo", profileForm.photoFile);
     }
+
+    const { data } = await api.put("/update_my_profile", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    const updated = data?.user || {
+      ...user,
+      ...profileForm,
+    };
+
+    const finalUser = {
+      ...getStoredUser(),
+      ...updated,
+    };
+
+    setUser(finalUser);
+    localStorage.setItem("user", JSON.stringify(finalUser));
+
+    setProfileModalOpen(false);
+  } catch (err) {
+    console.log(err);
+  } finally {
+    setSavingProfile(false);
   }
+}
+
+
+
+
 
   function handleLogout() {
     localStorage.clear();

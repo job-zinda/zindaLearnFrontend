@@ -30,14 +30,14 @@ function getImageSrc(value) {
   return src;
 }
 
-function fileToBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
+// function fileToBase64(file) {
+//   return new Promise((resolve, reject) => {
+//     const reader = new FileReader();
+//     reader.onload = () => resolve(reader.result);
+//     reader.onerror = reject;
+//     reader.readAsDataURL(file);
+//   });
+// }
 
 function Modal({ open, title, children, onClose }) {
   if (!open) return null;
@@ -81,12 +81,27 @@ export default function AdminSettingsPage() {
   const [profileModalOpen, setProfileModalOpen] = useState(false);
   const [savingProfile, setSavingProfile] = useState(false);
 
-  const [profileForm, setProfileForm] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    photo: "",
-  });
+  // const [profileForm, setProfileForm] = useState({
+  //   name: "",
+  //   email: "",
+  //   phone: "",
+  //   photo: "",
+  // });
+
+
+
+
+const [profileForm, setProfileForm] = useState({
+  name: "",
+  email: "",
+  phone: "",
+  photo: "",
+  photoFile: null,
+});
+
+
+
+
 
   const [passwordModalOpen, setPasswordModalOpen] = useState(false);
   const [savingPassword, setSavingPassword] = useState(false);
@@ -114,6 +129,7 @@ export default function AdminSettingsPage() {
           email: user.email || "",
           phone: user.phone || "",
           photo: user.photo || "",
+            photoFile: null,
         });
       }
     } catch (err) {
@@ -140,51 +156,121 @@ export default function AdminSettingsPage() {
     setMobileDetailOpen(true);
   }
 
-  async function handlePhotoSelect(event) {
-    const file = event.target.files?.[0];
-    if (!file) return;
+  // async function handlePhotoSelect(event) {
+  //   const file = event.target.files?.[0];
+  //   if (!file) return;
 
-    const base64 = await fileToBase64(file);
-    setProfileForm((prev) => ({ ...prev, photo: base64 }));
-  }
+  //   const base64 = await fileToBase64(file);
+  //   setProfileForm((prev) => ({ ...prev, photo: base64 }));
+  // }
 
-  async function saveProfile() {
-    try {
-      setSavingProfile(true);
 
-      const { data } = await api.put("/update_my_profile", {
-        name: profileForm.name,
-        email: profileForm.email,
-        phone: profileForm.phone,
-        photo: profileForm.photo,
-      });
 
-      const updated = data?.user || {
-        ...profile,
-        ...profileForm,
-      };
+function handlePhotoSelect(event) {
+  const file = event.target.files?.[0];
+  if (!file) return;
 
-      setProfile(updated);
+  setProfileForm((prev) => ({
+    ...prev,
+    photo: URL.createObjectURL(file),
+    photoFile: file,
+  }));
+}
 
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          ...(JSON.parse(localStorage.getItem("user") || "{}")),
-          name: updated.name,
-          email: updated.email,
-          phone: updated.phone,
-          photo: updated.photo,
-        })
-      );
 
-      showAlert("Profile updated successfully", "success");
-      setProfileModalOpen(false);
-    } catch (err) {
-      showAlert(getErrorMessage(err, "Failed to update profile"), "error");
-    } finally {
-      setSavingProfile(false);
+
+  // async function saveProfile() {
+  //   try {
+  //     setSavingProfile(true);
+
+  //     const { data } = await api.put("/update_my_profile", {
+  //       name: profileForm.name,
+  //       email: profileForm.email,
+  //       phone: profileForm.phone,
+  //       photo: profileForm.photo,
+  //     });
+
+  //     const updated = data?.user || {
+  //       ...profile,
+  //       ...profileForm,
+  //     };
+
+  //     setProfile(updated);
+
+  //     localStorage.setItem(
+  //       "user",
+  //       JSON.stringify({
+  //         ...(JSON.parse(localStorage.getItem("user") || "{}")),
+  //         name: updated.name,
+  //         email: updated.email,
+  //         phone: updated.phone,
+  //         photo: updated.photo,
+  //       })
+  //     );
+
+  //     showAlert("Profile updated successfully", "success");
+  //     setProfileModalOpen(false);
+  //   } catch (err) {
+  //     showAlert(getErrorMessage(err, "Failed to update profile"), "error");
+  //   } finally {
+  //     setSavingProfile(false);
+  //   }
+  // }
+
+
+
+
+
+
+async function saveProfile() {
+  try {
+    setSavingProfile(true);
+
+    const formData = new FormData();
+    formData.append("name", profileForm.name);
+    formData.append("email", profileForm.email);
+    formData.append("phone", profileForm.phone);
+
+    if (profileForm.photoFile) {
+      formData.append("photo", profileForm.photoFile);
     }
+
+    const { data } = await api.put("/update_my_profile", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    const updated = data?.user || {
+      ...profile,
+      ...profileForm,
+    };
+
+    setProfile(updated);
+
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        ...(JSON.parse(localStorage.getItem("user") || "{}")),
+        name: updated.name,
+        email: updated.email,
+        phone: updated.phone,
+        photo: updated.photo,
+      })
+    );
+
+    showAlert("Profile updated successfully", "success");
+    setProfileModalOpen(false);
+  } catch (err) {
+    showAlert(getErrorMessage(err, "Failed to update profile"), "error");
+  } finally {
+    setSavingProfile(false);
   }
+}
+
+
+
+
 
   async function changePassword() {
     if (!passwordForm.oldPass || !passwordForm.newPass || !passwordForm.confirmPass) {

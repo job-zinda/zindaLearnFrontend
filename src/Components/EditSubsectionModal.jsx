@@ -27,7 +27,7 @@ export default function EditSubsectionModal({
             }))
           }
         >
-          <option value="one_to_one">one - one section</option> z
+          <option value="one_to_one">one - one section</option> 
           <option value="batch">batch section</option>
         </select>
 

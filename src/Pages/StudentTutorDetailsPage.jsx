@@ -2,7 +2,6 @@
 
 
 import React, { useEffect, useMemo, useState } from "react";
-// import { useNavigate, useParams } from "react-router-dom";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import Modal from "../Components/Modal";
@@ -56,26 +55,7 @@ function getStudentName(review) {
   return review?.studentId?.name || review?.studentName || "Student";
 }
 
-// function getStudentPhoto(review) {
-//   return review?.studentId?.photo || review?.studentPhoto || review?.photo || "";
-// }
 
-// function getReviewPhotoUrl(photo) {
-//   if (!photo) return "";
-
-//   const cleanPhoto = String(photo).trim();
-
-//   if (
-//     cleanPhoto.startsWith("data:image") ||
-//     cleanPhoto.startsWith("blob:") ||
-//     cleanPhoto.startsWith("http://") ||
-//     cleanPhoto.startsWith("https://")
-//   ) {
-//     return cleanPhoto;
-//   }
-
-//   return getMediaUrl(cleanPhoto);
-// }
 
 
 
@@ -94,7 +74,6 @@ function getStudentPhoto(review) {
 
   if (!cleanPhoto) return "";
 
-  // backend/database il null, undefined, empty okke string aayi save aayittundenkil ignore cheyyan
   if (
     cleanPhoto === "null" ||
     cleanPhoto === "undefined" ||
@@ -191,29 +170,21 @@ export default function StudentTutorDetailsPage() {
   const { tuterId } = useParams();
   const navigate = useNavigate();
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// const location = useLocation();
-
-// const backTo = location.state?.backTo || "/student/tutors";
-// const backLabel = location.state?.courseName || "View details";
 
 
 
 
 
-const location = useLocation();
 
-const savedBackData = (() => {
-  try {
-    return JSON.parse(sessionStorage.getItem("studentTutorBackData") || "{}");
-  } catch {
-    return {};
-  }
-})();
+  const location = useLocation();
 
-// const backTo = location.state?.backTo || savedBackData?.backTo || "/student/tutors";
-// const backLabel = location.state?.courseName || savedBackData?.courseName || "View details";
+  const savedBackData = (() => {
+    try {
+      return JSON.parse(sessionStorage.getItem("studentTutorBackData") || "{}");
+    } catch {
+      return {};
+    }
+  })();
 
 
 
@@ -221,21 +192,22 @@ const savedBackData = (() => {
 
 
 
-const backTo =
-  location.state?.backTo || savedBackData?.backTo || "/student/tutors";
-
-const backButtonLabel =
-  location.state?.backButtonLabel ||
-  savedBackData?.backButtonLabel ||
-  "Tutors";
-
-const backLabel =
-  location.state?.backLabel || savedBackData?.backLabel || "View details";
 
 
+  const backTo =
+    location.state?.backTo || savedBackData?.backTo || "/student/tutors";
+
+  const backButtonLabel =
+    location.state?.backButtonLabel ||
+    savedBackData?.backButtonLabel ||
+    "Tutors";
+
+  const backLabel =
+    location.state?.backLabel || savedBackData?.backLabel || "View details";
 
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
   const { showAlert } = useAlert();
 
@@ -256,9 +228,9 @@ const backLabel =
     return Array.isArray(tutor.subjects)
       ? tutor.subjects
       : String(tutor.subjects)
-          .split(",")
-          .map((s) => s.trim())
-          .filter(Boolean);
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
   }, [tutor]);
 
   const recentReviews = useMemo(() => {
@@ -294,7 +266,6 @@ const backLabel =
 
   useEffect(() => {
     fetchTutor();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tuterId]);
 
   function openReviewModal() {
@@ -388,62 +359,47 @@ const backLabel =
   return (
     <div className="student-detail-page">
       <div className="student-detail-breadcrumb">
-        {/* <button type="button" onClick={() => navigate("/student/tutors")}>
-          ← Tutors
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <button
+          type="button"
+          onClick={() =>
+            navigate(backTo, {
+              state: {
+                courseName: location.state?.courseName || savedBackData?.courseName,
+              },
+            })
+          }
+        >
+          ← {backButtonLabel}
         </button>
         <span>»</span>
-        <b>View details</b> */}
-
-
-
-
-
-{/* <button type="button" onClick={() => navigate(backTo)}>
-  ← Tutors
-</button>
-<span>»</span>
-<b>{backLabel}</b> */}
-
-
-
-
-
-
-
-
-
-{/* <button type="button" onClick={() => navigate(backTo)}>
-  ← {backButtonLabel}
-</button>
-<span>»</span>
-<b>{backLabel}</b> */}
-
-
-
-
-
-
-
-
-
-
-
-
-
-<button
-  type="button"
-  onClick={() =>
-    navigate(backTo, {
-      state: {
-        courseName: location.state?.courseName || savedBackData?.courseName,
-      },
-    })
-  }
->
-  ← {backButtonLabel}
-</button>
-<span>»</span>
-<b>{backLabel}</b>
+        <b>{backLabel}</b>
 
 
 

@@ -1622,15 +1622,7 @@
 
 
 
-// import React, { useEffect, useMemo, useState } from "react";
-// import { useLocation, useNavigate, useParams } from "react-router-dom";
-// import Modal from "./Components/Modal";
-// import { useAlert } from "./context/AlertContext";
-// // import { getMediaUrl } from "./utils/media";
-// import { getMediaUrl } from "../utils/media";
-// // import api from "./api/axios";
-// import api from "../api/axios";
-// import "./AdminTutorDetailsPage.css";
+
 
 
 
@@ -1794,9 +1786,7 @@ function getStudentName(review) {
   return review?.studentId?.name || review?.studentName || "Student";
 }
 
-// function getStudentPhoto(review) {
-//   return review?.studentId?.photo || review?.studentPhoto || review?.photo || "";
-// }
+
 
 
 
@@ -1897,9 +1887,6 @@ export default function AdminTutorDetailsPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-// const backTo = location.state?.backTo || "/admin/tutors";
-// const backLabel = location.state?.courseName || "View details";
 
 
 
@@ -1907,7 +1894,7 @@ export default function AdminTutorDetailsPage() {
 
 
 
-// const backTo = location.state?.backTo || "/admin/tutors";
+
 
 
 
@@ -1939,18 +1926,8 @@ const savedCourseName =
 
 
 
-// const backLabel = location.state?.backLabel || "View details";
-
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-
   const { showAlert } = useAlert();
 
-  // const backTo = location.state?.backTo || "/admin/tutors";
 
   const [tutor, setTutor] = useState(null);
   const [categories, setCategories] = useState([]);
@@ -1963,12 +1940,10 @@ const savedCourseName =
 
 
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const [passwordOpen, setPasswordOpen] = useState(false);
 const [showPassword, setShowPassword] = useState(false);
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
   const [assignedStudentsOpen, setAssignedStudentsOpen] = useState(false);
@@ -2317,44 +2292,6 @@ async function toggleTutorStatus() {
 
 
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// async function toggleTutorStatus(tutor) {
-//   try {
-//     if (!isTutorActive(tutor) && !tutorHasCategoryAndCourse(tutor)) {
-//       showAlert(
-//         "Tutor active aakkan at least one category and one course select cheyyanam",
-//         "error"
-//       );
-
-//       openEditModal(tutor);
-//       return;
-//     }
-
-//     await api.patch(`/admin/tuter/status/${tutor._id}`);
-
-//     showAlert(
-//       isTutorActive(tutor)
-//         ? "Tutor deactivated successfully"
-//         : "Tutor activated successfully",
-//       "success"
-//     );
-
-//     setMenuOpenId(null);
-//     fetchData();
-//   } catch (err) {
-//     if (err?.response?.data?.needProfileCompletion) {
-//       showAlert(err.response.data.msg, "error");
-//       openEditModal(tutor);
-//       return;
-//     }
-
-//     showAlert(getErrorMessage(err, "Failed to update tutor status"), "error");
-//   }
-// }
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 async function toggleTutorBlock() {
   try {
@@ -2451,38 +2388,7 @@ async function toggleTutorBlock() {
 </div>
 
       <div className="detail-card">
-        {/* <div className="detail-actions">
-          {!active && <span className="detail-inactive-badge">Inactive</span>}
-
-          <button type="button" className="detail-edit-btn" onClick={openEditModal}>
-            ✎ Edit
-          </button>
-
-          <button
-            type="button"
-            className="detail-share-btn"
-            onClick={() => shareTutorDetails(tutor, showAlert)}
-          >
-            ↗ Share
-          </button>
-
-          <button
-            type="button"
-            className="detail-assigned-btn"
-            onClick={openAssignedStudentsModal}
-          >
-            👥 Assigned Students
-          </button>
-
-          <button
-            type="button"
-            className="detail-delete-btn"
-            onClick={() => setDeleteOpen(true)}
-          >
-            🗑 Delete
-          </button>
-        </div> */}
-
+       
 
 
 

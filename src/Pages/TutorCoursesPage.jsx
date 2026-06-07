@@ -229,11 +229,7 @@ export default function TutorCoursesPage() {
       ) : (
         <div className="tutor-course-grid">
           {displayedCourses.map((course) => (
-            // <CourseCard
-            //   key={course._id}
-            //   course={course}
-            //   categoryKey={categoryKey}
-            // />
+           
 
 
 

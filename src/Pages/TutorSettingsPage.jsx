@@ -33,16 +33,16 @@ function getImageSrc(value) {
   return src;
 }
 
-function fileToBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
+// function fileToBase64(file) {
+//   return new Promise((resolve, reject) => {
+//     const reader = new FileReader();
 
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
+//     reader.onload = () => resolve(reader.result);
+//     reader.onerror = reject;
 
-    reader.readAsDataURL(file);
-  });
-}
+//     reader.readAsDataURL(file);
+//   });
+// }
 
 function Modal({ open, title, children, onClose }) {
   if (!open) return null;
@@ -317,12 +317,31 @@ export default function TutorSettingsPage() {
   const [profile, setProfile] = useState(null);
   const [profileModalOpen, setProfileModalOpen] = useState(false);
 
-  const [profileForm, setProfileForm] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    photo: "",
-  });
+  // const [profileForm, setProfileForm] = useState({
+  //   name: "",
+  //   email: "",
+  //   phone: "",
+  //   photo: "",
+  // });
+
+
+
+
+
+
+const [profileForm, setProfileForm] = useState({
+  name: "",
+  email: "",
+  phone: "",
+  photo: "",
+  photoFile: null,
+});
+
+
+
+
+
+
 
   const [savingProfile, setSavingProfile] = useState(false);
 
@@ -348,6 +367,7 @@ export default function TutorSettingsPage() {
           email: user.email || "",
           phone: user.phone || "",
           photo: user.photo || "",
+           photoFile: null,
         });
       }
     } catch (err) {
@@ -370,18 +390,43 @@ export default function TutorSettingsPage() {
     setMobileDetailOpen(true);
   }
 
-  async function handlePhotoSelect(event) {
-    const file = event.target.files?.[0];
+  // async function handlePhotoSelect(event) {
+  //   const file = event.target.files?.[0];
 
-    if (!file) return;
+  //   if (!file) return;
 
-    const base64 = await fileToBase64(file);
+  //   const base64 = await fileToBase64(file);
 
-    setProfileForm((prev) => ({
-      ...prev,
-      photo: base64,
-    }));
-  }
+  //   setProfileForm((prev) => ({
+  //     ...prev,
+  //     photo: base64,
+  //   }));
+  // }
+
+
+
+
+
+
+
+function handlePhotoSelect(event) {
+  const file = event.target.files?.[0];
+
+  if (!file) return;
+
+  setProfileForm((prev) => ({
+    ...prev,
+    photo: URL.createObjectURL(file),
+    photoFile: file,
+  }));
+}
+
+
+
+
+
+
+
 
   async function saveProfile() {
     try {
@@ -395,12 +440,12 @@ export default function TutorSettingsPage() {
 
       setSavingProfile(true);
 
-      const { data } = await api.put("/update_my_profile", {
-        name: profileForm.name.trim(),
-        email: profileForm.email.trim(),
-        phone: profileForm.phone,
-        photo: profileForm.photo,
-      });
+      // const { data } = await api.put("/update_my_profile", {
+      //   name: profileForm.name.trim(),
+      //   email: profileForm.email.trim(),
+      //   phone: profileForm.phone,
+      //   photo: profileForm.photo,
+      // });
 
 
 
@@ -408,27 +453,27 @@ export default function TutorSettingsPage() {
 
 
 
-      // const updated = data?.user || {
-      //   ...profile,
-      //   ...profileForm,
-      // };
 
-      // setProfile(updated);
 
-      // const oldUser = JSON.parse(localStorage.getItem("user") || "{}");
+      const formData = new FormData();
+formData.append("name", profileForm.name.trim());
+formData.append("email", profileForm.email.trim());
+formData.append("phone", profileForm.phone || "");
 
-      // localStorage.setItem(
-      //   "user",
-      //   JSON.stringify({
-      //     ...oldUser,
-      //     name: updated.name,
-      //     email: updated.email,
-      //     phone: updated.phone,
-      //     photo: updated.photo,
-      //   })
-      // );
+if (profileForm.photoFile) {
+  formData.append("photo", profileForm.photoFile);
+}
 
-      // window.dispatchEvent(new Event("storage"));
+const { data } = await api.put("/update_my_profile", formData, {
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
+});
+
+
+
+
+
 
 
 
@@ -445,6 +490,7 @@ setProfileForm({
   email: updatedUser.email || "",
   phone: updatedUser.phone || "",
   photo: updatedUser.photo || "",
+   photoFile: null,
 });
 
 const oldUser = JSON.parse(localStorage.getItem("user") || "{}");

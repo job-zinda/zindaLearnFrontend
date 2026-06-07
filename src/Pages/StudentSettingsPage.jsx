@@ -36,14 +36,14 @@ function getImageSrc(value) {
   return src;
 }
 
-function fileToBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
+// function fileToBase64(file) {
+//   return new Promise((resolve, reject) => {
+//     const reader = new FileReader();
+//     reader.onload = () => resolve(reader.result);
+//     reader.onerror = reject;
+//     reader.readAsDataURL(file);
+//   });
+// }
 
 function Modal({ open, title, children, onClose }) {
   if (!open) return null;
@@ -454,19 +454,29 @@ export default function StudentSettingsPage() {
   const [profile, setProfile] = useState(null);
   const [profileModalOpen, setProfileModalOpen] = useState(false);
 
-  const [profileForm, setProfileForm] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    photo: "",
-  });
+  // const [profileForm, setProfileForm] = useState({
+  //   name: "",
+  //   email: "",
+  //   phone: "",
+  //   photo: "",
+  // });
+
+
+
+
+const [profileForm, setProfileForm] = useState({
+  name: "",
+  email: "",
+  phone: "",
+  photo: "",
+  photoFile: null,
+});
+
+  
 
   const [savingProfile, setSavingProfile] = useState(false);
 
-  // const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
-  // const [feedbackRating, setFeedbackRating] = useState(5);
-  // const [feedbackMessage, setFeedbackMessage] = useState("");
-  // const [savingFeedback, setSavingFeedback] = useState(false);
+
 
 
 
@@ -502,6 +512,7 @@ const [deletingFeedback, setDeletingFeedback] = useState(false);
           email: user.email || "",
           phone: user.phone || "",
           photo: user.photo || "",
+           photoFile: null,
         });
       }
     } catch (err) {
@@ -509,19 +520,7 @@ const [deletingFeedback, setDeletingFeedback] = useState(false);
     }
   }
 
-  // async function fetchMyFeedback() {
-  //   try {
-  //     const { data } = await api.get("/feedback/my");
-  //     const feedback = data?.feedback;
-
-  //     if (feedback) {
-  //       setFeedbackRating(feedback.rating || 5);
-  //       setFeedbackMessage(feedback.message || "");
-  //     }
-  //   } catch {
-  //     // no alert needed
-  //   }
-  // }
+ 
 
 
 
@@ -558,7 +557,6 @@ async function fetchMyFeedback() {
   useEffect(() => {
     fetchProfile();
     fetchMyFeedback();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function openSection(key) {
@@ -575,73 +573,123 @@ async function fetchMyFeedback() {
     setMobileDetailOpen(true);
   }
 
-  async function handlePhotoSelect(event) {
-    const file = event.target.files?.[0];
-    if (!file) return;
+  // async function handlePhotoSelect(event) {
+  //   const file = event.target.files?.[0];
+  //   if (!file) return;
 
-    const base64 = await fileToBase64(file);
-    setProfileForm((prev) => ({ ...prev, photo: base64 }));
-  }
-
-  async function saveProfile() {
-    try {
-      setSavingProfile(true);
-
-      const { data } = await api.put("/update_my_profile", {
-        name: profileForm.name,
-        email: profileForm.email,
-        phone: profileForm.phone,
-        photo: profileForm.photo,
-      });
-
-      const updated = data?.user || {
-        ...profile,
-        ...profileForm,
-      };
-
-      setProfile(updated);
-
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          ...(JSON.parse(localStorage.getItem("user") || "{}")),
-          name: updated.name,
-          email: updated.email,
-          phone: updated.phone,
-          photo: updated.photo,
-        })
-      );
-
-      showAlert("Profile updated successfully", "success");
-      setProfileModalOpen(false);
-    } catch (err) {
-      showAlert(getErrorMessage(err, "Failed to update profile"), "error");
-    } finally {
-      setSavingProfile(false);
-    }
-  }
-
-  // async function submitFeedback() {
-  //   try {
-  //     setSavingFeedback(true);
-
-  //     await api.post("/feedback", {
-  //       rating: feedbackRating,
-  //       message: feedbackMessage,
-  //     });
-
-  //     showAlert("Feedback submitted successfully", "success");
-  //     setFeedbackModalOpen(false);
-  //   } catch (err) {
-  //     showAlert(getErrorMessage(err, "Failed to submit feedback"), "error");
-  //   } finally {
-  //     setSavingFeedback(false);
-  //   }
+  //   const base64 = await fileToBase64(file);
+  //   setProfileForm((prev) => ({ ...prev, photo: base64 }));
   // }
 
 
 
 
+
+function handlePhotoSelect(event) {
+  const file = event.target.files?.[0];
+  if (!file) return;
+
+  setProfileForm((prev) => ({
+    ...prev,
+    photo: URL.createObjectURL(file),
+    photoFile: file,
+  }));
+}
+
+
+
+
+
+
+  // async function saveProfile() {
+  //   try {
+  //     setSavingProfile(true);
+
+  //     const { data } = await api.put("/update_my_profile", {
+  //       name: profileForm.name,
+  //       email: profileForm.email,
+  //       phone: profileForm.phone,
+  //       photo: profileForm.photo,
+  //     });
+
+  //     const updated = data?.user || {
+  //       ...profile,
+  //       ...profileForm,
+  //     };
+
+  //     setProfile(updated);
+
+  //     localStorage.setItem(
+  //       "user",
+  //       JSON.stringify({
+  //         ...(JSON.parse(localStorage.getItem("user") || "{}")),
+  //         name: updated.name,
+  //         email: updated.email,
+  //         phone: updated.phone,
+  //         photo: updated.photo,
+  //       })
+  //     );
+
+  //     showAlert("Profile updated successfully", "success");
+  //     setProfileModalOpen(false);
+  //   } catch (err) {
+  //     showAlert(getErrorMessage(err, "Failed to update profile"), "error");
+  //   } finally {
+  //     setSavingProfile(false);
+  //   }
+  // }
+
+ 
+
+
+
+async function saveProfile() {
+  try {
+    setSavingProfile(true);
+
+    const formData = new FormData();
+    formData.append("name", profileForm.name);
+    formData.append("email", profileForm.email);
+    formData.append("phone", profileForm.phone);
+
+    if (profileForm.photoFile) {
+      formData.append("photo", profileForm.photoFile);
+    }
+
+    const { data } = await api.put("/update_my_profile", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    const updated = data?.user || {
+      ...profile,
+      name: profileForm.name,
+      email: profileForm.email,
+      phone: profileForm.phone,
+    };
+
+    setProfile(updated);
+
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        ...(JSON.parse(localStorage.getItem("user") || "{}")),
+        name: updated.name,
+        email: updated.email,
+        phone: updated.phone,
+        photo: updated.photo,
+      })
+    );
+
+    showAlert("Profile updated successfully", "success");
+    setProfileModalOpen(false);
+  } catch (err) {
+    showAlert(getErrorMessage(err, "Failed to update profile"), "error");
+  } finally {
+    setSavingProfile(false);
+  }
+}
 
 
 
@@ -691,31 +739,6 @@ async function submitFeedback() {
 
 
 
-// async function deleteMyFeedback() {
-//   try {
-//     if (!myFeedback) {
-//       return showAlert("No feedback found to delete", "error");
-//     }
-
-//     const ok = window.confirm("Do you want to delete your feedback?");
-//     if (!ok) return;
-
-//     setDeletingFeedback(true);
-
-//     await api.delete("/feedback/my");
-
-//     setMyFeedback(null);
-//     setFeedbackRating(5);
-//     setFeedbackMessage("");
-
-//     showAlert("Feedback deleted successfully", "success");
-//     setFeedbackModalOpen(false);
-//   } catch (err) {
-//     showAlert(getErrorMessage(err, "Failed to delete feedback"), "error");
-//   } finally {
-//     setDeletingFeedback(false);
-//   }
-// }
 
 
 
@@ -809,13 +832,7 @@ async function deleteMyFeedback() {
           <h2>Feedback</h2>
           <p>Share your experience about Zinda Learn.</p>
 
-          {/* <button
-            type="button"
-            className="student-settings-primary-btn"
-            onClick={() => setFeedbackModalOpen(true)}
-          >
-            Write Feedback
-          </button> */}
+        
 
 
 
@@ -959,94 +976,7 @@ async function deleteMyFeedback() {
         </div>
       </Modal>
 
-      {/* <Modal
-        open={feedbackModalOpen}
-        title="Website Feedback"
-        onClose={() => setFeedbackModalOpen(false)}
-      >
-        <div className="student-settings-form">
-          <label>Rating</label>
-          <StarRating value={feedbackRating} onChange={setFeedbackRating} />
-
-          <label>Feedback</label>
-          <textarea
-            rows={5}
-            placeholder="Write your feedback..."
-            value={feedbackMessage}
-            onChange={(e) => setFeedbackMessage(e.target.value)}
-          />
-
-          <button
-            type="button"
-            className="student-settings-primary-btn"
-            disabled={savingFeedback || !feedbackMessage.trim()}
-            onClick={submitFeedback}
-          >
-            {savingFeedback ? "Submitting..." : "Submit Feedback"}
-          </button>
-        </div>
-      </Modal> */}
-
-
-
-
-
-
-{/* 
-<Modal
-  open={feedbackModalOpen}
-  title="Website Feedback"
-  onClose={() => setFeedbackModalOpen(false)}
->
-  <div className="student-settings-feedback-form">
-    <label>
-      <span>Rating</span>
-      <StarRating value={feedbackRating} onChange={setFeedbackRating} />
-    </label>
-
-    <label>
-      <span>Feedback</span>
-      <textarea
-        value={feedbackMessage}
-        onChange={(e) => setFeedbackMessage(e.target.value)}
-        placeholder="Write your feedback..."
-      />
-    </label>
-
-    <div className="student-settings-feedback-actions">
-      {myFeedback && (
-        <button
-          type="button"
-          className="student-settings-feedback-delete-btn"
-          onClick={deleteMyFeedback}
-          disabled={savingFeedback || deletingFeedback}
-        >
-          {deletingFeedback ? "Deleting..." : "Delete Feedback"}
-        </button>
-      )}
-
-      <button
-        type="button"
-        className="student-settings-primary-btn"
-        onClick={submitFeedback}
-        disabled={savingFeedback || deletingFeedback}
-      >
-        {savingFeedback
-          ? "Saving..."
-          : myFeedback
-          ? "Update Feedback"
-          : "Submit Feedback"}
-      </button>
-    </div>
-  </div>
-</Modal> */}
-
-
-
-
-
-
-
+      
 
 
 
