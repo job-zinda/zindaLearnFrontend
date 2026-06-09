@@ -3123,3 +3123,123 @@
     order: 2 !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* FINAL: show more like student page */
+.show-more-row {
+  display: flex !important;
+  justify-content: flex-end !important;
+  margin-top: 14px !important;
+}
+
+.show-more-btn,
+.show-more-btn--single {
+  border: none !important;
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  color: #c084fc !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  font-size: 15px !important;
+  font-weight: 900 !important;
+  cursor: pointer !important;
+}
+
+.show-more-btn:hover,
+.show-more-btn--single:hover {
+  transform: none !important;
+  box-shadow: none !important;
+  color: #d946ef !important;
+  text-decoration: underline !important;
+}
+
+/* All reviews modal dark */
+.tutor-detail-dark-modal .all-reviews-list {
+  color: #ffffff !important;
+}
+
+.tutor-detail-dark-modal .all-reviews-list .review-card {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(217, 70, 239, 0.25) !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+
+.tutor-detail-dark-modal .all-reviews-list .review-card h4,
+.tutor-detail-dark-modal .all-reviews-list .review-card p {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.tutor-detail-dark-modal .all-reviews-list .review-avatar {
+  background: rgba(217, 70, 239, 0.14) !important;
+  border-color: rgba(217, 70, 239, 0.38) !important;
+}
+
+.tutor-detail-dark-modal .all-reviews-list .review-avatar span {
+  color: #f0abfc !important;
+}
+
+/* Mobile edit modal buttons side by side */
+@media (max-width: 720px) {
+  .tutor-detail-dark-modal .form-actions,
+  .tutor-detail-dark-modal .detail-form .form-actions {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+    flex-direction: unset !important;
+    justify-content: stretch !important;
+    align-items: center !important;
+  }
+
+  .tutor-detail-dark-modal .form-actions button {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 42px !important;
+  }
+
+  .tutor-detail-dark-modal .form-actions .secondary-btn {
+    order: 1 !important;
+  }
+
+  .tutor-detail-dark-modal .form-actions .primary-btn,
+  .tutor-detail-dark-modal .form-actions .danger-btn {
+    order: 2 !important;
+  }
+}

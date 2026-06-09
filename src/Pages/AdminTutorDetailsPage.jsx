@@ -1363,7 +1363,7 @@ async function toggleTutorBlock() {
             <div className="empty-reviews">No reviews yet.</div>
           )}
 
-          {tutor.reviews?.length > 0 && tutor.reviews?.length <= 2 && (
+          {/* {tutor.reviews?.length > 0 && tutor.reviews?.length <= 2 && (
             <button
               type="button"
               className="show-more-btn show-more-btn--single"
@@ -1371,7 +1371,28 @@ async function toggleTutorBlock() {
             >
               Show more
             </button>
-          )}
+          )} */}
+
+
+
+
+
+{tutor.reviews?.length > 0 && tutor.reviews?.length <= 2 && (
+  <div className="show-more-row">
+    <button
+      type="button"
+      className="show-more-btn show-more-btn--single"
+      onClick={() => setReviewsOpen(true)}
+    >
+      Show more
+    </button>
+  </div>
+)}
+
+
+
+
+
         </section>
 
         <button type="button" className="tutor-contact-btn" onClick={contactTutor}>
@@ -1379,7 +1400,7 @@ async function toggleTutorBlock() {
         </button>
       </div>
 
-      <Modal
+      {/* <Modal
         open={reviewsOpen}
         title="All Reviews"
         width="760px"
@@ -1394,7 +1415,31 @@ async function toggleTutorBlock() {
         ) : (
           <div className="empty-reviews">No reviews yet.</div>
         )}
-      </Modal>
+      </Modal> */}
+
+
+
+
+
+<TutorDetailDarkModal
+  open={reviewsOpen}
+  title="All Reviews"
+  width="760px"
+  onClose={() => setReviewsOpen(false)}
+>
+  {tutor.reviews?.length ? (
+    <div className="all-reviews-list">
+      {tutor.reviews.map((review) => (
+        <ReviewCard key={review._id} review={review} />
+      ))}
+    </div>
+  ) : (
+    <div className="empty-reviews">No reviews yet.</div>
+  )}
+</TutorDetailDarkModal>
+
+
+
 
      <TutorDetailDarkModal
   open={editOpen}
