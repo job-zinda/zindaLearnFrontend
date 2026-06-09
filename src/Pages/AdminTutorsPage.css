@@ -3534,3 +3534,540 @@
     padding-bottom: 18px !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   FINAL: AdminCourseTutorsPage edit/delete modal dark fix
+   Paste at VERY BOTTOM of AdminTutorsPage.css
+========================================================= */
+
+.tutor-dark-modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 99999 !important;
+  background: rgba(2, 6, 23, 0.72) !important;
+  backdrop-filter: blur(10px) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 22px !important;
+}
+
+.tutor-dark-modal {
+  width: min(820px, calc(100vw - 32px)) !important;
+  max-height: 86vh !important;
+  overflow: hidden !important;
+  border-radius: 22px !important;
+  background: linear-gradient(145deg, #111633, #070a20) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(217, 70, 239, 0.35) !important;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55) !important;
+}
+
+.tutor-dark-modal-header {
+  min-height: 78px !important;
+  padding: 22px 28px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 14px !important;
+  background: rgba(255, 255, 255, 0.02) !important;
+}
+
+.tutor-dark-modal-header h2 {
+  margin: 0 !important;
+  color: #ffffff !important;
+  font-size: 24px !important;
+  font-weight: 950 !important;
+}
+
+.tutor-dark-modal-close {
+  width: 46px !important;
+  height: 46px !important;
+  border: none !important;
+  border-radius: 50% !important;
+  background: rgba(217, 70, 239, 0.22) !important;
+  color: #ffffff !important;
+  font-size: 34px !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+.tutor-dark-modal-body {
+  max-height: calc(86vh - 78px) !important;
+  overflow-y: auto !important;
+  padding: 28px !important;
+  background: linear-gradient(145deg, #0d1230, #070a20) !important;
+}
+
+.tutor-dark-modal-body::-webkit-scrollbar {
+  width: 8px !important;
+}
+
+.tutor-dark-modal-body::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #d946ef, #7c3aed) !important;
+  border-radius: 999px !important;
+}
+
+.tutor-dark-modal-body::-webkit-scrollbar-track {
+  background: #05071a !important;
+}
+
+/* Form full dark */
+.tutor-dark-modal .tutor-form {
+  color: #ffffff !important;
+  display: grid !important;
+  gap: 18px !important;
+}
+
+.tutor-dark-modal .tutor-form-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 18px 22px !important;
+}
+
+.tutor-dark-modal .form-field,
+.tutor-dark-modal .tutor-form .form-field {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 9px !important;
+  min-width: 0 !important;
+}
+
+.tutor-dark-modal .form-field--full {
+  grid-column: 1 / -1 !important;
+}
+
+.tutor-dark-modal .form-field > span,
+.tutor-dark-modal .tutor-form .form-field > span {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-size: 15px !important;
+  font-weight: 950 !important;
+}
+
+/* Inputs dark */
+.tutor-dark-modal input,
+.tutor-dark-modal textarea,
+.tutor-dark-modal select {
+  width: 100% !important;
+  min-height: 58px !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-radius: 16px !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-size: 16px !important;
+  font-weight: 850 !important;
+  outline: none !important;
+  padding: 14px 16px !important;
+  box-shadow: none !important;
+}
+
+.tutor-dark-modal textarea {
+  min-height: 132px !important;
+  resize: vertical !important;
+  line-height: 1.5 !important;
+}
+
+.tutor-dark-modal input::placeholder,
+.tutor-dark-modal textarea::placeholder {
+  color: rgba(255, 255, 255, 0.45) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.45) !important;
+}
+
+.tutor-dark-modal input:focus,
+.tutor-dark-modal textarea:focus,
+.tutor-dark-modal select:focus {
+  border-color: #d946ef !important;
+  box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.16) !important;
+}
+
+/* File input */
+.tutor-dark-modal input[type="file"] {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.tutor-dark-modal input[type="file"]::file-selector-button {
+  border: none !important;
+  border-radius: 12px !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-weight: 950 !important;
+  padding: 10px 14px !important;
+  margin-right: 12px !important;
+  cursor: pointer !important;
+}
+
+/* Preview */
+.tutor-dark-modal .tutor-photo-preview {
+  width: 132px !important;
+  height: 132px !important;
+  border-radius: 20px !important;
+  overflow: hidden !important;
+  border: 3px solid rgba(217, 70, 239, 0.35) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+.tutor-dark-modal .tutor-photo-preview img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+/* Courses box dark */
+.tutor-dark-modal .course-checkbox-list,
+.tutor-dark-modal .tutor-course-checkbox-list {
+  min-height: 170px !important;
+  max-height: 220px !important;
+  overflow-y: auto !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-radius: 18px !important;
+  padding: 12px !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+.tutor-dark-modal .course-checkbox-list::-webkit-scrollbar {
+  width: 8px !important;
+}
+
+.tutor-dark-modal .course-checkbox-list::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #d946ef, #7c3aed) !important;
+  border-radius: 999px !important;
+}
+
+.tutor-dark-modal .course-checkbox-list::-webkit-scrollbar-track {
+  background: #05071a !important;
+}
+
+.tutor-dark-modal .course-check-item {
+  display: grid !important;
+  grid-template-columns: 56px 1fr !important;
+  align-items: center !important;
+  gap: 12px !important;
+  min-height: 58px !important;
+  padding: 10px 12px !important;
+  border-radius: 16px !important;
+  color: #ffffff !important;
+  font-weight: 950 !important;
+  border: 1px solid transparent !important;
+  background: transparent !important;
+}
+
+.tutor-dark-modal .course-check-item:hover {
+  background: rgba(255, 255, 255, 0.07) !important;
+}
+
+.tutor-dark-modal .course-check-item span {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-size: 15px !important;
+  font-weight: 950 !important;
+}
+
+.tutor-dark-modal .course-category-name {
+  color: #c084fc !important;
+  -webkit-text-fill-color: #c084fc !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+}
+
+/* Switch checkbox */
+.tutor-dark-modal .course-check-item input[type="checkbox"] {
+  position: relative !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  width: 50px !important;
+  height: 30px !important;
+  min-height: 30px !important;
+  border: none !important;
+  border-radius: 999px !important;
+  background: #64748b !important;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.24) !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.tutor-dark-modal .course-check-item input[type="checkbox"]::before {
+  content: "" !important;
+  position: absolute !important;
+  width: 24px !important;
+  height: 24px !important;
+  left: 3px !important;
+  top: 3px !important;
+  border-radius: 50% !important;
+  background: #ffffff !important;
+  transition: 0.25s ease !important;
+}
+
+.tutor-dark-modal .course-check-item input[type="checkbox"]:checked {
+  background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
+}
+
+.tutor-dark-modal .course-check-item input[type="checkbox"]:checked::before {
+  transform: translateX(20px) !important;
+}
+
+.tutor-dark-modal .course-check-item:has(input[type="checkbox"]:checked) {
+  background: rgba(217, 70, 239, 0.14) !important;
+  border-color: rgba(217, 70, 239, 0.3) !important;
+}
+
+/* Delete modal dark */
+.tutor-dark-modal .delete-confirm-box {
+  color: #ffffff !important;
+}
+
+.tutor-dark-modal .delete-confirm-box p,
+.tutor-dark-modal .delete-confirm-box b {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-size: 17px !important;
+  font-weight: 900 !important;
+}
+
+/* Buttons */
+.tutor-dark-modal .form-actions {
+  display: flex !important;
+  justify-content: flex-end !important;
+  gap: 12px !important;
+  margin-top: 16px !important;
+  flex-wrap: wrap !important;
+}
+
+.tutor-dark-modal .primary-btn,
+.tutor-dark-modal .secondary-btn,
+.tutor-dark-modal .danger-btn {
+  border: none !important;
+  border-radius: 16px !important;
+  min-width: 126px !important;
+  min-height: 54px !important;
+  padding: 0 22px !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-weight: 950 !important;
+  cursor: pointer !important;
+}
+
+.tutor-dark-modal .primary-btn {
+  background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
+  box-shadow: 0 14px 30px rgba(217, 70, 239, 0.24) !important;
+}
+
+.tutor-dark-modal .secondary-btn {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.tutor-dark-modal .danger-btn {
+  background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+}
+
+.tutor-dark-modal .primary-btn:disabled,
+.tutor-dark-modal .secondary-btn:disabled,
+.tutor-dark-modal .danger-btn:disabled {
+  opacity: 0.55 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+}
+
+/* Mobile: height kurakkan + buttons side-by-side */
+@media (max-width: 720px) {
+  .tutor-dark-modal-overlay {
+    padding: 12px !important;
+    align-items: center !important;
+  }
+
+  .tutor-dark-modal {
+    width: calc(100vw - 28px) !important;
+    max-width: 330px !important;
+    max-height: 76vh !important;
+    border-radius: 14px !important;
+  }
+
+  .tutor-dark-modal-header {
+    min-height: 54px !important;
+    padding: 12px 14px !important;
+  }
+
+  .tutor-dark-modal-header h2 {
+    font-size: 16px !important;
+  }
+
+  .tutor-dark-modal-close {
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 24px !important;
+  }
+
+  .tutor-dark-modal-body {
+    padding: 14px !important;
+    max-height: calc(76vh - 54px) !important;
+  }
+
+  .tutor-dark-modal .tutor-form-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .tutor-dark-modal .form-field {
+    gap: 5px !important;
+  }
+
+  .tutor-dark-modal .form-field > span {
+    font-size: 11px !important;
+  }
+
+  .tutor-dark-modal input,
+  .tutor-dark-modal textarea,
+  .tutor-dark-modal select {
+    min-height: 38px !important;
+    height: 38px !important;
+    border-radius: 10px !important;
+    padding: 8px 10px !important;
+    font-size: 11px !important;
+  }
+
+  .tutor-dark-modal textarea {
+    min-height: 70px !important;
+    height: 70px !important;
+  }
+
+  .tutor-dark-modal input[type="file"] {
+    min-height: 44px !important;
+    height: 44px !important;
+    padding: 7px !important;
+    font-size: 10px !important;
+  }
+
+  .tutor-dark-modal input[type="file"]::file-selector-button {
+    padding: 7px 10px !important;
+    font-size: 10px !important;
+    border-radius: 8px !important;
+  }
+
+  .tutor-dark-modal .tutor-photo-preview {
+    width: 90px !important;
+    height: 90px !important;
+    border-radius: 12px !important;
+  }
+
+  .tutor-dark-modal .course-checkbox-list,
+  .tutor-dark-modal .tutor-course-checkbox-list {
+    min-height: 118px !important;
+    max-height: 136px !important;
+    border-radius: 12px !important;
+    padding: 7px !important;
+  }
+
+  .tutor-dark-modal .course-check-item {
+    grid-template-columns: 42px 1fr !important;
+    min-height: 44px !important;
+    padding: 7px 8px !important;
+    gap: 8px !important;
+    border-radius: 10px !important;
+  }
+
+  .tutor-dark-modal .course-check-item input[type="checkbox"] {
+    width: 38px !important;
+    height: 23px !important;
+    min-height: 23px !important;
+  }
+
+  .tutor-dark-modal .course-check-item input[type="checkbox"]::before {
+    width: 19px !important;
+    height: 19px !important;
+    left: 2px !important;
+    top: 2px !important;
+  }
+
+  .tutor-dark-modal .course-check-item input[type="checkbox"]:checked::before {
+    transform: translateX(15px) !important;
+  }
+
+  .tutor-dark-modal .course-check-item span {
+    font-size: 11px !important;
+  }
+
+  .tutor-dark-modal .course-category-name {
+    font-size: 10px !important;
+  }
+
+  .tutor-dark-modal .form-actions {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+    align-items: center !important;
+    justify-content: stretch !important;
+    flex-direction: unset !important;
+    margin-top: 10px !important;
+  }
+
+  .tutor-dark-modal .form-actions button {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 42px !important;
+    height: 42px !important;
+    padding: 0 10px !important;
+    font-size: 13px !important;
+  }
+
+  .tutor-dark-modal .form-actions .secondary-btn {
+    order: 1 !important;
+  }
+
+  .tutor-dark-modal .form-actions .primary-btn,
+  .tutor-dark-modal .form-actions .danger-btn {
+    order: 2 !important;
+  }
+}

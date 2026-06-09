@@ -1120,7 +1120,8 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import Modal from "../Components/Modal";
+// import Modal from "../Components/Modal";
+import { createPortal } from "react-dom";
 import { useAlert } from "../context/AlertContext";
 import { getMediaUrl } from "../utils/media";
 import api from "../api/axios";
@@ -1243,21 +1244,62 @@ function getErrorMessage(error, fallback = "Something went wrong") {
   );
 }
 
-function Stars({ rating = 0 }) {
-  const fixedRating = Number(rating || 0);
-  const rounded = Math.round(fixedRating);
+// function Stars({ rating = 0 }) {
+//   const fixedRating = Number(rating || 0);
+//   const rounded = Math.round(fixedRating);
 
-  return (
-    <div className="tutor-stars">
-      {[1, 2, 3, 4, 5].map((n) => (
-        <span key={n} className={n <= rounded ? "star filled" : "star"}>
-          ★
-        </span>
-      ))}
-      <b>{fixedRating.toFixed(1)}</b>
-    </div>
+//   return (
+//     <div className="tutor-stars">
+//       {[1, 2, 3, 4, 5].map((n) => (
+//         <span key={n} className={n <= rounded ? "star filled" : "star"}>
+//           ★
+//         </span>
+//       ))}
+//       <b>{fixedRating.toFixed(1)}</b>
+//     </div>
+//   );
+// }
+
+
+
+
+
+
+
+function TutorDarkModal({ open, title, width = "760px", onClose, children }) {
+  if (!open) return null;
+
+  return createPortal(
+    <div className="tutor-dark-modal-overlay" onMouseDown={onClose}>
+      <div
+        className="tutor-dark-modal"
+        style={{ width }}
+        onMouseDown={(e) => e.stopPropagation()}
+      >
+        <div className="tutor-dark-modal-header">
+          <h2>{title}</h2>
+
+          <button
+            type="button"
+            className="tutor-dark-modal-close"
+            onClick={onClose}
+            aria-label="Close modal"
+          >
+            ×
+          </button>
+        </div>
+
+        <div className="tutor-dark-modal-body">{children}</div>
+      </div>
+    </div>,
+    document.body
   );
 }
+
+
+
+
+
 
 function getTutorShareLink(tutor) {
   return `${window.location.origin}/student/tutors/${tutor._id}`;
@@ -2217,7 +2259,13 @@ className={`tutor-card ${
         </div>
       )}
 
-      <Modal open={modalOpen} title="Edit Tutor" width="850px" onClose={closeEditModal}>
+      {/* <Modal open={modalOpen} title="Edit Tutor" width="850px" onClose={closeEditModal}> */}
+      <TutorDarkModal
+  open={modalOpen}
+  title="Edit Tutor"
+  width="820px"
+  onClose={closeEditModal}
+>
         <form className="detail-form tutor-form" onSubmit={submitTutor}>
           <div className="detail-form-grid tutor-form-grid">
             <label className="form-field">
@@ -2433,7 +2481,7 @@ className={`tutor-card ${
 
           </div>
 
-          <div className="form-actions">
+          {/* <div className="form-actions">
             <button
               type="button"
               className="secondary-btn"
@@ -2446,11 +2494,40 @@ className={`tutor-card ${
             <button type="submit" className="primary-btn" disabled={submitting}>
               {submitting ? "Saving..." : "Save Changes"}
             </button>
-          </div>
-        </form>
-      </Modal>
+          </div> */}
 
-      <Modal
+
+
+
+
+<div className="form-actions">
+  <button
+    type="button"
+    className="secondary-btn"
+    onClick={closeEditModal}
+    disabled={submitting}
+  >
+    Cancel
+  </button>
+
+  <button
+    type="submit"
+    className="primary-btn"
+    disabled={submitting}
+  >
+    {submitting ? "Updating..." : "Update"}
+  </button>
+</div>
+
+
+
+
+
+
+        </form>
+      </TutorDarkModal>
+
+      {/* <Modal
         open={confirmOpen}
         title="Delete Tutor"
         width="420px"
@@ -2488,7 +2565,53 @@ className={`tutor-card ${
             </button>
           </div>
         </div>
-      </Modal>
+      </Modal> */}
+
+
+
+
+
+
+
+<TutorDarkModal
+  open={confirmOpen}
+  title="Delete Tutor"
+  width="430px"
+  onClose={() => {
+    if (!submitting) setConfirmOpen(false);
+  }}
+>
+  <div className="delete-confirm-box">
+    <p>
+      <b>{deleteTarget?.name}</b> Do you want to delete this tutor?
+    </p>
+
+    <div className="form-actions">
+      <button
+        type="button"
+        className="secondary-btn"
+        onClick={() => setConfirmOpen(false)}
+        disabled={submitting}
+      >
+        Cancel
+      </button>
+
+      <button
+        type="button"
+        className="danger-btn"
+        onClick={confirmDeleteTutor}
+        disabled={submitting}
+      >
+        {submitting ? "Deleting..." : "Delete"}
+      </button>
+    </div>
+  </div>
+</TutorDarkModal>
+
+
+
+
+
     </div>
   );
 }
