@@ -664,9 +664,10 @@ export default function AdminTutorsPage() {
           />
         </div>
 
-        <button type="button" className="tutor-add-btn" onClick={openAddModal}>
-          + Add Tutor
-        </button>
+       <button type="button" className="tutor-add-btn" onClick={openAddModal}>
+  <span className="tutor-add-label">+ Add Tutor</span>
+  <span className="tutor-add-icon" aria-hidden="true">+</span>
+</button>
       </div>
 
 
@@ -704,7 +705,7 @@ export default function AdminTutorsPage() {
                     ? "tutor-card--inactive"
                     : ""
                   }`}
-                onClick={(e) => e.stopPropagation()}
+                // onClick={(e) => e.stopPropagation()}
               >
 
 
@@ -726,60 +727,50 @@ export default function AdminTutorsPage() {
 
 
                 <div className="tutor-menu-wrap">
-                  <button
-                    className="tutor-menu-btn"
-                    type="button"
-                    onClick={() =>
-                      setMenuOpenId(menuOpenId === tutor._id ? null : tutor._id)
-                    }
-                  >
-                    ⋮
-                  </button>
+  <button
+    className="tutor-menu-btn"
+    type="button"
+    onClick={(e) => {
+      e.stopPropagation();
+      setMenuOpenId(menuOpenId === tutor._id ? null : tutor._id);
+    }}
+  >
+    ⋮
+  </button>
 
-                  {menuOpenId === tutor._id && (
-                    <div className="tutor-menu">
-                      <button type="button" onClick={() => openEditModal(tutor)}>
-                        ✎ Edit
-                      </button>
+  {menuOpenId === tutor._id && (
+    <div
+      className="tutor-menu"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button type="button" onClick={() => openEditModal(tutor)}>
+        ✎ Edit
+      </button>
 
+      <button
+        type="button"
+        onClick={() => {
+          setMenuOpenId(null);
+          shareTutorLink(tutor, showAlert);
+        }}
+      >
+        ↗ Share
+      </button>
 
+      <button type="button" onClick={() => toggleStatus(tutor)}>
+        {active ? "⏻ Deactive" : "✓ Active"}
+      </button>
 
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setMenuOpenId(null);
-                          shareTutorLink(tutor, showAlert);
-                        }}
-                      >
-                        ↗ Share
-                      </button>
+      <button type="button" onClick={() => toggleTutorBlockStatus(tutor)}>
+        {isTutorBlocked(tutor) ? "◯ Unblock" : "⊘ Block"}
+      </button>
 
-                      <button type="button" onClick={() => toggleStatus(tutor)}>
-                        {active ? "⏻ Deactive" : "✓ Active"}
-                      </button>
-
-
-
-
-
-
-
-
-
-                      <button type="button" onClick={() => toggleTutorBlockStatus(tutor)}>
-                        {isTutorBlocked(tutor) ? "◯ Unblock" : "⊘ Block"}
-                      </button>
-
-
-                      <button type="button" onClick={() => askDeleteTutor(tutor)}>
-                        🗑 Delete Account
-                      </button>
-
-
-
-                    </div>
-                  )}
-                </div>
+      <button type="button" onClick={() => askDeleteTutor(tutor)}>
+        🗑 Delete Account
+      </button>
+    </div>
+  )}
+</div>
 
                 <div className="tutor-card-top">
                   <div className="tutor-avatar">

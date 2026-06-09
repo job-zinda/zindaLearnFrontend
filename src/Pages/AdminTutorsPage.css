@@ -2062,3 +2062,122 @@
     width: 100%;
   }
 } */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   ADMIN TUTOR MOBILE TOOLBAR FIX
+   Mobile: search left + plus button right
+   Desktop: no change
+========================================================= */
+
+.tutor-add-icon {
+  display: none;
+}
+
+.tutor-add-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 720px) {
+  .tutor-toolbar {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 48px !important;
+    gap: 8px !important;
+    align-items: center !important;
+    margin-bottom: 18px !important;
+  }
+
+  .tutor-search {
+    min-width: 0 !important;
+    height: 48px !important;
+    border-radius: 14px !important;
+    padding: 0 12px !important;
+  }
+
+  .tutor-search span {
+    font-size: 18px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .tutor-search input {
+    min-width: 0 !important;
+    font-size: 13px !important;
+  }
+
+  .tutor-add-btn {
+    width: 48px !important;
+    min-width: 48px !important;
+    max-width: 48px !important;
+    height: 48px !important;
+    min-height: 48px !important;
+    padding: 0 !important;
+    border-radius: 14px !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    font-size: 0 !important;
+    line-height: 1 !important;
+  }
+
+  .tutor-add-label {
+    display: none !important;
+  }
+
+  .tutor-add-icon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: 100% !important;
+    height: 100% !important;
+
+    font-size: 26px !important;
+    line-height: 1 !important;
+    font-weight: 950 !important;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+  }
+}
