@@ -1678,6 +1678,26 @@ function getCourseCategory(course, categories) {
   return categories.find((cat) => String(cat._id) === String(categoryId));
 }
 
+
+
+
+function deriveCategoryIdsFromCourseIds(courseIds, courses) {
+  if (!Array.isArray(courseIds) || courseIds.length === 0) return [];
+
+  const selectedCourseIds = courseIds.map(String);
+
+  const derivedCategoryIds = courses
+    .filter((course) => selectedCourseIds.includes(String(course._id)))
+    .map((course) => normalizeId(course.categoryId))
+    .filter(Boolean)
+    .map(String);
+
+  return Array.from(new Set(derivedCategoryIds));
+}
+
+
+
+
 function getCourseLabel(course, categories) {
   const category = getCourseCategory(course, categories);
   const isOnline = category?.key === "online_tuition";
@@ -1975,15 +1995,24 @@ const [detailMenuOpen, setDetailMenuOpen] = useState(false);
     return selectedCategories.some((cat) => cat.key === "online_tuition");
   }, [selectedCategories]);
 
-  const visibleCourses = useMemo(() => {
-    if (!Array.isArray(form.categoryIds) || form.categoryIds.length === 0) return [];
 
-    const selectedIds = form.categoryIds.map(String);
 
-    return courses.filter((course) =>
-      selectedIds.includes(String(normalizeId(course.categoryId)))
-    );
-  }, [courses, form.categoryIds]);
+
+  // const visibleCourses = useMemo(() => {
+  //   if (!Array.isArray(form.categoryIds) || form.categoryIds.length === 0) return [];
+
+  //   const selectedIds = form.categoryIds.map(String);
+
+  //   return courses.filter((course) =>
+  //     selectedIds.includes(String(normalizeId(course.categoryId)))
+  //   );
+  // }, [courses, form.categoryIds]);
+
+
+const visibleCourses = useMemo(() => {
+  return Array.isArray(courses) ? courses : [];
+}, [courses]);
+
 
   const subjects = useMemo(() => {
     if (!tutor?.subjects) return [];
@@ -2025,46 +2054,112 @@ const [detailMenuOpen, setDetailMenuOpen] = useState(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tuterId]);
 
-  function openEditModal() {
-    if (!tutor) return;
 
-    const existingCategoryIds =
-      Array.isArray(tutor.categoryIds) && tutor.categoryIds.length
+
+
+
+
+  // function openEditModal() {
+  //   if (!tutor) return;
+
+  //   const existingCategoryIds =
+  //     Array.isArray(tutor.categoryIds) && tutor.categoryIds.length
+  //       ? tutor.categoryIds.map((cat) => normalizeId(cat)).filter(Boolean)
+  //       : tutor.categoryId
+  //         ? [normalizeId(tutor.categoryId)]
+  //         : [];
+
+  //   const existingCourseIds =
+  //     Array.isArray(tutor.courseIds) && tutor.courseIds.length
+  //       ? tutor.courseIds.map((course) => normalizeId(course)).filter(Boolean)
+  //       : tutor.courseId
+  //         ? [normalizeId(tutor.courseId)]
+  //         : [];
+
+  //   const onlineSelected = existingCategoryIds.some((catId) => {
+  //     const cat = categories.find((item) => String(item._id) === String(catId));
+  //     return cat?.key === "online_tuition";
+  //   });
+
+  //   setForm({
+  //     name: tutor.name || "",
+  //     email: tutor.email || "",
+  //     phone: tutor.phone || "",
+  //     qualification: tutor.qualification || "",
+  //     about: tutor.about || "",
+  //     subjects: Array.isArray(tutor.subjects)
+  //       ? tutor.subjects.join(", ")
+  //       : tutor.subjects || "",
+  //     categoryIds: existingCategoryIds,
+  //     syllabus: onlineSelected ? tutor.syllabus || "" : "none",
+  //     courseIds: existingCourseIds,
+  //     photo: null,
+  //   });
+
+  //   setPreview(tutor.photo ? getImageSrc(tutor.photo) : "");
+  //   setEditOpen(true);
+  // }
+
+
+
+
+
+
+function openEditModal() {
+  if (!tutor) return;
+
+  const existingCourseIds =
+    Array.isArray(tutor.courseIds) && tutor.courseIds.length
+      ? tutor.courseIds.map((course) => normalizeId(course)).filter(Boolean)
+      : tutor.courseId
+        ? [normalizeId(tutor.courseId)]
+        : [];
+
+  const derivedCategoryIds = deriveCategoryIdsFromCourseIds(
+    existingCourseIds,
+    courses
+  );
+
+  const existingCategoryIds =
+    derivedCategoryIds.length > 0
+      ? derivedCategoryIds
+      : Array.isArray(tutor.categoryIds) && tutor.categoryIds.length
         ? tutor.categoryIds.map((cat) => normalizeId(cat)).filter(Boolean)
         : tutor.categoryId
           ? [normalizeId(tutor.categoryId)]
           : [];
 
-    const existingCourseIds =
-      Array.isArray(tutor.courseIds) && tutor.courseIds.length
-        ? tutor.courseIds.map((course) => normalizeId(course)).filter(Boolean)
-        : tutor.courseId
-          ? [normalizeId(tutor.courseId)]
-          : [];
+  setForm({
+    name: tutor.name || "",
+    email: tutor.email || "",
+    phone: tutor.phone || "",
+    qualification: tutor.qualification || "",
+    about: tutor.about || "",
+    subjects: Array.isArray(tutor.subjects)
+      ? tutor.subjects.join(", ")
+      : tutor.subjects || "",
+    categoryIds: existingCategoryIds,
+    syllabus:
+      tutor.syllabus &&
+      tutor.syllabus !== "none" &&
+      tutor.syllabus !== "Not added"
+        ? tutor.syllabus
+        : "",
+    courseIds: existingCourseIds,
+    photo: null,
+  });
 
-    const onlineSelected = existingCategoryIds.some((catId) => {
-      const cat = categories.find((item) => String(item._id) === String(catId));
-      return cat?.key === "online_tuition";
-    });
+  setPreview(tutor.photo ? getImageSrc(tutor.photo) : "");
+  setEditOpen(true);
+}
 
-    setForm({
-      name: tutor.name || "",
-      email: tutor.email || "",
-      phone: tutor.phone || "",
-      qualification: tutor.qualification || "",
-      about: tutor.about || "",
-      subjects: Array.isArray(tutor.subjects)
-        ? tutor.subjects.join(", ")
-        : tutor.subjects || "",
-      categoryIds: existingCategoryIds,
-      syllabus: onlineSelected ? tutor.syllabus || "" : "none",
-      courseIds: existingCourseIds,
-      photo: null,
-    });
 
-    setPreview(tutor.photo ? getImageSrc(tutor.photo) : "");
-    setEditOpen(true);
-  }
+
+
+
+
+
+
 
   useEffect(() => {
     if (!loading && tutor && location.state?.openEdit && !editOpen) {
@@ -2114,140 +2209,263 @@ navigate(location.pathname, {
     }));
   }
 
-  function toggleCategorySelection(categoryId, checked) {
-    setForm((prev) => {
-      const currentCategoryIds = Array.isArray(prev.categoryIds)
-        ? prev.categoryIds.map(String)
-        : [];
+  // function toggleCategorySelection(categoryId, checked) {
+  //   setForm((prev) => {
+  //     const currentCategoryIds = Array.isArray(prev.categoryIds)
+  //       ? prev.categoryIds.map(String)
+  //       : [];
 
-      const currentCourseIds = Array.isArray(prev.courseIds)
-        ? prev.courseIds.map(String)
-        : [];
+  //     const currentCourseIds = Array.isArray(prev.courseIds)
+  //       ? prev.courseIds.map(String)
+  //       : [];
 
-      const selectedCategoryId = String(categoryId);
+  //     const selectedCategoryId = String(categoryId);
 
-      const nextCategoryIds = checked
-        ? Array.from(new Set([...currentCategoryIds, selectedCategoryId]))
-        : currentCategoryIds.filter((id) => id !== selectedCategoryId);
+  //     const nextCategoryIds = checked
+  //       ? Array.from(new Set([...currentCategoryIds, selectedCategoryId]))
+  //       : currentCategoryIds.filter((id) => id !== selectedCategoryId);
 
-      const allowedCourseIds = courses
-        .filter((course) =>
-          nextCategoryIds.includes(String(normalizeId(course.categoryId)))
-        )
-        .map((course) => String(course._id));
+  //     const allowedCourseIds = courses
+  //       .filter((course) =>
+  //         nextCategoryIds.includes(String(normalizeId(course.categoryId)))
+  //       )
+  //       .map((course) => String(course._id));
 
-      const nextCourseIds = currentCourseIds.filter((courseId) =>
-        allowedCourseIds.includes(String(courseId))
-      );
+  //     const nextCourseIds = currentCourseIds.filter((courseId) =>
+  //       allowedCourseIds.includes(String(courseId))
+  //     );
 
-      const hasOnlineTuition = nextCategoryIds.some((catId) => {
-        const cat = categories.find((item) => String(item._id) === String(catId));
-        return cat?.key === "online_tuition";
-      });
+  //     const hasOnlineTuition = nextCategoryIds.some((catId) => {
+  //       const cat = categories.find((item) => String(item._id) === String(catId));
+  //       return cat?.key === "online_tuition";
+  //     });
 
-      return {
-        ...prev,
-        categoryIds: nextCategoryIds,
-        courseIds: nextCourseIds,
-        syllabus: hasOnlineTuition
-          ? prev.syllabus === "none"
-            ? ""
-            : prev.syllabus || ""
-          : "none",
-      };
-    });
-  }
+  //     return {
+  //       ...prev,
+  //       categoryIds: nextCategoryIds,
+  //       courseIds: nextCourseIds,
+  //       syllabus: hasOnlineTuition
+  //         ? prev.syllabus === "none"
+  //           ? ""
+  //           : prev.syllabus || ""
+  //         : "none",
+  //     };
+  //   });
+  // }
 
-  function toggleCourseSelection(courseId, checked) {
-    setForm((prev) => {
-      const currentCourseIds = Array.isArray(prev.courseIds)
-        ? prev.courseIds.map(String)
-        : [];
+  // function toggleCourseSelection(courseId, checked) {
+  //   setForm((prev) => {
+  //     const currentCourseIds = Array.isArray(prev.courseIds)
+  //       ? prev.courseIds.map(String)
+  //       : [];
 
-      const selectedCategoryIds = Array.isArray(prev.categoryIds)
-        ? prev.categoryIds.map(String)
-        : [];
+  //     const selectedCategoryIds = Array.isArray(prev.categoryIds)
+  //       ? prev.categoryIds.map(String)
+  //       : [];
 
-      const allowedCourseIds = courses
-        .filter((course) =>
-          selectedCategoryIds.includes(String(normalizeId(course.categoryId)))
-        )
-        .map((course) => String(course._id));
+  //     const allowedCourseIds = courses
+  //       .filter((course) =>
+  //         selectedCategoryIds.includes(String(normalizeId(course.categoryId)))
+  //       )
+  //       .map((course) => String(course._id));
 
-      const normalizedCourseId = String(courseId);
+  //     const normalizedCourseId = String(courseId);
 
-      let nextCourseIds = checked
-        ? Array.from(new Set([...currentCourseIds, normalizedCourseId]))
-        : currentCourseIds.filter((id) => id !== normalizedCourseId);
+  //     let nextCourseIds = checked
+  //       ? Array.from(new Set([...currentCourseIds, normalizedCourseId]))
+  //       : currentCourseIds.filter((id) => id !== normalizedCourseId);
 
-      nextCourseIds = nextCourseIds.filter((id) => allowedCourseIds.includes(id));
+  //     nextCourseIds = nextCourseIds.filter((id) => allowedCourseIds.includes(id));
 
-      return {
-        ...prev,
-        courseIds: nextCourseIds,
-      };
-    });
-  }
+  //     return {
+  //       ...prev,
+  //       courseIds: nextCourseIds,
+  //     };
+  //   });
+  // }
 
-  async function updateTutor(e) {
-    e.preventDefault();
 
-    try {
-      if (!form.name.trim()) return showAlert("Tutor name required", "error");
-      if (!form.phone.trim()) return showAlert("Phone required", "error");
 
-      if (!Array.isArray(form.categoryIds) || form.categoryIds.length === 0) {
-        return showAlert("At least one category select cheyyuka", "error");
-      }
 
-      if (formHasOnlineTuition && !String(form.syllabus || "").trim()) {
-        return showAlert("Syllabus enter cheyyuka", "error");
-      }
 
-      if (!Array.isArray(form.courseIds) || form.courseIds.length === 0) {
-        return showAlert("At least one Course / Class select cheyyuka", "error");
-      }
+function toggleCourseSelection(courseId, checked) {
+  setForm((prev) => {
+    const currentCourseIds = Array.isArray(prev.courseIds)
+      ? prev.courseIds.map(String)
+      : [];
 
-      setSubmitting(true);
+    const selectedCourseId = String(courseId);
 
-      const fd = new FormData();
+    const nextCourseIds = checked
+      ? Array.from(new Set([...currentCourseIds, selectedCourseId]))
+      : currentCourseIds.filter((id) => id !== selectedCourseId);
 
-      fd.append("name", form.name.trim());
-      fd.append("email", form.email.trim());
-      fd.append("phone", form.phone.trim());
-      fd.append("qualification", form.qualification.trim());
-      fd.append("about", form.about.trim());
-      fd.append("subjects", form.subjects.trim());
+    const nextCategoryIds = deriveCategoryIdsFromCourseIds(
+      nextCourseIds,
+      courses
+    );
 
-      form.categoryIds.forEach((categoryId) => {
-        fd.append("categoryIds", categoryId);
-      });
+    return {
+      ...prev,
+      courseIds: nextCourseIds,
+      categoryIds: nextCategoryIds,
+    };
+  });
+}
 
-      fd.append("categoryId", form.categoryIds[0]);
 
-      form.courseIds.forEach((courseId) => {
-        fd.append("courseIds", courseId);
-      });
 
-      fd.append("courseId", form.courseIds[0]);
-      fd.append("sectionType", formHasOnlineTuition ? "both" : "none");
-      fd.append("syllabus", formHasOnlineTuition ? String(form.syllabus).trim() : "none");
 
-      if (form.photo) {
-        fd.append("photo", form.photo);
-      }
 
-      await api.put(`/admin/tuter/update/${tuterId}`, fd);
+  // async function updateTutor(e) {
+  //   e.preventDefault();
 
-      showAlert("Tutor updated successfully", "success");
-      setEditOpen(false);
-      fetchData();
-    } catch (err) {
-      showAlert(getErrorMessage(err), "error");
-    } finally {
-      setSubmitting(false);
+  //   try {
+  //     if (!form.name.trim()) return showAlert("Tutor name required", "error");
+  //     if (!form.phone.trim()) return showAlert("Phone required", "error");
+
+  //     if (!Array.isArray(form.categoryIds) || form.categoryIds.length === 0) {
+  //       return showAlert("At least one category select cheyyuka", "error");
+  //     }
+
+  //     if (formHasOnlineTuition && !String(form.syllabus || "").trim()) {
+  //       return showAlert("Syllabus enter cheyyuka", "error");
+  //     }
+
+  //     if (!Array.isArray(form.courseIds) || form.courseIds.length === 0) {
+  //       return showAlert("At least one Course / Class select cheyyuka", "error");
+  //     }
+
+  //     setSubmitting(true);
+
+  //     const fd = new FormData();
+
+  //     fd.append("name", form.name.trim());
+  //     fd.append("email", form.email.trim());
+  //     fd.append("phone", form.phone.trim());
+  //     fd.append("qualification", form.qualification.trim());
+  //     fd.append("about", form.about.trim());
+  //     fd.append("subjects", form.subjects.trim());
+
+  //     form.categoryIds.forEach((categoryId) => {
+  //       fd.append("categoryIds", categoryId);
+  //     });
+
+  //     fd.append("categoryId", form.categoryIds[0]);
+
+  //     form.courseIds.forEach((courseId) => {
+  //       fd.append("courseIds", courseId);
+  //     });
+
+  //     fd.append("courseId", form.courseIds[0]);
+  //     fd.append("sectionType", formHasOnlineTuition ? "both" : "none");
+  //     fd.append("syllabus", formHasOnlineTuition ? String(form.syllabus).trim() : "none");
+
+  //     if (form.photo) {
+  //       fd.append("photo", form.photo);
+  //     }
+
+  //     await api.put(`/admin/tuter/update/${tuterId}`, fd);
+
+  //     showAlert("Tutor updated successfully", "success");
+  //     setEditOpen(false);
+  //     fetchData();
+  //   } catch (err) {
+  //     showAlert(getErrorMessage(err), "error");
+  //   } finally {
+  //     setSubmitting(false);
+  //   }
+  // }
+
+
+
+
+
+async function updateTutor(e) {
+  e.preventDefault();
+
+  try {
+    if (!form.name.trim()) {
+      return showAlert("Tutor name required", "error");
     }
+
+    if (!form.phone.trim()) {
+      return showAlert("Phone required", "error");
+    }
+
+    if (!Array.isArray(form.courseIds) || form.courseIds.length === 0) {
+      return showAlert("At least one Course / Class select cheyyuka", "error");
+    }
+
+    const autoCategoryIds = deriveCategoryIdsFromCourseIds(
+      form.courseIds,
+      courses
+    );
+
+    if (autoCategoryIds.length === 0) {
+      return showAlert("Selected course category not found", "error");
+    }
+
+    const autoSelectedCategories = categories.filter((cat) =>
+      autoCategoryIds.includes(String(cat._id))
+    );
+
+    const autoOnlineTuition = autoSelectedCategories.some(
+      (cat) => cat.key === "online_tuition"
+    );
+
+    const finalSyllabus =
+      form.syllabus && String(form.syllabus).trim()
+        ? String(form.syllabus).trim()
+        : "Not added";
+
+    const finalSectionType = autoOnlineTuition ? "both" : "none";
+
+    setSubmitting(true);
+
+    const fd = new FormData();
+
+    fd.append("name", form.name.trim());
+    fd.append("email", form.email.trim());
+    fd.append("phone", form.phone.trim());
+    fd.append("qualification", form.qualification.trim());
+    fd.append("about", form.about.trim());
+    fd.append("subjects", form.subjects.trim());
+
+    autoCategoryIds.forEach((categoryId) => {
+      fd.append("categoryIds", categoryId);
+    });
+
+    fd.append("categoryId", autoCategoryIds[0]);
+
+    form.courseIds.forEach((courseId) => {
+      fd.append("courseIds", courseId);
+    });
+
+    fd.append("courseId", form.courseIds[0]);
+    fd.append("sectionType", finalSectionType);
+    fd.append("syllabus", finalSyllabus);
+
+    if (form.photo) {
+      fd.append("photo", form.photo);
+    }
+
+    await api.put(`/admin/tuter/update/${tuterId}`, fd);
+
+    showAlert("Tutor updated successfully", "success");
+    setEditOpen(false);
+    fetchData();
+  } catch (err) {
+    showAlert(getErrorMessage(err, "Failed to update tutor"), "error");
+  } finally {
+    setSubmitting(false);
   }
+}
+
+
+
+
+
 
   async function deleteTutor() {
     try {
@@ -2673,7 +2891,7 @@ async function toggleTutorBlock() {
               />
             </label>
 
-            <div className="form-field form-field--full">
+            {/* <div className="form-field form-field--full">
               <span>Categories</span>
 
               <div className="course-checkbox-list tutor-category-checkbox-list">
@@ -2701,22 +2919,47 @@ async function toggleTutorBlock() {
                   })
                 )}
               </div>
-            </div>
+            </div> */}
 
             {formHasOnlineTuition && (
-              <label className="form-field form-field--full">
-                <span>Syllabus</span>
-                <input
-                  type="text"
-                  name="syllabus"
-                  value={form.syllabus}
-                  onChange={handleChange}
-                  placeholder="Example: State, CBSE, ICSE"
-                />
-              </label>
+              // <label className="form-field form-field--full">
+              //   <span>Syllabus</span>
+              //   <input
+              //     type="text"
+              //     name="syllabus"
+              //     value={form.syllabus}
+              //     onChange={handleChange}
+              //     placeholder="Example: State, CBSE, ICSE"
+              //   />
+              // </label>
+
+
+<label className="form-field form-field--full">
+  <span>Syllabus</span>
+  <input
+    type="text"
+    name="syllabus"
+    value={form.syllabus}
+    onChange={handleChange}
+    placeholder="Example: State, CBSE, ICSE"
+  />
+  <small className="tutor-syllabus-note">
+    Empty aakki save cheythal “Not added” aayi save aavum.
+  </small>
+</label>
+
+
+
             )}
 
-            <div className="form-field form-field--full">
+
+
+
+
+
+
+
+            {/* <div className="form-field form-field--full">
               <span>Courses / Classes</span>
 
               <div className="course-checkbox-list tutor-course-checkbox-list">
@@ -2753,7 +2996,55 @@ async function toggleTutorBlock() {
                   })
                 )}
               </div>
-            </div>
+            </div> */}
+
+
+
+
+
+<div className="form-field form-field--full">
+  <span>Courses / Classes</span>
+
+  <div className="course-checkbox-list tutor-course-checkbox-list">
+    {visibleCourses.length === 0 ? (
+      <p className="course-empty-text">No courses found</p>
+    ) : (
+      visibleCourses.map((course) => {
+        const checked = Array.isArray(form.courseIds)
+          ? form.courseIds.map(String).includes(String(course._id))
+          : false;
+
+        const category = getCourseCategory(course, categories);
+
+        return (
+          <label key={course._id} className="course-check-item">
+            <input
+              type="checkbox"
+              checked={checked}
+              onChange={(e) =>
+                toggleCourseSelection(course._id, e.target.checked)
+              }
+            />
+
+            <span>
+              {getCourseLabel(course, categories)}
+              {category?.title ? (
+                <small className="course-category-name">
+                  {category.title}
+                </small>
+              ) : null}
+            </span>
+          </label>
+        );
+      })
+    )}
+  </div>
+</div>
+
+
+
+
+
           </div>
 
           <div className="form-actions">

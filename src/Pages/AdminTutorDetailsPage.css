@@ -1830,3 +1830,51 @@
   cursor: pointer;
   font-size: 20px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.detail-form .course-category-name {
+  display: block;
+  margin-top: 4px;
+  color: #7c3aed !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+}
+
+.detail-form .tutor-syllabus-note {
+  color: #6b7280 !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+}
+
+.detail-form .tutor-course-checkbox-list {
+  min-height: 140px;
+  max-height: 230px;
+  overflow-y: auto;
+}
