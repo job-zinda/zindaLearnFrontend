@@ -840,6 +840,38 @@ export default function AdminFeedbackPage() {
     fetchFeedbacks();
   }, []);
 
+
+
+
+
+
+useEffect(() => {
+  function closeMenuOnOutsideClick(e) {
+    if (!openMenuId) return;
+
+    if (
+      e.target.closest(".admin-feedback-menu") ||
+      e.target.closest(".admin-feedback-menu-btn")
+    ) {
+      return;
+    }
+
+    setOpenMenuId(null);
+  }
+
+  document.addEventListener("mousedown", closeMenuOnOutsideClick);
+
+  return () => {
+    document.removeEventListener("mousedown", closeMenuOnOutsideClick);
+  };
+}, [openMenuId]);
+
+
+
+
+
+
+
   const filteredFeedbacks = useMemo(() => {
     const key = search.trim().toLowerCase();
 

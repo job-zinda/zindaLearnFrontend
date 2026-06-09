@@ -668,3 +668,87 @@
   background: linear-gradient(135deg, #d946ef, #7c3aed);
   color: #ffffff;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   FINAL FIX: Feedback menu outside close support + red delete
+   Paste at VERY BOTTOM of AdminFeedbackPage.css
+========================================================= */
+
+.admin-feedback-confirm-delete-btn {
+  background: #ef4444 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  box-shadow: 0 14px 28px rgba(239, 68, 68, 0.28) !important;
+}
+
+.admin-feedback-confirm-delete-btn:hover {
+  background: #dc2626 !important;
+}
+
+.admin-feedback-confirm-delete-btn:disabled {
+  opacity: 0.65 !important;
+  cursor: not-allowed !important;
+}
+
+.admin-feedback-delete-actions {
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+@media (max-width: 720px) {
+  .admin-feedback-delete-actions {
+    flex-direction: row !important;
+  }
+
+  .admin-feedback-cancel-btn,
+  .admin-feedback-confirm-delete-btn {
+    width: 50% !important;
+  }
+}
