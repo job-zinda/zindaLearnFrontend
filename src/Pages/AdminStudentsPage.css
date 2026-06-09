@@ -2188,3 +2188,182 @@ rgba(
     grid-template-columns: 1fr !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   FINAL FIX: Admin Student invite icon + mobile modal buttons
+   Paste at the VERY BOTTOM of AdminStudentsPage.css
+========================================================= */
+
+/* Invite button content alignment */
+.student-invite-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  white-space: nowrap !important;
+}
+
+.student-invite-btn__icon {
+  position: relative !important;
+  width: 30px !important;
+  height: 30px !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  flex: 0 0 30px !important;
+}
+
+.student-invite-btn__user {
+  width: 27px !important;
+  height: 27px !important;
+  stroke: #ffffff !important;
+  stroke-width: 2.3 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+
+.student-invite-btn__plus {
+  position: absolute !important;
+  top: -6px !important;
+  left: -7px !important;
+  color: #ffffff !important;
+  font-size: 20px !important;
+  font-weight: 950 !important;
+  line-height: 1 !important;
+}
+
+/* Laptop/Desktop: keep current layout look */
+.student-invite-btn__text {
+  display: inline !important;
+}
+
+/* Mobile: search left, invite icon right */
+@media (max-width: 720px) {
+  .student-toolbar {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 50px !important;
+    gap: 10px !important;
+    align-items: center !important;
+    margin-bottom: 22px !important;
+  }
+
+  .student-search {
+    min-width: 0 !important;
+    width: 100% !important;
+    height: 48px !important;
+    border-radius: 14px !important;
+    padding: 0 12px !important;
+  }
+
+  .student-search span {
+    font-size: 18px !important;
+  }
+
+  .student-search input {
+    min-width: 0 !important;
+    font-size: 13px !important;
+  }
+
+  .student-invite-btn {
+    width: 50px !important;
+    min-width: 50px !important;
+    height: 48px !important;
+    padding: 0 !important;
+    border-radius: 14px !important;
+    display: inline-grid !important;
+    place-items: center !important;
+    align-self: stretch !important;
+  }
+
+  .student-invite-btn__text {
+    display: none !important;
+  }
+
+  .student-invite-btn__icon {
+    width: 30px !important;
+    height: 30px !important;
+    flex: 0 0 30px !important;
+  }
+
+  .student-invite-btn__user {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .student-invite-btn__plus {
+    top: -6px !important;
+    left: -7px !important;
+    font-size: 20px !important;
+  }
+}
+
+/* Edit/Delete modal mobile buttons should stay side-by-side */
+@media (max-width: 640px) {
+  .student-dark-modal .form-actions {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+    flex-direction: unset !important;
+    justify-content: stretch !important;
+    align-items: center !important;
+  }
+
+  .student-dark-modal .form-actions button {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 46px !important;
+    padding: 0 10px !important;
+  }
+
+  /* Cancel left side */
+  .student-dark-modal .form-actions .secondary-btn {
+    order: 1 !important;
+  }
+
+  /* Update/Delete right side */
+  .student-dark-modal .form-actions .primary-btn,
+  .student-dark-modal .form-actions .danger-btn {
+    order: 2 !important;
+  }
+}
+
+/* Very small phone safety */
+@media (max-width: 380px) {
+  .student-dark-modal .form-actions {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+  }
+
+  .student-dark-modal .form-actions button {
+    font-size: 13px !important;
+  }
+}
