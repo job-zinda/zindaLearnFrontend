@@ -2723,3 +2723,458 @@
     font-size: 13px !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   FINAL FINAL FIX: Tutor mobile icon + dark modal cleanup
+   Paste at VERY BOTTOM of AdminTutorsPage.css
+========================================================= */
+
+/* Desktop button: current look keep */
+.tutor-add-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  white-space: nowrap !important;
+}
+
+/* Icon same as student invite icon */
+.tutor-add-btn__icon {
+  position: relative !important;
+  width: 30px !important;
+  height: 30px !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  flex: 0 0 30px !important;
+}
+
+.tutor-add-btn__user {
+  width: 27px !important;
+  height: 27px !important;
+  stroke: #ffffff !important;
+  stroke-width: 2.3 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+
+.tutor-add-btn__plus {
+  position: absolute !important;
+  top: -6px !important;
+  left: -7px !important;
+  color: #ffffff !important;
+  font-size: 20px !important;
+  font-weight: 950 !important;
+  line-height: 1 !important;
+}
+
+.tutor-add-btn__text {
+  display: inline !important;
+}
+
+/* Mobile: same as admin student invite button */
+@media (max-width: 720px) {
+  .tutor-toolbar {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 50px !important;
+    gap: 10px !important;
+    align-items: center !important;
+    margin-bottom: 22px !important;
+  }
+
+  .tutor-search {
+    min-width: 0 !important;
+    width: 100% !important;
+    height: 48px !important;
+    border-radius: 14px !important;
+    padding: 0 12px !important;
+  }
+
+  .tutor-search span {
+    font-size: 18px !important;
+  }
+
+  .tutor-search input {
+    min-width: 0 !important;
+    font-size: 13px !important;
+  }
+
+  .tutor-add-btn {
+    width: 50px !important;
+    min-width: 50px !important;
+    max-width: 50px !important;
+    height: 48px !important;
+    min-height: 48px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 14px !important;
+
+    display: inline-grid !important;
+    place-items: center !important;
+    align-self: stretch !important;
+
+    font-size: 0 !important;
+    line-height: 1 !important;
+    text-indent: 0 !important;
+    overflow: visible !important;
+  }
+
+  .tutor-add-btn__text {
+    display: none !important;
+  }
+
+  .tutor-add-btn__icon {
+    width: 30px !important;
+    height: 30px !important;
+    flex: 0 0 30px !important;
+  }
+
+  .tutor-add-btn__user {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .tutor-add-btn__plus {
+    top: -6px !important;
+    left: -7px !important;
+    font-size: 20px !important;
+  }
+}
+
+/* =========================================================
+   Tutor dark modal: remove old white theme fully
+========================================================= */
+
+.tutor-dark-modal {
+  background: linear-gradient(145deg, #111633, #080b22) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(217, 70, 239, 0.28) !important;
+}
+
+.tutor-dark-modal-header {
+  background: transparent !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.tutor-dark-modal-body {
+  background: linear-gradient(145deg, #111633, #080b22) !important;
+}
+
+/* Form text */
+.tutor-dark-modal .tutor-form,
+.tutor-dark-modal .tutor-form *,
+.tutor-dark-modal .form-field span,
+.tutor-dark-modal label,
+.tutor-dark-modal p,
+.tutor-dark-modal b {
+  color: #ffffff !important;
+}
+
+/* Inputs dark */
+.tutor-dark-modal .tutor-form input,
+.tutor-dark-modal .tutor-form textarea,
+.tutor-dark-modal .tutor-form select {
+  background: rgba(255, 255, 255, 0.07) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  box-shadow: none !important;
+}
+
+.tutor-dark-modal .tutor-form input::placeholder,
+.tutor-dark-modal .tutor-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.tutor-dark-modal .tutor-form input:focus,
+.tutor-dark-modal .tutor-form textarea:focus,
+.tutor-dark-modal .tutor-form select:focus {
+  border-color: rgba(217, 70, 239, 0.75) !important;
+  box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.2) !important;
+}
+
+/* No file chosen text white */
+.tutor-dark-modal input[type="file"] {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.tutor-dark-modal input[type="file"]::file-selector-button {
+  background: rgba(255, 255, 255, 0.92) !important;
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+  border: none !important;
+  border-radius: 10px !important;
+  font-weight: 950 !important;
+}
+
+/* Password eye purple */
+.tutor-dark-modal .tutor-password-eye {
+  background: rgba(124, 58, 237, 0.16) !important;
+  color: #c084fc !important;
+  -webkit-text-fill-color: #c084fc !important;
+  border: none !important;
+  border-radius: 12px !important;
+}
+
+.tutor-dark-modal .tutor-password-eye svg {
+  color: #c084fc !important;
+  stroke: #c084fc !important;
+}
+
+.tutor-dark-modal .tutor-password-eye:hover {
+  background: rgba(217, 70, 239, 0.22) !important;
+  color: #ffffff !important;
+}
+
+/* Course / Classes box full dark, no white border */
+.tutor-dark-modal .course-checkbox-list,
+.tutor-dark-modal .tutor-course-checkbox-list {
+  background: rgba(255, 255, 255, 0.055) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-top-color: rgba(255, 255, 255, 0.14) !important;
+  box-shadow: none !important;
+}
+
+.tutor-dark-modal .course-check-item {
+  background: transparent !important;
+  color: #ffffff !important;
+  border: 1px solid transparent !important;
+}
+
+.tutor-dark-modal .course-check-item:hover {
+  background: rgba(217, 70, 239, 0.13) !important;
+}
+
+.tutor-dark-modal .course-check-item span {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.tutor-dark-modal .course-category-name {
+  color: #c084fc !important;
+  -webkit-text-fill-color: #c084fc !important;
+}
+
+.tutor-dark-modal .course-check-item:has(input[type="checkbox"]:checked) {
+  background: linear-gradient(
+    135deg,
+    rgba(217, 70, 239, 0.16),
+    rgba(124, 58, 237, 0.12)
+  ) !important;
+  border-color: rgba(217, 70, 239, 0.35) !important;
+}
+
+/* Switch checkbox dark */
+.tutor-dark-modal .course-check-item input[type="checkbox"] {
+  background: #475569 !important;
+  border: none !important;
+  box-shadow: inset 0 2px 5px rgba(15, 23, 42, 0.22) !important;
+}
+
+.tutor-dark-modal .course-check-item input[type="checkbox"]:checked {
+  background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
+}
+
+/* Important: remove old sticky white footer */
+.tutor-dark-modal .tutor-form .form-actions,
+.tutor-dark-modal .form-actions {
+  position: sticky !important;
+  bottom: 0 !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+  gap: 12px !important;
+  margin-top: 18px !important;
+  padding: 16px 0 0 !important;
+
+  background: linear-gradient(
+    180deg,
+    rgba(17, 22, 51, 0),
+    #080b22 36%,
+    #080b22 100%
+  ) !important;
+
+  z-index: 20 !important;
+  flex-wrap: nowrap !important;
+}
+
+/* Make cancel visible */
+.tutor-dark-modal .secondary-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border: none !important;
+  min-width: 126px !important;
+  min-height: 54px !important;
+  border-radius: 16px !important;
+  font-weight: 950 !important;
+}
+
+.tutor-dark-modal .primary-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border: none !important;
+  min-width: 126px !important;
+  min-height: 54px !important;
+  border-radius: 16px !important;
+  font-weight: 950 !important;
+}
+
+.tutor-dark-modal .danger-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #ef4444 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border: none !important;
+  min-width: 126px !important;
+  min-height: 54px !important;
+  border-radius: 16px !important;
+  font-weight: 950 !important;
+}
+
+/* Mobile modal buttons: Cancel left, Add/Update/Delete right */
+@media (max-width: 640px) {
+  .tutor-dark-modal .tutor-form .form-actions,
+  .tutor-dark-modal .form-actions {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+    align-items: center !important;
+    justify-content: stretch !important;
+    flex-direction: unset !important;
+  }
+
+  .tutor-dark-modal .form-actions button {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 46px !important;
+    height: 46px !important;
+    padding: 0 10px !important;
+    font-size: 14px !important;
+  }
+
+  .tutor-dark-modal .form-actions .secondary-btn {
+    order: 1 !important;
+  }
+
+  .tutor-dark-modal .form-actions .primary-btn,
+  .tutor-dark-modal .form-actions .danger-btn {
+    order: 2 !important;
+  }
+}

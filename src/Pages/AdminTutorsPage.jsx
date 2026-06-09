@@ -7,7 +7,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 // import Modal from "../Components/Modal";
 import { useNavigate } from "react-router-dom";
-import Modal from "../Components/Modal";
+// import Modal from "../Components/Modal";
 import { useAlert } from "../context/AlertContext";
 import { getMediaUrl } from "../utils/media";
 import api from "../api/axios";
