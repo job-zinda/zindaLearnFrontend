@@ -3432,3 +3432,105 @@
     grid-column: 2 !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   FINAL MOBILE FIX: Tutor file button white + action spacing
+   Paste at VERY BOTTOM of AdminTutorsPage.css
+========================================================= */
+
+/* Choose File button text white aakkan */
+.tutor-dark-modal .tutor-form input[type="file"]::file-selector-button {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-radius: 10px !important;
+  font-weight: 950 !important;
+}
+
+/* No file chosen text visible aakkan */
+.tutor-dark-modal .tutor-form input[type="file"] {
+  color: rgba(255, 255, 255, 0.72) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.72) !important;
+}
+
+/* File button hover */
+.tutor-dark-modal .tutor-form input[type="file"]::file-selector-button:hover {
+  background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border-color: transparent !important;
+}
+
+/* Mobile view only: Add/Cancel buttons bottom border-il ninnum mukalilekk */
+@media (max-width: 720px) {
+  .tutor-dark-modal .tutor-form .form-actions {
+    position: sticky !important;
+    bottom: 0 !important;
+
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+
+    margin-top: 12px !important;
+    padding: 12px 0 12px !important;
+
+    background: linear-gradient(
+      180deg,
+      rgba(8, 11, 34, 0),
+      #080b22 25%,
+      #080b22 100%
+    ) !important;
+
+    z-index: 20 !important;
+  }
+
+  .tutor-dark-modal .tutor-form .secondary-btn {
+    grid-column: 1 !important;
+  }
+
+  .tutor-dark-modal .tutor-form .primary-btn,
+  .tutor-dark-modal .tutor-form .danger-btn {
+    grid-column: 2 !important;
+  }
+
+  .tutor-dark-modal .tutor-form .primary-btn,
+  .tutor-dark-modal .tutor-form .secondary-btn,
+  .tutor-dark-modal .tutor-form .danger-btn {
+    height: 38px !important;
+    min-height: 38px !important;
+    border-radius: 10px !important;
+    font-size: 12px !important;
+    padding: 0 10px !important;
+  }
+
+  /* body bottom-il extra breathing space */
+  .tutor-dark-modal-body {
+    padding-bottom: 18px !important;
+  }
+}
