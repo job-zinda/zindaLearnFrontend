@@ -15,13 +15,18 @@
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
 
+// import React, {
+//   useEffect,
+//   useMemo,
+//   useState
+// } from "react";
+
 import React, {
   useEffect,
   useMemo,
+  useRef,
   useState
 } from "react";
-
-
 
 import { createPortal } from "react-dom";
 
@@ -410,9 +415,25 @@ const [showPassword, setShowPassword] = useState(false);
 
 
 const [detailMenuOpen, setDetailMenuOpen] = useState(false);
+const detailMenuRef = useRef(null);
 
+useEffect(() => {
+  function handleOutsideMenuClick(e) {
+    if (
+      detailMenuOpen &&
+      detailMenuRef.current &&
+      !detailMenuRef.current.contains(e.target)
+    ) {
+      setDetailMenuOpen(false);
+    }
+  }
 
+  document.addEventListener("mousedown", handleOutsideMenuClick);
 
+  return () => {
+    document.removeEventListener("mousedown", handleOutsideMenuClick);
+  };
+}, [detailMenuOpen]);
 
 
 
@@ -1145,8 +1166,8 @@ async function toggleTutorBlock() {
 
 
 <div
+  ref={detailMenuRef}
   className="detail-actions detail-actions-menu-wrap"
-  onClick={(e) => e.stopPropagation()}
 >
   {isTutorBlocked(tutor) ? (
     <span className="detail-blocked-badge">Blocked</span>
@@ -1154,78 +1175,98 @@ async function toggleTutorBlock() {
     <span className="detail-inactive-badge">Inactive</span>
   ) : null}
 
-  <button
-    type="button"
-    className="detail-menu-btn"
-    onClick={(e) => {
-      e.stopPropagation();
-      setDetailMenuOpen((prev) => !prev);
-    }}
-  >
-    ⋮
-  </button>
+<button
+  type="button"
+  className="detail-menu-btn"
+  onClick={(e) => {
+    e.stopPropagation();
+    setDetailMenuOpen((prev) => !prev);
+  }}
+>
+  ⋮
+</button>
 
-  {detailMenuOpen && (
-    <div className="detail-menu" onClick={(e) => e.stopPropagation()}>
-      <button
-        type="button"
-        onClick={() => {
-          setDetailMenuOpen(false);
-          openEditModal();
-        }}
-      >
-        ✎ Edit
-      </button>
 
-      <button
-        type="button"
-        onClick={() => {
-          setDetailMenuOpen(false);
-          shareTutorDetails(tutor, showAlert);
-        }}
-      >
-        ↗ Share
-      </button>
 
-      <button
-        type="button"
-        onClick={() => {
-          setDetailMenuOpen(false);
-          setPasswordOpen(true);
-        }}
-      >
-        🔐 Password
-      </button>
 
-      <button
-        type="button"
-        onClick={() => {
-          setDetailMenuOpen(false);
-          openAssignedStudentsModal();
-        }}
-      >
-        👥 Assigned Students
-      </button>
 
-      <button type="button" onClick={toggleTutorStatus}>
-        {active ? "⏻ Deactive" : "✓ Active"}
-      </button>
 
-      <button type="button" onClick={toggleTutorBlock}>
-        {isTutorBlocked(tutor) ? "⊘ Unblock" : "⊘ Block"}
-      </button>
 
-      <button
-        type="button"
-        onClick={() => {
-          setDetailMenuOpen(false);
-          setDeleteOpen(true);
-        }}
-      >
-        🗑 Delete Account
-      </button>
-    </div>
-  )}
+
+ {detailMenuOpen && (
+  <div className="detail-menu">
+    <button
+      type="button"
+      onClick={() => {
+        setDetailMenuOpen(false);
+        openEditModal();
+      }}
+    >
+      ✎ Edit
+    </button>
+
+    <button
+      type="button"
+      onClick={() => {
+        setDetailMenuOpen(false);
+        shareTutorDetails(tutor, showAlert);
+      }}
+    >
+      ↗ Share
+    </button>
+
+    <button
+      type="button"
+      onClick={() => {
+        setDetailMenuOpen(false);
+        setShowPassword(false);
+        setPasswordOpen(true);
+      }}
+    >
+      🔐 Password
+    </button>
+
+    <button
+      type="button"
+      onClick={() => {
+        setDetailMenuOpen(false);
+        openAssignedStudentsModal();
+      }}
+    >
+      👥 Assigned Students
+    </button>
+
+    <button
+      type="button"
+      onClick={() => {
+        setDetailMenuOpen(false);
+        toggleTutorStatus();
+      }}
+    >
+      {active ? "⏻ Deactive" : "✓ Active"}
+    </button>
+
+    <button
+      type="button"
+      onClick={() => {
+        setDetailMenuOpen(false);
+        toggleTutorBlock();
+      }}
+    >
+      {isTutorBlocked(tutor) ? "⊘ Unblock" : "⊘ Block"}
+    </button>
+
+    <button
+      type="button"
+      onClick={() => {
+        setDetailMenuOpen(false);
+        setDeleteOpen(true);
+      }}
+    >
+      🗑 Delete Account
+    </button>
+  </div>
+)}
 </div>
 
 
