@@ -1750,6 +1750,30 @@ function StudentDarkModal({ open, title, width = "560px", onClose, children }) {
 
 
 
+// function StudentInviteIcon() {
+//   return (
+//     <span className="student-invite-btn__icon" aria-hidden="true">
+//       <span className="student-invite-btn__plus">+</span>
+
+//       <svg
+//         className="student-invite-btn__user"
+//         viewBox="0 0 24 24"
+//         fill="none"
+//       >
+//         <circle cx="12" cy="8" r="4" />
+//         <path d="M4.5 21c.8-4 3.6-6 7.5-6s6.7 2 7.5 6" />
+//       </svg>
+//     </span>
+//   );
+// }
+
+
+
+
+
+
+
+
 function StudentInviteIcon() {
   return (
     <span className="student-invite-btn__icon" aria-hidden="true">
@@ -1766,6 +1790,10 @@ function StudentInviteIcon() {
     </span>
   );
 }
+
+
+
+
 
 
 
@@ -2329,6 +2357,19 @@ export default function AdminStudentsPage() {
 
 
 
+{/* <button
+  type="button"
+  className="student-invite-btn"
+  onClick={openInviteModal}
+  aria-label="Invite Student"
+>
+  <StudentInviteIcon />
+  <span className="student-invite-btn__text">Invite Student</span>
+</button> */}
+
+
+
+
 <button
   type="button"
   className="student-invite-btn"
@@ -2338,11 +2379,6 @@ export default function AdminStudentsPage() {
   <StudentInviteIcon />
   <span className="student-invite-btn__text">Invite Student</span>
 </button>
-
-
-
-
-
 
 
 

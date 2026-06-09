@@ -2661,3 +2661,95 @@ rgba(
     order: 2 !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Student invite button icon same as Add Tutor mobile icon */
+
+.student-invite-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+}
+
+.student-invite-btn__icon {
+  position: relative !important;
+  width: 30px !important;
+  height: 30px !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  flex: 0 0 30px !important;
+}
+
+.student-invite-btn__user {
+  width: 27px !important;
+  height: 27px !important;
+  stroke: #ffffff !important;
+  stroke-width: 2.3 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+
+.student-invite-btn__plus {
+  position: absolute !important;
+  top: -6px !important;
+  left: -7px !important;
+  color: #ffffff !important;
+  font-size: 20px !important;
+  font-weight: 950 !important;
+  line-height: 1 !important;
+}
+
+@media (max-width: 720px) {
+  .student-invite-btn {
+    width: 50px !important;
+    min-width: 50px !important;
+    max-width: 50px !important;
+    height: 48px !important;
+    padding: 0 !important;
+    border-radius: 14px !important;
+    display: grid !important;
+    place-items: center !important;
+  }
+
+  .student-invite-btn__text {
+    display: none !important;
+  }
+
+  .student-invite-btn__icon {
+    transform: translate(1px, 1px) !important;
+  }
+}
