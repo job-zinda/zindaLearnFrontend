@@ -52,7 +52,7 @@ const emptyForm = {
   about: "",
   subjects: "",
   categoryIds: [],
-  syllabus: "Not added",
+  syllabus: "",
   courseIds: [],
   loginPasswordText: "",
   photo: null,
@@ -346,7 +346,7 @@ setForm({
   ...emptyForm,
   categoryIds: [],
   courseIds: [],
-  syllabus: "Not added",
+  syllabus: "",
   loginPasswordText: "",
 });
 
@@ -436,10 +436,19 @@ const existingCategoryIds =
       categoryIds: existingCategoryIds,
       // syllabus: onlineSelected ? tutor.syllabus || "" : "none",
 
+// syllabus:
+//   tutor.syllabus && tutor.syllabus !== "none"
+//     ? tutor.syllabus
+//     : "Not added",
+
+
+
 syllabus:
-  tutor.syllabus && tutor.syllabus !== "none"
+  tutor.syllabus &&
+  tutor.syllabus !== "none" &&
+  tutor.syllabus !== "Not added"
     ? tutor.syllabus
-    : "Not added",
+    : "",
 
       courseIds: existingCourseIds,
 
@@ -578,10 +587,10 @@ function toggleCourseSelection(courseId, checked) {
       ...prev,
       courseIds: nextCourseIds,
       categoryIds: nextCategoryIds,
-      syllabus:
-        prev.syllabus && String(prev.syllabus).trim()
-          ? prev.syllabus
-          : "Not added",
+      // syllabus:
+      //   prev.syllabus && String(prev.syllabus).trim()
+      //     ? prev.syllabus
+      //     : "Not added",
     };
   });
 }
@@ -1211,7 +1220,7 @@ fd.append("categoryId", autoCategoryIds[0]);
     name="syllabus"
     value={form.syllabus}
     onChange={handleChange}
-    placeholder="Not added"
+     placeholder="Example: State, CBSE, ICSE"
   />
   <small className="tutor-syllabus-note">
     Empty aakki save cheythal “Not added” aayi save aavum.
