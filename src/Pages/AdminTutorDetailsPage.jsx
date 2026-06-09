@@ -1983,17 +1983,17 @@ const [detailMenuOpen, setDetailMenuOpen] = useState(false);
 
 
 
-  const selectedCategories = useMemo(() => {
-    return categories.filter((cat) =>
-      Array.isArray(form.categoryIds)
-        ? form.categoryIds.map(String).includes(String(cat._id))
-        : false
-    );
-  }, [categories, form.categoryIds]);
+  // const selectedCategories = useMemo(() => {
+  //   return categories.filter((cat) =>
+  //     Array.isArray(form.categoryIds)
+  //       ? form.categoryIds.map(String).includes(String(cat._id))
+  //       : false
+  //   );
+  // }, [categories, form.categoryIds]);
 
-  const formHasOnlineTuition = useMemo(() => {
-    return selectedCategories.some((cat) => cat.key === "online_tuition");
-  }, [selectedCategories]);
+  // const formHasOnlineTuition = useMemo(() => {
+  //   return selectedCategories.some((cat) => cat.key === "online_tuition");
+  // }, [selectedCategories]);
 
 
 

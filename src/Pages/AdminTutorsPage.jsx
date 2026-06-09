@@ -230,13 +230,13 @@ export default function AdminTutorsPage() {
 
 
 
-  const selectedCategories = useMemo(() => {
-    return categories.filter((cat) => form.categoryIds.includes(cat._id));
-  }, [categories, form.categoryIds]);
+  // const selectedCategories = useMemo(() => {
+  //   return categories.filter((cat) => form.categoryIds.includes(cat._id));
+  // }, [categories, form.categoryIds]);
 
-  const isOnlineTuition = useMemo(() => {
-    return selectedCategories.some((cat) => cat.key === "online_tuition");
-  }, [selectedCategories]);
+  // const isOnlineTuition = useMemo(() => {
+  //   return selectedCategories.some((cat) => cat.key === "online_tuition");
+  // }, [selectedCategories]);
 
   // const visibleCourses = useMemo(() => {
   //   if (!Array.isArray(form.categoryIds) || form.categoryIds.length === 0) {
