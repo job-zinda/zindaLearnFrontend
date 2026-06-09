@@ -3178,3 +3178,257 @@
     order: 2 !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   FINAL FIX: Tutor modal submit disable + file text + mobile height
+   Paste at VERY BOTTOM of AdminTutorsPage.css
+========================================================= */
+
+.tutor-dark-modal .primary-btn:disabled,
+.tutor-dark-modal .secondary-btn:disabled,
+.tutor-dark-modal .danger-btn:disabled {
+  opacity: 0.55 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  pointer-events: none !important;
+}
+
+/* File input text white */
+.tutor-dark-modal input[type="file"] {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.tutor-dark-modal input[type="file"]::file-selector-button {
+  background: #f8fafc !important;
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+  border: none !important;
+  border-radius: 10px !important;
+  font-weight: 950 !important;
+  padding: 9px 14px !important;
+  margin-right: 12px !important;
+}
+
+/* Chrome sometimes keeps "No file chosen" dark; this improves visibility */
+.tutor-dark-modal .form-field input[type="file"] {
+  font-weight: 900 !important;
+  text-shadow: none !important;
+}
+
+/* Password eye purple */
+.tutor-dark-modal .tutor-password-eye {
+  background: rgba(124, 58, 237, 0.45) !important;
+  color: #c084fc !important;
+  border: 1px solid rgba(192, 132, 252, 0.35) !important;
+}
+
+.tutor-dark-modal .tutor-password-eye svg {
+  color: #c084fc !important;
+  stroke: #c084fc !important;
+}
+
+/* Mobile modal height kurakkan */
+@media (max-width: 720px) {
+  .tutor-dark-modal {
+    width: calc(100vw - 28px) !important;
+    max-width: 330px !important;
+    max-height: 76vh !important;
+    border-radius: 14px !important;
+  }
+
+  .tutor-dark-modal-header {
+    min-height: 54px !important;
+    padding: 14px 16px !important;
+  }
+
+  .tutor-dark-modal-header h2 {
+    font-size: 17px !important;
+  }
+
+  .tutor-dark-modal-close {
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 24px !important;
+  }
+
+  .tutor-dark-modal-body {
+    max-height: calc(76vh - 54px) !important;
+    padding: 14px 16px 10px !important;
+    overflow-y: auto !important;
+  }
+
+  .tutor-form {
+    gap: 10px !important;
+  }
+
+  .tutor-form-grid {
+    gap: 10px !important;
+  }
+
+  .tutor-form .form-field {
+    gap: 5px !important;
+  }
+
+  .tutor-form .form-field > span {
+    font-size: 11px !important;
+  }
+
+  .tutor-form .form-field input,
+  .tutor-form .form-field textarea,
+  .tutor-form .form-field select {
+    min-height: 38px !important;
+    height: 38px !important;
+    border-radius: 10px !important;
+    padding: 8px 10px !important;
+    font-size: 11px !important;
+  }
+
+  .tutor-form .form-field textarea {
+    min-height: 64px !important;
+    height: 64px !important;
+  }
+
+  .tutor-photo-preview {
+    width: 92px !important;
+    height: 92px !important;
+    border-radius: 12px !important;
+  }
+
+  .tutor-password-field input {
+    padding-right: 42px !important;
+  }
+
+  .tutor-password-eye {
+    width: 30px !important;
+    height: 30px !important;
+    right: 5px !important;
+    border-radius: 9px !important;
+    font-size: 15px !important;
+  }
+
+  .tutor-password-note {
+    font-size: 10px !important;
+    line-height: 1.25 !important;
+  }
+
+  .tutor-form .tutor-course-checkbox-list {
+    min-height: 150px !important;
+    max-height: 170px !important;
+    border-radius: 12px !important;
+    padding: 8px !important;
+  }
+
+  .tutor-form .course-check-item {
+    grid-template-columns: 44px 1fr !important;
+    min-height: 44px !important;
+    padding: 7px 8px !important;
+    border-radius: 12px !important;
+  }
+
+  .tutor-form .course-check-item input[type="checkbox"] {
+    width: 40px !important;
+    height: 24px !important;
+    min-height: 24px !important;
+  }
+
+  .tutor-form .course-check-item input[type="checkbox"]::before {
+    width: 18px !important;
+    height: 18px !important;
+    left: 3px !important;
+    top: 3px !important;
+  }
+
+  .tutor-form .course-check-item input[type="checkbox"]:checked::before {
+    transform: translateX(16px) !important;
+  }
+
+  .tutor-form .course-check-item span {
+    font-size: 12px !important;
+  }
+
+  .course-category-name {
+    font-size: 10px !important;
+  }
+
+  .tutor-form .form-actions {
+    position: sticky !important;
+    bottom: 0 !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    padding: 10px 0 0 !important;
+    margin-top: 8px !important;
+    background: linear-gradient(
+      180deg,
+      rgba(8, 11, 34, 0),
+      #080b22 28%,
+      #080b22 100%
+    ) !important;
+  }
+
+  .tutor-form .primary-btn,
+  .tutor-form .secondary-btn,
+  .tutor-form .danger-btn {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 38px !important;
+    height: 38px !important;
+    border-radius: 10px !important;
+    font-size: 12px !important;
+    padding: 0 10px !important;
+  }
+
+  .tutor-form .secondary-btn {
+    grid-column: 1 !important;
+  }
+
+  .tutor-form .primary-btn,
+  .tutor-form .danger-btn {
+    grid-column: 2 !important;
+  }
+}

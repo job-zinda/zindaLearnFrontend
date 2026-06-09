@@ -283,7 +283,7 @@ export default function AdminTutorsPage() {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState(null);
 
-
+const [submitting, setSubmitting] = useState(false);
 
 
 
@@ -392,6 +392,7 @@ const visibleCourses = useMemo(() => {
     setEditingTutor(null);
     setPreview("");
     setShowTutorPassword(false);
+     setSubmitting(false);
 
     // setForm({
     //   ...emptyForm,
@@ -481,6 +482,7 @@ const existingCategoryIds =
 
 
     setEditingTutor(tutor);
+    setSubmitting(false);
 
     setForm({
       name: tutor.name || "",
@@ -661,50 +663,48 @@ function toggleCourseSelection(courseId, checked) {
 
 
 
-  async function submitTutor(e) {
-    e.preventDefault();
+//   async function submitTutor(e) {
+//     e.preventDefault();
 
-    try {
-      if (!form.name.trim()) {
-        return showAlert("Tutor name required", "error");
-      }
+//     try {
+//       if (!form.name.trim()) {
+//         return showAlert("Tutor name required", "error");
+//       }
 
-      if (!form.phone.trim()) {
-        return showAlert("Phone required", "error");
-      }
-
-
-
-
-
-
-
-      // if (!Array.isArray(form.categoryIds) || form.categoryIds.length === 0) {
-      //   return showAlert("At least one category select cheyyuka", "error");
-      // }
-
-      // if (isOnlineTuition && !String(form.syllabus || "").trim()) {
-      //   return showAlert("Syllabus enter cheyyuka", "error");
-      // }
-
-      // if (!Array.isArray(form.courseIds) || form.courseIds.length === 0) {
-      //   return showAlert("At least one Course / Class select cheyyuka", "error");
-      // }
+//       if (!form.phone.trim()) {
+//         return showAlert("Phone required", "error");
+//       }
 
 
 
 
 
 
-      // if (isOnlineTuition && !String(form.syllabus || "").trim()) {
-      //   return showAlert("Syllabus enter cheyyuka", "error");
-      // }
 
-      // if (!Array.isArray(form.courseIds) || form.courseIds.length === 0) {
-      //   return showAlert("At least one Course / Batch select cheyyuka", "error");
-      // }
+//       // if (!Array.isArray(form.categoryIds) || form.categoryIds.length === 0) {
+//       //   return showAlert("At least one category select cheyyuka", "error");
+//       // }
+
+//       // if (isOnlineTuition && !String(form.syllabus || "").trim()) {
+//       //   return showAlert("Syllabus enter cheyyuka", "error");
+//       // }
+
+//       // if (!Array.isArray(form.courseIds) || form.courseIds.length === 0) {
+//       //   return showAlert("At least one Course / Class select cheyyuka", "error");
+//       // }
 
 
+
+
+
+
+//       // if (isOnlineTuition && !String(form.syllabus || "").trim()) {
+//       //   return showAlert("Syllabus enter cheyyuka", "error");
+//       // }
+
+//       // if (!Array.isArray(form.courseIds) || form.courseIds.length === 0) {
+//       //   return showAlert("At least one Course / Batch select cheyyuka", "error");
+//       // }
 
 
 
@@ -718,21 +718,10 @@ function toggleCourseSelection(courseId, checked) {
 
 
 
-if (!Array.isArray(form.courseIds) || form.courseIds.length === 0) {
-  return showAlert("At least one Course / Class select cheyyuka", "error");
-}
 
 
-
-
-
-
-
-
-// const autoCategoryIds = deriveCategoryIdsFromCourseIds(form.courseIds, courses);
-
-// if (autoCategoryIds.length === 0) {
-//   return showAlert("Selected course category not found", "error");
+// if (!Array.isArray(form.courseIds) || form.courseIds.length === 0) {
+//   return showAlert("At least one Course / Class select cheyyuka", "error");
 // }
 
 
@@ -741,12 +730,64 @@ if (!Array.isArray(form.courseIds) || form.courseIds.length === 0) {
 
 
 
-//       // const finalSyllabus = isOnlineTuition ? String(form.syllabus).trim() : "none";
-//       // const finalSectionType = isOnlineTuition ? "both" : "none";
+
+// // const autoCategoryIds = deriveCategoryIdsFromCourseIds(form.courseIds, courses);
+
+// // if (autoCategoryIds.length === 0) {
+// //   return showAlert("Selected course category not found", "error");
+// // }
 
 
+
+
+
+
+
+// //       // const finalSyllabus = isOnlineTuition ? String(form.syllabus).trim() : "none";
+// //       // const finalSectionType = isOnlineTuition ? "both" : "none";
+
+
+
+// // const autoCategoryIds = deriveCategoryIdsFromCourseIds(form.courseIds, courses);
+
+// // const autoSelectedCategories = categories.filter((cat) =>
+// //   autoCategoryIds.includes(String(cat._id))
+// // );
+
+// // const autoOnlineTuition = autoSelectedCategories.some(
+// //   (cat) => cat.key === "online_tuition"
+// // );
+
+// // const finalSyllabus =
+// //   form.syllabus && String(form.syllabus).trim()
+// //     ? String(form.syllabus).trim()
+// //     : "Not added";
+
+// // const finalSectionType = autoOnlineTuition ? "both" : "none";
+
+
+
+
+// //       const fd = new FormData();
+
+
+
+
+
+
+
+
+
+
+// if (!Array.isArray(form.courseIds) || form.courseIds.length === 0) {
+//   return showAlert("At least one Course / Class select cheyyuka", "error");
+// }
 
 // const autoCategoryIds = deriveCategoryIdsFromCourseIds(form.courseIds, courses);
+
+// if (autoCategoryIds.length === 0) {
+//   return showAlert("Selected course category not found", "error");
+// }
 
 // const autoSelectedCategories = categories.filter((cat) =>
 //   autoCategoryIds.includes(String(cat._id))
@@ -763,46 +804,7 @@ if (!Array.isArray(form.courseIds) || form.courseIds.length === 0) {
 
 // const finalSectionType = autoOnlineTuition ? "both" : "none";
 
-
-
-
-//       const fd = new FormData();
-
-
-
-
-
-
-
-
-
-
-if (!Array.isArray(form.courseIds) || form.courseIds.length === 0) {
-  return showAlert("At least one Course / Class select cheyyuka", "error");
-}
-
-const autoCategoryIds = deriveCategoryIdsFromCourseIds(form.courseIds, courses);
-
-if (autoCategoryIds.length === 0) {
-  return showAlert("Selected course category not found", "error");
-}
-
-const autoSelectedCategories = categories.filter((cat) =>
-  autoCategoryIds.includes(String(cat._id))
-);
-
-const autoOnlineTuition = autoSelectedCategories.some(
-  (cat) => cat.key === "online_tuition"
-);
-
-const finalSyllabus =
-  form.syllabus && String(form.syllabus).trim()
-    ? String(form.syllabus).trim()
-    : "Not added";
-
-const finalSectionType = autoOnlineTuition ? "both" : "none";
-
-const fd = new FormData();
+// const fd = new FormData();
 
 
 
@@ -813,55 +815,53 @@ const fd = new FormData();
 
 
 
-      fd.append("name", form.name.trim());
-      fd.append("email", form.email.trim());
-      fd.append("phone", form.phone.trim());
-      fd.append("qualification", form.qualification.trim());
-      fd.append("about", form.about.trim());
-      fd.append("subjects", form.subjects.trim());
+//       fd.append("name", form.name.trim());
+//       fd.append("email", form.email.trim());
+//       fd.append("phone", form.phone.trim());
+//       fd.append("qualification", form.qualification.trim());
+//       fd.append("about", form.about.trim());
+//       fd.append("subjects", form.subjects.trim());
 
-      // form.categoryIds.forEach((categoryId) => {
-      //   fd.append("categoryIds", categoryId);
-      // });
+//       // form.categoryIds.forEach((categoryId) => {
+//       //   fd.append("categoryIds", categoryId);
+//       // });
 
-      // fd.append("categoryId", form.categoryIds[0]);
-
-
+//       // fd.append("categoryId", form.categoryIds[0]);
 
 
 
 
-autoCategoryIds.forEach((categoryId) => {
-  fd.append("categoryIds", categoryId);
-});
-
-fd.append("categoryId", autoCategoryIds[0]);
 
 
+// autoCategoryIds.forEach((categoryId) => {
+//   fd.append("categoryIds", categoryId);
+// });
 
-
-      fd.append("sectionType", finalSectionType);
-      fd.append("syllabus", finalSyllabus);
-
-      form.courseIds.forEach((courseId) => {
-        fd.append("courseIds", courseId);
-      });
-
-      fd.append("courseId", form.courseIds[0]);
+// fd.append("categoryId", autoCategoryIds[0]);
 
 
 
 
-      if (!editingTutor) {
-        fd.append("loginPasswordText", form.loginPasswordText);
-      }
+//       fd.append("sectionType", finalSectionType);
+//       fd.append("syllabus", finalSyllabus);
+
+//       form.courseIds.forEach((courseId) => {
+//         fd.append("courseIds", courseId);
+//       });
+
+//       fd.append("courseId", form.courseIds[0]);
 
 
-      if (form.photo) {
-        fd.append("photo", form.photo);
-      }
 
 
+//       if (!editingTutor) {
+//         fd.append("loginPasswordText", form.loginPasswordText);
+//       }
+
+
+//       if (form.photo) {
+//         fd.append("photo", form.photo);
+//       }
 
 
 
@@ -870,26 +870,142 @@ fd.append("categoryId", autoCategoryIds[0]);
 
 
 
-      if (editingTutor) {
-        await api.put(`/admin/tuter/update/${editingTutor._id}`, fd);
-      } else {
-        await api.post("/admin/tuter/create", fd);
-      }
 
-      showAlert(
-        editingTutor ? "Tutor updated successfully" : "Tutor added successfully",
-        "success"
-      );
 
-      setModalOpen(false);
-      setEditingTutor(null);
-      setForm({ ...emptyForm, courseIds: [] });
-      setPreview("");
-      fetchData();
-    } catch (err) {
-      showAlert(getErrorMessage(err), "error");
+//       if (editingTutor) {
+//         await api.put(`/admin/tuter/update/${editingTutor._id}`, fd);
+//       } else {
+//         await api.post("/admin/tuter/create", fd);
+//       }
+
+//       showAlert(
+//         editingTutor ? "Tutor updated successfully" : "Tutor added successfully",
+//         "success"
+//       );
+
+//       setModalOpen(false);
+//       setEditingTutor(null);
+//       setForm({ ...emptyForm, courseIds: [] });
+//       setPreview("");
+//       fetchData();
+//     } catch (err) {
+//       showAlert(getErrorMessage(err), "error");
+//     }
+//   }
+
+
+
+
+
+
+
+
+
+async function submitTutor(e) {
+  e.preventDefault();
+
+  if (submitting) return;
+
+  try {
+    if (!form.name.trim()) {
+      return showAlert("Tutor name required", "error");
     }
+
+    if (!form.phone.trim()) {
+      return showAlert("Phone required", "error");
+    }
+
+    if (!Array.isArray(form.courseIds) || form.courseIds.length === 0) {
+      return showAlert("At least one Course / Class select cheyyuka", "error");
+    }
+
+    const autoCategoryIds = deriveCategoryIdsFromCourseIds(
+      form.courseIds,
+      courses
+    );
+
+    if (autoCategoryIds.length === 0) {
+      return showAlert("Selected course category not found", "error");
+    }
+
+    const autoSelectedCategories = categories.filter((cat) =>
+      autoCategoryIds.includes(String(cat._id))
+    );
+
+    const autoOnlineTuition = autoSelectedCategories.some(
+      (cat) => cat.key === "online_tuition"
+    );
+
+    const finalSyllabus =
+      form.syllabus && String(form.syllabus).trim()
+        ? String(form.syllabus).trim()
+        : "Not added";
+
+    const finalSectionType = autoOnlineTuition ? "both" : "none";
+
+    setSubmitting(true);
+
+    const fd = new FormData();
+
+    fd.append("name", form.name.trim());
+    fd.append("email", form.email.trim());
+    fd.append("phone", form.phone.trim());
+    fd.append("qualification", form.qualification.trim());
+    fd.append("about", form.about.trim());
+    fd.append("subjects", form.subjects.trim());
+
+    autoCategoryIds.forEach((categoryId) => {
+      fd.append("categoryIds", categoryId);
+    });
+
+    fd.append("categoryId", autoCategoryIds[0]);
+
+    fd.append("sectionType", finalSectionType);
+    fd.append("syllabus", finalSyllabus);
+
+    form.courseIds.forEach((courseId) => {
+      fd.append("courseIds", courseId);
+    });
+
+    fd.append("courseId", form.courseIds[0]);
+
+    if (!editingTutor) {
+      fd.append("loginPasswordText", form.loginPasswordText);
+    }
+
+    if (form.photo) {
+      fd.append("photo", form.photo);
+    }
+
+    if (editingTutor) {
+      await api.put(`/admin/tuter/update/${editingTutor._id}`, fd);
+    } else {
+      await api.post("/admin/tuter/create", fd);
+    }
+
+    showAlert(
+      editingTutor ? "Tutor updated successfully" : "Tutor added successfully",
+      "success"
+    );
+
+    setModalOpen(false);
+    setEditingTutor(null);
+    setForm({ ...emptyForm, courseIds: [] });
+    setPreview("");
+    fetchData();
+  } catch (err) {
+    showAlert(getErrorMessage(err), "error");
+  } finally {
+    setSubmitting(false);
   }
+}
+
+
+
+
+
+
+
 
   function askDeleteTutor(tutor) {
     setDeleteTarget(tutor);
@@ -897,20 +1013,50 @@ fd.append("categoryId", autoCategoryIds[0]);
     setMenuOpenId(null);
   }
 
-  async function confirmDeleteTutor() {
-    if (!deleteTarget) return;
+  // async function confirmDeleteTutor() {
+  //   if (!deleteTarget) return;
 
-    try {
-      await api.delete(`/admin/tuter/delete/${deleteTarget._id}`);
+  //   try {
+  //     await api.delete(`/admin/tuter/delete/${deleteTarget._id}`);
 
-      showAlert("Tutor deleted successfully", "success");
-      setConfirmOpen(false);
-      setDeleteTarget(null);
-      fetchData();
-    } catch (err) {
-      showAlert(getErrorMessage(err), "error");
-    }
+  //     showAlert("Tutor deleted successfully", "success");
+  //     setConfirmOpen(false);
+  //     setDeleteTarget(null);
+  //     fetchData();
+  //   } catch (err) {
+  //     showAlert(getErrorMessage(err), "error");
+  //   }
+  // }
+
+
+
+
+
+
+async function confirmDeleteTutor() {
+  if (!deleteTarget || submitting) return;
+
+  try {
+    setSubmitting(true);
+
+    await api.delete(`/admin/tuter/delete/${deleteTarget._id}`);
+
+    showAlert("Tutor deleted successfully", "success");
+    setConfirmOpen(false);
+    setDeleteTarget(null);
+    fetchData();
+  } catch (err) {
+    showAlert(getErrorMessage(err), "error");
+  } finally {
+    setSubmitting(false);
   }
+}
+
+
+
+
+
+
 
   async function toggleStatus(tutor) {
     try {
@@ -1371,17 +1517,43 @@ fd.append("categoryId", autoCategoryIds[0]);
           </div>
 
           <div className="form-actions">
-            <button
+            {/* <button
               type="button"
               className="secondary-btn"
               onClick={() => setModalOpen(false)}
             >
               Cancel
-            </button>
+            </button> */}
 
-            <button type="submit" className="primary-btn">
+
+
+<button
+  type="button"
+  className="secondary-btn"
+  onClick={() => setModalOpen(false)}
+  disabled={submitting}
+>
+  Cancel
+</button>
+
+
+
+
+            {/* <button type="submit" className="primary-btn">
               {editingTutor ? "Update" : "Add"}
-            </button>
+            </button> */}
+
+
+<button type="submit" className="primary-btn" disabled={submitting}>
+  {submitting
+    ? editingTutor
+      ? "Updating..."
+      : "Adding..."
+    : editingTutor
+    ? "Update"
+    : "Add"}
+</button>
+
           </div>
         </form>
       </TutorDarkModal>
@@ -1452,13 +1624,29 @@ fd.append("categoryId", autoCategoryIds[0]);
         Cancel
       </button>
 
-      <button
+      {/* <button
         type="button"
         className="danger-btn"
         onClick={confirmDeleteTutor}
       >
         Delete
-      </button>
+      </button> */}
+
+
+
+<button
+  type="button"
+  className="danger-btn"
+  onClick={confirmDeleteTutor}
+  disabled={submitting}
+>
+  {submitting ? "Deleting..." : "Delete"}
+</button>
+
+
+
+
+
     </div>
   </div>
 </TutorDarkModal>
