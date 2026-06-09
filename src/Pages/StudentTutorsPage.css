@@ -484,3 +484,300 @@
     -webkit-line-clamp: 4 !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   FINAL FIX: Admin Course Tutors Edit Modal Full Dark Theme
+   Paste at VERY BOTTOM of AdminTutorDetailsPage.css
+   ========================================================= */
+
+.tutor-dark-modal-overlay .tutor-dark-modal {
+  background: linear-gradient(180deg, #111633 0%, #070a21 100%) !important;
+  border: 1px solid rgba(217, 70, 239, 0.35) !important;
+  color: #ffffff !important;
+  overflow: hidden !important;
+}
+
+.tutor-dark-modal-overlay .tutor-dark-modal-header {
+  background: rgba(15, 20, 48, 0.98) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.tutor-dark-modal-overlay .tutor-dark-modal-header h2 {
+  color: #ffffff !important;
+}
+
+.tutor-dark-modal-overlay .tutor-dark-modal-close {
+  background: rgba(217, 70, 239, 0.22) !important;
+  color: #ffffff !important;
+}
+
+.tutor-dark-modal-overlay .tutor-dark-modal-body {
+  background: linear-gradient(180deg, #0d1230 0%, #070a21 100%) !important;
+  color: #ffffff !important;
+}
+
+/* Form labels */
+.tutor-dark-modal-overlay .tutor-form,
+.tutor-dark-modal-overlay .detail-form {
+  background: transparent !important;
+  color: #ffffff !important;
+}
+
+.tutor-dark-modal-overlay .tutor-form .form-field > span,
+.tutor-dark-modal-overlay .detail-form .form-field > span {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Inputs, textarea, select full dark */
+.tutor-dark-modal-overlay .tutor-form input,
+.tutor-dark-modal-overlay .tutor-form textarea,
+.tutor-dark-modal-overlay .tutor-form select,
+.tutor-dark-modal-overlay .detail-form input,
+.tutor-dark-modal-overlay .detail-form textarea,
+.tutor-dark-modal-overlay .detail-form select {
+  background: linear-gradient(180deg, #252a42 0%, #1f2439 100%) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  box-shadow: none !important;
+}
+
+.tutor-dark-modal-overlay .tutor-form input::placeholder,
+.tutor-dark-modal-overlay .tutor-form textarea::placeholder,
+.tutor-dark-modal-overlay .detail-form input::placeholder,
+.tutor-dark-modal-overlay .detail-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.45) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.45) !important;
+}
+
+.tutor-dark-modal-overlay .tutor-form input:focus,
+.tutor-dark-modal-overlay .tutor-form textarea:focus,
+.tutor-dark-modal-overlay .tutor-form select:focus,
+.tutor-dark-modal-overlay .detail-form input:focus,
+.tutor-dark-modal-overlay .detail-form textarea:focus,
+.tutor-dark-modal-overlay .detail-form select:focus {
+  border-color: #d946ef !important;
+  box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.16) !important;
+}
+
+/* File input white area fix */
+.tutor-dark-modal-overlay .tutor-form input[type="file"],
+.tutor-dark-modal-overlay .detail-form input[type="file"] {
+  background: linear-gradient(180deg, #252a42 0%, #1f2439 100%) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.tutor-dark-modal-overlay .tutor-form input[type="file"]::file-selector-button,
+.tutor-dark-modal-overlay .detail-form input[type="file"]::file-selector-button {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-radius: 12px !important;
+  font-weight: 900 !important;
+}
+
+.tutor-dark-modal-overlay .tutor-form input[type="file"]::file-selector-button:hover,
+.tutor-dark-modal-overlay .detail-form input[type="file"]::file-selector-button:hover {
+  background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
+  color: #ffffff !important;
+}
+
+/* Chrome file input text */
+.tutor-dark-modal-overlay input[type="file"] {
+  color-scheme: dark !important;
+}
+
+/* Course / Classes box dark */
+.tutor-dark-modal-overlay .course-checkbox-list,
+.tutor-dark-modal-overlay .tutor-course-checkbox-list,
+.tutor-dark-modal-overlay .tutor-category-checkbox-list {
+  background: linear-gradient(180deg, #252a42 0%, #1b2036 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+
+.tutor-dark-modal-overlay .course-check-item {
+  color: #ffffff !important;
+  background: transparent !important;
+  border: 1px solid transparent !important;
+}
+
+.tutor-dark-modal-overlay .course-check-item:hover {
+  background: rgba(217, 70, 239, 0.12) !important;
+}
+
+.tutor-dark-modal-overlay .course-check-item span {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.tutor-dark-modal-overlay .course-category-name {
+  color: #c084fc !important;
+  -webkit-text-fill-color: #c084fc !important;
+}
+
+.tutor-dark-modal-overlay .course-check-item:has(input[type="checkbox"]:checked) {
+  background: rgba(217, 70, 239, 0.14) !important;
+  border-color: rgba(217, 70, 239, 0.35) !important;
+}
+
+/* Empty text */
+.tutor-dark-modal-overlay .course-empty-text {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+
+/* Bottom white sticky area fix */
+.tutor-dark-modal-overlay .tutor-form .form-actions,
+.tutor-dark-modal-overlay .detail-form .form-actions {
+  background: linear-gradient(
+    180deg,
+    rgba(7, 10, 33, 0) 0%,
+    #070a21 35%,
+    #070a21 100%
+  ) !important;
+  padding: 18px 0 12px !important;
+  margin-top: 14px !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  gap: 14px !important;
+}
+
+/* Buttons */
+.tutor-dark-modal-overlay .primary-btn {
+  background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border: none !important;
+}
+
+.tutor-dark-modal-overlay .secondary-btn {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border: none !important;
+}
+
+.tutor-dark-modal-overlay .danger-btn {
+  background: #ef4444 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border: none !important;
+}
+
+/* Disabled button also readable */
+.tutor-dark-modal-overlay button:disabled {
+  opacity: 0.65 !important;
+  cursor: not-allowed !important;
+}
+
+/* Preview image dark background */
+.tutor-dark-modal-overlay .tutor-photo-preview,
+.tutor-dark-modal-overlay .detail-photo-preview {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(217, 70, 239, 0.35) !important;
+}
+
+/* Mobile modal height same as tutor page */
+@media (max-width: 760px) {
+  .tutor-dark-modal-overlay .tutor-dark-modal {
+    width: calc(100vw - 28px) !important;
+    max-width: 360px !important;
+    max-height: 76vh !important;
+    border-radius: 18px !important;
+  }
+
+  .tutor-dark-modal-overlay .tutor-dark-modal-body {
+    max-height: calc(76vh - 72px) !important;
+    overflow-y: auto !important;
+    padding: 16px !important;
+  }
+
+  .tutor-dark-modal-overlay .tutor-form-grid,
+  .tutor-dark-modal-overlay .detail-form-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .tutor-dark-modal-overlay .tutor-form input,
+  .tutor-dark-modal-overlay .tutor-form textarea,
+  .tutor-dark-modal-overlay .tutor-form select,
+  .tutor-dark-modal-overlay .detail-form input,
+  .tutor-dark-modal-overlay .detail-form textarea,
+  .tutor-dark-modal-overlay .detail-form select {
+    min-height: 40px !important;
+    border-radius: 10px !important;
+    font-size: 12px !important;
+    padding: 9px 10px !important;
+  }
+
+  .tutor-dark-modal-overlay .tutor-form textarea,
+  .tutor-dark-modal-overlay .detail-form textarea {
+    min-height: 80px !important;
+  }
+
+  .tutor-dark-modal-overlay .tutor-photo-preview,
+  .tutor-dark-modal-overlay .detail-photo-preview {
+    width: 90px !important;
+    height: 90px !important;
+    border-radius: 14px !important;
+  }
+
+  .tutor-dark-modal-overlay .tutor-course-checkbox-list,
+  .tutor-dark-modal-overlay .course-checkbox-list {
+    min-height: 150px !important;
+    max-height: 190px !important;
+  }
+
+  .tutor-dark-modal-overlay .tutor-form .form-actions,
+  .tutor-dark-modal-overlay .detail-form .form-actions {
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    padding: 14px 0 10px !important;
+  }
+
+  .tutor-dark-modal-overlay .primary-btn,
+  .tutor-dark-modal-overlay .secondary-btn,
+  .tutor-dark-modal-overlay .danger-btn {
+    width: 50% !important;
+    min-width: 0 !important;
+    min-height: 44px !important;
+    border-radius: 12px !important;
+    font-size: 13px !important;
+  }
+}
