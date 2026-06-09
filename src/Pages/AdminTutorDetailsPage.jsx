@@ -2921,7 +2921,7 @@ async function toggleTutorBlock() {
               </div>
             </div> */}
 
-            {formHasOnlineTuition && (
+            {/* {formHasOnlineTuition && (
               // <label className="form-field form-field--full">
               //   <span>Syllabus</span>
               //   <input
@@ -2932,6 +2932,14 @@ async function toggleTutorBlock() {
               //     placeholder="Example: State, CBSE, ICSE"
               //   />
               // </label>
+
+
+
+
+
+
+            )} */}
+
 
 
 <label className="form-field form-field--full">
@@ -2947,14 +2955,6 @@ async function toggleTutorBlock() {
     Empty aakki save cheythal “Not added” aayi save aavum.
   </small> */}
 </label>
-
-
-
-            )}
-
-
-
-
 
 
 
