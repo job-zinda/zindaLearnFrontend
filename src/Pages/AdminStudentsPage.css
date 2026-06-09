@@ -2367,3 +2367,79 @@ rgba(
     font-size: 13px !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===========================
+   MOBILE INVITE BUTTON FIX
+=========================== */
+
+.student-invite-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+
+  .student-toolbar {
+    display: grid !important;
+    grid-template-columns: 1fr 52px !important;
+    gap: 10px !important;
+    align-items: center !important;
+  }
+
+  .student-search {
+    width: 100% !important;
+    height: 52px !important;
+    margin: 0 !important;
+  }
+
+  .student-invite-btn {
+    width: 52px !important;
+    min-width: 52px !important;
+    height: 52px !important;
+    padding: 0 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    border-radius: 14px !important;
+  }
+
+  .student-invite-btn__text {
+    display: none !important;
+  }
+
+  .student-invite-btn__icon {
+    width: 26px !important;
+    height: 26px !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .student-invite-btn__user {
+    width: 24px !important;
+    height: 24px !important;
+  }
+
+  .student-invite-btn__plus {
+    font-size: 18px !important;
+    top: -5px !important;
+    left: -6px !important;
+  }
+}
