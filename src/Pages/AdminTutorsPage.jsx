@@ -1222,9 +1222,9 @@ fd.append("categoryId", autoCategoryIds[0]);
     onChange={handleChange}
      placeholder="Example: State, CBSE, ICSE"
   />
-  <small className="tutor-syllabus-note">
+  {/* <small className="tutor-syllabus-note">
     Empty aakki save cheythal “Not added” aayi save aavum.
-  </small>
+  </small> */}
 </label>
 
 
