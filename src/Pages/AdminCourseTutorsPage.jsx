@@ -2227,7 +2227,7 @@ className={`tutor-card ${
   </button>
 
   <button type="button" onClick={() => askDeleteTutor(tutor)}>
-    🗑 Delete
+    🗑 Delete Account
   </button>
 </div>
 
