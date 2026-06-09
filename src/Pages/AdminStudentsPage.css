@@ -2443,3 +2443,221 @@ rgba(
     left: -6px !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   FINAL FIX: Student mobile invite icon + edit modal height
+   Paste at VERY BOTTOM of AdminStudentsPage.css
+========================================================= */
+
+.student-invite-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  white-space: nowrap !important;
+}
+
+.student-invite-btn__icon {
+  position: relative !important;
+  width: 30px !important;
+  height: 30px !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  flex: 0 0 30px !important;
+}
+
+.student-invite-btn__user {
+  width: 27px !important;
+  height: 27px !important;
+  stroke: #ffffff !important;
+  stroke-width: 2.3 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+
+.student-invite-btn__plus {
+  position: absolute !important;
+  top: -6px !important;
+  left: -7px !important;
+  color: #ffffff !important;
+  font-size: 20px !important;
+  font-weight: 950 !important;
+  line-height: 1 !important;
+}
+
+.student-invite-btn__text {
+  display: inline !important;
+}
+
+/* Mobile only */
+@media (max-width: 720px) {
+  .student-toolbar {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 50px !important;
+    gap: 10px !important;
+    align-items: center !important;
+    margin-bottom: 22px !important;
+  }
+
+  .student-search {
+    min-width: 0 !important;
+    width: 100% !important;
+    height: 48px !important;
+    border-radius: 14px !important;
+    padding: 0 12px !important;
+  }
+
+  .student-search span {
+    font-size: 18px !important;
+  }
+
+  .student-search input {
+    min-width: 0 !important;
+    font-size: 13px !important;
+  }
+
+  .student-invite-btn {
+    width: 50px !important;
+    min-width: 50px !important;
+    max-width: 50px !important;
+    height: 48px !important;
+    min-height: 48px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 14px !important;
+    display: inline-grid !important;
+    place-items: center !important;
+    font-size: 0 !important;
+  }
+
+  .student-invite-btn__text {
+    display: none !important;
+  }
+
+  .student-invite-btn__icon {
+    width: 30px !important;
+    height: 30px !important;
+  }
+}
+
+/* Edit Student modal mobile height same compact style */
+@media (max-width: 640px) {
+  .student-dark-modal {
+    width: calc(100vw - 28px) !important;
+    max-height: calc(100vh - 118px) !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+  }
+
+  .student-dark-modal-header {
+    padding: 14px 16px !important;
+  }
+
+  .student-dark-modal-header h2 {
+    font-size: 16px !important;
+  }
+
+  .student-dark-modal-close {
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 22px !important;
+  }
+
+  .student-dark-modal-body {
+    max-height: calc(100vh - 190px) !important;
+    overflow-y: auto !important;
+    padding: 14px 16px 16px !important;
+  }
+
+  .student-form {
+    gap: 10px !important;
+  }
+
+  .student-form label,
+  .student-form .form-field {
+    gap: 5px !important;
+  }
+
+  .student-form input {
+    min-height: 38px !important;
+    height: 38px !important;
+    border-radius: 9px !important;
+    padding: 8px 10px !important;
+    font-size: 11px !important;
+  }
+
+  .student-photo-preview {
+    width: 88px !important;
+    height: 88px !important;
+    border-radius: 12px !important;
+  }
+
+  .student-dark-modal .form-actions {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    margin-top: 8px !important;
+  }
+
+  .student-dark-modal .form-actions button {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    border-radius: 9px !important;
+    font-size: 12px !important;
+    padding: 0 8px !important;
+  }
+
+  .student-dark-modal .form-actions .secondary-btn {
+    order: 1 !important;
+  }
+
+  .student-dark-modal .form-actions .primary-btn,
+  .student-dark-modal .form-actions .danger-btn {
+    order: 2 !important;
+  }
+}
