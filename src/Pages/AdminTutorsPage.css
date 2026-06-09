@@ -2181,3 +2181,53 @@
     transform: translateY(-1px);
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   ADMIN TUTOR AUTO CATEGORY UI FIX
+   Categories hidden, all courses visible
+========================================================= */
+
+.tutor-syllabus-note {
+  color: rgba(15, 23, 42, 0.58) !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  line-height: 1.4 !important;
+}
+
+.tutor-form .tutor-course-checkbox-list {
+  min-height: 260px !important;
+  max-height: 330px !important;
+}
+
+@media (max-width: 760px) {
+  .tutor-form .tutor-course-checkbox-list {
+    min-height: 230px !important;
+    max-height: 300px !important;
+  }
+}
