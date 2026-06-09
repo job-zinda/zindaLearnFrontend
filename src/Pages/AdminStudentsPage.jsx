@@ -1945,24 +1945,24 @@ export default function AdminStudentsPage() {
 
 
 
-function handlePhotoChange(e) {
-  const file = e.target.files?.[0];
+  function handlePhotoChange(e) {
+    const file = e.target.files?.[0];
 
-  if (!file) return;
+    if (!file) return;
 
-  if (file.size > 5 * 1024 * 1024) {
-    showAlert("Image size 5MB-il താഴെ ആയിരിക്കണം", "error");
-    return;
+    if (file.size > 5 * 1024 * 1024) {
+      showAlert("Image size 5MB-il താഴെ ആയിരിക്കണം", "error");
+      return;
+    }
+
+    setEditForm((prev) => ({
+      ...prev,
+      photo: URL.createObjectURL(file),
+      photoFile: file,
+    }));
+
+    setPreview(URL.createObjectURL(file));
   }
-
-  setEditForm((prev) => ({
-    ...prev,
-    photo: URL.createObjectURL(file),
-    photoFile: file,
-  }));
-
-  setPreview(URL.createObjectURL(file));
-}
 
 
 
@@ -1999,24 +1999,24 @@ function handlePhotoChange(e) {
 
 
 
-const formData = new FormData();
-formData.append("name", editForm.name.trim());
-formData.append("email", editForm.email.trim());
-formData.append("phone", editForm.phone.trim());
+      const formData = new FormData();
+      formData.append("name", editForm.name.trim());
+      formData.append("email", editForm.email.trim());
+      formData.append("phone", editForm.phone.trim());
 
-if (editForm.photoFile) {
-  formData.append("photo", editForm.photoFile);
-}
+      if (editForm.photoFile) {
+        formData.append("photo", editForm.photoFile);
+      }
 
-await api.put(
-  `/admin/student/update/${getStudentId(editingStudent)}`,
-  formData,
-  {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  }
-);
+      await api.put(
+        `/admin/student/update/${getStudentId(editingStudent)}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
 
 
@@ -2298,7 +2298,7 @@ ${isStudentBlocked(student)
 
 
 
-                onClick={(e) => e.stopPropagation()}
+                // onClick={(e) => e.stopPropagation()}
               >
 
 
@@ -2339,37 +2339,28 @@ ${isStudentBlocked(student)
 
 
                 <div className="student-menu-wrap">
-                  <button
-                    type="button"
-                    className="student-menu-btn"
-                    onClick={() =>
-                      setMenuOpenId(menuOpenId === studentId ? null : studentId)
-                    }
-                  >
-                    ⋮
-                  </button>
+                <button
+  type="button"
+  className="student-menu-btn"
+  onClick={(e) => {
+    e.stopPropagation();
+    setMenuOpenId(menuOpenId === studentId ? null : studentId);
+  }}
+>
+  ⋮
+</button>
 
-                  {menuOpenId === studentId && (
-
-
-
-
-
-
-
-
-                    <div className="student-menu">
-
-                      <button
-                        type="button"
-                        onClick={() =>
-                          openEditModal(student)
-                        }
-                      >
-
-                        ✎ Edit
-
-                      </button>
+                {menuOpenId === studentId && (
+  <div
+    className="student-menu"
+    onClick={(e) => e.stopPropagation()}
+  >
+    <button
+      type="button"
+      onClick={() => openEditModal(student)}
+    >
+      ✎ Edit
+    </button>
 
 
                       <button
