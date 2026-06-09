@@ -1954,3 +1954,120 @@ rgba(
     width: 100% !important;
   }
 } */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   MOBILE FIX: Search bar + Invite button same row
+   Laptop view change ചെയ്യില്ല
+========================================================= */
+
+@media (max-width: 720px) {
+  .student-toolbar {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 56px !important;
+    gap: 10px !important;
+    align-items: center !important;
+    margin-bottom: 22px !important;
+  }
+
+  .student-search {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 56px !important;
+    border-radius: 16px !important;
+    padding: 0 14px !important;
+  }
+
+  .student-search span {
+    font-size: 22px !important;
+    flex: 0 0 auto !important;
+  }
+
+  .student-search input {
+    min-width: 0 !important;
+    font-size: 14px !important;
+  }
+
+  .student-search input::placeholder {
+    font-size: 14px !important;
+  }
+
+  .student-invite-btn {
+    width: 56px !important;
+    min-width: 56px !important;
+    max-width: 56px !important;
+    height: 56px !important;
+    padding: 0 !important;
+    border-radius: 16px !important;
+    font-size: 0 !important;
+    display: grid !important;
+    place-items: center !important;
+    flex: 0 0 56px !important;
+  }
+
+  .student-invite-btn::before {
+    content: "+" !important;
+    font-size: 30px !important;
+    line-height: 1 !important;
+    font-weight: 950 !important;
+    color: #ffffff !important;
+  }
+
+  /* Search ചെയ്യുമ്പോൾ invite button hide ആക്കും */
+  .student-toolbar:focus-within {
+    grid-template-columns: 1fr !important;
+  }
+
+  .student-toolbar:focus-within .student-invite-btn {
+    display: none !important;
+  }
+
+  .student-toolbar:focus-within .student-search {
+    width: 100% !important;
+  }
+}
