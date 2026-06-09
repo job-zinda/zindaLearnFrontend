@@ -2231,3 +2231,495 @@
     max-height: 300px !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   FINAL FIX: Admin Tutors mobile add icon + dark modals
+   Paste at VERY BOTTOM of AdminTutorsPage.css
+========================================================= */
+
+/* Add tutor button icon */
+.tutor-add-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+}
+
+.tutor-add-btn__icon {
+  position: relative !important;
+  width: 27px !important;
+  height: 27px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 0 0 27px !important;
+}
+
+.tutor-add-btn__user {
+  width: 26px !important;
+  height: 26px !important;
+  stroke: #ffffff !important;
+  stroke-width: 2.3 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+
+.tutor-add-btn__plus {
+  position: absolute !important;
+  top: -7px !important;
+  left: -7px !important;
+  color: #ffffff !important;
+  font-size: 20px !important;
+  font-weight: 950 !important;
+  line-height: 1 !important;
+}
+
+.tutor-add-btn__text {
+  display: inline !important;
+}
+
+/* Mobile: search left, add tutor icon right */
+@media (max-width: 720px) {
+  .tutor-toolbar {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 50px !important;
+    gap: 10px !important;
+    align-items: center !important;
+    margin-bottom: 22px !important;
+  }
+
+  .tutor-search {
+    min-width: 0 !important;
+    width: 100% !important;
+    height: 48px !important;
+    border-radius: 14px !important;
+    padding: 0 12px !important;
+  }
+
+  .tutor-search span {
+    font-size: 18px !important;
+  }
+
+  .tutor-search input {
+    min-width: 0 !important;
+    font-size: 13px !important;
+  }
+
+  .tutor-add-btn {
+    width: 50px !important;
+    min-width: 50px !important;
+    height: 48px !important;
+    padding: 0 !important;
+    border-radius: 14px !important;
+    display: inline-grid !important;
+    place-items: center !important;
+    align-self: stretch !important;
+  }
+
+  .tutor-add-btn__text {
+    display: none !important;
+  }
+
+  .tutor-add-btn__icon {
+    width: 30px !important;
+    height: 30px !important;
+    flex: 0 0 30px !important;
+  }
+
+  .tutor-add-btn__user {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .tutor-add-btn__plus {
+    top: -6px !important;
+    left: -7px !important;
+    font-size: 20px !important;
+  }
+}
+
+/* Dark modal overlay */
+.tutor-dark-modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483647 !important;
+  background: rgba(2, 6, 23, 0.72) !important;
+  backdrop-filter: blur(7px) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 20px !important;
+}
+
+/* Dark modal box */
+.tutor-dark-modal {
+  max-width: calc(100vw - 40px) !important;
+  max-height: calc(100vh - 40px) !important;
+  background: linear-gradient(145deg, #111633, #080b22) !important;
+  color: #ffffff !important;
+  border-radius: 22px !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(217, 70, 239, 0.28) !important;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45) !important;
+}
+
+.tutor-dark-modal-header {
+  padding: 18px 22px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+.tutor-dark-modal-header h2 {
+  margin: 0 !important;
+  font-size: 22px !important;
+  color: #ffffff !important;
+  font-weight: 950 !important;
+}
+
+.tutor-dark-modal-close {
+  width: 42px !important;
+  height: 42px !important;
+  border: none !important;
+  border-radius: 50% !important;
+  background: rgba(217, 70, 239, 0.16) !important;
+  color: #f0abfc !important;
+  font-size: 30px !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+.tutor-dark-modal-close:hover {
+  background: rgba(217, 70, 239, 0.28) !important;
+  color: #ffffff !important;
+}
+
+.tutor-dark-modal-body {
+  padding: 24px !important;
+  max-height: calc(100vh - 120px) !important;
+  overflow-y: auto !important;
+}
+
+/* Force tutor modal form dark */
+.tutor-dark-modal,
+.tutor-dark-modal * {
+  color: #ffffff;
+}
+
+.tutor-dark-modal .tutor-form {
+  color: #ffffff !important;
+  padding: 4px 4px 0 !important;
+}
+
+.tutor-dark-modal .tutor-form-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 18px 22px !important;
+  align-items: start !important;
+}
+
+.tutor-dark-modal .tutor-form .form-field--full {
+  grid-column: 1 / -1 !important;
+}
+
+.tutor-dark-modal .tutor-form .form-field {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 9px !important;
+  margin: 0 !important;
+  min-width: 0 !important;
+}
+
+.tutor-dark-modal .tutor-form .form-field > span,
+.tutor-dark-modal .tutor-form label,
+.tutor-dark-modal .tutor-form span,
+.tutor-dark-modal .tutor-form p,
+.tutor-dark-modal .delete-confirm-box,
+.tutor-dark-modal .delete-confirm-box p,
+.tutor-dark-modal .delete-confirm-box b {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-weight: 900 !important;
+}
+
+/* Inputs dark */
+.tutor-dark-modal .tutor-form input,
+.tutor-dark-modal .tutor-form textarea,
+.tutor-dark-modal .tutor-form select {
+  width: 100% !important;
+  min-height: 56px !important;
+  background: rgba(255, 255, 255, 0.07) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-radius: 16px !important;
+  padding: 14px 16px !important;
+  outline: none !important;
+  font-size: 15px !important;
+  font-weight: 850 !important;
+  box-shadow: none !important;
+}
+
+.tutor-dark-modal .tutor-form textarea {
+  min-height: 132px !important;
+  resize: vertical !important;
+  line-height: 1.55 !important;
+}
+
+.tutor-dark-modal .tutor-form input::placeholder,
+.tutor-dark-modal .tutor-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.52) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.52) !important;
+  opacity: 1 !important;
+}
+
+.tutor-dark-modal .tutor-form input:focus,
+.tutor-dark-modal .tutor-form textarea:focus,
+.tutor-dark-modal .tutor-form select:focus {
+  border-color: rgba(217, 70, 239, 0.75) !important;
+  box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.2) !important;
+}
+
+/* File input */
+.tutor-dark-modal .tutor-form input[type="file"] {
+  height: auto !important;
+  padding: 12px !important;
+  cursor: pointer !important;
+}
+
+.tutor-dark-modal .tutor-form input[type="file"]::file-selector-button {
+  border: none !important;
+  border-radius: 10px !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+  font-weight: 950 !important;
+  padding: 9px 13px !important;
+  margin-right: 12px !important;
+  cursor: pointer !important;
+}
+
+/* Photo preview */
+.tutor-dark-modal .tutor-photo-preview {
+  width: 130px !important;
+  height: 130px !important;
+  border-radius: 18px !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(217, 70, 239, 0.35) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+.tutor-dark-modal .tutor-photo-preview img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+/* Course list dark */
+.tutor-dark-modal .course-checkbox-list,
+.tutor-dark-modal .tutor-course-checkbox-list {
+  min-height: 180px !important;
+  max-height: 260px !important;
+  overflow-y: auto !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-radius: 18px !important;
+  padding: 10px !important;
+  background: rgba(255, 255, 255, 0.055) !important;
+}
+
+.tutor-dark-modal .course-check-item {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  padding: 12px 10px !important;
+  font-weight: 900 !important;
+  color: #ffffff !important;
+  cursor: pointer !important;
+  border-radius: 14px !important;
+  transition: 0.22s ease !important;
+}
+
+.tutor-dark-modal .course-check-item:hover {
+  background: rgba(217, 70, 239, 0.13) !important;
+}
+
+.tutor-dark-modal .course-check-item input[type="checkbox"] {
+  appearance: none !important;
+  width: 50px !important;
+  min-width: 50px !important;
+  height: 30px !important;
+  border-radius: 999px !important;
+  background: #475569 !important;
+  position: relative !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+.tutor-dark-modal .course-check-item input[type="checkbox"]::before {
+  content: "" !important;
+  position: absolute !important;
+  width: 24px !important;
+  height: 24px !important;
+  top: 3px !important;
+  left: 3px !important;
+  border-radius: 50% !important;
+  background: #ffffff !important;
+  transition: 0.25s ease !important;
+}
+
+.tutor-dark-modal .course-check-item input[type="checkbox"]:checked {
+  background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
+}
+
+.tutor-dark-modal .course-check-item input[type="checkbox"]:checked::before {
+  transform: translateX(20px) !important;
+}
+
+.tutor-dark-modal .course-check-item span {
+  display: grid !important;
+  gap: 3px !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.tutor-dark-modal .course-category-name {
+  display: block !important;
+  color: #c084fc !important;
+  -webkit-text-fill-color: #c084fc !important;
+  font-size: 12px !important;
+  font-weight: 950 !important;
+}
+
+.tutor-dark-modal .course-empty-text {
+  color: rgba(255, 255, 255, 0.72) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.72) !important;
+}
+
+/* Modal buttons */
+.tutor-dark-modal .form-actions {
+  display: flex !important;
+  justify-content: flex-end !important;
+  gap: 12px !important;
+  margin-top: 10px !important;
+  flex-wrap: nowrap !important;
+}
+
+.tutor-dark-modal .secondary-btn,
+.tutor-dark-modal .primary-btn,
+.tutor-dark-modal .danger-btn {
+  border: none !important;
+  border-radius: 14px !important;
+  min-width: 120px !important;
+  height: 50px !important;
+  padding: 0 22px !important;
+  color: #ffffff !important;
+  font-weight: 950 !important;
+  cursor: pointer !important;
+  transition: 0.25s ease !important;
+}
+
+.tutor-dark-modal .secondary-btn {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.tutor-dark-modal .primary-btn {
+  background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
+  box-shadow: 0 14px 30px rgba(217, 70, 239, 0.24) !important;
+}
+
+.tutor-dark-modal .danger-btn {
+  background: #ef4444 !important;
+  box-shadow: 0 14px 30px rgba(239, 68, 68, 0.22) !important;
+}
+
+/* Scrollbar */
+.tutor-dark-modal .tutor-dark-modal-body::-webkit-scrollbar,
+.tutor-dark-modal .course-checkbox-list::-webkit-scrollbar {
+  width: 8px !important;
+}
+
+.tutor-dark-modal .tutor-dark-modal-body::-webkit-scrollbar-track,
+.tutor-dark-modal .course-checkbox-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-radius: 999px !important;
+}
+
+.tutor-dark-modal .tutor-dark-modal-body::-webkit-scrollbar-thumb,
+.tutor-dark-modal .course-checkbox-list::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
+  border-radius: 999px !important;
+}
+
+/* Mobile modal */
+@media (max-width: 640px) {
+  .tutor-dark-modal {
+    width: calc(100vw - 28px) !important;
+  }
+
+  .tutor-dark-modal-body {
+    padding: 18px !important;
+  }
+
+  .tutor-dark-modal .tutor-form-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .tutor-dark-modal .form-actions {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+    justify-content: stretch !important;
+    align-items: center !important;
+  }
+
+  .tutor-dark-modal .form-actions button {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 46px !important;
+    padding: 0 10px !important;
+  }
+
+  .tutor-dark-modal .form-actions .secondary-btn {
+    order: 1 !important;
+  }
+
+  .tutor-dark-modal .form-actions .primary-btn,
+  .tutor-dark-modal .form-actions .danger-btn {
+    order: 2 !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .tutor-dark-modal .form-actions {
+    gap: 8px !important;
+  }
+
+  .tutor-dark-modal .form-actions button {
+    font-size: 13px !important;
+  }
+}

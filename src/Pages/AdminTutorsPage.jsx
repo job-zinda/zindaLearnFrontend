@@ -2,7 +2,10 @@
 
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
+// import React, { useEffect, useMemo, useState } from "react";
 import React, { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
+// import Modal from "../Components/Modal";
 import { useNavigate } from "react-router-dom";
 import Modal from "../Components/Modal";
 import { useAlert } from "../context/AlertContext";
@@ -158,6 +161,64 @@ function Stars({ rating = 0 }) {
     </div>
   );
 }
+
+
+
+
+
+
+function TutorAddIcon() {
+  return (
+    <span className="tutor-add-btn__icon" aria-hidden="true">
+      <span className="tutor-add-btn__plus">+</span>
+
+      <svg
+        className="tutor-add-btn__user"
+        viewBox="0 0 24 24"
+        fill="none"
+      >
+        <circle cx="12" cy="8" r="4" />
+        <path d="M4.5 21c.8-4 3.6-6 7.5-6s6.7 2 7.5 6" />
+      </svg>
+    </span>
+  );
+}
+
+function TutorDarkModal({ open, title, width = "760px", onClose, children }) {
+  if (!open) return null;
+
+  return createPortal(
+    <div className="tutor-dark-modal-overlay" onMouseDown={onClose}>
+      <div
+        className="tutor-dark-modal"
+        style={{ width }}
+        onMouseDown={(e) => e.stopPropagation()}
+      >
+        <div className="tutor-dark-modal-header">
+          <h2>{title}</h2>
+
+          <button
+            type="button"
+            className="tutor-dark-modal-close"
+            onClick={onClose}
+            aria-label="Close modal"
+          >
+            ×
+          </button>
+        </div>
+
+        <div className="tutor-dark-modal-body">{children}</div>
+      </div>
+    </div>,
+    document.body
+  );
+}
+
+
+
+
+
+
 
 function getTutorShareLink(tutor) {
   return `${window.location.origin}/student/tutors/${tutor._id}`;
@@ -926,10 +987,30 @@ fd.append("categoryId", autoCategoryIds[0]);
           />
         </div>
 
-       <button type="button" className="tutor-add-btn" onClick={openAddModal}>
+       {/* <button type="button" className="tutor-add-btn" onClick={openAddModal}>
   <span className="tutor-add-label">+ Add Tutor</span>
   <span className="tutor-add-icon" aria-hidden="true">+</span>
+</button> */}
+
+
+
+
+<button
+  type="button"
+  className="tutor-add-btn"
+  onClick={openAddModal}
+  aria-label="Add Tutor"
+>
+  <TutorAddIcon />
+
+  <span className="tutor-add-btn__text">Add Tutor</span>
 </button>
+
+
+
+
+
+
       </div>
 
 
@@ -1078,12 +1159,21 @@ fd.append("categoryId", autoCategoryIds[0]);
         </div>
       )}
 
-      <Modal
-        open={modalOpen}
-        title={editingTutor ? "Edit Tutor" : "Add Tutor"}
-        width="850px"
-        onClose={() => setModalOpen(false)}
-      >
+
+
+
+
+
+
+
+
+
+     <TutorDarkModal
+  open={modalOpen}
+  title={editingTutor ? "Edit Tutor" : "Add Tutor"}
+  width="820px"
+  onClose={() => setModalOpen(false)}
+>
         <form className="tutor-form" onSubmit={submitTutor}>
           <div className="tutor-form-grid">
             <label className="form-field">
@@ -1294,8 +1384,16 @@ fd.append("categoryId", autoCategoryIds[0]);
             </button>
           </div>
         </form>
-      </Modal>
+      </TutorDarkModal>
 
+
+
+
+
+
+
+
+{/* 
       <Modal
         open={confirmOpen}
         title="Delete Tutor"
@@ -1325,8 +1423,45 @@ fd.append("categoryId", autoCategoryIds[0]);
             </button>
           </div>
         </div>
-      </Modal>
+      </Modal> */}
 
+
+
+
+
+
+
+<TutorDarkModal
+  open={confirmOpen}
+  title="Delete Tutor"
+  width="460px"
+  onClose={() => setConfirmOpen(false)}
+>
+  <div className="delete-confirm-box tutor-dark-delete-box">
+    <p>
+      <b>{deleteTarget?.name || "This tutor"}</b> Do you want to delete this
+      tutor?
+    </p>
+
+    <div className="form-actions">
+      <button
+        type="button"
+        className="secondary-btn"
+        onClick={() => setConfirmOpen(false)}
+      >
+        Cancel
+      </button>
+
+      <button
+        type="button"
+        className="danger-btn"
+        onClick={confirmDeleteTutor}
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+</TutorDarkModal>
 
 
 
