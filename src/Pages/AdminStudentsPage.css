@@ -2059,7 +2059,7 @@ rgba(
   }
 
   /* Search ചെയ്യുമ്പോൾ invite button hide ആക്കും */
-  .student-toolbar:focus-within {
+  /* .student-toolbar:focus-within {
     grid-template-columns: 1fr !important;
   }
 
@@ -2069,5 +2069,122 @@ rgba(
 
   .student-toolbar:focus-within .student-search {
     width: 100% !important;
+  } */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   FINAL MOBILE FIX: Search + Plus invite button
+   Laptop view change ഇല്ല
+========================================================= */
+
+@media (max-width: 720px) {
+  .student-toolbar {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 52px !important;
+    gap: 8px !important;
+    align-items: center !important;
+    margin-bottom: 22px !important;
+  }
+
+  .student-search {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 52px !important;
+    border-radius: 15px !important;
+    padding: 0 12px !important;
+  }
+
+  .student-search span {
+    font-size: 19px !important;
+    line-height: 1 !important;
+    flex: 0 0 auto !important;
+  }
+
+  .student-search input {
+    min-width: 0 !important;
+    width: 100% !important;
+    font-size: 13px !important;
+  }
+
+  .student-search input::placeholder {
+    font-size: 13px !important;
+  }
+
+  .student-invite-btn {
+    width: 52px !important;
+    min-width: 52px !important;
+    max-width: 52px !important;
+    height: 52px !important;
+    min-height: 52px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 15px !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    font-size: 0 !important;
+    line-height: 1 !important;
+    text-indent: -9999px !important;
+    overflow: hidden !important;
+
+    cursor: pointer !important;
+    position: relative !important;
+    z-index: 5 !important;
+  }
+
+  .student-invite-btn::before {
+    content: "+" !important;
+    position: absolute !important;
+    inset: 0 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    text-indent: 0 !important;
+    font-size: 28px !important;
+    line-height: 1 !important;
+    font-weight: 950 !important;
+    color: #ffffff !important;
+
+    pointer-events: none !important;
+  }
+
+  .student-grid {
+    grid-template-columns: 1fr !important;
   }
 }
