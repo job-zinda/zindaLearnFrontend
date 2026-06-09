@@ -1262,7 +1262,21 @@ function getErrorMessage(error, fallback = "Something went wrong") {
 
 
 
+function Stars({ rating = 0 }) {
+  const fixedRating = Number(rating || 0);
+  const rounded = Math.round(fixedRating);
 
+  return (
+    <div className="tutor-stars">
+      {[1, 2, 3, 4, 5].map((n) => (
+        <span key={n} className={n <= rounded ? "star filled" : "star"}>
+          ★
+        </span>
+      ))}
+      <b>{fixedRating.toFixed(1)}</b>
+    </div>
+  );
+}
 
 
 
