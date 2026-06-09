@@ -2341,9 +2341,9 @@ className={`tutor-card ${
     onChange={handleChange}
     placeholder="Example: State, CBSE, ICSE"
   />
-  <small className="tutor-syllabus-note">
+  {/* <small className="tutor-syllabus-note">
     Empty aakki save cheythal “Not added” aayi save aavum.
-  </small>
+  </small> */}
 </label>
 
 
