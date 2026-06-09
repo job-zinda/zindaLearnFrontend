@@ -639,6 +639,74 @@ function toggleCourseSelection(courseId, checked) {
 
 
 
+
+
+
+
+
+
+
+
+
+if (!Array.isArray(form.courseIds) || form.courseIds.length === 0) {
+  return showAlert("At least one Course / Class select cheyyuka", "error");
+}
+
+
+
+
+
+
+
+
+// const autoCategoryIds = deriveCategoryIdsFromCourseIds(form.courseIds, courses);
+
+// if (autoCategoryIds.length === 0) {
+//   return showAlert("Selected course category not found", "error");
+// }
+
+
+
+
+
+
+
+//       // const finalSyllabus = isOnlineTuition ? String(form.syllabus).trim() : "none";
+//       // const finalSectionType = isOnlineTuition ? "both" : "none";
+
+
+
+// const autoCategoryIds = deriveCategoryIdsFromCourseIds(form.courseIds, courses);
+
+// const autoSelectedCategories = categories.filter((cat) =>
+//   autoCategoryIds.includes(String(cat._id))
+// );
+
+// const autoOnlineTuition = autoSelectedCategories.some(
+//   (cat) => cat.key === "online_tuition"
+// );
+
+// const finalSyllabus =
+//   form.syllabus && String(form.syllabus).trim()
+//     ? String(form.syllabus).trim()
+//     : "Not added";
+
+// const finalSectionType = autoOnlineTuition ? "both" : "none";
+
+
+
+
+//       const fd = new FormData();
+
+
+
+
+
+
+
+
+
+
 if (!Array.isArray(form.courseIds) || form.courseIds.length === 0) {
   return showAlert("At least one Course / Class select cheyyuka", "error");
 }
@@ -648,19 +716,6 @@ const autoCategoryIds = deriveCategoryIdsFromCourseIds(form.courseIds, courses);
 if (autoCategoryIds.length === 0) {
   return showAlert("Selected course category not found", "error");
 }
-
-
-
-
-
-
-
-      // const finalSyllabus = isOnlineTuition ? String(form.syllabus).trim() : "none";
-      // const finalSectionType = isOnlineTuition ? "both" : "none";
-
-
-
-const autoCategoryIds = deriveCategoryIdsFromCourseIds(form.courseIds, courses);
 
 const autoSelectedCategories = categories.filter((cat) =>
   autoCategoryIds.includes(String(cat._id))
@@ -677,10 +732,16 @@ const finalSyllabus =
 
 const finalSectionType = autoOnlineTuition ? "both" : "none";
 
+const fd = new FormData();
 
 
 
-      const fd = new FormData();
+
+
+
+
+
+
 
       fd.append("name", form.name.trim());
       fd.append("email", form.email.trim());
