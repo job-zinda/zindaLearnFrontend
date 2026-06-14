@@ -706,12 +706,12 @@ body:has(.tutor-detail-page) .modal-close,
 body:has(.tutor-detail-page) .modal-card__close,
 body:has(.tutor-detail-page) button[aria-label="Close"],
 body:has(.tutor-detail-page) button[aria-label="Close modal"] {
-  width: 48px !important;
-  height: 48px !important;
-  min-width: 48px !important;
-  min-height: 48px !important;
-  max-width: 48px !important;
-  max-height: 48px !important;
+  width: 42px !important;
+  height: 42px !important;
+  min-width: 42px !important;
+  min-height: 42px !important;
+  max-width: 42px !important;
+  max-height: 42px !important;
 
   border: none !important;
   border-radius: 50% !important;
