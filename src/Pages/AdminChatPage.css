@@ -3233,3 +3233,266 @@
     font-size: 14px !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   FINAL ADMIN CHAT FULL HEIGHT + MOBILE FIX
+========================================================= */
+
+body:has(.admin-chat-page) .admin-content,
+body:has(.admin-chat-page) .admin-content__inner {
+  overflow: hidden !important;
+}
+
+.admin-chat-page {
+  width: 100% !important;
+  height: calc(100dvh - 132px) !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+.admin-chat-layout {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  border-radius: 0 !important;
+}
+
+.admin-chat-panel-card,
+.admin-chat-detail-card,
+.admin-chat-app {
+  height: 100% !important;
+  min-height: 0 !important;
+}
+
+.admin-chat-sidebar-head {
+  display: none !important;
+}
+
+.admin-chat-search-box {
+  padding: 18px !important;
+}
+
+.admin-chat-app {
+  grid-template-rows: 76px minmax(0, 1fr) auto auto !important;
+}
+
+.admin-chat-body {
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+.admin-chat-inputbar {
+  flex-shrink: 0 !important;
+}
+
+/* MOBILE */
+@media (max-width: 900px) {
+  body:has(.admin-chat-page),
+  body:has(.admin-chat-page) #root,
+  body:has(.admin-chat-page) .admin-shell,
+  body:has(.admin-chat-page) .admin-content,
+  body:has(.admin-chat-page) .admin-content__inner {
+    overflow: hidden !important;
+  }
+
+  .admin-chat-page {
+    height: calc(100dvh - 104px) !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .admin-chat-layout {
+    height: 100% !important;
+    min-height: 0 !important;
+    display: block !important;
+    border-radius: 0 !important;
+  }
+
+  .admin-chat-panel-card,
+  .admin-chat-detail-card {
+    height: 100% !important;
+    min-height: 0 !important;
+  }
+
+  .admin-chat-student-panel--hide-mobile {
+    display: none !important;
+  }
+
+  .admin-chat-detail-panel {
+    display: none !important;
+    height: 100% !important;
+  }
+
+  .admin-chat-detail-panel--open-mobile {
+    display: block !important;
+  }
+
+  .admin-chat-app {
+    height: 100% !important;
+    grid-template-rows: 82px minmax(0, 1fr) auto auto !important;
+  }
+
+  .admin-chat-header {
+    height: 82px !important;
+    padding: 0 14px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .admin-chat-body {
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    padding: 14px 12px !important;
+  }
+
+  .admin-chat-inputbar {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: 34px 34px 34px minmax(0, 1fr) 36px !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 9px 8px !important;
+    overflow: hidden !important;
+  }
+
+  .admin-chat-inputbar:has(.admin-chat-cancel-edit) {
+    grid-template-columns: 32px 32px 32px minmax(0, 1fr) 32px 34px !important;
+  }
+
+  .admin-chat-icon-btn,
+  .admin-chat-send,
+  .admin-chat-cancel-edit {
+    width: 100% !important;
+    height: 34px !important;
+    min-width: 0 !important;
+    flex: none !important;
+    font-size: 16px !important;
+  }
+
+  .admin-chat-send {
+    font-size: 18px !important;
+  }
+
+  .admin-chat-inputbar input[type="text"] {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 40px !important;
+    padding: 0 10px !important;
+    font-size: 13px !important;
+  }
+
+  .admin-chat-mobile-back {
+    display: grid !important;
+    place-items: center !important;
+    width: 46px !important;
+    height: 46px !important;
+    min-width: 46px !important;
+  }
+
+  .admin-chat-avatar {
+    width: 54px !important;
+    height: 54px !important;
+  }
+
+  .admin-chat-user {
+    min-width: 0 !important;
+  }
+
+  .admin-chat-user h3 {
+    font-size: 20px !important;
+  }
+
+  .admin-chat-user p {
+    font-size: 14px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .admin-chat-page {
+    height: calc(100dvh - 100px) !important;
+  }
+
+  .admin-chat-inputbar {
+    grid-template-columns: 32px 32px 32px minmax(0, 1fr) 34px !important;
+    gap: 5px !important;
+    padding: 8px 6px !important;
+  }
+
+  .admin-chat-inputbar:has(.admin-chat-cancel-edit) {
+    grid-template-columns: 30px 30px 30px minmax(0, 1fr) 30px 32px !important;
+  }
+
+  .admin-chat-icon-btn,
+  .admin-chat-send,
+  .admin-chat-cancel-edit {
+    height: 32px !important;
+    font-size: 15px !important;
+  }
+
+  .admin-chat-send {
+    font-size: 17px !important;
+  }
+
+  .admin-chat-inputbar input[type="text"] {
+    height: 38px !important;
+    font-size: 12.5px !important;
+    padding: 0 8px !important;
+  }
+}
