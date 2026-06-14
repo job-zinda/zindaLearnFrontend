@@ -2134,9 +2134,9 @@ export default function AdminChatPage() {
           }`}
         >
           <div className="admin-chat-panel-card">
-            <div className="admin-chat-sidebar-head">
+            {/* <div className="admin-chat-sidebar-head">
               <h2>Chats</h2>
-            </div>
+            </div> */}
 
             <div className="admin-chat-search-box">
               <input
