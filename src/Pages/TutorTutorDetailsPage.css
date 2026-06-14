@@ -587,3 +587,87 @@ body:has(.tutor-detail-page) .modal-box button[aria-label="Close"] {
 .tutor-detail-all-reviews-list .tutor-detail-star.filled {
   color: #ffc400 !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* FINAL FIX: modal top/header white remove */
+body:has(.tutor-detail-page) .modal-content,
+body:has(.tutor-detail-page) .modal-box,
+body:has(.tutor-detail-page) .modal-container,
+body:has(.tutor-detail-page) .modal-card,
+body:has(.tutor-detail-page) .modal-card__header,
+body:has(.tutor-detail-page) .modal-header,
+body:has(.tutor-detail-page) .modal-content > div:first-child,
+body:has(.tutor-detail-page) .modal-box > div:first-child,
+body:has(.tutor-detail-page) .modal-container > div:first-child,
+body:has(.tutor-detail-page) .modal-card > div:first-child {
+  background: linear-gradient(145deg, #111633, #080b22) !important;
+  color: #ffffff !important;
+  border-color: rgba(217, 70, 239, 0.35) !important;
+}
+
+/* modal body also dark */
+body:has(.tutor-detail-page) .modal-body,
+body:has(.tutor-detail-page) .modal-card__body,
+body:has(.tutor-detail-page) .modal-content > div:last-child,
+body:has(.tutor-detail-page) .modal-box > div:last-child,
+body:has(.tutor-detail-page) .modal-container > div:last-child,
+body:has(.tutor-detail-page) .modal-card > div:last-child {
+  background: linear-gradient(145deg, #111633, #080b22) !important;
+  color: #ffffff !important;
+}
+
+/* title visible */
+body:has(.tutor-detail-page) .modal-content h1,
+body:has(.tutor-detail-page) .modal-content h2,
+body:has(.tutor-detail-page) .modal-content h3,
+body:has(.tutor-detail-page) .modal-box h1,
+body:has(.tutor-detail-page) .modal-box h2,
+body:has(.tutor-detail-page) .modal-box h3,
+body:has(.tutor-detail-page) .modal-container h1,
+body:has(.tutor-detail-page) .modal-container h2,
+body:has(.tutor-detail-page) .modal-container h3,
+body:has(.tutor-detail-page) .modal-card h1,
+body:has(.tutor-detail-page) .modal-card h2,
+body:has(.tutor-detail-page) .modal-card h3 {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+/* close button dark purple */
+body:has(.tutor-detail-page) .modal-close,
+body:has(.tutor-detail-page) .modal-card__close,
+body:has(.tutor-detail-page) button[aria-label="Close"],
+body:has(.tutor-detail-page) button[aria-label="Close modal"] {
+  background: rgba(217, 70, 239, 0.22) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
