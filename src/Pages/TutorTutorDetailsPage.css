@@ -447,3 +447,143 @@ body:has(.tutor-detail-page) .modal-container {
     min-height: 105px;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Show more button right side */
+.tutor-detail-show-more-btn--single {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: 0 !important;
+  width: fit-content !important;
+}
+
+/* All Reviews modal dark theme */
+body:has(.tutor-detail-page) .modal-overlay {
+  background: rgba(3, 7, 18, 0.72) !important;
+  backdrop-filter: blur(7px) !important;
+}
+
+body:has(.tutor-detail-page) .modal-content,
+body:has(.tutor-detail-page) .modal-box,
+body:has(.tutor-detail-page) .modal-container,
+body:has(.tutor-detail-page) .modal-card {
+  width: min(760px, 95vw) !important;
+  max-height: 90vh !important;
+  overflow-y: auto !important;
+  border-radius: 24px !important;
+  background: linear-gradient(145deg, #111633, #080b22) !important;
+  border: 1px solid rgba(217, 70, 239, 0.35) !important;
+  color: #ffffff !important;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55) !important;
+}
+
+/* Modal header/title */
+body:has(.tutor-detail-page) .modal-content h2,
+body:has(.tutor-detail-page) .modal-content h3,
+body:has(.tutor-detail-page) .modal-box h2,
+body:has(.tutor-detail-page) .modal-box h3,
+body:has(.tutor-detail-page) .modal-card h2,
+body:has(.tutor-detail-page) .modal-card h3 {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Close button */
+body:has(.tutor-detail-page) .modal-close,
+body:has(.tutor-detail-page) .modal-card__close,
+body:has(.tutor-detail-page) .modal-content button[aria-label="Close"],
+body:has(.tutor-detail-page) .modal-box button[aria-label="Close"] {
+  background: rgba(217, 70, 239, 0.22) !important;
+  color: #ffffff !important;
+  border-radius: 50% !important;
+}
+
+/* Review list dark */
+.tutor-detail-all-reviews-list {
+  background: transparent !important;
+  color: #ffffff !important;
+}
+
+.tutor-detail-all-reviews-list,
+.tutor-detail-all-reviews-list * {
+  color: inherit !important;
+  -webkit-text-fill-color: initial !important;
+}
+
+.tutor-detail-all-reviews-list .tutor-detail-review-card {
+  background: rgba(255, 255, 255, 0.055) !important;
+  border: 1px solid rgba(217, 70, 239, 0.3) !important;
+  border-radius: 18px !important;
+  box-shadow: none !important;
+}
+
+.tutor-detail-all-reviews-list .tutor-detail-review-card h4 {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.tutor-detail-all-reviews-list .tutor-detail-review-card p {
+  color: rgba(255, 255, 255, 0.78) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.78) !important;
+}
+
+.tutor-detail-all-reviews-list .tutor-detail-review-avatar {
+  background: rgba(217, 70, 239, 0.13) !important;
+  border: 2px solid rgba(217, 70, 239, 0.4) !important;
+}
+
+.tutor-detail-all-reviews-list .tutor-detail-review-avatar span {
+  color: #d946ef !important;
+  -webkit-text-fill-color: #d946ef !important;
+}
+
+.tutor-detail-all-reviews-list .tutor-detail-star {
+  color: rgba(255, 255, 255, 0.28) !important;
+}
+
+.tutor-detail-all-reviews-list .tutor-detail-star.filled {
+  color: #ffc400 !important;
+}
