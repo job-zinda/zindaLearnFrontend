@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import Modal from "../Components/Modal";
+// import Modal from "../Components/Modal";
 import api from "../api/axios";
 import { useAlert } from "../context/AlertContext";
 import { getMediaUrl } from "../utils/media";
@@ -139,6 +140,45 @@ function ReviewCard({ review }) {
     </div>
   );
 }
+
+
+
+
+
+
+function TutorDetailDarkModal({ open, title, width = "760px", onClose, children }) {
+  if (!open) return null;
+
+  return createPortal(
+    <div className="tutor-detail-dark-modal-overlay" onMouseDown={onClose}>
+      <div
+        className="tutor-detail-dark-modal"
+        style={{ width }}
+        onMouseDown={(e) => e.stopPropagation()}
+      >
+        <div className="tutor-detail-dark-modal-header">
+          <h2>{title}</h2>
+
+          <button
+            type="button"
+            className="tutor-detail-dark-modal-close"
+            onClick={onClose}
+            aria-label="Close modal"
+          >
+            ×
+          </button>
+        </div>
+
+        <div className="tutor-detail-dark-modal-body">{children}</div>
+      </div>
+    </div>,
+    document.body
+  );
+}
+
+
+
+
 
 export default function TutorTutorDetailsPage() {
   const { tuterId } = useParams();
@@ -324,12 +364,12 @@ export default function TutorTutorDetailsPage() {
         </section>
       </div>
 
-      <Modal
-        open={allReviewsOpen}
-        title="All Reviews"
-        width="760px"
-        onClose={() => setAllReviewsOpen(false)}
-      >
+      <TutorDetailDarkModal
+  open={allReviewsOpen}
+  title="All Reviews"
+  width="760px"
+  onClose={() => setAllReviewsOpen(false)}
+>
         {tutor.reviews?.length ? (
           <div className="tutor-detail-all-reviews-list">
             {tutor.reviews.map((review) => (
@@ -339,7 +379,7 @@ export default function TutorTutorDetailsPage() {
         ) : (
           <div className="tutor-detail-empty-reviews">No reviews yet.</div>
         )}
-      </Modal>
+      </TutorDetailDarkModal>
     </div>
   );
 }
