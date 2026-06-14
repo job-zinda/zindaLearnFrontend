@@ -706,15 +706,33 @@ body:has(.student-detail-page) .close-btn {
 
 /* Modal final fix: review + connect */
 
-.student-review-form,
+/* .student-review-form,
 .student-review-form * {
   color: #111827 !important;
+} */
+
+
+
+/* Modal final fix: review + connect */
+
+.student-review-form,
+.student-review-form * {
+  color: #ffffff !important;
 }
+
+
+/* .student-rating-picker > span,
+.student-review-field span {
+  color: #111827 !important;
+} */
+
+
 
 .student-rating-picker > span,
 .student-review-field span {
-  color: #111827 !important;
+  color: #ffffff !important;
 }
+
 
 .student-rating-stars {
   display: flex !important;
@@ -1202,4 +1220,26 @@ max-height:95vh!important;
   .student-detail-dark-modal-body {
     padding: 18px;
   }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Write Review modal heading fix */
+
+.student-detail-dark-modal-header h2,
+.student-detail-dark-modal-header,
+.student-detail-dark-modal-header * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
