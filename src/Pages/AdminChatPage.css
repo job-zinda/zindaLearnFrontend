@@ -1,4 +1,4 @@
-/* 
+
 
 
 
@@ -1932,7 +1932,7 @@
   .admin-emoji-picker-wrap .EmojiPickerReact {
     height: 360px !important;
   }
-} */
+} 
 
 
 
@@ -2048,7 +2048,7 @@
 
 
 
-
+/* 
 
 
 
@@ -3060,11 +3060,8 @@
 
 
 
-/* =========================================================
-   FINAL ADMIN CHAT RESPONSIVE FIX
-   ========================================================= */
 
-/* Topnav overlap fix */
+
 .admin-chat-page {
   height: calc(100dvh - 175px) !important;
   min-height: 0 !important;
@@ -3082,7 +3079,6 @@
   min-height: 0 !important;
 }
 
-/* Removed Chats heading space */
 .admin-chat-sidebar-head {
   display: none !important;
 }
@@ -3091,7 +3087,6 @@
   padding-top: 18px !important;
 }
 
-/* Desktop should not page-scroll */
 .admin-chat-app {
   height: 100% !important;
   min-height: 0 !important;
@@ -3101,7 +3096,6 @@
   min-height: 0 !important;
 }
 
-/* Mobile exact view: header + body + input visible */
 @media (max-width: 900px) {
   .admin-chat-page {
     height: calc(100dvh - 112px) !important;
@@ -3291,9 +3285,6 @@
 
 
 
-/* =========================================================
-   FINAL ADMIN CHAT FULL HEIGHT + MOBILE FIX
-========================================================= */
 
 body:has(.admin-chat-page) .admin-content,
 body:has(.admin-chat-page) .admin-content__inner {
@@ -3343,7 +3334,6 @@ body:has(.admin-chat-page) .admin-content__inner {
   flex-shrink: 0 !important;
 }
 
-/* MOBILE */
 @media (max-width: 900px) {
   body:has(.admin-chat-page),
   body:has(.admin-chat-page) #root,
@@ -3495,4 +3485,4 @@ body:has(.admin-chat-page) .admin-content__inner {
     font-size: 12.5px !important;
     padding: 0 8px !important;
   }
-}
+} */
