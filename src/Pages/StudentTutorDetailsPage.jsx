@@ -2,6 +2,7 @@
 
 
 import React, { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import Modal from "../Components/Modal";
@@ -165,6 +166,57 @@ function ReviewCard({ review }) {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+function StudentDetailDarkModal({
+  open,
+  title,
+  width = "760px",
+  onClose,
+  children,
+}) {
+  if (!open) return null;
+
+  return createPortal(
+    <div className="student-detail-dark-modal-overlay" onMouseDown={onClose}>
+      <div
+        className="student-detail-dark-modal"
+        style={{ width }}
+        onMouseDown={(e) => e.stopPropagation()}
+      >
+        <div className="student-detail-dark-modal-header">
+          <h2>{title}</h2>
+
+          <button
+            type="button"
+            className="student-detail-dark-modal-close"
+            onClick={onClose}
+            aria-label="Close modal"
+          >
+            ×
+          </button>
+        </div>
+
+        <div className="student-detail-dark-modal-body">{children}</div>
+      </div>
+    </div>,
+    document.body
+  );
+}
+
+
+
+
+
+
+
 
 export default function StudentTutorDetailsPage() {
   const { tuterId } = useParams();
@@ -486,7 +538,7 @@ export default function StudentTutorDetailsPage() {
             <div className="student-empty-reviews">No reviews yet.</div>
           )}
 
-          {tutor.reviews?.length > 0 && tutor.reviews?.length <= 2 && (
+          {/* {tutor.reviews?.length > 0 && tutor.reviews?.length <= 2 && (
             <button
               type="button"
               className="student-show-more-btn student-show-more-btn--single"
@@ -494,7 +546,25 @@ export default function StudentTutorDetailsPage() {
             >
               Show more
             </button>
-          )}
+          )} */}
+
+
+
+{tutor.reviews?.length > 0 && tutor.reviews?.length <= 2 && (
+  <div className="student-show-more-row">
+    <button
+      type="button"
+      className="student-show-more-btn student-show-more-btn--single"
+      onClick={() => setAllReviewsOpen(true)}
+    >
+      Show more
+    </button>
+  </div>
+)}
+
+
+
+
         </section>
 
         <div className="student-detail-bottom-actions">
@@ -525,7 +595,7 @@ export default function StudentTutorDetailsPage() {
         </button>
       </div>
 
-      <Modal
+      {/* <Modal
         open={allReviewsOpen}
         title="All Reviews"
         width="760px"
@@ -540,9 +610,35 @@ export default function StudentTutorDetailsPage() {
         ) : (
           <div className="student-empty-reviews">No reviews yet.</div>
         )}
-      </Modal>
+      </Modal> */}
 
-      <Modal
+
+
+
+
+<StudentDetailDarkModal
+  open={allReviewsOpen}
+  title="All Reviews"
+  width="760px"
+  onClose={() => setAllReviewsOpen(false)}
+>
+  {tutor.reviews?.length ? (
+    <div className="student-all-reviews-list">
+      {tutor.reviews.map((review) => (
+        <ReviewCard key={review._id} review={review} />
+      ))}
+    </div>
+  ) : (
+    <div className="student-empty-reviews">No reviews yet.</div>
+  )}
+</StudentDetailDarkModal>
+
+
+
+
+
+
+      {/* <Modal
         open={reviewOpen}
         title={myReview ? "Update Review" : "Write Review"}
         width="560px"
@@ -606,7 +702,84 @@ export default function StudentTutorDetailsPage() {
             </button>
           </div>
         </form>
-      </Modal>
+      </Modal> */}
+
+
+
+
+
+
+
+<StudentDetailDarkModal
+  open={reviewOpen}
+  title={myReview ? "Update Review" : "Write Review"}
+  width="560px"
+  onClose={() => setReviewOpen(false)}
+>
+  <form className="student-review-form" onSubmit={submitReview}>
+    <div className="student-rating-picker">
+      <span>Rating</span>
+
+      <div className="student-rating-stars">
+        {[1, 2, 3, 4, 5].map((n) => (
+          <button
+            key={n}
+            type="button"
+            className={n <= rating ? "selected" : ""}
+            onClick={() => setRating(n)}
+          >
+            ★
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <label className="student-review-field">
+      <span>Review</span>
+      <textarea
+        rows="5"
+        value={reviewText}
+        onChange={(e) => setReviewText(e.target.value)}
+        placeholder="Write your review..."
+      />
+    </label>
+
+    <div className="student-review-actions">
+      {myReview && (
+        <button
+          type="button"
+          className="student-review-delete-btn"
+          onClick={deleteMyReview}
+          disabled={submitting}
+        >
+          Delete
+        </button>
+      )}
+
+      <button
+        type="button"
+        className="student-review-cancel-btn"
+        onClick={() => setReviewOpen(false)}
+        disabled={submitting}
+      >
+        Cancel
+      </button>
+
+      <button
+        type="submit"
+        className="student-review-submit-btn"
+        disabled={submitting}
+      >
+        {submitting ? "Saving..." : myReview ? "Update" : "Submit"}
+      </button>
+    </div>
+  </form>
+</StudentDetailDarkModal>
+
+
+
+
+
 
       <Modal
         open={connectModalOpen}

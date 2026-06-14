@@ -1045,3 +1045,161 @@ padding:20px!important;
 max-height:95vh!important;
 }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Student detail show more right side */
+.student-show-more-row {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+  margin-top: 14px !important;
+}
+
+.student-show-more-btn--single {
+  margin-left: auto !important;
+  margin-right: 0 !important;
+}
+
+/* Student detail dark modal */
+.student-detail-dark-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background: rgba(3, 7, 18, 0.72);
+  backdrop-filter: blur(7px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+}
+
+.student-detail-dark-modal {
+  max-width: 95vw;
+  max-height: 90vh;
+  overflow: hidden;
+  border-radius: 24px;
+  background: linear-gradient(145deg, #111633, #080b22);
+  border: 1px solid rgba(217, 70, 239, 0.35);
+  color: #ffffff;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+}
+
+.student-detail-dark-modal-header {
+  min-height: 78px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.student-detail-dark-modal-header h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 950;
+}
+
+.student-detail-dark-modal-close {
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(217, 70, 239, 0.22);
+  color: #ffffff;
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.student-detail-dark-modal-body {
+  padding: 24px;
+  max-height: calc(90vh - 78px);
+  overflow-y: auto;
+}
+
+.student-all-reviews-list {
+  background: transparent !important;
+  color: #ffffff !important;
+}
+
+.student-all-reviews-list,
+.student-all-reviews-list * {
+  color: inherit !important;
+  -webkit-text-fill-color: initial !important;
+}
+
+.student-all-reviews-list .student-review-card {
+  background: rgba(255, 255, 255, 0.055) !important;
+  border: 1px solid rgba(217, 70, 239, 0.3) !important;
+  box-shadow: none !important;
+}
+
+.student-all-reviews-list .student-review-card h4,
+.student-all-reviews-list .student-review-card p {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.student-review-form {
+  color: #ffffff !important;
+}
+
+.student-review-field textarea {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border: 1px solid rgba(217, 70, 239, 0.35) !important;
+}
+
+.student-review-cancel-btn {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+
+@media (max-width: 640px) {
+  .student-detail-dark-modal-overlay {
+    padding: 18px;
+  }
+
+  .student-detail-dark-modal-header {
+    min-height: 68px;
+    padding: 0 18px;
+  }
+
+  .student-detail-dark-modal-body {
+    padding: 18px;
+  }
+}
