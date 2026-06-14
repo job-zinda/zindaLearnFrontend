@@ -415,3 +415,146 @@
   margin-right: 12px;
   cursor: pointer;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   TUTOR ABOUT - ALL COURSES VISIBLE + AUTO CATEGORY UI
+   Paste at VERY BOTTOM of TutorAboutPage.css
+========================================================= */
+
+.tutor-about-help-text {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.tutor-about-auto-category-box {
+  min-height: 64px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 16px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.tutor-about-category-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: linear-gradient(
+    135deg,
+    rgba(217, 70, 239, 0.22),
+    rgba(124, 58, 237, 0.2)
+  );
+  border: 1px solid rgba(217, 70, 239, 0.35);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 950;
+}
+
+.tutor-about-course-list {
+  max-height: 320px;
+}
+
+.tutor-about-check-item span {
+  display: grid;
+  gap: 3px;
+}
+
+.tutor-about-check-item small {
+  color: #d8b4fe;
+  font-size: 12px;
+  font-weight: 850;
+  line-height: 1.2;
+}
+
+.tutor-about-check-item:has(input:checked) {
+  background: linear-gradient(
+    135deg,
+    rgba(217, 70, 239, 0.14),
+    rgba(124, 58, 237, 0.12)
+  );
+  border-color: rgba(217, 70, 239, 0.42);
+}
+
+.tutor-about-save-btn:disabled,
+.tutor-about-reset-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
