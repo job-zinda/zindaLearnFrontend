@@ -777,17 +777,34 @@ function getCourseLabel(course, categories) {
 //     .join(", ");
 // }
 
-function getCourseTitlesFromIds(courseIds, courses) {
-  if (!Array.isArray(courseIds) || courseIds.length === 0) return "";
+// function getCourseTitlesFromIds(courseIds, courses) {
+//   if (!Array.isArray(courseIds) || courseIds.length === 0) return "";
+
+//   const selectedIds = courseIds.map(String);
+
+//   return courses
+//     .filter((course) => selectedIds.includes(String(course._id)))
+//     .map((course) => course.name)
+//     .filter(Boolean)
+//     .join(", ");
+// }
+
+
+
+
+
+
+function getSelectedCoursesFromIds(courseIds, courses) {
+  if (!Array.isArray(courseIds) || courseIds.length === 0) return [];
 
   const selectedIds = courseIds.map(String);
 
-  return courses
-    .filter((course) => selectedIds.includes(String(course._id)))
-    .map((course) => course.name)
-    .filter(Boolean)
-    .join(", ");
+  return courses.filter((course) => selectedIds.includes(String(course._id)));
 }
+
+
+
+
 
 export default function TutorAboutPage() {
   const { showAlert } = useAlert();
@@ -1091,10 +1108,46 @@ export default function TutorAboutPage() {
               "Not selected"}
           </p> */}
 
-          <p>
+
+
+
+
+{form.syllabus && String(form.syllabus).trim() ? (
+  <p>
+    <b>Syllabus:</b> {form.syllabus}
+  </p>
+) : null}
+
+
+          {/* <p>
             <b>Courses:</b>{" "}
             {getCourseTitlesFromIds(form.courseIds, courses) || "Not selected"}
-          </p>
+          </p> */}
+
+
+
+
+<div className="tutor-about-hero-course-row">
+  <b>Courses:</b>
+
+  <div className="tutor-about-hero-course-chips">
+    {getSelectedCoursesFromIds(form.courseIds, courses).length === 0 ? (
+      <span className="tutor-about-hero-empty">Not selected</span>
+    ) : (
+      getSelectedCoursesFromIds(form.courseIds, courses).map((course) => (
+        <span key={course._id} className="tutor-about-hero-course-chip">
+          {course.name}
+        </span>
+      ))
+    )}
+  </div>
+</div>
+
+
+
+
+
+
         </div>
       </div>
 
