@@ -765,17 +765,17 @@ function getCourseLabel(course, categories) {
   return course?.name || "Course";
 }
 
-function getCategoryTitlesFromIds(categoryIds, categories) {
-  if (!Array.isArray(categoryIds) || categoryIds.length === 0) return "";
+// function getCategoryTitlesFromIds(categoryIds, categories) {
+//   if (!Array.isArray(categoryIds) || categoryIds.length === 0) return "";
 
-  const selectedIds = categoryIds.map(String);
+//   const selectedIds = categoryIds.map(String);
 
-  return categories
-    .filter((cat) => selectedIds.includes(String(cat._id)))
-    .map((cat) => cat.title)
-    .filter(Boolean)
-    .join(", ");
-}
+//   return categories
+//     .filter((cat) => selectedIds.includes(String(cat._id)))
+//     .map((cat) => cat.title)
+//     .filter(Boolean)
+//     .join(", ");
+// }
 
 function getCourseTitlesFromIds(courseIds, courses) {
   if (!Array.isArray(courseIds) || courseIds.length === 0) return "";
@@ -1078,7 +1078,7 @@ export default function TutorAboutPage() {
             <b>Phone:</b> {form.phone || "No phone added"}
           </p>
 
-          <p>
+          {/* <p>
             <b>Syllabus:</b>{" "}
             {form.syllabus && String(form.syllabus).trim()
               ? form.syllabus
@@ -1089,7 +1089,7 @@ export default function TutorAboutPage() {
             <b>Categories:</b>{" "}
             {getCategoryTitlesFromIds(form.categoryIds, categories) ||
               "Not selected"}
-          </p>
+          </p> */}
 
           <p>
             <b>Courses:</b>{" "}
@@ -1180,7 +1180,7 @@ export default function TutorAboutPage() {
             />
           </label>
 
-          <div className="tutor-about-field tutor-about-field--full">
+          {/* <div className="tutor-about-field tutor-about-field--full">
             <span>Auto Selected Categories</span>
 
             <div className="tutor-about-auto-category-box">
@@ -1200,7 +1200,7 @@ export default function TutorAboutPage() {
                   ))
               )}
             </div>
-          </div>
+          </div> */}
 
           <div className="tutor-about-field tutor-about-field--full">
             <span>Courses / Classes</span>

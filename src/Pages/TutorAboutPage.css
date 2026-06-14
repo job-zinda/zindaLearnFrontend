@@ -558,3 +558,65 @@
   cursor: not-allowed;
   transform: none;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Course selected row purple theme */
+.tutor-about-check-item:has(input:checked) {
+  background: linear-gradient(
+    135deg,
+    rgba(217, 70, 239, 0.24),
+    rgba(124, 58, 237, 0.22)
+  ) !important;
+  border-color: rgba(217, 70, 239, 0.65) !important;
+  box-shadow: 0 10px 24px rgba(124, 58, 237, 0.18) !important;
+}
+
+.tutor-about-check-item:has(input:checked) span {
+  color: #ffffff !important;
+}
+
+.tutor-about-check-item:has(input:checked) small {
+  color: #f0abfc !important;
+}
+
+/* Mobile buttons: Reset left, Save right */
+@media (max-width: 640px) {
+  .tutor-about-actions {
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+  }
+
+  .tutor-about-reset-btn,
+  .tutor-about-save-btn {
+    width: 50% !important;
+    min-width: 0 !important;
+  }
+}
