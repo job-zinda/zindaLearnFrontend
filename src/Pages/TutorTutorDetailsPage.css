@@ -671,3 +671,69 @@ body:has(.tutor-detail-page) button[aria-label="Close modal"] {
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* FINAL FIX: close icon smaller like admin modal */
+body:has(.tutor-detail-page) .modal-close,
+body:has(.tutor-detail-page) .modal-card__close,
+body:has(.tutor-detail-page) button[aria-label="Close"],
+body:has(.tutor-detail-page) button[aria-label="Close modal"] {
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px !important;
+  min-height: 48px !important;
+  max-width: 48px !important;
+  max-height: 48px !important;
+
+  border: none !important;
+  border-radius: 50% !important;
+  background: rgba(217, 70, 239, 0.22) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+
+  font-size: 34px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+
+  display: grid !important;
+  place-items: center !important;
+  padding: 0 !important;
+  cursor: pointer !important;
+}
+
+/* close button hover */
+body:has(.tutor-detail-page) .modal-close:hover,
+body:has(.tutor-detail-page) .modal-card__close:hover,
+body:has(.tutor-detail-page) button[aria-label="Close"]:hover,
+body:has(.tutor-detail-page) button[aria-label="Close modal"]:hover {
+  background: rgba(217, 70, 239, 0.34) !important;
+  transform: none !important;
+}
