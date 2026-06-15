@@ -2273,3 +2273,211 @@ body,
     font-size: 15px;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   STUDENT CHAT FINAL FIX - EXACT ADMIN CHAT LAYOUT STYLE
+========================================================= */
+
+body:has(.student-admin-chat-page) .student-content,
+body:has(.student-admin-chat-page) .student-content__inner,
+body:has(.student-admin-chat-page) .student-content_inner {
+  overflow: hidden !important;
+}
+
+.student-admin-chat-page {
+  width: 100% !important;
+  height: calc(100vh - 92px - 44px - 72px) !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+.student-admin-chat-layout {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  border-radius: 0 !important;
+  overflow: hidden !important;
+}
+
+.student-admin-chat-panel-card,
+.student-admin-chat-detail-card,
+.student-admin-chat-app {
+  height: 100% !important;
+  min-height: 0 !important;
+}
+
+.student-admin-chat-app {
+  grid-template-rows: 76px minmax(0, 1fr) auto auto !important;
+}
+
+.student-admin-chat-body {
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+.student-admin-chat-inputbar {
+  flex-shrink: 0 !important;
+}
+
+/* Mobile */
+@media (max-width: 860px) {
+  body:has(.student-admin-chat-page),
+  body:has(.student-admin-chat-page) #root,
+  body:has(.student-admin-chat-page) .student-shell,
+  body:has(.student-admin-chat-page) .student-content,
+  body:has(.student-admin-chat-page) .student-content__inner,
+  body:has(.student-admin-chat-page) .student-content_inner {
+    overflow: hidden !important;
+  }
+
+  .student-admin-chat-page {
+    height: calc(100dvh - 78px - 44px - 32px) !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .student-admin-chat-layout {
+    display: block !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  .student-admin-chat-panel-card,
+  .student-admin-chat-detail-card {
+    height: 100% !important;
+    min-height: 0 !important;
+  }
+
+  .student-admin-chat-admin-panel--hide-mobile {
+    display: none !important;
+  }
+
+  .student-admin-chat-detail-panel {
+    display: none !important;
+    height: 100% !important;
+  }
+
+  .student-admin-chat-detail-panel--open-mobile {
+    display: block !important;
+    height: 100% !important;
+  }
+
+  .student-admin-chat-app {
+    height: 100% !important;
+    grid-template-rows: 82px minmax(0, 1fr) auto auto !important;
+  }
+
+  .student-admin-chat-header {
+    height: 82px !important;
+    padding: 0 12px !important;
+  }
+
+  .student-admin-chat-body {
+    padding: 12px 8px !important;
+  }
+
+  .student-admin-chat-inputbar {
+    display: grid !important;
+    grid-template-columns: 34px 34px 34px minmax(0, 1fr) 38px !important;
+    gap: 6px !important;
+    padding: 8px !important;
+  }
+
+  .student-admin-chat-inputbar:has(.student-admin-chat-cancel-edit) {
+    grid-template-columns: 34px 34px 34px minmax(0, 1fr) 34px 38px !important;
+  }
+
+  .student-admin-chat-icon-btn,
+  .student-admin-chat-send,
+  .student-admin-chat-cancel-edit {
+    width: 100% !important;
+    height: 34px !important;
+    min-width: 0 !important;
+    flex: unset !important;
+    font-size: 15px !important;
+  }
+
+  .student-admin-chat-send {
+    font-size: 18px !important;
+  }
+
+  .student-admin-chat-inputbar input[type="text"] {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 39px !important;
+    padding: 0 10px !important;
+    font-size: 13px !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .student-admin-chat-inputbar {
+    grid-template-columns: 32px 32px 32px minmax(0, 1fr) 34px !important;
+    gap: 5px !important;
+    padding: 7px !important;
+  }
+
+  .student-admin-chat-inputbar:has(.student-admin-chat-cancel-edit) {
+    grid-template-columns: 30px 30px 30px minmax(0, 1fr) 30px 32px !important;
+  }
+
+  .student-admin-chat-icon-btn,
+  .student-admin-chat-send,
+  .student-admin-chat-cancel-edit {
+    height: 32px !important;
+    font-size: 14px !important;
+  }
+
+  .student-admin-chat-send {
+    font-size: 17px !important;
+  }
+
+  .student-admin-chat-inputbar input[type="text"] {
+    height: 38px !important;
+    font-size: 12.5px !important;
+    padding: 0 8px !important;
+  }
+}
