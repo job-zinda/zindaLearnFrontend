@@ -2394,7 +2394,7 @@ const chatUser = getChatUser(room);
                     <div className="admin-chat-no-message">Loading messages...</div>
                   ) : messages.length === 0 ? (
                     <div className="admin-chat-no-message">
-                      No messages yet. Send a message to this student.
+                      No messages yet.
                     </div>
                   ) : (
                     messages.map((message) => (
