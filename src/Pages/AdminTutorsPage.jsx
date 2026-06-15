@@ -1362,7 +1362,7 @@ async function confirmDeleteTutor() {
     className="view-details-btn"
     onClick={() => navigate(`/admin/tutors/${tutor._id}`)}
   >
-    View 
+    View Detail
   </button>
 </div>
 
