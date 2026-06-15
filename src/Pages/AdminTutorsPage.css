@@ -4148,3 +4148,78 @@
   opacity: 0.7 !important;
   cursor: not-allowed !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.tutor-card-actions {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 10px;
+  margin-top: auto;
+  width: 100%;
+}
+
+.tutor-chat-btn {
+  border: 1px solid rgba(217, 70, 239, 0.45);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  font-weight: 950;
+  font-size: 15px;
+  padding: 14px;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.tutor-chat-btn:hover {
+  background: rgba(217, 70, 239, 0.18);
+  transform: translateY(-2px);
+}
+
+.tutor-card-actions .view-details-btn {
+  margin-top: 0 !important;
+}
+
+@media (max-width: 520px) {
+  .tutor-card-actions {
+    grid-template-columns: 82px 1fr;
+    gap: 8px;
+  }
+
+  .tutor-chat-btn,
+  .tutor-card-actions .view-details-btn {
+    min-height: 50px;
+    font-size: 14px;
+    padding: 12px 8px;
+  }
+}
