@@ -1710,6 +1710,7 @@ export default function AdminChatPage() {
       setRooms(list);
 
       const queryRoomId = searchParams.get("roomId");
+      const shouldOpenChat = searchParams.get("open") === "chat";
       const keepRoomId = preferredRoomId || queryRoomId || activeRoomIdRef.current;
 
       const selected =
@@ -1727,6 +1728,12 @@ export default function AdminChatPage() {
         if (String(queryRoomId) !== String(selectedId)) {
           setSearchParams({ roomId: selectedId }, { replace: true });
         }
+
+if (shouldOpenChat) {
+  setMobileChatOpen(true);
+}
+
+
       }
     } catch (err) {
       showAlert(getErrorMessage(err, "Failed to load chat rooms"), "error");

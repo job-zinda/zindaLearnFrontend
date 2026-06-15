@@ -1831,7 +1831,11 @@ async function openStudentChat(student) {
     const roomId = data?.room?._id || data?.chatRoom?._id || data?.roomId;
 
     if (roomId) {
-      navigate(`/admin/chats?roomId=${roomId}`);
+      // navigate(`/admin/chats?roomId=${roomId}`);
+
+navigate(`/admin/chats?roomId=${roomId}&open=chat`);
+
+
     } else {
       navigate("/admin/chats");
     }
