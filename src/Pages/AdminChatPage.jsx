@@ -1676,7 +1676,9 @@ export default function AdminChatPage() {
   const emojiPickerRef = useRef(null);
 
   const activeRoomId = getRoomId(activeRoom);
-  const activeStudent = useMemo(() => getStudent(activeRoom), [activeRoom]);
+  // const activeStudent = useMemo(() => getStudent(activeRoom), [activeRoom]);
+
+  const activeChatUser = useMemo(() => getChatUser(activeRoom), [activeRoom]);
 
   useEffect(() => {
     activeRoomIdRef.current = activeRoomId || "";
@@ -1690,11 +1692,26 @@ export default function AdminChatPage() {
     return rooms.filter((room) => {
       // const student = getStudent(room);
 
+// const chatUser = getChatUser(room);
+
+//       const name = getUserName(student, "").toLowerCase();
+//       const email = String(student?.email || "").toLowerCase();
+//       return name.includes(keyword) || email.includes(keyword);
+
+
+
+
+
 const chatUser = getChatUser(room);
 
-      const name = getUserName(student, "").toLowerCase();
-      const email = String(student?.email || "").toLowerCase();
-      return name.includes(keyword) || email.includes(keyword);
+const name = getUserName(chatUser, "").toLowerCase();
+const email = String(chatUser?.email || "").toLowerCase();
+
+return name.includes(keyword) || email.includes(keyword);
+
+
+
+
     });
   }, [rooms, search]);
 
@@ -1799,7 +1816,14 @@ if (shouldOpenChat) {
       }
 
       const existingStudentIds = new Set(
-        rooms.map((room) => String(getStudent(room)?._id || getStudent(room)?.id))
+        // rooms.map((room) => String(getStudent(room)?._id || getStudent(room)?.id))
+rooms
+  .filter((room) => room?.roomType === "student_admin")
+  .map((room) => {
+    const chatUser = getChatUser(room);
+    return String(chatUser?._id || chatUser?.id);
+  })
+
       );
 
       const filtered = students.filter((student) => {
@@ -2222,11 +2246,16 @@ if (shouldOpenChat) {
                     className="admin-chat-room-item"
                     onClick={() => selectStudentFromSearch(student)}
                   >
-                    <Avatar user={student} className="admin-chat-room-avatar" />
+                    {/* <Avatar user={student} className="admin-chat-room-avatar" /> */}
+
+                    <Avatar user={chatUser} className="admin-chat-room-avatar" />
 
                     <div className="admin-chat-room-info">
                       <div className="admin-chat-room-top">
-                        <h4>{getUserName(student)}</h4>
+                        {/* <h4>{getUserName(student)}</h4> */}
+
+<h4>{getUserName(chatUser)}</h4>
+
                         {isNew && <span>New</span>}
                       </div>
 
@@ -2255,21 +2284,39 @@ const chatUser = getChatUser(room);
                       }`}
                       onClick={() => openChatView(room)}
                     >
-                      <Avatar user={student} className="admin-chat-room-avatar" />
+                      {/* <Avatar user={student} className="admin-chat-room-avatar" /> */}
+
+                      <Avatar user={chatUser} className="admin-chat-room-avatar" />
 
                       <div className="admin-chat-room-info">
                         <div className="admin-chat-room-top">
-                          <h4>{getUserName(student)}</h4>
+                          {/* <h4>{getUserName(student)}</h4> */}
+
+
+<h4>{getUserName(chatUser)}</h4>
+
                           <span>{formatTime(room?.lastMessageAt)}</span>
                         </div>
 
                         <p>{room?.lastMessage || "No messages yet"}</p>
 
-                        <small className={room?.studentOnline ? "online" : ""}>
+                        {/* <small className={room?.studentOnline ? "online" : ""}>
                           {room?.studentOnline
                             ? "Online"
                             : formatLastSeen(student?.lastSeen)}
-                        </small>
+                        </small> */}
+
+
+
+<small className={isChatUserOnline(room) ? "online" : ""}>
+  {isChatUserOnline(room)
+    ? "Online"
+    : formatLastSeen(chatUser?.lastSeen)}
+</small>
+
+
+
+
                       </div>
                     </button>
                   );
@@ -2287,8 +2334,16 @@ const chatUser = getChatUser(room);
           <div className="admin-chat-detail-card">
             {!activeRoom ? (
               <div className="admin-chat-empty">
-                <h2>Select a student</h2>
-                <p>Choose a chat to start messaging.</p>
+                {/* <h2>Select a student</h2>
+                <p>Choose a chat to start messaging.</p> */}
+
+
+
+<h2>Select a chat</h2>
+<p>Choose student or tutor chat to start messaging.</p>
+
+
+
               </div>
             ) : (
               <div className="admin-chat-app">
@@ -2302,7 +2357,7 @@ const chatUser = getChatUser(room);
                   </button>
 
                   <div className="admin-chat-user">
-                    <Avatar user={activeStudent} />
+                    {/* <Avatar user={activeStudent} />
 
                     <div>
                       <h3>{getUserName(activeStudent)}</h3>
@@ -2311,7 +2366,26 @@ const chatUser = getChatUser(room);
                           ? "Online"
                           : formatLastSeen(activeStudent?.lastSeen)}
                       </p>
-                    </div>
+                    </div> */}
+
+
+
+
+<Avatar user={activeChatUser} />
+
+<div>
+  <h3>{getUserName(activeChatUser)}</h3>
+  <p className={isChatUserOnline(activeRoom) ? "online" : ""}>
+    {isChatUserOnline(activeRoom)
+      ? "Online"
+      : formatLastSeen(activeChatUser?.lastSeen)}
+  </p>
+</div>
+
+
+
+
+
                   </div>
                 </header>
 
