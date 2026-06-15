@@ -1565,6 +1565,7 @@ import TutorTutorDetailsPage from "./Pages/TutorTutorDetailsPage";
 import TutorSettingsPage from "./Pages/TutorSettingsPage";
 import TutorPlaceholderPage from "./Pages/TutorPlaceholderPage";
 import TutorAboutPage from "./Pages/TutorAboutPage";
+import TutorChatPage from "./Pages/TutorChatPage";
 
 /* CSS */
 import "./style/admin-layout.css";
@@ -1600,6 +1601,7 @@ import "./Pages/TutorPlaceholderPage.css";
 import "./Components/TutorBannerSection.css";
 import "./Components/TutorCategorySection.css";
 import "./Pages/TutorAboutPage.css";
+import "./Pages/TutorChatPage.css";
 
 export default function App() {
   return (
@@ -1712,10 +1714,15 @@ export default function App() {
 
           <Route path="about" element={<TutorAboutPage />} />
 
-          <Route
+          {/* <Route
             path="chats"
             element={<TutorPlaceholderPage title="Chats" />}
-          />
+          /> */}
+
+
+<Route path="chats" element={<TutorChatPage />} />
+
+
 
           <Route path="settings" element={<TutorSettingsPage />} />
         </Route>

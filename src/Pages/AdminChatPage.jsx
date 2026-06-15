@@ -1373,9 +1373,31 @@ function isMessageRead(message) {
   return message?.isRead === true || message?.read === true;
 }
 
-function getStudent(room) {
+// function getStudent(room) {
+//   return room?.studentId || room?.student || null;
+// }
+
+
+
+function getChatUser(room) {
+  if (room?.roomType === "tutor_admin") {
+    return room?.tutorId || room?.tutor || null;
+  }
+
   return room?.studentId || room?.student || null;
 }
+
+function getChatUserLabel(room) {
+  if (room?.roomType === "tutor_admin") return "Tutor";
+  if (room?.roomType === "student_admin") return "Student";
+  return "User";
+}
+
+function isChatUserOnline(room) {
+  if (room?.roomType === "tutor_admin") return room?.tutorOnline;
+  return room?.studentOnline;
+}
+
 
 function getUserName(user, fallback = "Student") {
   return user?.name || user?.email || fallback;
@@ -1666,7 +1688,10 @@ export default function AdminChatPage() {
     if (!keyword) return rooms;
 
     return rooms.filter((room) => {
-      const student = getStudent(room);
+      // const student = getStudent(room);
+
+const chatUser = getChatUser(room);
+
       const name = getUserName(student, "").toLowerCase();
       const email = String(student?.email || "").toLowerCase();
       return name.includes(keyword) || email.includes(keyword);
@@ -2215,7 +2240,10 @@ if (shouldOpenChat) {
               ) : (
                 filteredRooms.map((room) => {
                   const roomId = getRoomId(room);
-                  const student = getStudent(room);
+                  // const student = getStudent(room);
+
+const chatUser = getChatUser(room);
+
                   const active = String(roomId) === String(activeRoomId);
 
                   return (
