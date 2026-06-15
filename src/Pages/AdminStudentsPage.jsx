@@ -1570,7 +1570,7 @@ import { createPortal } from "react-dom";
 
 
 
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "../Components/Modal";
 import { useAlert } from "../context/AlertContext";
 import { getMediaUrl } from "../utils/media";
@@ -1665,52 +1665,6 @@ function isStudentBlocked(student) {
 
 
 
-// function resizeImageToBase64(file, maxSize = 420, quality = 0.72) {
-//   return new Promise((resolve, reject) => {
-//     if (!file.type.startsWith("image/")) {
-//       reject(new Error("Please select an image file"));
-//       return;
-//     }
-
-//     const reader = new FileReader();
-
-//     reader.onload = () => {
-//       const img = new Image();
-
-//       img.onload = () => {
-//         const canvas = document.createElement("canvas");
-
-//         let { width, height } = img;
-
-//         if (width > height) {
-//           if (width > maxSize) {
-//             height = Math.round((height * maxSize) / width);
-//             width = maxSize;
-//           }
-//         } else if (height > maxSize) {
-//           width = Math.round((width * maxSize) / height);
-//           height = maxSize;
-//         }
-
-//         canvas.width = width;
-//         canvas.height = height;
-
-//         const ctx = canvas.getContext("2d");
-//         ctx.drawImage(img, 0, 0, width, height);
-
-//         resolve(canvas.toDataURL("image/jpeg", quality));
-//       };
-
-//       img.onerror = () => reject(new Error("Image load failed"));
-//       img.src = reader.result;
-//     };
-
-//     reader.onerror = () => reject(new Error("Image read failed"));
-//     reader.readAsDataURL(file);
-//   });
-// }
-
-
 
 
 
@@ -1750,24 +1704,6 @@ function StudentDarkModal({ open, title, width = "560px", onClose, children }) {
 
 
 
-// function StudentInviteIcon() {
-//   return (
-//     <span className="student-invite-btn__icon" aria-hidden="true">
-//       <span className="student-invite-btn__plus">+</span>
-
-//       <svg
-//         className="student-invite-btn__user"
-//         viewBox="0 0 24 24"
-//         fill="none"
-//       >
-//         <circle cx="12" cy="8" r="4" />
-//         <path d="M4.5 21c.8-4 3.6-6 7.5-6s6.7 2 7.5 6" />
-//       </svg>
-//     </span>
-//   );
-// }
-
-
 
 
 
@@ -1795,7 +1731,7 @@ function StudentInviteIcon() {
 
 
 
-  
+
 }
 
 
@@ -1807,6 +1743,7 @@ function StudentInviteIcon() {
 export default function AdminStudentsPage() {
   const { showAlert } = useAlert();
   const location = useLocation();
+  const navigate = useNavigate();
   const firstNewCardRef = useRef(null);
 
   const [students, setStudents] = useState([]);
@@ -1881,7 +1818,27 @@ export default function AdminStudentsPage() {
     }
   }
 
+async function openStudentChat(student) {
+  try {
+    const studentId = getStudentId(student);
 
+    if (!studentId) {
+      return showAlert("Student id not found", "error");
+    }
+
+    const { data } = await api.post(`/chat/admin-student-room/${studentId}`);
+
+    const roomId = data?.room?._id || data?.chatRoom?._id || data?.roomId;
+
+    if (roomId) {
+      navigate(`/admin/chats?roomId=${roomId}`);
+    } else {
+      navigate("/admin/chats");
+    }
+  } catch (err) {
+    showAlert(getErrorMessage(err, "Failed to open chat"), "error");
+  }
+}
 
 
   async function fetchTutors() {
@@ -1967,29 +1924,6 @@ export default function AdminStudentsPage() {
     setMenuOpenId(null);
   }
 
-  // async function handlePhotoChange(e) {
-  //   const file = e.target.files?.[0];
-
-  //   if (!file) return;
-
-  //   try {
-  //     if (file.size > 5 * 1024 * 1024) {
-  //       showAlert("Image size 5MB-il താഴെ ആയിരിക്കണം", "error");
-  //       return;
-  //     }
-
-  //     const compressedBase64 = await resizeImageToBase64(file, 420, 0.72);
-
-  //     setEditForm((prev) => ({
-  //       ...prev,
-  //       photo: compressedBase64,
-  //     }));
-
-  //     setPreview(compressedBase64);
-  //   } catch (err) {
-  //     showAlert(err.message || "Photo select cheyyan kazhinjilla", "error");
-  //   }
-  // }
 
 
 
@@ -2038,12 +1972,6 @@ export default function AdminStudentsPage() {
 
       setSubmitting(true);
 
-      // await api.put(`/admin/student/update/${getStudentId(editingStudent)}`, {
-      //   name: editForm.name.trim(),
-      //   email: editForm.email.trim(),
-      //   phone: editForm.phone.trim(),
-      //   photo: editForm.photo || "",
-      // });
 
 
 
@@ -2274,7 +2202,6 @@ export default function AdminStudentsPage() {
       setSubmitting(false);
     }
   }
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   return (
     <div className="student-page" onClick={() => setMenuOpenId(null)}>
       <div className="student-toolbar" onClick={(e) => e.stopPropagation()}>
@@ -2287,105 +2214,19 @@ export default function AdminStudentsPage() {
           />
         </div>
 
-        {/* <button
+
+
+
+
+        <button
           type="button"
           className="student-invite-btn"
           onClick={openInviteModal}
+          aria-label="Invite Student"
         >
-          + Invite Student
-        </button> */}
-
-
-
-
-{/* 
-<button
-  type="button"
-  className="student-invite-btn"
-  onClick={openInviteModal}
-  aria-label="Invite Student"
->
-  <span className="student-invite-btn__icon" aria-hidden="true">
-    <span className="student-invite-btn__plus">+</span>
-
-    <svg
-      className="student-invite-btn__user"
-      viewBox="0 0 24 24"
-      fill="none"
-    >
-      <circle cx="12" cy="8" r="4" />
-      <path d="M4.5 21c.8-4 3.6-6 7.5-6s6.7 2 7.5 6" />
-    </svg>
-  </span>
-
-  <span className="student-invite-btn__text">Invite Student</span>
-</button>
- */}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/* <button
-  type="button"
-  className="student-invite-btn"
-  onClick={openInviteModal}
->
-  <span className="student-invite-btn__icon">
-    <span className="student-invite-btn__plus">+</span>
-
-    <svg
-      className="student-invite-btn__user"
-      viewBox="0 0 24 24"
-      fill="none"
-    >
-      <circle cx="12" cy="8" r="4" />
-      <path d="M4.5 21c.8-4 3.6-6 7.5-6s6.7 2 7.5 6" />
-    </svg>
-  </span>
-
-  <span className="student-invite-btn__text">
-    Invite Student
-  </span>
-</button> */}
-
-
-
-
-
-
-
-{/* <button
-  type="button"
-  className="student-invite-btn"
-  onClick={openInviteModal}
-  aria-label="Invite Student"
->
-  <StudentInviteIcon />
-  <span className="student-invite-btn__text">Invite Student</span>
-</button> */}
-
-
-
-
-<button
-  type="button"
-  className="student-invite-btn"
-  onClick={openInviteModal}
-  aria-label="Invite Student"
->
-  <StudentInviteIcon />
-  <span className="student-invite-btn__text">Invite Student</span>
-</button>
+          <StudentInviteIcon />
+          <span className="student-invite-btn__text">Invite Student</span>
+        </button>
 
 
 
@@ -2443,7 +2284,7 @@ ${isStudentBlocked(student)
 
 
 
-                // onClick={(e) => e.stopPropagation()}
+
               >
 
 
@@ -2484,28 +2325,28 @@ ${isStudentBlocked(student)
 
 
                 <div className="student-menu-wrap">
-                <button
-  type="button"
-  className="student-menu-btn"
-  onClick={(e) => {
-    e.stopPropagation();
-    setMenuOpenId(menuOpenId === studentId ? null : studentId);
-  }}
->
-  ⋮
-</button>
+                  <button
+                    type="button"
+                    className="student-menu-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setMenuOpenId(menuOpenId === studentId ? null : studentId);
+                    }}
+                  >
+                    ⋮
+                  </button>
 
-                {menuOpenId === studentId && (
-  <div
-    className="student-menu"
-    onClick={(e) => e.stopPropagation()}
-  >
-    <button
-      type="button"
-      onClick={() => openEditModal(student)}
-    >
-      ✎ Edit
-    </button>
+                  {menuOpenId === studentId && (
+                    <div
+                      className="student-menu"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => openEditModal(student)}
+                      >
+                        ✎ Edit
+                      </button>
 
 
                       <button
@@ -2585,13 +2426,23 @@ ${isStudentBlocked(student)
 
 
 
-                <button
-                  type="button"
-                  className="student-assign-btn"
-                  onClick={() => openAssignTutorModal(student)}
-                >
-                  Assign Tutors
-                </button>
+            <div className="student-card-actions">
+  <button
+    type="button"
+    className="student-chat-btn"
+    onClick={() => openStudentChat(student)}
+  >
+    Chat
+  </button>
+
+  <button
+    type="button"
+    className="student-assign-btn"
+    onClick={() => openAssignModal(student)}
+  >
+    Assign Tutors
+  </button>
+</div>
 
 
 
