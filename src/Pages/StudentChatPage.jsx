@@ -41,13 +41,1077 @@
 
 
 
+// import EmojiPicker from "emoji-picker-react";
+
+
+
+
+
+
+// import React, { useEffect, useMemo, useRef, useState } from "react";
+// import { useSearchParams } from "react-router-dom";
+// import api from "../api/axios";
+// import { useAlert } from "../context/AlertContext";
+// import { getMediaUrl } from "../utils/media";
+// import { connectSocket } from "../socket";
+// import "./StudentChatPage.css";
+
+// function getErrorMessage(error, fallback = "Something went wrong") {
+//   return (
+//     error?.response?.data?.msg ||
+//     error?.response?.data?.error ||
+//     error?.message ||
+//     fallback
+//   );
+// }
+
+// function getCurrentUserId() {
+//   const user = JSON.parse(localStorage.getItem("user") || "{}");
+//   return user?._id || user?.id || "";
+// }
+
+// function getRoomId(room) {
+//   return room?._id || room?.id || room?.roomId;
+// }
+
+// function getSenderId(message) {
+//   const sender = message?.senderId || message?.sender || message?.from;
+//   return typeof sender === "object" ? sender?._id || sender?.id : sender;
+// }
+
+// function getText(message) {
+//   return message?.text || message?.message || message?.content || "";
+// }
+
+// function isOwnMessage(message) {
+//   return String(getSenderId(message)) === String(getCurrentUserId());
+// }
+
+// function isMessageRead(message) {
+//   if (message?.isRead === true || message?.read === true) return true;
+
+//   const currentId = getCurrentUserId();
+
+//   if (Array.isArray(message?.readBy)) {
+//     return message.readBy.some(
+//       (id) => String(id?._id || id) !== String(currentId)
+//     );
+//   }
+
+//   return false;
+// }
+
+// function getAdmin(room) {
+//   if (room?.adminId && typeof room.adminId === "object") return room.adminId;
+//   if (room?.admin && typeof room.admin === "object") return room.admin;
+//   if (room?.adminDetails && typeof room.adminDetails === "object") {
+//     return room.adminDetails;
+//   }
+//   if (room?.createdBy && room?.createdBy?.role === "admin") return room.createdBy;
+
+//   if (Array.isArray(room?.participants)) {
+//     return room.participants.find(
+//       (user) =>
+//         String(user?.role || "").toLowerCase() === "admin" ||
+//         String(user?.userType || "").toLowerCase() === "admin"
+//     );
+//   }
+
+//   return null;
+// }
+
+// function getImageSrc(value) {
+//   if (!value) return "";
+
+//   const src = String(value).trim();
+
+//   if (
+//     src.startsWith("data:image") ||
+//     src.startsWith("blob:") ||
+//     src.startsWith("http://") ||
+//     src.startsWith("https://")
+//   ) {
+//     return src;
+//   }
+
+//   return getMediaUrl(src);
+// }
+
+// function getUserPhoto(user) {
+//   return (
+//     getImageSrc(user?.photo) ||
+//     getImageSrc(user?.profilePhoto) ||
+//     getImageSrc(user?.profileImage) ||
+//     getImageSrc(user?.image) ||
+//     getImageSrc(user?.avatar) ||
+//     getImageSrc(user?.profilePic)
+//   );
+// }
+
+// function formatLastSeen(value) {
+//   if (!value) return "Offline";
+
+//   const date = new Date(value);
+//   if (Number.isNaN(date.getTime())) return "Offline";
+
+//   return `Last seen ${date.toLocaleString()}`;
+// }
+
+// function isLink(value = "") {
+//   return /^(https?:\/\/|www\.)/i.test(value);
+// }
+
+// function renderTextWithLinks(text = "") {
+//   const parts = String(text).split(/(\s+)/);
+
+//   return parts.map((part, index) => {
+//     const clean = part.trim();
+
+//     if (isLink(clean)) {
+//       const href = clean.startsWith("http") ? clean : `https://${clean}`;
+
+//       return (
+//         <a
+//           key={`${part}-${index}`}
+//           href={href}
+//           target="_blank"
+//           rel="noreferrer"
+//           className="student-chat-link"
+//         >
+//           {part}
+//         </a>
+//       );
+//     }
+
+//     return part;
+//   });
+// }
+
+// function getFileUrl(file) {
+//   return getMediaUrl(file?.url || file?.path || file);
+// }
+
+// function getFileType(file) {
+//   return file?.mimeType || file?.type || "";
+// }
+
+// function isImageFile(file) {
+//   const type = getFileType(file);
+//   const url = getFileUrl(file);
+//   return type.startsWith("image/") || /\.(png|jpg|jpeg|webp|gif)$/i.test(url);
+// }
+
+// function isVideoFile(file) {
+//   const type = getFileType(file);
+//   const url = getFileUrl(file);
+//   return type.startsWith("video/") || /\.(mp4|webm|mov)$/i.test(url);
+// }
+
+// function isAudioFile(file) {
+//   const type = getFileType(file);
+//   const url = getFileUrl(file);
+//   return type.startsWith("audio/") || /\.(mp3|wav|webm|ogg)$/i.test(url);
+// }
+
+// function MessageFile({ file }) {
+//   const url = getFileUrl(file);
+//   const name = file?.originalName || file?.filename || file?.name || "File";
+
+//   if (!url) return null;
+
+//   if (isImageFile(file)) {
+//     return <img className="student-chat-file-img" src={url} alt={name} />;
+//   }
+
+//   if (isVideoFile(file)) {
+//     return <video className="student-chat-file-video" src={url} controls />;
+//   }
+
+//   if (isAudioFile(file)) {
+//     return <audio className="student-chat-file-audio" src={url} controls />;
+//   }
+
+//   return (
+//     <a
+//       className="student-chat-file-link"
+//       href={url}
+//       target="_blank"
+//       rel="noreferrer"
+//     >
+//       📎 {name}
+//     </a>
+//   );
+// }
+
+// function MessageBubble({ message, onEdit, onDelete }) {
+//   const own = isOwnMessage(message);
+//   const read = isMessageRead(message);
+//   const text = getText(message);
+//   const files = message?.files || message?.attachments || [];
+//   const messageType = message?.messageType || message?.type;
+
+//   const isAutomatic =
+//     messageType === "auto" ||
+//     messageType === "connect_request" ||
+//     message?.isAutomatic;
+
+//   const hasFiles = Array.isArray(files) && files.length > 0;
+
+//   const canDelete = own;
+//   const canEdit =
+//     own && !isAutomatic && messageType !== "connect_card" && !hasFiles;
+
+//   return (
+//     <div className={`student-chat-row ${own ? "student-chat-row--own" : ""}`}>
+//       <div
+//         className={`student-chat-bubble ${
+//           own
+//             ? read
+//               ? "student-chat-bubble--own-read"
+//               : "student-chat-bubble--own-unread"
+//             : ""
+//         }`}
+//       >
+//         {own && (canEdit || canDelete) && (
+//           <div className="student-message-actions-hover">
+//             {canEdit && (
+//               <button type="button" title="Edit" onClick={() => onEdit(message)}>
+//                 ✎
+//               </button>
+//             )}
+
+//             {canDelete && (
+//               <button type="button" title="Delete" onClick={() => onDelete(message)}>
+//                 🗑
+//               </button>
+//             )}
+//           </div>
+//         )}
+
+//         {messageType === "connect_card" ? (
+//           <>
+//             <div
+//               className="student-connect-preview-image-card"
+//               onClick={() => {
+//                 if (message?.connectCard?.tuterId) {
+//                   window.location.href = `/student/tutors/${message.connectCard.tuterId}`;
+//                 }
+//               }}
+//             >
+//               {message?.connectCard?.image ? (
+//                 <img
+//                   src={getMediaUrl(message.connectCard.image)}
+//                   alt={message.connectCard.name || "Tutor"}
+//                 />
+//               ) : (
+//                 <div className="student-connect-preview-fallback">
+//                   {message?.connectCard?.name?.charAt(0)?.toUpperCase() || "T"}
+//                 </div>
+//               )}
+
+//               <div className="student-connect-preview-overlay">
+//                 <h4>{message?.connectCard?.name || "Tutor Details"}</h4>
+//                 <p>
+//                   {message?.connectCard?.qualification ||
+//                     "Qualification not added"}
+//                 </p>
+//                 <span>Tap to view full tutor details</span>
+//               </div>
+//             </div>
+
+//             {text ? (
+//               <p className="student-connect-request-text">
+//                 {renderTextWithLinks(text)}
+//               </p>
+//             ) : null}
+//           </>
+//         ) : isAutomatic ? (
+//           <div className="student-connect-request-card">
+//             <b>Connect Request</b>
+//             <p>{renderTextWithLinks(text)}</p>
+//           </div>
+//         ) : (
+//           text && <p className="student-chat-text">{renderTextWithLinks(text)}</p>
+//         )}
+
+//         {hasFiles && (
+//           <div className="student-chat-files">
+//             {files.map((file, index) => (
+//               <MessageFile key={file?._id || index} file={file} />
+//             ))}
+//           </div>
+//         )}
+
+//         <div className="student-chat-meta">
+//           <span>
+//             {message?.createdAt
+//               ? new Date(message.createdAt).toLocaleTimeString([], {
+//                   hour: "2-digit",
+//                   minute: "2-digit",
+//                 })
+//               : ""}
+//           </span>
+
+//           {own && <span>{read ? "✓✓ Read" : "✓ Sent"}</span>}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// // const emojis = ["😀", "😂", "😍", "👍", "🙏", "🔥", "❤️", "🎉", "😊", "😎"];
+
+// export default function StudentChatPage() {
+//   const { showAlert } = useAlert();
+//   const [searchParams] = useSearchParams();
+
+//   const [activeRoom, setActiveRoom] = useState(null);
+//   const [messages, setMessages] = useState([]);
+//   const [text, setText] = useState("");
+//   const [emojiOpen, setEmojiOpen] = useState(false);
+//   const [loading, setLoading] = useState(true);
+//   const [sending, setSending] = useState(false);
+//   const [editingMessage, setEditingMessage] = useState(null);
+
+//   const [recording, setRecording] = useState(false);
+//   const [recordSeconds, setRecordSeconds] = useState(0);
+//   const [voiceReady, setVoiceReady] = useState(false);
+
+//   const [pendingFiles, setPendingFiles] = useState([]);
+
+//   const recorderRef = useRef(null);
+//   const chunksRef = useRef([]);
+//   const streamRef = useRef(null);
+//   const recordTimerRef = useRef(null);
+//   const fileInputRef = useRef(null);
+//   const bottomRef = useRef(null);
+
+// const emojiPickerRef = useRef(null);
+// // const emojiPickerRef = useRef(null);
+
+
+
+//   const activeRoomId = getRoomId(activeRoom);
+//   const admin = useMemo(() => getAdmin(activeRoom), [activeRoom]);
+//   const adminPhoto = getUserPhoto(admin);
+
+//   function scrollToBottom() {
+//     setTimeout(() => {
+//       bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+//     }, 80);
+//   }
+
+//   function formatRecordTime(seconds) {
+//     const min = String(Math.floor(seconds / 60)).padStart(2, "0");
+//     const sec = String(seconds % 60).padStart(2, "0");
+//     return `${min}:${sec}`;
+//   }
+
+//   async function createOrGetDefaultRoom() {
+//     const { data } = await api.post("/chat/student-admin-room");
+//     return data?.room || data?.chatRoom || null;
+//   }
+
+//   async function fetchRooms() {
+//     try {
+//       setLoading(true);
+
+//       const { data } = await api.get("/chat/rooms");
+//       let list = data?.rooms || data?.chatRooms || [];
+//       const queryRoomId = searchParams.get("roomId");
+
+//       let selected =
+//         list.find((room) => String(getRoomId(room)) === String(queryRoomId)) ||
+//         list[0] ||
+//         null;
+
+//       if (!selected) {
+//         selected = await createOrGetDefaultRoom();
+//       }
+
+//       setActiveRoom(selected);
+//     } catch (err) {
+//       showAlert(getErrorMessage(err, "Failed to load chats"), "error");
+//     } finally {
+//       setLoading(false);
+//     }
+//   }
+
+//   async function fetchMessages(roomId) {
+//     if (!roomId) return;
+
+//     try {
+//       const { data } = await api.get(`/chat/messages/${roomId}`);
+//       setMessages(data?.messages || []);
+//       await api.patch(`/chat/read/${roomId}`);
+//       scrollToBottom();
+//     } catch (err) {
+//       showAlert(getErrorMessage(err, "Failed to load messages"), "error");
+//     }
+//   }
+
+//   useEffect(() => {
+//     fetchRooms();
+//     // eslint-disable-next-line react-hooks/exhaustive-deps
+//   }, []);
+
+
+
+
+// useEffect(() => {
+//   function handleOutsideClick(e) {
+//     if (
+//       emojiOpen &&
+//       emojiPickerRef.current &&
+//       !emojiPickerRef.current.contains(e.target)
+//     ) {
+//       setEmojiOpen(false);
+//     }
+//   }
+
+//   document.addEventListener(
+//     "mousedown",
+//     handleOutsideClick
+//   );
+
+//   return () => {
+//     document.removeEventListener(
+//       "mousedown",
+//       handleOutsideClick
+//     );
+//   };
+// }, [emojiOpen]);
+
+
+
+//   useEffect(() => {
+//     if (!activeRoomId) return;
+
+//     fetchMessages(activeRoomId);
+
+//     const socket = connectSocket();
+
+//     socket.emit("joinRoom", activeRoomId);
+//     socket.emit("join_room", activeRoomId);
+
+//     function handleNewMessage(message) {
+//       const roomId =
+//         message?.roomId?._id || message?.roomId || message?.chatRoomId;
+
+//       if (String(roomId) === String(activeRoomId)) {
+//         setMessages((prev) => {
+//           if (prev.some((m) => String(m._id) === String(message._id))) {
+//             return prev;
+//           }
+//           return [...prev, message];
+//         });
+
+//         api.patch(`/chat/read/${activeRoomId}`).catch(() => {});
+//         scrollToBottom();
+//       }
+//     }
+
+//     function handleMessageRead(payload) {
+//       const roomId = payload?.roomId || payload?.chatRoomId;
+
+//       if (String(roomId) === String(activeRoomId)) {
+//         setMessages((prev) =>
+//           prev.map((message) => ({
+//             ...message,
+//             isRead: true,
+//           }))
+//         );
+//       }
+//     }
+
+//     function handleMessageDeleted(payload) {
+//       const messageId = payload?.messageId || payload?._id;
+
+//       setMessages((prev) =>
+//         prev.filter((message) => String(message._id) !== String(messageId))
+//       );
+//     }
+
+//     function handleMessageUpdated(updatedMessage) {
+//       setMessages((prev) =>
+//         prev.map((message) =>
+//           String(message._id) === String(updatedMessage._id)
+//             ? updatedMessage
+//             : message
+//         )
+//       );
+//     }
+
+//     socket.on("new_message", handleNewMessage);
+//     socket.on("newMessage", handleNewMessage);
+//     socket.on("message_read", handleMessageRead);
+//     socket.on("messageRead", handleMessageRead);
+//     socket.on("messageDeleted", handleMessageDeleted);
+//     socket.on("message_deleted", handleMessageDeleted);
+//     socket.on("messageUpdated", handleMessageUpdated);
+//     socket.on("message_updated", handleMessageUpdated);
+
+//     return () => {
+//       socket.off("new_message", handleNewMessage);
+//       socket.off("newMessage", handleNewMessage);
+//       socket.off("message_read", handleMessageRead);
+//       socket.off("messageRead", handleMessageRead);
+//       socket.off("messageDeleted", handleMessageDeleted);
+//       socket.off("message_deleted", handleMessageDeleted);
+//       socket.off("messageUpdated", handleMessageUpdated);
+//       socket.off("message_updated", handleMessageUpdated);
+//     };
+//   }, [activeRoomId]);
+
+//   async function sendFilesNow(filesToSend) {
+//     if (!activeRoomId || !filesToSend?.length) return null;
+
+//     const formData = new FormData();
+
+//     filesToSend.forEach((file) => {
+//       formData.append("files", file);
+//     });
+
+//     if (text.trim() && !editingMessage) {
+//       formData.append("message", text.trim());
+//       formData.append("text", text.trim());
+//     }
+
+//     const { data } = await api.post(
+//       `/chat/file-message/${activeRoomId}`,
+//       formData
+//     );
+
+//     return data?.message || data?.chatMessage;
+//   }
+
+//   async function sendTextNow() {
+//     const { data } = await api.post(`/chat/message/${activeRoomId}`, {
+//       message: text.trim(),
+//       text: text.trim(),
+//       messageType: "text",
+//     });
+
+//     return data?.message || data?.chatMessage;
+//   }
+
+//   async function updateTextNow() {
+//     const { data } = await api.patch(`/chat/message/${editingMessage._id}`, {
+//       message: text.trim(),
+//       text: text.trim(),
+//     });
+
+//     return data?.message || data?.chatMessage;
+//   }
+
+//   async function sendMessage(e) {
+//     e.preventDefault();
+
+//     if (!activeRoomId || sending || recording) return;
+//     if (!text.trim() && pendingFiles.length === 0) return;
+
+//     try {
+//       setSending(true);
+
+//       let saved = null;
+
+//       if (editingMessage) {
+//         if (!text.trim()) return;
+
+//         saved = await updateTextNow();
+
+//         if (saved) {
+//           setMessages((prev) =>
+//             prev.map((message) =>
+//               String(message._id) === String(saved._id) ? saved : message
+//             )
+//           );
+//         } else {
+//           await fetchMessages(activeRoomId);
+//         }
+
+//         setEditingMessage(null);
+//         setText("");
+//         showAlert("Message updated", "success");
+//         return;
+//       }
+
+//       if (pendingFiles.length > 0) {
+//         saved = await sendFilesNow(pendingFiles);
+//       } else {
+//         saved = await sendTextNow();
+//       }
+
+//       if (saved) {
+//         setMessages((prev) => {
+//           if (prev.some((m) => String(m._id) === String(saved._id))) {
+//             return prev;
+//           }
+//           return [...prev, saved];
+//         });
+//       } else {
+//         await fetchMessages(activeRoomId);
+//       }
+
+//       setText("");
+//       setPendingFiles([]);
+//       setVoiceReady(false);
+//       setEmojiOpen(false);
+
+//       if (fileInputRef.current) {
+//         fileInputRef.current.value = "";
+//       }
+
+//       scrollToBottom();
+//     } catch (err) {
+//       showAlert(getErrorMessage(err, "Failed to send message"), "error");
+//     } finally {
+//       setSending(false);
+//     }
+//   }
+
+//   function handleFileSelect(files) {
+//     if (!files?.length) return;
+
+//     setEditingMessage(null);
+//     setVoiceReady(false);
+//     setPendingFiles(Array.from(files));
+
+//     if (fileInputRef.current) {
+//       fileInputRef.current.value = "";
+//     }
+//   }
+
+//   async function startRecording() {
+//     try {
+//       setPendingFiles([]);
+//       setVoiceReady(false);
+//       setEditingMessage(null);
+
+//       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+//       const recorder = new MediaRecorder(stream);
+
+//       chunksRef.current = [];
+//       recorderRef.current = recorder;
+//       streamRef.current = stream;
+
+//       recorder.ondataavailable = (event) => {
+//         if (event.data.size > 0) {
+//           chunksRef.current.push(event.data);
+//         }
+//       };
+
+//       recorder.onstop = () => {
+//         const blob = new Blob(chunksRef.current, { type: "audio/webm" });
+
+//         stream.getTracks().forEach((track) => track.stop());
+//         streamRef.current = null;
+
+//         if (blob.size > 0) {
+//           const file = new File([blob], `voice-${Date.now()}.webm`, {
+//             type: "audio/webm",
+//           });
+
+//           setPendingFiles([file]);
+//           setVoiceReady(true);
+//         }
+
+//         chunksRef.current = [];
+//       };
+
+//       recorder.start();
+//       setRecording(true);
+//       setRecordSeconds(0);
+
+//       recordTimerRef.current = setInterval(() => {
+//         setRecordSeconds((prev) => prev + 1);
+//       }, 1000);
+//     } catch {
+//       showAlert("Microphone permission denied", "error");
+//     }
+//   }
+
+//   function stopRecording() {
+//     if (recorderRef.current && recording) {
+//       recorderRef.current.stop();
+//     }
+
+//     if (recordTimerRef.current) {
+//       clearInterval(recordTimerRef.current);
+//       recordTimerRef.current = null;
+//     }
+
+//     setRecording(false);
+//   }
+
+//   function cancelRecording() {
+//     chunksRef.current = [];
+
+//     if (recorderRef.current && recording) {
+//       recorderRef.current.onstop = null;
+//       recorderRef.current.stop();
+//     }
+
+//     if (streamRef.current) {
+//       streamRef.current.getTracks().forEach((track) => track.stop());
+//       streamRef.current = null;
+//     }
+
+//     if (recordTimerRef.current) {
+//       clearInterval(recordTimerRef.current);
+//       recordTimerRef.current = null;
+//     }
+
+//     setRecording(false);
+//     setRecordSeconds(0);
+//     setVoiceReady(false);
+//     setPendingFiles([]);
+//   }
+
+//   function removePendingFile(index) {
+//     setPendingFiles((prev) => prev.filter((_, i) => i !== index));
+//     setVoiceReady(false);
+//   }
+
+//   async function handleDelete(message) {
+//     try {
+//       await api.delete(`/chat/message/${message._id}`);
+
+//       setMessages((prev) =>
+//         prev.filter((item) => String(item._id) !== String(message._id))
+//       );
+
+//       showAlert("Message deleted", "success");
+//     } catch (err) {
+//       showAlert(getErrorMessage(err, "Failed to delete message"), "error");
+//     }
+//   }
+
+//   function handleEdit(message) {
+//     setEditingMessage(message);
+//     setText(getText(message));
+//     setPendingFiles([]);
+//     setVoiceReady(false);
+//   }
+
+//   if (loading) {
+//     return <div className="student-chat-state">Loading chats...</div>;
+//   }
+
+//   return (
+//     <div className="student-chat-page">
+//       <div className="student-chat-app">
+//         <div className="student-chat-header">
+//           <div className="student-chat-admin">
+//             <div className="student-chat-avatar">
+//               {adminPhoto ? (
+//                 <img
+//                   src={adminPhoto}
+//                   alt={admin?.name || "Admin"}
+//                   onError={(e) => {
+//                     e.currentTarget.style.display = "none";
+//                   }}
+//                 />
+//               ) : (
+//                 <span>{admin?.name?.charAt(0)?.toUpperCase() || "A"}</span>
+//               )}
+//             </div>
+
+//             <div>
+//               <h3>{admin?.name || "Admin"}</h3>
+//               <p className={admin?.isOnline ? "online" : ""}>
+//                 {admin?.isOnline ? "Online" : formatLastSeen(admin?.lastSeen)}
+//               </p>
+//             </div>
+//           </div>
+//         </div>
+
+//         <div className="student-chat-body">
+//           {messages.length ? (
+//             messages.map((message) => (
+//               <MessageBubble
+//                 key={message._id}
+//                 message={message}
+//                 onEdit={handleEdit}
+//                 onDelete={handleDelete}
+//               />
+//             ))
+//           ) : (
+//             <div className="student-chat-no-message">
+//               Start chatting with admin
+//             </div>
+//           )}
+
+//           <div ref={bottomRef} />
+//         </div>
+
+//         {recording && (
+//           <div className="student-recording-panel">
+//             <button
+//               type="button"
+//               className="student-record-trash"
+//               onClick={cancelRecording}
+//             >
+//               🗑
+//             </button>
+
+//             <span className="student-record-dot"></span>
+//             <b>{formatRecordTime(recordSeconds)}</b>
+
+//             <div className="student-record-waves">
+//               <span></span>
+//               <span></span>
+//               <span></span>
+//               <span></span>
+//               <span></span>
+//               <span></span>
+//               <span></span>
+//               <span></span>
+//             </div>
+
+//             <button
+//               type="button"
+//               className="student-record-stop"
+//               onClick={stopRecording}
+//             >
+//               ■
+//             </button>
+//           </div>
+//         )}
+
+//         {pendingFiles.length > 0 && !recording && (
+//           <div className="student-selected-file-bar">
+//             <div className="student-selected-file-list">
+//               {pendingFiles.map((file, index) => (
+//                 <div
+//                   key={`${file.name}-${index}`}
+//                   className="student-selected-file-chip"
+//                 >
+//                   <span>{voiceReady ? "🎙️" : "📎"}</span>
+//                   <b>{voiceReady ? "Voice message ready" : file.name}</b>
+//                   <button type="button" onClick={() => removePendingFile(index)}>
+//                     ✕
+//                   </button>
+//                 </div>
+//               ))}
+//             </div>
+//           </div>
+//         )}
+
+//         <form className="student-chat-inputbar" onSubmit={sendMessage}>
+//           <button
+//             type="button"
+//             className="student-chat-icon-btn"
+//             onClick={() => setEmojiOpen((prev) => !prev)}
+//           >
+//             😊
+//           </button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// {emojiOpen && (
+//   <div
+//     className="student-emoji-picker-wrap"
+//     ref={emojiPickerRef}
+//     onClick={(e) => e.stopPropagation()}
+//   >
+//     <EmojiPicker
+//       theme="dark"
+//       width="100%"
+//       height={390}
+//       searchPlaceholder="Search emoji"
+//       previewConfig={{
+//         showPreview: false,
+//       }}
+//       skinTonesDisabled={false}
+//       lazyLoadEmojis={true}
+//       onEmojiClick={(emojiData) => {
+//         setText((prev) => prev + emojiData.emoji);
+//       }}
+//     />
+//   </div>
+// )}
+
+
+
+
+
+//           <button
+//             type="button"
+//             className="student-chat-icon-btn"
+//             onClick={() => fileInputRef.current?.click()}
+//             disabled={recording || sending}
+//           >
+//             📎
+//           </button>
+
+//           <input
+//             ref={fileInputRef}
+//             type="file"
+//             multiple
+//             hidden
+//             onChange={(e) => handleFileSelect(e.target.files)}
+//           />
+
+//           <button
+//             type="button"
+//             className={`student-chat-icon-btn voice-btn ${
+//               recording ? "recording-active" : ""
+//             }`}
+//             onClick={recording ? stopRecording : startRecording}
+//             disabled={sending}
+//           >
+//             {recording ? "■" : "🎙️"}
+//           </button>
+
+//           <input
+//             value={text}
+//             onChange={(e) => setText(e.target.value)}
+//             disabled={recording}
+//             placeholder={
+//               recording
+//                 ? "Recording voice..."
+//                 : editingMessage
+//                 ? "Edit message..."
+//                 : pendingFiles.length
+//                 ? "Add caption..."
+//                 : "Type a message...."
+//             }
+//           />
+
+//           {editingMessage && (
+//             <button
+//               type="button"
+//               className="student-chat-cancel-edit"
+//               onClick={() => {
+//                 setEditingMessage(null);
+//                 setText("");
+//               }}
+//             >
+//               ✕
+//             </button>
+//           )}
+
+//           <button
+//             type="submit"
+//             className="student-chat-send"
+//             disabled={
+//               sending || recording || (!text.trim() && pendingFiles.length === 0)
+//             }
+//           >
+//             ➤
+//           </button>
+//         </form>
+//       </div>
+//     </div>
+//   );
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import EmojiPicker from "emoji-picker-react";
-
-
-
-
-
-
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import api from "../api/axios";
@@ -120,6 +1184,10 @@ function getAdmin(room) {
   return null;
 }
 
+function getUserName(user, fallback = "Admin") {
+  return user?.name || user?.email || fallback;
+}
+
 function getImageSrc(value) {
   if (!value) return "";
 
@@ -148,6 +1216,18 @@ function getUserPhoto(user) {
   );
 }
 
+function formatTime(value) {
+  if (!value) return "";
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+
+  return date.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
 function formatLastSeen(value) {
   if (!value) return "Offline";
 
@@ -162,29 +1242,29 @@ function isLink(value = "") {
 }
 
 function renderTextWithLinks(text = "") {
-  const parts = String(text).split(/(\s+)/);
+  return String(text)
+    .split(/(\s+)/)
+    .map((part, index) => {
+      const clean = part.trim();
 
-  return parts.map((part, index) => {
-    const clean = part.trim();
+      if (isLink(clean)) {
+        const href = clean.startsWith("http") ? clean : `https://${clean}`;
 
-    if (isLink(clean)) {
-      const href = clean.startsWith("http") ? clean : `https://${clean}`;
+        return (
+          <a
+            key={`${part}-${index}`}
+            href={href}
+            target="_blank"
+            rel="noreferrer"
+            className="student-admin-chat-link"
+          >
+            {part}
+          </a>
+        );
+      }
 
-      return (
-        <a
-          key={`${part}-${index}`}
-          href={href}
-          target="_blank"
-          rel="noreferrer"
-          className="student-chat-link"
-        >
-          {part}
-        </a>
-      );
-    }
-
-    return part;
-  });
+      return part;
+    });
 }
 
 function getFileUrl(file) {
@@ -210,7 +1290,18 @@ function isVideoFile(file) {
 function isAudioFile(file) {
   const type = getFileType(file);
   const url = getFileUrl(file);
-  return type.startsWith("audio/") || /\.(mp3|wav|webm|ogg)$/i.test(url);
+  return type.startsWith("audio/") || /\.(mp3|wav|webm|ogg|m4a)$/i.test(url);
+}
+
+function Avatar({ user, className = "student-admin-chat-avatar" }) {
+  const name = getUserName(user, "Admin");
+  const src = getUserPhoto(user);
+
+  return (
+    <div className={className}>
+      {src ? <img src={src} alt={name} /> : <span>{name.charAt(0).toUpperCase()}</span>}
+    </div>
+  );
 }
 
 function MessageFile({ file }) {
@@ -220,20 +1311,20 @@ function MessageFile({ file }) {
   if (!url) return null;
 
   if (isImageFile(file)) {
-    return <img className="student-chat-file-img" src={url} alt={name} />;
+    return <img className="student-admin-chat-file-img" src={url} alt={name} />;
   }
 
   if (isVideoFile(file)) {
-    return <video className="student-chat-file-video" src={url} controls />;
+    return <video className="student-admin-chat-file-video" src={url} controls />;
   }
 
   if (isAudioFile(file)) {
-    return <audio className="student-chat-file-audio" src={url} controls />;
+    return <audio className="student-admin-chat-file-audio" src={url} controls />;
   }
 
   return (
     <a
-      className="student-chat-file-link"
+      className="student-admin-chat-file-link"
       href={url}
       target="_blank"
       rel="noreferrer"
@@ -257,23 +1348,27 @@ function MessageBubble({ message, onEdit, onDelete }) {
 
   const hasFiles = Array.isArray(files) && files.length > 0;
 
-  const canDelete = own;
+  const canDelete = own && !isAutomatic && messageType !== "connect_card";
   const canEdit =
     own && !isAutomatic && messageType !== "connect_card" && !hasFiles;
 
   return (
-    <div className={`student-chat-row ${own ? "student-chat-row--own" : ""}`}>
+    <div
+      className={`student-admin-chat-row ${
+        own ? "student-admin-chat-row--own" : ""
+      }`}
+    >
       <div
-        className={`student-chat-bubble ${
+        className={`student-admin-chat-bubble ${
           own
             ? read
-              ? "student-chat-bubble--own-read"
-              : "student-chat-bubble--own-unread"
+              ? "student-admin-chat-bubble--own-read"
+              : "student-admin-chat-bubble--own-unread"
             : ""
         }`}
       >
         {own && (canEdit || canDelete) && (
-          <div className="student-message-actions-hover">
+          <div className="student-admin-message-actions-hover">
             {canEdit && (
               <button type="button" title="Edit" onClick={() => onEdit(message)}>
                 ✎
@@ -281,7 +1376,11 @@ function MessageBubble({ message, onEdit, onDelete }) {
             )}
 
             {canDelete && (
-              <button type="button" title="Delete" onClick={() => onDelete(message)}>
+              <button
+                type="button"
+                title="Delete"
+                onClick={() => onDelete(message)}
+              >
                 🗑
               </button>
             )}
@@ -291,7 +1390,7 @@ function MessageBubble({ message, onEdit, onDelete }) {
         {messageType === "connect_card" ? (
           <>
             <div
-              className="student-connect-preview-image-card"
+              className="student-admin-connect-preview-image-card"
               onClick={() => {
                 if (message?.connectCard?.tuterId) {
                   window.location.href = `/student/tutors/${message.connectCard.tuterId}`;
@@ -304,12 +1403,12 @@ function MessageBubble({ message, onEdit, onDelete }) {
                   alt={message.connectCard.name || "Tutor"}
                 />
               ) : (
-                <div className="student-connect-preview-fallback">
+                <div className="student-admin-connect-preview-fallback">
                   {message?.connectCard?.name?.charAt(0)?.toUpperCase() || "T"}
                 </div>
               )}
 
-              <div className="student-connect-preview-overlay">
+              <div className="student-admin-connect-preview-overlay">
                 <h4>{message?.connectCard?.name || "Tutor Details"}</h4>
                 <p>
                   {message?.connectCard?.qualification ||
@@ -320,38 +1419,34 @@ function MessageBubble({ message, onEdit, onDelete }) {
             </div>
 
             {text ? (
-              <p className="student-connect-request-text">
+              <p className="student-admin-connect-request-text">
                 {renderTextWithLinks(text)}
               </p>
             ) : null}
           </>
         ) : isAutomatic ? (
-          <div className="student-connect-request-card">
+          <div className="student-admin-connect-auto">
             <b>Connect Request</b>
             <p>{renderTextWithLinks(text)}</p>
           </div>
         ) : (
-          text && <p className="student-chat-text">{renderTextWithLinks(text)}</p>
+          text && (
+            <p className="student-admin-chat-text">
+              {renderTextWithLinks(text)}
+            </p>
+          )
         )}
 
         {hasFiles && (
-          <div className="student-chat-files">
+          <div className="student-admin-chat-files">
             {files.map((file, index) => (
               <MessageFile key={file?._id || index} file={file} />
             ))}
           </div>
         )}
 
-        <div className="student-chat-meta">
-          <span>
-            {message?.createdAt
-              ? new Date(message.createdAt).toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })
-              : ""}
-          </span>
-
+        <div className="student-admin-chat-meta">
+          <span>{formatTime(message?.createdAt)}</span>
           {own && <span>{read ? "✓✓ Read" : "✓ Sent"}</span>}
         </div>
       </div>
@@ -359,41 +1454,74 @@ function MessageBubble({ message, onEdit, onDelete }) {
   );
 }
 
-// const emojis = ["😀", "😂", "😍", "👍", "🙏", "🔥", "❤️", "🎉", "😊", "😎"];
-
 export default function StudentChatPage() {
   const { showAlert } = useAlert();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
+  const [rooms, setRooms] = useState([]);
   const [activeRoom, setActiveRoom] = useState(null);
   const [messages, setMessages] = useState([]);
+
+  const [search, setSearch] = useState("");
+  const [mobileChatOpen, setMobileChatOpen] = useState(false);
+
   const [text, setText] = useState("");
   const [emojiOpen, setEmojiOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
+
+  const [loadingRooms, setLoadingRooms] = useState(true);
+  const [loadingMessages, setLoadingMessages] = useState(false);
   const [sending, setSending] = useState(false);
+
   const [editingMessage, setEditingMessage] = useState(null);
+  const [pendingFiles, setPendingFiles] = useState([]);
 
   const [recording, setRecording] = useState(false);
   const [recordSeconds, setRecordSeconds] = useState(0);
   const [voiceReady, setVoiceReady] = useState(false);
 
-  const [pendingFiles, setPendingFiles] = useState([]);
-
+  const fileInputRef = useRef(null);
+  const bottomRef = useRef(null);
   const recorderRef = useRef(null);
   const chunksRef = useRef([]);
   const streamRef = useRef(null);
   const recordTimerRef = useRef(null);
-  const fileInputRef = useRef(null);
-  const bottomRef = useRef(null);
-
-const emojiPickerRef = useRef(null);
-// const emojiPickerRef = useRef(null);
-
-
+  const sendingRef = useRef(false);
+  const activeRoomIdRef = useRef("");
+  const emojiPickerRef = useRef(null);
 
   const activeRoomId = getRoomId(activeRoom);
-  const admin = useMemo(() => getAdmin(activeRoom), [activeRoom]);
-  const adminPhoto = getUserPhoto(admin);
+  const activeAdmin = useMemo(() => getAdmin(activeRoom), [activeRoom]);
+
+  useEffect(() => {
+    activeRoomIdRef.current = activeRoomId || "";
+  }, [activeRoomId]);
+
+  const filteredRooms = useMemo(() => {
+    const keyword = search.trim().toLowerCase();
+
+    if (!keyword) return rooms;
+
+    return rooms.filter((room) => {
+      const admin = getAdmin(room);
+      const name = getUserName(admin, "").toLowerCase();
+      const email = String(admin?.email || "").toLowerCase();
+
+      return name.includes(keyword) || email.includes(keyword);
+    });
+  }, [rooms, search]);
+
+  function appendUniqueMessage(newMessage) {
+    if (!newMessage?._id) return;
+
+    setMessages((prev) => {
+      const exists = prev.some(
+        (message) => String(message._id) === String(newMessage._id)
+      );
+
+      if (exists) return prev;
+      return [...prev, newMessage];
+    });
+  }
 
   function scrollToBottom() {
     setTimeout(() => {
@@ -412,28 +1540,68 @@ const emojiPickerRef = useRef(null);
     return data?.room || data?.chatRoom || null;
   }
 
-  async function fetchRooms() {
+  async function fetchRooms(options = {}) {
+    const { silent = false, preferredRoomId = activeRoomIdRef.current } = options;
+
     try {
-      setLoading(true);
+      if (!silent) setLoadingRooms(true);
 
       const { data } = await api.get("/chat/rooms");
       let list = data?.rooms || data?.chatRooms || [];
-      const queryRoomId = searchParams.get("roomId");
 
-      let selected =
-        list.find((room) => String(getRoomId(room)) === String(queryRoomId)) ||
-        list[0] ||
-        null;
-
-      if (!selected) {
-        selected = await createOrGetDefaultRoom();
+      if (!list.length) {
+        const createdRoom = await createOrGetDefaultRoom();
+        if (createdRoom) list = [createdRoom];
       }
 
-      setActiveRoom(selected);
+      setRooms(list);
+
+      const queryRoomId = searchParams.get("roomId");
+      const shouldOpenChat = searchParams.get("open") === "chat";
+      const keepRoomId = preferredRoomId || queryRoomId || activeRoomIdRef.current;
+
+      const selected =
+        list.find((room) => String(getRoomId(room)) === String(keepRoomId)) ||
+        list.find((room) => String(getRoomId(room)) === String(queryRoomId)) ||
+        null;
+
+      if (selected) {
+        setActiveRoom(selected);
+        activeRoomIdRef.current = getRoomId(selected);
+
+        if (shouldOpenChat) {
+          setMobileChatOpen(true);
+        }
+      }
     } catch (err) {
-      showAlert(getErrorMessage(err, "Failed to load chats"), "error");
+      showAlert(getErrorMessage(err, "Failed to load chat rooms"), "error");
     } finally {
-      setLoading(false);
+      if (!silent) setLoadingRooms(false);
+    }
+  }
+
+  async function refreshRoomListOnly() {
+    try {
+      const keepRoomId = activeRoomIdRef.current;
+      const { data } = await api.get("/chat/rooms");
+      let list = data?.rooms || data?.chatRooms || [];
+
+      if (!list.length) {
+        const createdRoom = await createOrGetDefaultRoom();
+        if (createdRoom) list = [createdRoom];
+      }
+
+      setRooms(list);
+
+      const updatedActiveRoom = list.find(
+        (room) => String(getRoomId(room)) === String(keepRoomId)
+      );
+
+      if (updatedActiveRoom) {
+        setActiveRoom(updatedActiveRoom);
+      }
+    } catch {
+      // silent refresh
     }
   }
 
@@ -441,13 +1609,35 @@ const emojiPickerRef = useRef(null);
     if (!roomId) return;
 
     try {
+      setLoadingMessages(true);
+
       const { data } = await api.get(`/chat/messages/${roomId}`);
       setMessages(data?.messages || []);
+
       await api.patch(`/chat/read/${roomId}`);
+
       scrollToBottom();
     } catch (err) {
       showAlert(getErrorMessage(err, "Failed to load messages"), "error");
+    } finally {
+      setLoadingMessages(false);
     }
+  }
+
+  function openChatView(room) {
+    const roomId = getRoomId(room);
+
+    activeRoomIdRef.current = roomId;
+    setActiveRoom(room);
+    setSearchParams({ roomId }, { replace: true });
+    setMessages([]);
+    setMobileChatOpen(true);
+  }
+
+  function goBackToList() {
+    setMobileChatOpen(false);
+    setEmojiOpen(false);
+    setEditingMessage(null);
   }
 
   useEffect(() => {
@@ -455,34 +1645,23 @@ const emojiPickerRef = useRef(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
-
-
-useEffect(() => {
-  function handleOutsideClick(e) {
-    if (
-      emojiOpen &&
-      emojiPickerRef.current &&
-      !emojiPickerRef.current.contains(e.target)
-    ) {
-      setEmojiOpen(false);
+  useEffect(() => {
+    function handleOutsideClick(e) {
+      if (
+        emojiOpen &&
+        emojiPickerRef.current &&
+        !emojiPickerRef.current.contains(e.target)
+      ) {
+        setEmojiOpen(false);
+      }
     }
-  }
 
-  document.addEventListener(
-    "mousedown",
-    handleOutsideClick
-  );
+    document.addEventListener("mousedown", handleOutsideClick);
 
-  return () => {
-    document.removeEventListener(
-      "mousedown",
-      handleOutsideClick
-    );
-  };
-}, [emojiOpen]);
-
-
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [emojiOpen]);
 
   useEffect(() => {
     if (!activeRoomId) return;
@@ -498,23 +1677,19 @@ useEffect(() => {
       const roomId =
         message?.roomId?._id || message?.roomId || message?.chatRoomId;
 
-      if (String(roomId) === String(activeRoomId)) {
-        setMessages((prev) => {
-          if (prev.some((m) => String(m._id) === String(message._id))) {
-            return prev;
-          }
-          return [...prev, message];
-        });
-
-        api.patch(`/chat/read/${activeRoomId}`).catch(() => {});
+      if (String(roomId) === String(activeRoomIdRef.current)) {
+        appendUniqueMessage(message);
+        api.patch(`/chat/read/${activeRoomIdRef.current}`).catch(() => {});
         scrollToBottom();
       }
+
+      refreshRoomListOnly();
     }
 
     function handleMessageRead(payload) {
       const roomId = payload?.roomId || payload?.chatRoomId;
 
-      if (String(roomId) === String(activeRoomId)) {
+      if (String(roomId) === String(activeRoomIdRef.current)) {
         setMessages((prev) =>
           prev.map((message) => ({
             ...message,
@@ -530,6 +1705,8 @@ useEffect(() => {
       setMessages((prev) =>
         prev.filter((message) => String(message._id) !== String(messageId))
       );
+
+      refreshRoomListOnly();
     }
 
     function handleMessageUpdated(updatedMessage) {
@@ -540,6 +1717,12 @@ useEffect(() => {
             : message
         )
       );
+
+      refreshRoomListOnly();
+    }
+
+    function handleChatListUpdated() {
+      refreshRoomListOnly();
     }
 
     socket.on("new_message", handleNewMessage);
@@ -550,8 +1733,12 @@ useEffect(() => {
     socket.on("message_deleted", handleMessageDeleted);
     socket.on("messageUpdated", handleMessageUpdated);
     socket.on("message_updated", handleMessageUpdated);
+    socket.on("chat_list_updated", handleChatListUpdated);
 
     return () => {
+      socket.emit("leaveRoom", activeRoomId);
+      socket.emit("leave_room", activeRoomId);
+
       socket.off("new_message", handleNewMessage);
       socket.off("newMessage", handleNewMessage);
       socket.off("message_read", handleMessageRead);
@@ -560,7 +1747,9 @@ useEffect(() => {
       socket.off("message_deleted", handleMessageDeleted);
       socket.off("messageUpdated", handleMessageUpdated);
       socket.off("message_updated", handleMessageUpdated);
+      socket.off("chat_list_updated", handleChatListUpdated);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeRoomId]);
 
   async function sendFilesNow(filesToSend) {
@@ -585,195 +1774,87 @@ useEffect(() => {
     return data?.message || data?.chatMessage;
   }
 
-  async function sendTextNow() {
-    const { data } = await api.post(`/chat/message/${activeRoomId}`, {
-      message: text.trim(),
-      text: text.trim(),
-      messageType: "text",
-    });
-
-    return data?.message || data?.chatMessage;
-  }
-
-  async function updateTextNow() {
-    const { data } = await api.patch(`/chat/message/${editingMessage._id}`, {
-      message: text.trim(),
-      text: text.trim(),
-    });
-
-    return data?.message || data?.chatMessage;
-  }
-
   async function sendMessage(e) {
-    e.preventDefault();
+    e?.preventDefault?.();
 
-    if (!activeRoomId || sending || recording) return;
-    if (!text.trim() && pendingFiles.length === 0) return;
+    if (sendingRef.current) return;
+    if (!activeRoomId) return;
+
+    const cleanText = text.trim();
+    const hasFiles = pendingFiles.length > 0;
+
+    if (!cleanText && !hasFiles && !voiceReady) return;
 
     try {
+      sendingRef.current = true;
       setSending(true);
 
-      let saved = null;
-
       if (editingMessage) {
-        if (!text.trim()) return;
+        const { data } = await api.patch(`/chat/message/${editingMessage._id}`, {
+          text: cleanText,
+          message: cleanText,
+          content: cleanText,
+        });
 
-        saved = await updateTextNow();
+        const updated = data?.message || data?.chatMessage || data?.updatedMessage;
 
-        if (saved) {
+        if (updated) {
           setMessages((prev) =>
             prev.map((message) =>
-              String(message._id) === String(saved._id) ? saved : message
+              String(message._id) === String(updated._id) ? updated : message
             )
           );
-        } else {
-          await fetchMessages(activeRoomId);
         }
 
         setEditingMessage(null);
         setText("");
-        showAlert("Message updated", "success");
         return;
       }
 
-      if (pendingFiles.length > 0) {
-        saved = await sendFilesNow(pendingFiles);
-      } else {
-        saved = await sendTextNow();
+      if (hasFiles) {
+        const newMessage = await sendFilesNow(pendingFiles);
+
+        if (newMessage) {
+          appendUniqueMessage(newMessage);
+        }
+
+        setText("");
+        setPendingFiles([]);
+        scrollToBottom();
+        refreshRoomListOnly();
+        return;
       }
 
-      if (saved) {
-        setMessages((prev) => {
-          if (prev.some((m) => String(m._id) === String(saved._id))) {
-            return prev;
-          }
-          return [...prev, saved];
-        });
-      } else {
-        await fetchMessages(activeRoomId);
+      const { data } = await api.post(`/chat/message/${activeRoomId}`, {
+        text: cleanText,
+        message: cleanText,
+        content: cleanText,
+      });
+
+      const newMessage = data?.message || data?.chatMessage;
+
+      if (newMessage) {
+        appendUniqueMessage(newMessage);
       }
 
       setText("");
-      setPendingFiles([]);
-      setVoiceReady(false);
-      setEmojiOpen(false);
-
-      if (fileInputRef.current) {
-        fileInputRef.current.value = "";
-      }
-
       scrollToBottom();
+      refreshRoomListOnly();
     } catch (err) {
       showAlert(getErrorMessage(err, "Failed to send message"), "error");
     } finally {
       setSending(false);
+      sendingRef.current = false;
     }
   }
 
-  function handleFileSelect(files) {
-    if (!files?.length) return;
-
-    setEditingMessage(null);
-    setVoiceReady(false);
-    setPendingFiles(Array.from(files));
-
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
+  function startEdit(message) {
+    setEditingMessage(message);
+    setText(getText(message));
+    setEmojiOpen(false);
   }
 
-  async function startRecording() {
-    try {
-      setPendingFiles([]);
-      setVoiceReady(false);
-      setEditingMessage(null);
-
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const recorder = new MediaRecorder(stream);
-
-      chunksRef.current = [];
-      recorderRef.current = recorder;
-      streamRef.current = stream;
-
-      recorder.ondataavailable = (event) => {
-        if (event.data.size > 0) {
-          chunksRef.current.push(event.data);
-        }
-      };
-
-      recorder.onstop = () => {
-        const blob = new Blob(chunksRef.current, { type: "audio/webm" });
-
-        stream.getTracks().forEach((track) => track.stop());
-        streamRef.current = null;
-
-        if (blob.size > 0) {
-          const file = new File([blob], `voice-${Date.now()}.webm`, {
-            type: "audio/webm",
-          });
-
-          setPendingFiles([file]);
-          setVoiceReady(true);
-        }
-
-        chunksRef.current = [];
-      };
-
-      recorder.start();
-      setRecording(true);
-      setRecordSeconds(0);
-
-      recordTimerRef.current = setInterval(() => {
-        setRecordSeconds((prev) => prev + 1);
-      }, 1000);
-    } catch {
-      showAlert("Microphone permission denied", "error");
-    }
-  }
-
-  function stopRecording() {
-    if (recorderRef.current && recording) {
-      recorderRef.current.stop();
-    }
-
-    if (recordTimerRef.current) {
-      clearInterval(recordTimerRef.current);
-      recordTimerRef.current = null;
-    }
-
-    setRecording(false);
-  }
-
-  function cancelRecording() {
-    chunksRef.current = [];
-
-    if (recorderRef.current && recording) {
-      recorderRef.current.onstop = null;
-      recorderRef.current.stop();
-    }
-
-    if (streamRef.current) {
-      streamRef.current.getTracks().forEach((track) => track.stop());
-      streamRef.current = null;
-    }
-
-    if (recordTimerRef.current) {
-      clearInterval(recordTimerRef.current);
-      recordTimerRef.current = null;
-    }
-
-    setRecording(false);
-    setRecordSeconds(0);
-    setVoiceReady(false);
-    setPendingFiles([]);
-  }
-
-  function removePendingFile(index) {
-    setPendingFiles((prev) => prev.filter((_, i) => i !== index));
-    setVoiceReady(false);
-  }
-
-  async function handleDelete(message) {
+  async function deleteMessage(message) {
     try {
       await api.delete(`/chat/message/${message._id}`);
 
@@ -781,250 +1862,407 @@ useEffect(() => {
         prev.filter((item) => String(item._id) !== String(message._id))
       );
 
-      showAlert("Message deleted", "success");
+      refreshRoomListOnly();
     } catch (err) {
       showAlert(getErrorMessage(err, "Failed to delete message"), "error");
     }
   }
 
-  function handleEdit(message) {
-    setEditingMessage(message);
-    setText(getText(message));
-    setPendingFiles([]);
-    setVoiceReady(false);
+  function cancelEdit() {
+    setEditingMessage(null);
+    setText("");
   }
 
-  if (loading) {
-    return <div className="student-chat-state">Loading chats...</div>;
+  function handleFileChange(e) {
+    const files = Array.from(e.target.files || []);
+
+    if (!files.length) return;
+
+    setPendingFiles((prev) => [...prev, ...files]);
+
+    e.target.value = "";
   }
+
+  function removePendingFile(index) {
+    setPendingFiles((prev) => prev.filter((_, i) => i !== index));
+  }
+
+  function stopStream() {
+    streamRef.current?.getTracks?.().forEach((track) => track.stop());
+    streamRef.current = null;
+  }
+
+  function clearRecordingTimer() {
+    if (recordTimerRef.current) {
+      clearInterval(recordTimerRef.current);
+      recordTimerRef.current = null;
+    }
+  }
+
+  async function startRecording() {
+    try {
+      if (!navigator.mediaDevices?.getUserMedia) {
+        return showAlert("Voice recording is not supported", "error");
+      }
+
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+      streamRef.current = stream;
+      chunksRef.current = [];
+
+      const recorder = new MediaRecorder(stream);
+      recorderRef.current = recorder;
+
+      recorder.ondataavailable = (e) => {
+        if (e.data.size > 0) chunksRef.current.push(e.data);
+      };
+
+      recorder.onstop = () => {
+        const blob = new Blob(chunksRef.current, { type: "audio/webm" });
+        const file = new File([blob], `voice-${Date.now()}.webm`, {
+          type: "audio/webm",
+        });
+
+        setPendingFiles((prev) => [...prev, file]);
+        setVoiceReady(true);
+        setRecording(false);
+        clearRecordingTimer();
+        stopStream();
+      };
+
+      recorder.start();
+      setRecording(true);
+      setVoiceReady(false);
+      setRecordSeconds(0);
+
+      recordTimerRef.current = setInterval(() => {
+        setRecordSeconds((prev) => prev + 1);
+      }, 1000);
+    } catch (err) {
+      showAlert(getErrorMessage(err, "Failed to start recording"), "error");
+      setRecording(false);
+      clearRecordingTimer();
+      stopStream();
+    }
+  }
+
+  function stopRecording() {
+    if (recorderRef.current && recorderRef.current.state !== "inactive") {
+      recorderRef.current.stop();
+    }
+  }
+
+  function cancelRecording() {
+    chunksRef.current = [];
+    clearRecordingTimer();
+    setRecording(false);
+    setRecordSeconds(0);
+    setVoiceReady(false);
+
+    if (recorderRef.current && recorderRef.current.state !== "inactive") {
+      recorderRef.current.onstop = null;
+      recorderRef.current.stop();
+    }
+
+    stopStream();
+  }
+
+  const canSend =
+    Boolean(text.trim()) ||
+    pendingFiles.length > 0 ||
+    Boolean(editingMessage);
 
   return (
-    <div className="student-chat-page">
-      <div className="student-chat-app">
-        <div className="student-chat-header">
-          <div className="student-chat-admin">
-            <div className="student-chat-avatar">
-              {adminPhoto ? (
-                <img
-                  src={adminPhoto}
-                  alt={admin?.name || "Admin"}
-                  onError={(e) => {
-                    e.currentTarget.style.display = "none";
-                  }}
-                />
+    <div className="student-admin-chat-page">
+      <div className="student-admin-chat-layout">
+        <aside
+          className={`student-admin-chat-admin-panel ${
+            mobileChatOpen ? "student-admin-chat-admin-panel--hide-mobile" : ""
+          }`}
+        >
+          <div className="student-admin-chat-panel-card">
+            <div className="student-admin-chat-search-box">
+              <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search admin..."
+              />
+            </div>
+
+            <div className="student-admin-chat-room-list">
+              {loadingRooms ? (
+                <div className="student-admin-chat-list-state">
+                  Loading chats...
+                </div>
+              ) : filteredRooms.length ? (
+                filteredRooms.map((room) => {
+                  const roomId = getRoomId(room);
+                  const admin = getAdmin(room);
+                  const name = getUserName(admin, "Admin");
+                  const lastMessage =
+                    room?.lastMessage?.text ||
+                    room?.lastMessage?.message ||
+                    room?.lastMessage?.content ||
+                    room?.lastMessage ||
+                    "Tap to chat with admin";
+
+                  return (
+                    <button
+                      key={roomId}
+                      type="button"
+                      className={`student-admin-chat-room-item ${
+                        String(activeRoomId) === String(roomId)
+                          ? "student-admin-chat-room-item--active"
+                          : ""
+                      }`}
+                      onClick={() => openChatView(room)}
+                    >
+                      <Avatar
+                        user={admin}
+                        className="student-admin-chat-room-avatar"
+                      />
+
+                      <div className="student-admin-chat-room-info">
+                        <div className="student-admin-chat-room-top">
+                          <h4>{name}</h4>
+                          <span>
+                            {formatTime(
+                              room?.lastMessage?.createdAt ||
+                                room?.updatedAt ||
+                                room?.createdAt
+                            )}
+                          </span>
+                        </div>
+
+                        <p>
+                          {typeof lastMessage === "string"
+                            ? lastMessage
+                            : "New message"}
+                        </p>
+
+                        <small
+                          className={
+                            admin?.isOnline ? "online" : ""
+                          }
+                        >
+                          {admin?.isOnline
+                            ? "Online"
+                            : formatLastSeen(admin?.lastSeen)}
+                        </small>
+                      </div>
+                    </button>
+                  );
+                })
               ) : (
-                <span>{admin?.name?.charAt(0)?.toUpperCase() || "A"}</span>
+                <div className="student-admin-chat-list-state">
+                  No admin chat found
+                </div>
               )}
             </div>
-
-            <div>
-              <h3>{admin?.name || "Admin"}</h3>
-              <p className={admin?.isOnline ? "online" : ""}>
-                {admin?.isOnline ? "Online" : formatLastSeen(admin?.lastSeen)}
-              </p>
-            </div>
           </div>
-        </div>
+        </aside>
 
-        <div className="student-chat-body">
-          {messages.length ? (
-            messages.map((message) => (
-              <MessageBubble
-                key={message._id}
-                message={message}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-              />
-            ))
-          ) : (
-            <div className="student-chat-no-message">
-              Start chatting with admin
-            </div>
-          )}
-
-          <div ref={bottomRef} />
-        </div>
-
-        {recording && (
-          <div className="student-recording-panel">
-            <button
-              type="button"
-              className="student-record-trash"
-              onClick={cancelRecording}
-            >
-              🗑
-            </button>
-
-            <span className="student-record-dot"></span>
-            <b>{formatRecordTime(recordSeconds)}</b>
-
-            <div className="student-record-waves">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-
-            <button
-              type="button"
-              className="student-record-stop"
-              onClick={stopRecording}
-            >
-              ■
-            </button>
-          </div>
-        )}
-
-        {pendingFiles.length > 0 && !recording && (
-          <div className="student-selected-file-bar">
-            <div className="student-selected-file-list">
-              {pendingFiles.map((file, index) => (
-                <div
-                  key={`${file.name}-${index}`}
-                  className="student-selected-file-chip"
-                >
-                  <span>{voiceReady ? "🎙️" : "📎"}</span>
-                  <b>{voiceReady ? "Voice message ready" : file.name}</b>
-                  <button type="button" onClick={() => removePendingFile(index)}>
-                    ✕
+        <section
+          className={`student-admin-chat-detail-panel ${
+            mobileChatOpen
+              ? "student-admin-chat-detail-panel--open-mobile"
+              : ""
+          }`}
+        >
+          <div className="student-admin-chat-detail-card">
+            {activeRoom ? (
+              <div className="student-admin-chat-app">
+                <header className="student-admin-chat-header">
+                  <button
+                    type="button"
+                    className="student-admin-chat-mobile-back"
+                    onClick={goBackToList}
+                  >
+                    ‹
                   </button>
+
+                  <div className="student-admin-chat-user">
+                    <Avatar user={activeAdmin} />
+
+                    <div>
+                      <h3>{getUserName(activeAdmin, "Admin")}</h3>
+                      <p className={activeAdmin?.isOnline ? "online" : ""}>
+                        {activeAdmin?.isOnline
+                          ? "Online"
+                          : formatLastSeen(activeAdmin?.lastSeen)}
+                      </p>
+                    </div>
+                  </div>
+                </header>
+
+                <main className="student-admin-chat-body">
+                  {loadingMessages ? (
+                    <div className="student-admin-chat-no-message">
+                      Loading messages...
+                    </div>
+                  ) : messages.length ? (
+                    messages.map((message) => (
+                      <MessageBubble
+                        key={message._id}
+                        message={message}
+                        onEdit={startEdit}
+                        onDelete={deleteMessage}
+                      />
+                    ))
+                  ) : (
+                    <div className="student-admin-chat-no-message">
+                      No messages yet. Send a message to admin.
+                    </div>
+                  )}
+
+                  <div ref={bottomRef} />
+                </main>
+
+                {pendingFiles.length > 0 && (
+                  <div className="student-admin-selected-file-bar">
+                    <div className="student-admin-selected-file-list">
+                      {pendingFiles.map((file, index) => (
+                        <div
+                          className="student-admin-selected-file-chip"
+                          key={`${file.name}-${index}`}
+                        >
+                          <b>{file.name}</b>
+                          <button
+                            type="button"
+                            onClick={() => removePendingFile(index)}
+                          >
+                            ×
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {recording && (
+                  <div className="student-admin-recording-panel">
+                    <button
+                      type="button"
+                      className="student-admin-record-trash"
+                      onClick={cancelRecording}
+                    >
+                      🗑
+                    </button>
+
+                    <span className="student-admin-record-dot" />
+
+                    <div className="student-admin-record-waves">
+                      <span />
+                      <span />
+                      <span />
+                      <span />
+                      <span />
+                      <span />
+                    </div>
+
+                    <b>{formatRecordTime(recordSeconds)}</b>
+
+                    <button
+                      type="button"
+                      className="student-admin-record-stop"
+                      onClick={stopRecording}
+                    >
+                      ■
+                    </button>
+                  </div>
+                )}
+
+                <form
+                  className="student-admin-chat-inputbar"
+                  onSubmit={sendMessage}
+                >
+                  {emojiOpen && (
+                    <div
+                      className="student-admin-emoji-picker-wrap"
+                      ref={emojiPickerRef}
+                    >
+                      <EmojiPicker
+                        theme="dark"
+                        onEmojiClick={(emojiData) => {
+                          setText((prev) => prev + emojiData.emoji);
+                        }}
+                      />
+                    </div>
+                  )}
+
+                  <button
+                    type="button"
+                    className="student-admin-chat-icon-btn"
+                    onClick={() => setEmojiOpen((prev) => !prev)}
+                  >
+                    😊
+                  </button>
+
+                  <button
+                    type="button"
+                    className="student-admin-chat-icon-btn"
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    📎
+                  </button>
+
+                  <button
+                    type="button"
+                    className={`student-admin-chat-icon-btn ${
+                      recording ? "recording-active" : ""
+                    }`}
+                    onClick={recording ? stopRecording : startRecording}
+                  >
+                    🎙
+                  </button>
+
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    multiple
+                    hidden
+                    onChange={handleFileChange}
+                  />
+
+                  <input
+                    type="text"
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                    placeholder={
+                      editingMessage ? "Edit message..." : "Type a message..."
+                    }
+                  />
+
+                  {editingMessage && (
+                    <button
+                      type="button"
+                      className="student-admin-chat-cancel-edit"
+                      onClick={cancelEdit}
+                    >
+                      ×
+                    </button>
+                  )}
+
+                  <button
+                    type="submit"
+                    className="student-admin-chat-send"
+                    disabled={sending || !canSend}
+                  >
+                    ➤
+                  </button>
+                </form>
+              </div>
+            ) : (
+              <div className="student-admin-chat-empty">
+                <div>
+                  <h2>Select Admin</h2>
+                  <p>Choose admin profile to start chatting.</p>
                 </div>
-              ))}
-            </div>
+              </div>
+            )}
           </div>
-        )}
-
-        <form className="student-chat-inputbar" onSubmit={sendMessage}>
-          <button
-            type="button"
-            className="student-chat-icon-btn"
-            onClick={() => setEmojiOpen((prev) => !prev)}
-          >
-            😊
-          </button>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{emojiOpen && (
-  <div
-    className="student-emoji-picker-wrap"
-    ref={emojiPickerRef}
-    onClick={(e) => e.stopPropagation()}
-  >
-    <EmojiPicker
-      theme="dark"
-      width="100%"
-      height={390}
-      searchPlaceholder="Search emoji"
-      previewConfig={{
-        showPreview: false,
-      }}
-      skinTonesDisabled={false}
-      lazyLoadEmojis={true}
-      onEmojiClick={(emojiData) => {
-        setText((prev) => prev + emojiData.emoji);
-      }}
-    />
-  </div>
-)}
-
-
-
-
-
-          <button
-            type="button"
-            className="student-chat-icon-btn"
-            onClick={() => fileInputRef.current?.click()}
-            disabled={recording || sending}
-          >
-            📎
-          </button>
-
-          <input
-            ref={fileInputRef}
-            type="file"
-            multiple
-            hidden
-            onChange={(e) => handleFileSelect(e.target.files)}
-          />
-
-          <button
-            type="button"
-            className={`student-chat-icon-btn voice-btn ${
-              recording ? "recording-active" : ""
-            }`}
-            onClick={recording ? stopRecording : startRecording}
-            disabled={sending}
-          >
-            {recording ? "■" : "🎙️"}
-          </button>
-
-          <input
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            disabled={recording}
-            placeholder={
-              recording
-                ? "Recording voice..."
-                : editingMessage
-                ? "Edit message..."
-                : pendingFiles.length
-                ? "Add caption..."
-                : "Type a message...."
-            }
-          />
-
-          {editingMessage && (
-            <button
-              type="button"
-              className="student-chat-cancel-edit"
-              onClick={() => {
-                setEditingMessage(null);
-                setText("");
-              }}
-            >
-              ✕
-            </button>
-          )}
-
-          <button
-            type="submit"
-            className="student-chat-send"
-            disabled={
-              sending || recording || (!text.trim() && pendingFiles.length === 0)
-            }
-          >
-            ➤
-          </button>
-        </form>
+        </section>
       </div>
     </div>
   );
 }
-
-
