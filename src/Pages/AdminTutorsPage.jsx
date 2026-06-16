@@ -1629,7 +1629,7 @@ async function toggleTutorBlockStatus(tutor) {
 
 
 
-<button
+{/* <button
   type="button"
   className={`tutor-chat-btn ${
     isTutorBlocked(tutor) ? "tutor-chat-btn--disabled" : ""
@@ -1638,7 +1638,36 @@ async function toggleTutorBlockStatus(tutor) {
   onClick={() => openTutorChat(tutor)}
 >
   Chat
+</button> */}
+
+
+
+
+
+
+
+
+<button
+  type="button"
+  className={`tutor-chat-btn ${
+    isTutorBlocked(tutor) ? "tutor-chat-btn--disabled" : ""
+  }`}
+  disabled={isTutorBlocked(tutor)}
+  onClick={(e) => {
+    e.stopPropagation();
+
+    if (isTutorBlocked(tutor)) {
+      showAlert("Blocked tutor chat is disabled", "error");
+      return;
+    }
+
+    openTutorChat(tutor);
+  }}
+>
+  Chat
 </button>
+
+
 
 
 

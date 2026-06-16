@@ -2693,7 +2693,7 @@ className={`tutor-card ${
 
 
 
-<button
+{/* <button
   type="button"
   className={`tutor-chat-btn ${
     isTutorBlocked(tutor) ? "tutor-chat-btn--disabled" : ""
@@ -2702,7 +2702,34 @@ className={`tutor-card ${
   onClick={() => openTutorChat(tutor)}
 >
   Chat
+</button> */}
+
+
+
+
+
+
+<button
+  type="button"
+  className={`tutor-chat-btn ${
+    isTutorBlocked(tutor) ? "tutor-chat-btn--disabled" : ""
+  }`}
+  disabled={isTutorBlocked(tutor)}
+  onClick={(e) => {
+    e.stopPropagation();
+
+    if (isTutorBlocked(tutor)) {
+      showAlert("Blocked tutor chat is disabled", "error");
+      return;
+    }
+
+    openTutorChat(tutor);
+  }}
+>
+  Chat
 </button>
+
+
 
 
 
