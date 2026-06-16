@@ -1492,6 +1492,39 @@ useEffect(() => {
     }
   }
 
+
+
+
+async function openTutorChat(tutor) {
+  try {
+    const tutorUserId =
+      typeof tutor?.loginUserId === "object"
+        ? tutor.loginUserId?._id
+        : tutor?.loginUserId;
+
+    if (!tutorUserId) {
+      return showAlert("Tutor login user id not found", "error");
+    }
+
+    const { data } = await api.post(`/chat/admin-tutor-room/${tutorUserId}`);
+
+    const roomId = data?.room?._id || data?.chatRoom?._id || data?.roomId;
+
+    if (roomId) {
+      navigate(`/admin/chats?roomId=${roomId}&open=chat`);
+    } else {
+      navigate("/admin/chats");
+    }
+  } catch (err) {
+    showAlert(getErrorMessage(err, "Failed to open tutor chat"), "error");
+  }
+}
+
+
+
+
+
+
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -2260,13 +2293,39 @@ className={`tutor-card ${
 
                 <Stars rating={tutor.averageRating} />
 
-                <button
+                {/* <button
                   type="button"
                   className="view-details-btn"
                   onClick={() => goToDetails(tutor)}
                 >
                   View Details
-                </button>
+                </button> */}
+
+
+
+<div className="tutor-card-actions">
+  <button
+    type="button"
+    className="tutor-chat-btn"
+    onClick={() => openTutorChat(tutor)}
+  >
+    Chat
+  </button>
+
+  <button
+    type="button"
+    className="view-details-btn"
+    onClick={() => goToDetails(tutor)}
+  >
+    View Details
+  </button>
+</div>
+
+
+
+
+
+                
               </article>
             );
           })}

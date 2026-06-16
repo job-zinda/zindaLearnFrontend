@@ -4286,3 +4286,110 @@
     white-space: nowrap !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   ADMIN COURSE TUTORS + ADMIN TUTORS CARD ACTION BUTTONS
+   Chat button left + View Details right
+   Paste at VERY BOTTOM of AdminTutorsPage.css
+   ========================================================= */
+
+.tutor-card-actions {
+  position: relative !important;
+  z-index: 2 !important;
+  width: 100% !important;
+  margin-top: 0 !important;
+  display: grid !important;
+  grid-template-columns: 96px minmax(0, 1fr) !important;
+  gap: 12px !important;
+  align-items: stretch !important;
+  flex-shrink: 0 !important;
+}
+
+.tutor-chat-btn,
+.tutor-card-actions .view-details-btn {
+  width: 100% !important;
+  min-height: 58px !important;
+  height: 58px !important;
+  border-radius: 15px !important;
+  font-size: 15px !important;
+  font-weight: 950 !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+  line-height: 1 !important;
+  padding: 0 12px !important;
+  margin: 0 !important;
+  transition: 0.25s ease !important;
+}
+
+.tutor-chat-btn {
+  border: 1px solid rgba(217, 70, 239, 0.45) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #ffffff !important;
+}
+
+.tutor-chat-btn:hover {
+  transform: translateY(-2px) !important;
+  background: rgba(217, 70, 239, 0.18) !important;
+  border-color: rgba(217, 70, 239, 0.75) !important;
+}
+
+.tutor-card-actions .view-details-btn {
+  border: none !important;
+  background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
+  color: #ffffff !important;
+  box-shadow: 0 14px 28px rgba(124, 58, 237, 0.24) !important;
+}
+
+.tutor-card-actions .view-details-btn:hover {
+  transform: translateY(-2px) !important;
+  opacity: 0.95 !important;
+}
+
+@media (max-width: 520px) {
+  .tutor-card-actions {
+    grid-template-columns: 88px minmax(0, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  .tutor-chat-btn,
+  .tutor-card-actions .view-details-btn {
+    height: 54px !important;
+    min-height: 54px !important;
+    font-size: 14px !important;
+    padding: 0 10px !important;
+    white-space: nowrap !important;
+  }
+}
