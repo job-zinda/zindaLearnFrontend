@@ -592,3 +592,50 @@
     margin: -2px 0 0;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.student-course-tutors-page-head h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 34px;
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+@media (max-width: 900px) {
+  .student-course-tutors-page-head h2 {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 760px) {
+  .student-course-tutors-page-head h2 {
+    font-size: 24px;
+  }
+}
