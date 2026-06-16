@@ -258,8 +258,45 @@ export default function AdminStudentsPage() {
     }
   }
 
+// async function openStudentChat(student) {
+//   try {
+//     const studentId = getStudentId(student);
+
+//     if (!studentId) {
+//       return showAlert("Student id not found", "error");
+//     }
+
+//     const { data } = await api.post(`/chat/admin-student-room/${studentId}`);
+
+//     const roomId = data?.room?._id || data?.chatRoom?._id || data?.roomId;
+
+//     if (roomId) {
+//       // navigate(`/admin/chats?roomId=${roomId}`);
+
+// navigate(`/admin/chats?roomId=${roomId}&open=chat`);
+
+
+//     } else {
+//       navigate("/admin/chats");
+//     }
+//   } catch (err) {
+//     showAlert(getErrorMessage(err, "Failed to open chat"), "error");
+//   }
+// }
+
+
+
+
+
+
+
 async function openStudentChat(student) {
   try {
+    if (isStudentBlocked(student)) {
+      showAlert("Blocked student chat is disabled", "error");
+      return;
+    }
+
     const studentId = getStudentId(student);
 
     if (!studentId) {
@@ -271,11 +308,7 @@ async function openStudentChat(student) {
     const roomId = data?.room?._id || data?.chatRoom?._id || data?.roomId;
 
     if (roomId) {
-      // navigate(`/admin/chats?roomId=${roomId}`);
-
-navigate(`/admin/chats?roomId=${roomId}&open=chat`);
-
-
+      navigate(`/admin/chats?roomId=${roomId}&open=chat`);
     } else {
       navigate("/admin/chats");
     }
@@ -283,6 +316,10 @@ navigate(`/admin/chats?roomId=${roomId}&open=chat`);
     showAlert(getErrorMessage(err, "Failed to open chat"), "error");
   }
 }
+
+
+
+
 
 
   async function fetchTutors() {
@@ -871,7 +908,7 @@ ${isStudentBlocked(student)
 
 
             <div className="student-card-actions">
-<button
+{/* <button
   type="button"
   className="student-chat-btn"
   onClick={(e) => {
@@ -880,7 +917,36 @@ ${isStudentBlocked(student)
   }}
 >
   Chat
+</button> */}
+
+
+
+
+
+<button
+  type="button"
+  className={`student-chat-btn ${
+    isStudentBlocked(student) ? "student-chat-btn--disabled" : ""
+  }`}
+  disabled={isStudentBlocked(student)}
+  onClick={(e) => {
+    e.stopPropagation();
+
+    if (isStudentBlocked(student)) {
+      showAlert("Blocked student chat is disabled", "error");
+      return;
+    }
+
+    openStudentChat(student);
+  }}
+>
+  Chat
 </button>
+
+
+
+
+
 
  <button
   type="button"

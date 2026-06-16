@@ -2653,3 +2653,48 @@
     padding: 0 10px !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.student-chat-btn:disabled,
+.student-chat-btn--disabled {
+  opacity: 0.35 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  filter: grayscale(0.4) !important;
+  transform: none !important;
+}
+
+.student-chat-btn:disabled:hover,
+.student-chat-btn--disabled:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(217, 70, 239, 0.45) !important;
+  transform: none !important;
+}
