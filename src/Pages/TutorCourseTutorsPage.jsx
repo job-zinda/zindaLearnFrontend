@@ -110,7 +110,7 @@ export default function TutorCourseTutorsPage() {
 
   return (
     <div className="tutor-course-tutors-page">
-      <div className="tutor-course-tutors-breadcrumb">
+      {/* <div className="tutor-course-tutors-breadcrumb">
         <button
           type="button"
           onClick={() => navigate(`/tutor/courses/${categoryId}`)}
@@ -123,7 +123,36 @@ export default function TutorCourseTutorsPage() {
         <b>{courseName} tutors</b>
       </div>
 
-      <div className="tutor-course-tutors-search">
+      <div className="tutor-course-tutors-search"> */}
+
+
+
+
+
+
+<div className="tutor-course-tutors-breadcrumb">
+  <button
+    type="button"
+    onClick={() => navigate(`/tutor/courses/${categoryId}`)}
+  >
+    ← Courses
+  </button>
+
+  <span>»</span>
+
+  <b>Tutors</b>
+</div>
+
+<div className="tutor-course-tutors-page-head">
+  <h2>{courseName} tutors</h2>
+</div>
+
+<div className="tutor-course-tutors-search">
+
+
+
+
+
         <span>⌕</span>
 
         <input

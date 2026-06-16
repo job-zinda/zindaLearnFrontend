@@ -341,3 +341,51 @@
     -webkit-line-clamp: 4 !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.tutor-course-tutors-page-head h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 34px;
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+@media (max-width: 900px) {
+  .tutor-course-tutors-page-head h2 {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 760px) {
+  .tutor-course-tutors-page-head h2 {
+    font-size: 24px;
+  }
+}
