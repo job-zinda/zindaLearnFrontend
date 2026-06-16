@@ -4393,3 +4393,65 @@
     white-space: nowrap !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   ADMIN COURSE TUTORS PAGE HEADING
+   Paste at VERY BOTTOM of AdminTutorsPage.css
+   ========================================================= */
+
+.course-tutors-page-head {
+  width: 100%;
+  margin: 22px 0 22px;
+}
+
+.course-tutors-page-head h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 40px;
+  font-weight: 950;
+  line-height: 1.15;
+  letter-spacing: -0.7px;
+  text-transform: none;
+}
+
+@media (max-width: 720px) {
+  .course-tutors-page-head {
+    margin: 18px 0 18px;
+  }
+
+  .course-tutors-page-head h2 {
+    font-size: 30px;
+    line-height: 1.2;
+  }
+}

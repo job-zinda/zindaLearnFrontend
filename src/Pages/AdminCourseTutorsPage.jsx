@@ -2127,7 +2127,7 @@ function goToDetails(tutor, openEdit = false) {
 
 
 
-
+{/* 
 <div className="detail-breadcrumb">
   <button type="button" onClick={() => navigate(backTo)}>
     ← Courses
@@ -2150,7 +2150,41 @@ function goToDetails(tutor, openEdit = false) {
             placeholder="Search tutors..."
           />
         </div>
-      </div>
+      </div> */}
+
+
+
+
+
+
+<div className="detail-breadcrumb">
+  <button type="button" onClick={() => navigate(backTo)}>
+    ← Courses
+  </button>
+  <span>»</span>
+  <b>Tutors</b>
+</div>
+
+<div className="course-tutors-page-head">
+  <h2>{courseName} tutors</h2>
+</div>
+
+<div className="tutor-toolbar" onClick={(e) => e.stopPropagation()}>
+  <div className="tutor-search">
+    <span>⌕</span>
+    <input
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      placeholder="Search tutors..."
+    />
+  </div>
+</div>
+
+
+
+
+
+
 
       {loading ? (
         <div className="tutor-state">Loading tutors...</div>
