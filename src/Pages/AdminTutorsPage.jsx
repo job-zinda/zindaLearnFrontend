@@ -372,8 +372,45 @@ const visibleCourses = useMemo(() => {
 
 
 
+// async function openTutorChat(tutor) {
+//   try {
+//     const tutorUserId =
+//       typeof tutor?.loginUserId === "object"
+//         ? tutor.loginUserId?._id
+//         : tutor?.loginUserId;
+
+//     if (!tutorUserId) {
+//       return showAlert("Tutor login user id not found", "error");
+//     }
+
+//     const { data } = await api.post(`/chat/admin-tutor-room/${tutorUserId}`);
+
+//     const roomId = data?.room?._id || data?.chatRoom?._id || data?.roomId;
+
+//     if (roomId) {
+//       navigate(`/admin/chats?roomId=${roomId}&open=chat`);
+//     } else {
+//       navigate("/admin/chats");
+//     }
+//   } catch (err) {
+//     showAlert(getErrorMessage(err, "Failed to open tutor chat"), "error");
+//   }
+// }
+
+
+
+
+
+
+
+
 async function openTutorChat(tutor) {
   try {
+    if (isTutorBlocked(tutor)) {
+      showAlert("Blocked tutor chat is disabled", "error");
+      return;
+    }
+
     const tutorUserId =
       typeof tutor?.loginUserId === "object"
         ? tutor.loginUserId?._id
@@ -396,6 +433,7 @@ async function openTutorChat(tutor) {
     showAlert(getErrorMessage(err, "Failed to open tutor chat"), "error");
   }
 }
+
 
 
 
@@ -1579,13 +1617,33 @@ async function toggleTutorBlockStatus(tutor) {
 
 
 <div className="tutor-card-actions">
-  <button
+  {/* <button
     type="button"
     className="tutor-chat-btn"
     onClick={() => openTutorChat(tutor)}
   >
     Chat
-  </button>
+  </button> */}
+
+
+
+
+
+<button
+  type="button"
+  className={`tutor-chat-btn ${
+    isTutorBlocked(tutor) ? "tutor-chat-btn--disabled" : ""
+  }`}
+  disabled={isTutorBlocked(tutor)}
+  onClick={() => openTutorChat(tutor)}
+>
+  Chat
+</button>
+
+
+
+
+
 
   {/* <button
     type="button"
