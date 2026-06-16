@@ -536,3 +536,59 @@
     -webkit-line-clamp: 4 !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.student-course-tutors-page-head h2 {
+  margin: -4px 0 -2px;
+  color: #ffffff;
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 950;
+  line-height: 1.05;
+  letter-spacing: -1px;
+}
+
+@media (max-width: 720px) {
+  .student-course-tutors-page-head h2 {
+    font-size: 34px;
+    line-height: 1.08;
+    margin: -2px 0 0;
+  }
+}

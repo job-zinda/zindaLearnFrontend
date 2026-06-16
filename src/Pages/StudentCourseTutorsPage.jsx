@@ -108,7 +108,7 @@ export default function StudentCourseTutorsPage() {
 
   return (
     <div className="student-course-tutors-page">
-      <div className="student-course-tutors-breadcrumb">
+      {/* <div className="student-course-tutors-breadcrumb">
         <button
           type="button"
           onClick={() => navigate(`/student/courses/${categoryId}`)}
@@ -135,7 +135,42 @@ export default function StudentCourseTutorsPage() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-      </div>
+      </div> */}
+
+
+
+
+
+
+<div className="student-course-tutors-breadcrumb">
+  <button
+    type="button"
+    onClick={() => navigate(`/student/courses/${categoryId}`)}
+  >
+    ← Courses
+  </button>
+  <span>»</span>
+  <b>Tutors</b>
+</div>
+
+<div className="student-course-tutors-page-head">
+  <h2>{courseName} tutors</h2>
+</div>
+
+<div className="student-course-tutors-search">
+  <span>⌕</span>
+  <input
+    type="text"
+    placeholder="Search tutors..."
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+  />
+</div>
+
+
+
+
+
 
       {loading ? (
         <div className="student-course-tutor-state">Loading tutors...</div>
