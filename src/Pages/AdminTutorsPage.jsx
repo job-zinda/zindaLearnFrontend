@@ -1103,63 +1103,179 @@ async function confirmDeleteTutor() {
 
 
 
-  async function toggleStatus(tutor) {
-    try {
-      const currentActive = isTutorActive(tutor);
+  // async function toggleStatus(tutor) {
+  //   try {
+  //     const currentActive = isTutorActive(tutor);
 
-      await api.patch(`/admin/tuter/status/${tutor._id}`, {
-        isActive: !currentActive,
-      });
+  //     await api.patch(`/admin/tuter/status/${tutor._id}`, {
+  //       isActive: !currentActive,
+  //     });
 
-      showAlert(
-        currentActive
-          ? "Tutor deactivated successfully"
-          : "Tutor activated successfully",
-        "success"
-      );
+  //     showAlert(
+  //       currentActive
+  //         ? "Tutor deactivated successfully"
+  //         : "Tutor activated successfully",
+  //       "success"
+  //     );
 
+  //     setMenuOpenId(null);
+  //     fetchData();
+  //   } catch (err) {
+  //     showAlert(getErrorMessage(err), "error");
+  //   }
+  // }
+
+
+
+
+
+
+
+
+async function toggleStatus(tutor) {
+  try {
+    if (isTutorBlocked(tutor)) {
+      showAlert("Blocked tutor cannot be activated. Please unblock first.", "error");
       setMenuOpenId(null);
-      fetchData();
-    } catch (err) {
-      showAlert(getErrorMessage(err), "error");
+      return;
     }
-  }
 
+    const { data } = await api.patch(`/admin/tuter/status/${tutor._id}`);
 
+    const updatedTutor = data?.tuter;
 
-
-
-  async function toggleTutorBlockStatus(tutor) {
-    try {
-      const nextBlocked = !isTutorBlocked(tutor);
-
-      const { data } = await api.patch(`/admin/tuter/block/${tutor._id}`, {
-        isBlocked: nextBlocked,
-      });
-
-      setTutors((prev) =>
-        prev.map((item) =>
-          item._id === tutor._id
-            ? {
+    setTutors((prev) =>
+      prev.map((item) =>
+        item._id === tutor._id
+          ? {
               ...item,
-              isBlocked: data?.tuter?.isBlocked ?? nextBlocked,
+              isActive: updatedTutor?.isActive ?? !isTutorActive(tutor),
+              isBlocked: updatedTutor?.isBlocked ?? item.isBlocked,
             }
-            : item
-        )
-      );
+          : item
+      )
+    );
 
-      setMenuOpenId(null);
+    setAllTutors((prev) =>
+      prev.map((item) =>
+        item._id === tutor._id
+          ? {
+              ...item,
+              isActive: updatedTutor?.isActive ?? !isTutorActive(tutor),
+              isBlocked: updatedTutor?.isBlocked ?? item.isBlocked,
+            }
+          : item
+      )
+    );
 
-      showAlert(
-        nextBlocked
-          ? "Tutor blocked successfully"
-          : "Tutor unblocked successfully",
-        "success"
-      );
-    } catch (err) {
-      showAlert(getErrorMessage(err, "Failed to update block status"), "error");
-    }
+    setMenuOpenId(null);
+
+    showAlert(
+      updatedTutor?.isActive
+        ? "Tutor activated successfully"
+        : "Tutor deactivated successfully",
+      "success"
+    );
+
+    fetchData();
+  } catch (err) {
+    showAlert(getErrorMessage(err, "Failed to update tutor status"), "error");
   }
+}
+
+
+
+
+
+  // async function toggleTutorBlockStatus(tutor) {
+  //   try {
+  //     const nextBlocked = !isTutorBlocked(tutor);
+
+  //     const { data } = await api.patch(`/admin/tuter/block/${tutor._id}`, {
+  //       isBlocked: nextBlocked,
+  //     });
+
+  //     setTutors((prev) =>
+  //       prev.map((item) =>
+  //         item._id === tutor._id
+  //           ? {
+  //             ...item,
+  //             isBlocked: data?.tuter?.isBlocked ?? nextBlocked,
+  //           }
+  //           : item
+  //       )
+  //     );
+
+  //     setMenuOpenId(null);
+
+  //     showAlert(
+  //       nextBlocked
+  //         ? "Tutor blocked successfully"
+  //         : "Tutor unblocked successfully",
+  //       "success"
+  //     );
+  //   } catch (err) {
+  //     showAlert(getErrorMessage(err, "Failed to update block status"), "error");
+  //   }
+  // }
+
+
+
+
+
+
+async function toggleTutorBlockStatus(tutor) {
+  try {
+    const nextBlocked = !isTutorBlocked(tutor);
+
+    const { data } = await api.patch(`/admin/tuter/block/${tutor._id}`, {
+      isBlocked: nextBlocked,
+    });
+
+    const updatedTutor = data?.tuter;
+
+    setTutors((prev) =>
+      prev.map((item) =>
+        item._id === tutor._id
+          ? {
+              ...item,
+              isBlocked: updatedTutor?.isBlocked ?? nextBlocked,
+              isActive: updatedTutor?.isActive ?? !nextBlocked,
+            }
+          : item
+      )
+    );
+
+    setAllTutors((prev) =>
+      prev.map((item) =>
+        item._id === tutor._id
+          ? {
+              ...item,
+              isBlocked: updatedTutor?.isBlocked ?? nextBlocked,
+              isActive: updatedTutor?.isActive ?? !nextBlocked,
+            }
+          : item
+      )
+    );
+
+    setMenuOpenId(null);
+
+    showAlert(
+      nextBlocked
+        ? "Tutor blocked and deactivated successfully"
+        : "Tutor unblocked and activated successfully",
+      "success"
+    );
+
+    fetchData();
+  } catch (err) {
+    showAlert(getErrorMessage(err, "Failed to update block status"), "error");
+  }
+}
+
+
+
+
 
 
 
