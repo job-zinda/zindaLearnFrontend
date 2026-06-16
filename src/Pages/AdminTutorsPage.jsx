@@ -1357,13 +1357,44 @@ async function confirmDeleteTutor() {
     Chat
   </button>
 
-  <button
+  {/* <button
     type="button"
     className="view-details-btn"
     onClick={() => navigate(`/admin/tutors/${tutor._id}`)}
   >
     View Details
-  </button>
+  </button> */}
+
+
+
+
+<button
+  type="button"
+  className="view-details-btn"
+  onClick={() => {
+    const backData = {
+      backTo: "/admin/tutors",
+      backButtonLabel: "Tutors",
+      backLabel: "View details",
+    };
+
+    sessionStorage.setItem(
+      "adminTutorBackData",
+      JSON.stringify(backData)
+    );
+
+    navigate(`/admin/tutors/${tutor._id}`, {
+      state: backData,
+    });
+  }}
+>
+  View Details
+</button>
+
+
+
+
+
 </div>
 
 
