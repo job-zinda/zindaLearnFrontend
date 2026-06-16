@@ -1352,8 +1352,8 @@ async function toggleTutorBlockStatus(tutor) {
 
     showAlert(
       nextBlocked
-        ? "Tutor blocked and deactivated successfully"
-        : "Tutor unblocked and activated successfully",
+        ? "Tutor blocked successfully"
+        : "Tutor unblocked successfully",
       "success"
     );
 
