@@ -1512,6 +1512,58 @@ useEffect(() => {
 
 
 
+// async function fetchData() {
+//   try {
+//     setLoading(true);
+
+//     const [tutorRes, catRes, courseRes] = await Promise.all([
+//       api.get("/admin/tuter/all"),
+//       api.get("/admin/category/all"),
+//       api.get("/admin/course/all"),
+//     ]);
+
+//     const tutorList = tutorRes.data.tuters || [];
+
+//     const filtered = tutorList.filter((tutor) => {
+//       const active = isTutorActive(tutor);
+//       const blocked = isTutorBlocked(tutor);
+
+//       // AdminCourseTutorsPage il blocked/deactive tutors kanikkaruth
+//       if (!active || blocked) {
+//         return false;
+//       }
+
+//       // Multiple course support
+//       if (Array.isArray(tutor.courseIds) && tutor.courseIds.length > 0) {
+//         return tutor.courseIds.some(
+//           (course) => String(normalizeId(course)) === String(courseId)
+//         );
+//       }
+
+//       // Old single course support
+//       return String(normalizeId(tutor.courseId)) === String(courseId);
+//     });
+
+//     setAllTutors(tutorList);
+//     setTutors(filtered);
+//     setCategories(catRes.data.categories || []);
+//     setCourses(courseRes.data.courses || []);
+//   } catch (err) {
+//     showAlert(getErrorMessage(err), "error");
+//   } finally {
+//     setLoading(false);
+//   }
+// }
+
+
+
+
+
+
+
+
+
+
 async function fetchData() {
   try {
     setLoading(true);
@@ -1528,10 +1580,10 @@ async function fetchData() {
       const active = isTutorActive(tutor);
       const blocked = isTutorBlocked(tutor);
 
-      // AdminCourseTutorsPage il blocked/deactive tutors kanikkaruth
-      if (!active || blocked) {
-        return false;
-      }
+      // IMPORTANT:
+      // AdminCourseTutorsPage il blocked tutors um deactive tutors um kanikkaruth
+      if (!active) return false;
+      if (blocked) return false;
 
       // Multiple course support
       if (Array.isArray(tutor.courseIds) && tutor.courseIds.length > 0) {
@@ -1554,6 +1606,8 @@ async function fetchData() {
     setLoading(false);
   }
 }
+
+
 
 
 
