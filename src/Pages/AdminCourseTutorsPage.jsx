@@ -1118,7 +1118,7 @@
 
 
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 // import Modal from "../Components/Modal";
 import { createPortal } from "react-dom";
@@ -1388,6 +1388,28 @@ export default function AdminCourseTutorsPage() {
 
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState(null);
+
+
+
+const menuRef = useRef(null);
+
+useEffect(() => {
+  function handleOutsideClick(e) {
+    if (menuRef.current && !menuRef.current.contains(e.target)) {
+      setMenuOpenId(null);
+    }
+  }
+
+  document.addEventListener("mousedown", handleOutsideClick);
+
+  return () => {
+    document.removeEventListener("mousedown", handleOutsideClick);
+  };
+}, []);
+
+
+
+
 
   // const courseName = location.state?.courseName || "Selected Course";
   // const backTo = location.state?.backTo || `/admin/courses/${categoryId}`;
@@ -2344,7 +2366,7 @@ className={`tutor-card ${
 
 
 
-                <div className="tutor-menu-wrap">
+                {/* <div className="tutor-menu-wrap">
                   <button
                     className="tutor-menu-btn"
                     type="button"
@@ -2353,7 +2375,31 @@ className={`tutor-card ${
                     }
                   >
                     ⋮
-                  </button>
+                  </button> */}
+
+
+
+
+
+
+
+
+
+                  <div
+  className="tutor-menu-wrap"
+  ref={menuOpenId === tutor._id ? menuRef : null}
+  onMouseDown={(e) => e.stopPropagation()}
+>
+  <button
+    className="tutor-menu-btn"
+    type="button"
+    onClick={(e) => {
+      e.stopPropagation();
+      setMenuOpenId((prev) => (prev === tutor._id ? null : tutor._id));
+    }}
+  >
+    ⋮
+  </button>
 
                   {menuOpenId === tutor._id && (
                     // <div className="tutor-menu">
