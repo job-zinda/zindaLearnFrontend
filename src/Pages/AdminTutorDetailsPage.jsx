@@ -939,25 +939,97 @@ async function updateTutor(e) {
 
 
 
+// async function toggleTutorStatus() {
+//   try {
+//     await api.patch(`/admin/tuter/status/${tuterId}`, {
+//       isActive: !isTutorActive(tutor),
+//     });
+
+//     showAlert(
+//       isTutorActive(tutor)
+//         ? "Tutor deactivated successfully"
+//         : "Tutor activated successfully",
+//       "success"
+//     );
+
+//     setDetailMenuOpen(false);
+//     fetchData();
+//   } catch (err) {
+//     showAlert(getErrorMessage(err), "error");
+//   }
+// }
+
+
+
+
+
+
 async function toggleTutorStatus() {
   try {
-    await api.patch(`/admin/tuter/status/${tuterId}`, {
-      isActive: !isTutorActive(tutor),
-    });
+    if (!tutor) return;
+
+    if (isTutorBlocked(tutor)) {
+      showAlert("Blocked tutor cannot be activated. Please unblock first.", "error");
+      setDetailMenuOpen(false);
+      return;
+    }
+
+    const { data } = await api.patch(`/admin/tuter/status/${tuterId}`);
+
+    const updatedTutor = data?.tuter;
+
+    setTutor((prev) =>
+      prev
+        ? {
+            ...prev,
+            isActive: updatedTutor?.isActive ?? !isTutorActive(prev),
+            isBlocked: updatedTutor?.isBlocked ?? prev.isBlocked,
+          }
+        : prev
+    );
 
     showAlert(
-      isTutorActive(tutor)
-        ? "Tutor deactivated successfully"
-        : "Tutor activated successfully",
+      updatedTutor?.isActive
+        ? "Tutor activated successfully"
+        : "Tutor deactivated successfully",
       "success"
     );
 
     setDetailMenuOpen(false);
     fetchData();
   } catch (err) {
-    showAlert(getErrorMessage(err), "error");
+    showAlert(getErrorMessage(err, "Failed to update tutor status"), "error");
   }
 }
+
+
+
+
+
+
+
+
+
+// async function toggleTutorBlock() {
+//   try {
+//     await api.patch(`/admin/tuter/block/${tuterId}`, {
+//       isBlocked: !isTutorBlocked(tutor),
+//     });
+
+//     showAlert(
+//       isTutorBlocked(tutor)
+//         ? "Tutor unblocked successfully"
+//         : "Tutor blocked successfully",
+//       "success"
+//     );
+
+//     setDetailMenuOpen(false);
+//     fetchData();
+//   } catch (err) {
+//     showAlert(getErrorMessage(err), "error");
+//   }
+// }
+
 
 
 
@@ -967,23 +1039,41 @@ async function toggleTutorStatus() {
 
 async function toggleTutorBlock() {
   try {
-    await api.patch(`/admin/tuter/block/${tuterId}`, {
-      isBlocked: !isTutorBlocked(tutor),
+    if (!tutor) return;
+
+    const nextBlocked = !isTutorBlocked(tutor);
+
+    const { data } = await api.patch(`/admin/tuter/block/${tuterId}`, {
+      isBlocked: nextBlocked,
     });
 
+    const updatedTutor = data?.tuter;
+
+    setTutor((prev) =>
+      prev
+        ? {
+            ...prev,
+            isBlocked: updatedTutor?.isBlocked ?? nextBlocked,
+            isActive: updatedTutor?.isActive ?? !nextBlocked,
+          }
+        : prev
+    );
+
     showAlert(
-      isTutorBlocked(tutor)
-        ? "Tutor unblocked successfully"
-        : "Tutor blocked successfully",
+      nextBlocked
+        ? "Tutor blocked and deactivated successfully"
+        : "Tutor unblocked and activated successfully",
       "success"
     );
 
     setDetailMenuOpen(false);
     fetchData();
   } catch (err) {
-    showAlert(getErrorMessage(err), "error");
+    showAlert(getErrorMessage(err, "Failed to update block status"), "error");
   }
 }
+
+
 
 
 
@@ -1236,7 +1326,7 @@ async function toggleTutorBlock() {
       👥 Assigned Students
     </button>
 
-    <button
+    {/* <button
       type="button"
       onClick={() => {
         setDetailMenuOpen(false);
@@ -1244,9 +1334,36 @@ async function toggleTutorBlock() {
       }}
     >
       {active ? "⏻ Deactive" : "✓ Active"}
-    </button>
+    </button> */}
 
-    <button
+
+
+
+
+
+<button
+  type="button"
+  disabled={isTutorBlocked(tutor)}
+  className={isTutorBlocked(tutor) ? "detail-menu-disabled-btn" : ""}
+  onClick={() => {
+    if (isTutorBlocked(tutor)) {
+      showAlert("Blocked tutor cannot be activated. Please unblock first.", "error");
+      setDetailMenuOpen(false);
+      return;
+    }
+
+    setDetailMenuOpen(false);
+    toggleTutorStatus();
+  }}
+>
+  {active ? "⏻ Deactive" : "✓ Active"}
+</button>
+
+
+
+
+
+    {/* <button
       type="button"
       onClick={() => {
         setDetailMenuOpen(false);
@@ -1254,7 +1371,26 @@ async function toggleTutorBlock() {
       }}
     >
       {isTutorBlocked(tutor) ? "⊘ Unblock" : "⊘ Block"}
-    </button>
+    </button> */}
+
+
+
+
+
+
+<button
+  type="button"
+  onClick={() => {
+    setDetailMenuOpen(false);
+    toggleTutorBlock();
+  }}
+>
+  {isTutorBlocked(tutor) ? "◯ Unblock" : "⊘ Block"}
+</button>
+
+
+
+
 
     <button
       type="button"
