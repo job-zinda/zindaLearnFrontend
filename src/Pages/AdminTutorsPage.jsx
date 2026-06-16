@@ -1291,9 +1291,33 @@ async function confirmDeleteTutor() {
         ↗ Share
       </button>
 
-      <button type="button" onClick={() => toggleStatus(tutor)}>
+      {/* <button type="button" onClick={() => toggleStatus(tutor)}>
         {active ? "⏻ Deactive" : "✓ Active"}
-      </button>
+      </button> */}
+
+
+
+<button
+  type="button"
+  disabled={isTutorBlocked(tutor)}
+  className={isTutorBlocked(tutor) ? "tutor-menu-disabled-btn" : ""}
+  onClick={() => {
+    if (isTutorBlocked(tutor)) {
+      showAlert("Blocked tutor cannot be activated. Please unblock first.", "error");
+      return;
+    }
+
+    toggleStatus(tutor);
+  }}
+>
+  {active ? "⏻ Deactive" : "✓ Active"}
+</button>
+
+
+
+
+
+
 
       <button type="button" onClick={() => toggleTutorBlockStatus(tutor)}>
         {isTutorBlocked(tutor) ? "◯ Unblock" : "⊘ Block"}

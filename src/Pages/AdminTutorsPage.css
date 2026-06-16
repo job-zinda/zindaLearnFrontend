@@ -4455,3 +4455,45 @@
     line-height: 1.2;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.tutor-menu-disabled-btn,
+.tutor-menu button:disabled {
+  opacity: 0.45 !important;
+  cursor: not-allowed !important;
+  pointer-events: auto !important;
+}
+
+.tutor-menu-disabled-btn:hover,
+.tutor-menu button:disabled:hover {
+  background: transparent !important;
+  color: rgba(255, 255, 255, 0.82) !important;
+}
