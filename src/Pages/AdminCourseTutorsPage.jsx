@@ -1232,7 +1232,21 @@ function isTutorBlocked(tutor) {
 
 
 
+function isTutorActive(tutor) {
+  return (
+    tutor?.isActive === true ||
+    tutor?.isActive === "true" ||
+    tutor?.isActive === 1
+  );
+}
 
+function isTutorBlocked(tutor) {
+  return (
+    tutor?.isBlocked === true ||
+    tutor?.isBlocked === "true" ||
+    tutor?.isBlocked === 1
+  );
+}
 
 
 function getErrorMessage(error, fallback = "Something went wrong") {
@@ -1459,38 +1473,90 @@ useEffect(() => {
 
 
 
-  async function fetchData() {
-    try {
-      setLoading(true);
+  // async function fetchData() {
+  //   try {
+  //     setLoading(true);
 
-      const [tutorRes, catRes, courseRes] = await Promise.all([
-        api.get("/admin/tuter/all"),
-        api.get("/admin/category/all"),
-        api.get("/admin/course/all"),
-      ]);
+  //     const [tutorRes, catRes, courseRes] = await Promise.all([
+  //       api.get("/admin/tuter/all"),
+  //       api.get("/admin/category/all"),
+  //       api.get("/admin/course/all"),
+  //     ]);
 
-      const tutorList = tutorRes.data.tuters || [];
+  //     const tutorList = tutorRes.data.tuters || [];
 
-      const filtered = tutorList.filter((tutor) => {
-        if (Array.isArray(tutor.courseIds) && tutor.courseIds.length > 0) {
-          return tutor.courseIds.some(
-            (course) => String(normalizeId(course)) === String(courseId)
-          );
-        }
+  //     const filtered = tutorList.filter((tutor) => {
+  //       if (Array.isArray(tutor.courseIds) && tutor.courseIds.length > 0) {
+  //         return tutor.courseIds.some(
+  //           (course) => String(normalizeId(course)) === String(courseId)
+  //         );
+  //       }
 
-        return String(normalizeId(tutor.courseId)) === String(courseId);
-      });
+  //       return String(normalizeId(tutor.courseId)) === String(courseId);
+  //     });
 
-      setAllTutors(tutorList);
-      setTutors(filtered);
-      setCategories(catRes.data.categories || []);
-      setCourses(courseRes.data.courses || []);
-    } catch (err) {
-      showAlert(getErrorMessage(err), "error");
-    } finally {
-      setLoading(false);
-    }
+  //     setAllTutors(tutorList);
+  //     setTutors(filtered);
+  //     setCategories(catRes.data.categories || []);
+  //     setCourses(courseRes.data.courses || []);
+  //   } catch (err) {
+  //     showAlert(getErrorMessage(err), "error");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }
+
+
+
+
+
+
+
+async function fetchData() {
+  try {
+    setLoading(true);
+
+    const [tutorRes, catRes, courseRes] = await Promise.all([
+      api.get("/admin/tuter/all"),
+      api.get("/admin/category/all"),
+      api.get("/admin/course/all"),
+    ]);
+
+    const tutorList = tutorRes.data.tuters || [];
+
+    const filtered = tutorList.filter((tutor) => {
+      const active = isTutorActive(tutor);
+      const blocked = isTutorBlocked(tutor);
+
+      // AdminCourseTutorsPage il blocked/deactive tutors kanikkaruth
+      if (!active || blocked) {
+        return false;
+      }
+
+      // Multiple course support
+      if (Array.isArray(tutor.courseIds) && tutor.courseIds.length > 0) {
+        return tutor.courseIds.some(
+          (course) => String(normalizeId(course)) === String(courseId)
+        );
+      }
+
+      // Old single course support
+      return String(normalizeId(tutor.courseId)) === String(courseId);
+    });
+
+    setAllTutors(tutorList);
+    setTutors(filtered);
+    setCategories(catRes.data.categories || []);
+    setCourses(courseRes.data.courses || []);
+  } catch (err) {
+    showAlert(getErrorMessage(err), "error");
+  } finally {
+    setLoading(false);
   }
+}
+
+
+
 
 
 
