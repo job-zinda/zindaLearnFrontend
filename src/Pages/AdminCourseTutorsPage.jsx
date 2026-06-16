@@ -1208,26 +1208,26 @@ function deriveCategoryIdsFromCourseIds(courseIds, courses) {
 
 
 
-function isTutorActive(tutor) {
-  return (
-    tutor?.isActive === true ||
-    tutor?.isActive === "true" ||
-    tutor?.isActive === 1
-  );
-}
+// function isTutorActive(tutor) {
+//   return (
+//     tutor?.isActive === true ||
+//     tutor?.isActive === "true" ||
+//     tutor?.isActive === 1
+//   );
+// }
 
 
 
 
 
 
-function isTutorBlocked(tutor) {
-  return (
-    tutor?.isBlocked === true ||
-    tutor?.isBlocked === "true" ||
-    tutor?.isBlocked === 1
-  );
-}
+// function isTutorBlocked(tutor) {
+//   return (
+//     tutor?.isBlocked === true ||
+//     tutor?.isBlocked === "true" ||
+//     tutor?.isBlocked === 1
+//   );
+// }
 
 
 
