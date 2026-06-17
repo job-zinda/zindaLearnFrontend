@@ -2993,3 +2993,92 @@
     width: 198px !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   ASSIGN TUTOR DATE DISPLAY
+   Paste at VERY BOTTOM of AdminStudentsPage.css
+========================================================= */
+
+.assign-tutor-item {
+  grid-template-columns: 54px 58px minmax(0, 1fr) auto !important;
+}
+
+.assign-tutor-date {
+  justify-self: end;
+  align-self: center;
+  min-width: 118px;
+  display: grid;
+  gap: 3px;
+  text-align: right;
+  color: #ffffff;
+}
+
+.assign-tutor-date span {
+  color: rgba(255, 255, 255, 0.48) !important;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+  line-height: 1.1;
+}
+
+.assign-tutor-date b {
+  color: #f0abfc !important;
+  font-size: 12px !important;
+  font-weight: 950 !important;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .assign-tutor-item {
+    grid-template-columns: 44px 46px minmax(0, 1fr) !important;
+  }
+
+  .assign-tutor-date {
+    grid-column: 3;
+    justify-self: start;
+    text-align: left;
+    min-width: 0;
+    margin-top: 4px;
+  }
+
+  .assign-tutor-date b {
+    white-space: normal;
+  }
+}

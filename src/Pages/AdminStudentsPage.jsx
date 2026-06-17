@@ -121,7 +121,23 @@ function isTutorBlocked(tutor) {
 
 
 
+function formatAssignedDate(value) {
+  if (!value) return "";
 
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) return "";
+
+  return date
+    .toLocaleString("en-US", {
+      month: "short",
+      day: "2-digit",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    })
+    .replace(",", "");
+}
 
 
 
@@ -379,6 +395,12 @@ const filterWrapRef = useRef(null);
   const [assignedTutorIds, setAssignedTutorIds] = useState([]);
   const [assignSearch, setAssignSearch] = useState("");
   const [assignLoading, setAssignLoading] = useState(false);
+
+
+
+
+
+  const [assignedTutorDates, setAssignedTutorDates] = useState({});
 
 
 
@@ -924,11 +946,60 @@ const activeTutorIds = tutors
   .filter((tutor) => isTutorActive(tutor) && !isTutorBlocked(tutor))
   .map((tutor) => String(tutor._id));
 
-const ids = (data.tutors || [])
-  .map((tutor) => String(tutor._id))
-  .filter((id) => activeTutorIds.includes(id));
+// const ids = (data.tutors || [])
+//   .map((tutor) => String(tutor._id))
+//   .filter((id) => activeTutorIds.includes(id));
 
-setAssignedTutorIds(ids);
+// setAssignedTutorIds(ids);
+
+
+
+
+
+
+
+async function openAssignTutorModal(student) {
+  try {
+    setAssignStudent(student);
+    setAssignedTutorIds([]);
+    setAssignedTutorDates({});
+    setAssignSearch("");
+    setAssignOpen(true);
+    setMenuOpenId(null);
+    setAssignLoading(true);
+
+    const { data } = await api.get(
+      `/admin/student/${getStudentId(student)}/assigned-tutors`
+    );
+
+    const activeTutorIds = tutors
+      .filter((tutor) => isTutorActive(tutor) && !isTutorBlocked(tutor))
+      .map((tutor) => String(tutor._id));
+
+    const ids = (data.tutors || [])
+      .map((tutor) => String(tutor._id))
+      .filter((id) => activeTutorIds.includes(id));
+
+    const dateMap = {};
+
+    (data.tutors || []).forEach((tutor) => {
+      const id = String(tutor._id);
+
+      if (activeTutorIds.includes(id) && tutor.assignedAt) {
+        dateMap[id] = tutor.assignedAt;
+      }
+    });
+
+    setAssignedTutorIds(ids);
+    setAssignedTutorDates(dateMap);
+  } catch (err) {
+    showAlert(getErrorMessage(err, "Failed to load assigned tutors"), "error");
+  } finally {
+    setAssignLoading(false);
+  }
+}
+
+
 
 
 
@@ -942,58 +1013,128 @@ setAssignedTutorIds(ids);
     }
   }
 
-  function toggleAssignedTutor(tutorId, checked) {
-    setAssignedTutorIds((prev) => {
-      if (checked) {
-        return Array.from(new Set([...prev, tutorId]));
-      }
+  // function toggleAssignedTutor(tutorId, checked) {
+  //   setAssignedTutorIds((prev) => {
+  //     if (checked) {
+  //       return Array.from(new Set([...prev, tutorId]));
+  //     }
 
-      return prev.filter((id) => id !== tutorId);
+  //     return prev.filter((id) => id !== tutorId);
+  //   });
+  // }
+
+
+
+
+
+
+function toggleAssignedTutor(tutorId, checked) {
+  const cleanTutorId = String(tutorId);
+
+  setAssignedTutorIds((prev) => {
+    const currentIds = prev.map(String);
+
+    if (checked) {
+      return Array.from(new Set([...currentIds, cleanTutorId]));
+    }
+
+    return currentIds.filter((id) => id !== cleanTutorId);
+  });
+
+  if (!checked) {
+    setAssignedTutorDates((prev) => {
+      const next = { ...prev };
+      delete next[cleanTutorId];
+      return next;
     });
   }
-
-  async function saveAssignedTutors() {
-    try {
-      if (!assignStudent) return;
-
-      setSubmitting(true);
-
-      // await api.post(`/admin/student/${getStudentId(assignStudent)}/assign-tutors`, {
-      //   tutorIds: assignedTutorIds,
-      // });
+}
 
 
 
 
 
 
-const activeTutorIds = tutors
-  .filter((tutor) => isTutorActive(tutor) && !isTutorBlocked(tutor))
-  .map((tutor) => String(tutor._id));
+//   async function saveAssignedTutors() {
+//     try {
+//       if (!assignStudent) return;
 
-const cleanTutorIds = assignedTutorIds
-  .map(String)
-  .filter((id) => activeTutorIds.includes(id));
+//       setSubmitting(true);
 
-await api.post(`/admin/student/${getStudentId(assignStudent)}/assign-tutors`, {
-  tutorIds: cleanTutorIds,
-});
+//       // await api.post(`/admin/student/${getStudentId(assignStudent)}/assign-tutors`, {
+//       //   tutorIds: assignedTutorIds,
+//       // });
 
 
 
 
 
 
-      showAlert("Tutors assigned successfully", "success");
-      setAssignOpen(false);
-      setAssignStudent(null);
-      setAssignedTutorIds([]);
-    } catch (err) {
-      showAlert(getErrorMessage(err, "Failed to assign tutors"), "error");
-    } finally {
-      setSubmitting(false);
-    }
+// const activeTutorIds = tutors
+//   .filter((tutor) => isTutorActive(tutor) && !isTutorBlocked(tutor))
+//   .map((tutor) => String(tutor._id));
+
+// const cleanTutorIds = assignedTutorIds
+//   .map(String)
+//   .filter((id) => activeTutorIds.includes(id));
+
+// await api.post(`/admin/student/${getStudentId(assignStudent)}/assign-tutors`, {
+//   tutorIds: cleanTutorIds,
+// });
+
+
+
+
+
+
+//       showAlert("Tutors assigned successfully", "success");
+//       setAssignOpen(false);
+//       setAssignStudent(null);
+//       setAssignedTutorIds([]);
+//     } catch (err) {
+//       showAlert(getErrorMessage(err, "Failed to assign tutors"), "error");
+//     } finally {
+//       setSubmitting(false);
+//     }
+//   }
+
+
+
+
+async function saveAssignedTutors() {
+  try {
+    if (!assignStudent) return;
+
+    setSubmitting(true);
+
+    const activeTutorIds = tutors
+      .filter((tutor) => isTutorActive(tutor) && !isTutorBlocked(tutor))
+      .map((tutor) => String(tutor._id));
+
+    const cleanTutorIds = assignedTutorIds
+      .map(String)
+      .filter((id) => activeTutorIds.includes(id));
+
+    await api.post(`/admin/student/${getStudentId(assignStudent)}/assign-tutors`, {
+      tutorIds: cleanTutorIds,
+    });
+
+    showAlert("Tutors assigned successfully", "success");
+    setAssignOpen(false);
+    setAssignStudent(null);
+    setAssignedTutorIds([]);
+    setAssignedTutorDates({});
+  } catch (err) {
+    showAlert(getErrorMessage(err, "Failed to assign tutors"), "error");
+  } finally {
+    setSubmitting(false);
   }
+}
+
+
+
+
+
   return (
     // <div className="student-page" onClick={() => setMenuOpenId(null)}>
 
@@ -1630,7 +1771,7 @@ ${isStudentBlocked(student)
             </div>
           ) : (
             <div className="assign-tutor-list assign-tutor-list-dark">
-              {filteredAssignTutors.map((tutor) => {
+              {/* {filteredAssignTutors.map((tutor) => {
                 const checked = assignedTutorIds.includes(tutor._id);
                 const photo = tutor.photo ? getMediaUrl(tutor.photo) : "";
 
@@ -1665,12 +1806,71 @@ ${isStudentBlocked(student)
                     </div>
                   </label>
                 );
-              })}
+              })} */}
+
+
+
+
+{filteredAssignTutors.map((tutor) => {
+  const tutorId = String(tutor._id);
+  const checked = assignedTutorIds.map(String).includes(tutorId);
+  const photo = tutor.photo ? getMediaUrl(tutor.photo) : "";
+  const assignedDateText = checked
+    ? formatAssignedDate(assignedTutorDates[tutorId])
+    : "";
+
+  return (
+    <label
+      key={tutor._id}
+      className={`assign-tutor-item assign-tutor-item-dark ${
+        checked ? "assign-tutor-item--selected" : ""
+      }`}
+    >
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={(e) =>
+          toggleAssignedTutor(tutor._id, e.target.checked)
+        }
+      />
+
+      <div className="assign-tutor-avatar">
+        {photo ? (
+          <img src={photo} alt={tutor.name || "Tutor"} />
+        ) : (
+          <span>{tutor.name?.charAt(0)?.toUpperCase() || "T"}</span>
+        )}
+      </div>
+
+      <div className="assign-tutor-info assign-tutor-info-dark">
+        <h4>{tutor.name || "Tutor"}</h4>
+        <p>{tutor.qualification || "Qualification not added"}</p>
+        <small>
+          {tutor.email || tutor.phone || "No contact added"}
+        </small>
+      </div>
+
+      {assignedDateText && (
+        <div className="assign-tutor-date">
+          <span>Assigned</span>
+          <b>{assignedDateText}</b>
+        </div>
+      )}
+    </label>
+  );
+})}
+
+
+
+
+
+
+
             </div>
           )}
 
           <div className="assign-tutor-actions">
-            <button
+            {/* <button
               type="button"
               className="secondary-btn"
               onClick={() => {
@@ -1681,7 +1881,29 @@ ${isStudentBlocked(student)
               disabled={submitting}
             >
               Cancel
-            </button>
+            </button> */}
+
+
+
+
+
+
+<button
+  type="button"
+  className="secondary-btn"
+  onClick={() => {
+    setAssignOpen(false);
+    setAssignStudent(null);
+    setAssignedTutorIds([]);
+    setAssignedTutorDates({});
+  }}
+  disabled={submitting}
+>
+  Cancel
+</button>
+
+
+
 
             <button
               type="button"
