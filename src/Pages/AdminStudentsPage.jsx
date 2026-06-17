@@ -923,7 +923,50 @@ useEffect(() => {
 
 
 
+async function toggleStudentBlock(student) {
+  try {
+    const studentId = getStudentId(student);
 
+    if (!studentId) {
+      return showAlert("Student id not found", "error");
+    }
+
+    const nextBlocked = !isStudentBlocked(student);
+
+    const { data } = await api.patch(`/admin/student/block/${studentId}`, {
+      isBlocked: nextBlocked,
+    });
+
+    const updatedBlocked =
+      data?.student?.isBlocked ??
+      data?.user?.isBlocked ??
+      data?.data?.isBlocked ??
+      nextBlocked;
+
+    setStudents((prev) =>
+      prev.map((item) =>
+        String(getStudentId(item)) === String(studentId)
+          ? {
+              ...item,
+              isBlocked: updatedBlocked,
+            }
+          : item
+      )
+    );
+
+    setMenuOpenId(null);
+
+    showAlert(
+      updatedBlocked ? "Student blocked" : "Student unblocked",
+      "success"
+    );
+  } catch (err) {
+    showAlert(
+      getErrorMessage(err, "Failed to update student block status"),
+      "error"
+    );
+  }
+}
 
 
 
