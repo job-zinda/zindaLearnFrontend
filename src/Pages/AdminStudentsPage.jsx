@@ -23,12 +23,7 @@ const emptyInviteForm = {
   phone: "",
 };
 
-// const emptyEditForm = {
-//   name: "",
-//   email: "",
-//   phone: "",
-//   photo: "",
-// };
+
 
 
 
@@ -103,7 +98,21 @@ function isStudentBlocked(student) {
 
 
 
+const studentFilterOptions = [
+  {
+    key: "all",
+    label: "All Students",
+  },
+  {
+    key: "blocked",
+    label: "Blocked Students",
+  },
+];
 
+const studentFilterLabels = {
+  all: "All Students",
+  blocked: "Blocked Students",
+};
 
 
 
@@ -150,29 +159,112 @@ function StudentDarkModal({ open, title, width = "560px", onClose, children }) {
 
 
 
+// function StudentInviteIcon() {
+//   return (
+//     <span className="student-invite-btn__icon" aria-hidden="true">
+//       <span className="student-invite-btn__plus">+</span>
+
+//       <svg
+//         className="student-invite-btn__user"
+//         viewBox="0 0 24 24"
+//         fill="none"
+//       >
+//         <circle cx="12" cy="8" r="4" />
+//         <path d="M4.5 21c.8-4 3.6-6 7.5-6s6.7 2 7.5 6" />
+//       </svg>
+//     </span>
+//   );
+
+
+
+
+
+
+
+// }
+
+
+
+
+
+
+
 function StudentInviteIcon() {
   return (
     <span className="student-invite-btn__icon" aria-hidden="true">
-      <span className="student-invite-btn__plus">+</span>
-
       <svg
-        className="student-invite-btn__user"
-        viewBox="0 0 24 24"
+        className="student-invite-btn__mail"
+        viewBox="0 0 28 28"
         fill="none"
       >
-        <circle cx="12" cy="8" r="4" />
-        <path d="M4.5 21c.8-4 3.6-6 7.5-6s6.7 2 7.5 6" />
+        <path
+          d="M4 10.5V23H24V10.5"
+          stroke="currentColor"
+          strokeWidth="2.2"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M4 10.5L14 17.5L24 10.5"
+          stroke="currentColor"
+          strokeWidth="2.2"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M4 10.5L14 4L24 10.5"
+          stroke="currentColor"
+          strokeWidth="2.2"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M14 7V14"
+          stroke="currentColor"
+          strokeWidth="2.2"
+          strokeLinecap="round"
+        />
+        <path
+          d="M10.5 10.5H17.5"
+          stroke="currentColor"
+          strokeWidth="2.2"
+          strokeLinecap="round"
+        />
       </svg>
     </span>
   );
-
-
-
-
-
-
-
 }
+
+
+
+
+
+
+
+
+
+function StudentFilterIcon() {
+  return (
+    <svg
+      className="student-filter-icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M4 6h16L14 13v5.2c0 .35-.18.67-.48.86l-3 1.9A1 1 0 0 1 9 20.1V13L4 6Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M7 6h10"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+
 
 
 
@@ -190,6 +282,19 @@ export default function AdminStudentsPage() {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [menuOpenId, setMenuOpenId] = useState(null);
+
+
+
+
+
+const [studentFilter, setStudentFilter] = useState("all");
+const [filterOpen, setFilterOpen] = useState(false);
+const filterWrapRef = useRef(null);
+
+
+
+
+
 
   const [inviteOpen, setInviteOpen] = useState(false);
   const [inviteForm, setInviteForm] = useState(emptyInviteForm);
@@ -225,25 +330,60 @@ export default function AdminStudentsPage() {
   const showOnlyNew =
     new URLSearchParams(location.search).get("filter") === "new";
 
-  const filteredStudents = useMemo(() => {
-    let result = students;
+  // const filteredStudents = useMemo(() => {
+  //   let result = students;
 
-    if (showOnlyNew) {
-      result = result.filter((student) => isNewStudent(student));
-    }
+  //   if (showOnlyNew) {
+  //     result = result.filter((student) => isNewStudent(student));
+  //   }
 
-    const q = search.toLowerCase().trim();
+  //   const q = search.toLowerCase().trim();
 
-    if (!q) return result;
+  //   if (!q) return result;
 
-    return result.filter((student) => {
-      return (
-        String(student.name || "").toLowerCase().includes(q) ||
-        String(student.email || "").toLowerCase().includes(q) ||
-        String(student.phone || "").toLowerCase().includes(q)
-      );
-    });
-  }, [students, search, showOnlyNew]);
+  //   return result.filter((student) => {
+  //     return (
+  //       String(student.name || "").toLowerCase().includes(q) ||
+  //       String(student.email || "").toLowerCase().includes(q) ||
+  //       String(student.phone || "").toLowerCase().includes(q)
+  //     );
+  //   });
+  // }, [students, search, showOnlyNew]);
+
+
+
+
+
+const filteredStudents = useMemo(() => {
+  let result = students;
+
+  if (showOnlyNew) {
+    result = result.filter((student) => isNewStudent(student));
+  }
+
+  if (studentFilter === "blocked") {
+    result = result.filter((student) => isStudentBlocked(student));
+  }
+
+  const q = search.toLowerCase().trim();
+
+  if (!q) return result;
+
+  return result.filter((student) => {
+    return (
+      String(student.name || "").toLowerCase().includes(q) ||
+      String(student.email || "").toLowerCase().includes(q) ||
+      String(student.phone || "").toLowerCase().includes(q)
+    );
+  });
+}, [students, search, showOnlyNew, studentFilter]);
+
+
+
+
+
+
+
 
   async function fetchStudents() {
     try {
@@ -258,64 +398,38 @@ export default function AdminStudentsPage() {
     }
   }
 
-// async function openStudentChat(student) {
-//   try {
-//     const studentId = getStudentId(student);
-
-//     if (!studentId) {
-//       return showAlert("Student id not found", "error");
-//     }
-
-//     const { data } = await api.post(`/chat/admin-student-room/${studentId}`);
-
-//     const roomId = data?.room?._id || data?.chatRoom?._id || data?.roomId;
-
-//     if (roomId) {
-//       // navigate(`/admin/chats?roomId=${roomId}`);
-
-// navigate(`/admin/chats?roomId=${roomId}&open=chat`);
-
-
-//     } else {
-//       navigate("/admin/chats");
-//     }
-//   } catch (err) {
-//     showAlert(getErrorMessage(err, "Failed to open chat"), "error");
-//   }
-// }
 
 
 
 
 
 
+  async function openStudentChat(student) {
+    try {
+      if (isStudentBlocked(student)) {
+        showAlert("Blocked student chat is disabled", "error");
+        return;
+      }
 
-async function openStudentChat(student) {
-  try {
-    if (isStudentBlocked(student)) {
-      showAlert("Blocked student chat is disabled", "error");
-      return;
+      const studentId = getStudentId(student);
+
+      if (!studentId) {
+        return showAlert("Student id not found", "error");
+      }
+
+      const { data } = await api.post(`/chat/admin-student-room/${studentId}`);
+
+      const roomId = data?.room?._id || data?.chatRoom?._id || data?.roomId;
+
+      if (roomId) {
+        navigate(`/admin/chats?roomId=${roomId}&open=chat`);
+      } else {
+        navigate("/admin/chats");
+      }
+    } catch (err) {
+      showAlert(getErrorMessage(err, "Failed to open chat"), "error");
     }
-
-    const studentId = getStudentId(student);
-
-    if (!studentId) {
-      return showAlert("Student id not found", "error");
-    }
-
-    const { data } = await api.post(`/chat/admin-student-room/${studentId}`);
-
-    const roomId = data?.room?._id || data?.chatRoom?._id || data?.roomId;
-
-    if (roomId) {
-      navigate(`/admin/chats?roomId=${roomId}&open=chat`);
-    } else {
-      navigate("/admin/chats");
-    }
-  } catch (err) {
-    showAlert(getErrorMessage(err, "Failed to open chat"), "error");
   }
-}
 
 
 
@@ -338,6 +452,34 @@ async function openStudentChat(student) {
     fetchStudents();
     fetchTutors();
   }, []);
+
+
+
+
+
+
+
+
+useEffect(() => {
+  function handleOutsideFilterClick(e) {
+    if (
+      filterWrapRef.current &&
+      !filterWrapRef.current.contains(e.target)
+    ) {
+      setFilterOpen(false);
+    }
+  }
+
+  document.addEventListener("mousedown", handleOutsideFilterClick);
+
+  return () => {
+    document.removeEventListener("mousedown", handleOutsideFilterClick);
+  };
+}, []);
+
+
+
+
 
 
   useEffect(() => {
@@ -684,7 +826,18 @@ async function openStudentChat(student) {
     }
   }
   return (
-    <div className="student-page" onClick={() => setMenuOpenId(null)}>
+    // <div className="student-page" onClick={() => setMenuOpenId(null)}>
+
+
+<div
+  className="student-page"
+  onClick={() => {
+    setMenuOpenId(null);
+    setFilterOpen(false);
+  }}
+>
+
+{/* 
       <div className="student-toolbar" onClick={(e) => e.stopPropagation()}>
         <div className="student-search">
           <span>⌕</span>
@@ -713,6 +866,117 @@ async function openStudentChat(student) {
 
       </div>
 
+
+ */}
+
+
+
+
+
+
+
+
+
+
+
+
+<div className="student-toolbar" onClick={(e) => e.stopPropagation()}>
+  <div className="student-search">
+    <span>⌕</span>
+
+    <input
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      placeholder="Search name, email, phone..."
+    />
+  </div>
+
+  <div className="student-toolbar-actions">
+    <div className="student-filter-wrap" ref={filterWrapRef}>
+      <button
+        type="button"
+        className={`student-filter-btn ${
+          filterOpen ? "student-filter-btn--active" : ""
+        }`}
+        onClick={(e) => {
+          e.stopPropagation();
+          setFilterOpen((prev) => !prev);
+          setMenuOpenId(null);
+        }}
+        aria-label="Filter students"
+      >
+        <StudentFilterIcon />
+      </button>
+
+      {filterOpen && (
+        <div
+          className="student-filter-menu"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {studentFilterOptions.map((option) => (
+            <button
+              key={option.key}
+              type="button"
+              className={
+                studentFilter === option.key
+                  ? "student-filter-option student-filter-option--active"
+                  : "student-filter-option"
+              }
+              onClick={() => {
+                setStudentFilter(option.key);
+                setFilterOpen(false);
+              }}
+            >
+              <span className="student-filter-check">
+                {studentFilter === option.key ? "✓" : ""}
+              </span>
+
+              {option.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <button
+      type="button"
+      className="student-invite-btn"
+      onClick={openInviteModal}
+      aria-label="Invite Student"
+    >
+      <StudentInviteIcon />
+
+      <span className="student-invite-btn__text">Invite Student</span>
+    </button>
+  </div>
+
+
+
+
+
+
+
+
+{/* </div>
+
+      {showOnlyNew && !loading && (
+        <div className="student-new-filter-note">
+          Showing students registered in the last 24 hours
+        </div>
+      )}
+
+      {loading ? ( */}
+
+
+
+
+
+      </div>
+
+      <div className="student-list-heading">
+        <h2>{studentFilterLabels[studentFilter]}</h2>
+      </div>
+
       {showOnlyNew && !loading && (
         <div className="student-new-filter-note">
           Showing students registered in the last 24 hours
@@ -720,6 +984,12 @@ async function openStudentChat(student) {
       )}
 
       {loading ? (
+
+
+
+
+
+
         <div className="student-state">Loading students...</div>
       ) : filteredStudents.length === 0 ? (
         <div className="student-state">
@@ -907,58 +1177,48 @@ ${isStudentBlocked(student)
 
 
 
-            <div className="student-card-actions">
-{/* <button
-  type="button"
-  className="student-chat-btn"
-  onClick={(e) => {
-    e.stopPropagation();
-    openStudentChat(student);
-  }}
->
-  Chat
-</button> */}
-
-
-
-
-
-<button
-  type="button"
-  className={`student-chat-btn ${
-    isStudentBlocked(student) ? "student-chat-btn--disabled" : ""
-  }`}
-  disabled={isStudentBlocked(student)}
-  onClick={(e) => {
-    e.stopPropagation();
-
-    if (isStudentBlocked(student)) {
-      showAlert("Blocked student chat is disabled", "error");
-      return;
-    }
-
-    openStudentChat(student);
-  }}
->
-  Chat
-</button>
+                <div className="student-card-actions">
 
 
 
 
 
 
- <button
-  type="button"
-  className="student-assign-btn"
-  onClick={(e) => {
-    e.stopPropagation();
-    openAssignTutorModal(student);
-  }}
->
-  Assign Tutors
-</button>
-</div>
+                  <button
+                    type="button"
+                    className={`student-chat-btn ${isStudentBlocked(student) ? "student-chat-btn--disabled" : ""
+                      }`}
+                    disabled={isStudentBlocked(student)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+
+                      if (isStudentBlocked(student)) {
+                        showAlert("Blocked student chat is disabled", "error");
+                        return;
+                      }
+
+                      openStudentChat(student);
+                    }}
+                  >
+                    Chat
+                  </button>
+
+
+
+
+
+
+                  <button
+                    type="button"
+                    className="student-assign-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openAssignTutorModal(student);
+                    }}
+                  >
+                    Assign Tutors
+                  </button>
+                </div>
 
 
 

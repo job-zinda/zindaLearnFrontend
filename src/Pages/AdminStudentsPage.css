@@ -2698,3 +2698,298 @@
   border-color: rgba(217, 70, 239, 0.45) !important;
   transform: none !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   ADMIN STUDENTS FILTER + LIST HEADING + INVITE ICON
+   Paste at VERY BOTTOM of AdminStudentsPage.css
+   ========================================================= */
+
+.student-toolbar {
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  align-items: center !important;
+}
+
+.student-toolbar-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  position: relative !important;
+}
+
+.student-filter-wrap {
+  position: relative !important;
+  flex: 0 0 auto !important;
+}
+
+.student-filter-btn {
+  width: 60px !important;
+  height: 60px !important;
+  min-width: 60px !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 18px !important;
+  background: linear-gradient(145deg, #111633, #080b22) !important;
+  color: rgba(255, 255, 255, 0.72) !important;
+  display: grid !important;
+  place-items: center !important;
+  cursor: pointer !important;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22) !important;
+  transition: 0.25s ease !important;
+}
+
+.student-filter-btn:hover,
+.student-filter-btn--active {
+  color: #ffffff !important;
+  border-color: rgba(217, 70, 239, 0.42) !important;
+  background:
+    radial-gradient(circle at top right, rgba(217, 70, 239, 0.22), transparent 45%),
+    linear-gradient(145deg, #111633, #080b22) !important;
+  transform: translateY(-2px) !important;
+}
+
+.student-filter-icon {
+  width: 28px !important;
+  height: 28px !important;
+  color: currentColor !important;
+}
+
+.student-filter-menu {
+  position: absolute !important;
+  top: calc(100% + 12px) !important;
+  right: 0 !important;
+  width: 215px !important;
+  padding: 8px !important;
+  border-radius: 16px !important;
+  background: #111633 !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 24px 55px rgba(0, 0, 0, 0.45) !important;
+  display: grid !important;
+  gap: 5px !important;
+  z-index: 999 !important;
+}
+
+.student-filter-option {
+  width: 100% !important;
+  min-height: 46px !important;
+  border: none !important;
+  border-radius: 12px !important;
+  background: transparent !important;
+  color: rgba(255, 255, 255, 0.82) !important;
+  font-size: 15px !important;
+  font-weight: 900 !important;
+  text-align: left !important;
+  padding: 10px 12px !important;
+  cursor: pointer !important;
+  display: grid !important;
+  grid-template-columns: 24px 1fr !important;
+  align-items: center !important;
+  gap: 8px !important;
+  transition: 0.22s ease !important;
+}
+
+.student-filter-option:hover {
+  background: rgba(217, 70, 239, 0.16) !important;
+  color: #ffffff !important;
+}
+
+.student-filter-option--active {
+  background: rgba(217, 70, 239, 0.22) !important;
+  color: #ffffff !important;
+}
+
+.student-filter-check {
+  width: 24px !important;
+  height: 24px !important;
+  display: grid !important;
+  place-items: center !important;
+  color: #c084fc !important;
+  font-size: 16px !important;
+  font-weight: 950 !important;
+}
+
+.student-list-heading {
+  margin: -8px 0 22px !important;
+}
+
+.student-list-heading h2 {
+  margin: 0 !important;
+  color: #ffffff !important;
+  font-size: 26px !important;
+  font-weight: 950 !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.3px !important;
+}
+
+/* Invite Student icon: envelope + plus */
+.student-invite-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+}
+
+.student-invite-btn__icon {
+  width: 34px !important;
+  height: 34px !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  flex: 0 0 34px !important;
+  color: #ffffff !important;
+}
+
+.student-invite-btn__mail {
+  width: 33px !important;
+  height: 33px !important;
+  color: #ffffff !important;
+}
+
+.student-invite-btn__text {
+  display: inline !important;
+}
+
+@media (max-width: 720px) {
+  .student-toolbar {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    gap: 10px !important;
+    align-items: center !important;
+    margin-bottom: 20px !important;
+  }
+
+  .student-toolbar-actions {
+    gap: 8px !important;
+  }
+
+  .student-search {
+    min-width: 0 !important;
+    width: 100% !important;
+    height: 48px !important;
+    border-radius: 14px !important;
+    padding: 0 12px !important;
+  }
+
+  .student-search span {
+    font-size: 18px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .student-search input {
+    min-width: 0 !important;
+    font-size: 13px !important;
+  }
+
+  .student-filter-btn {
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    border-radius: 14px !important;
+  }
+
+  .student-filter-icon {
+    width: 23px !important;
+    height: 23px !important;
+  }
+
+  .student-filter-menu {
+    right: -58px !important;
+    width: 205px !important;
+    top: calc(100% + 10px) !important;
+  }
+
+  .student-filter-option {
+    min-height: 44px !important;
+    font-size: 14px !important;
+    border-radius: 11px !important;
+  }
+
+  .student-list-heading {
+    margin: -4px 0 18px !important;
+  }
+
+  .student-list-heading h2 {
+    font-size: 22px !important;
+  }
+
+  .student-invite-btn {
+    width: 50px !important;
+    min-width: 50px !important;
+    max-width: 50px !important;
+    height: 48px !important;
+    min-height: 48px !important;
+    padding: 0 !important;
+    border-radius: 14px !important;
+    display: inline-grid !important;
+    place-items: center !important;
+    font-size: 0 !important;
+    line-height: 1 !important;
+  }
+
+  .student-invite-btn__text {
+    display: none !important;
+  }
+
+  .student-invite-btn__icon {
+    width: 30px !important;
+    height: 30px !important;
+    flex: 0 0 30px !important;
+  }
+
+  .student-invite-btn__mail {
+    width: 29px !important;
+    height: 29px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .student-toolbar {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    gap: 8px !important;
+  }
+
+  .student-toolbar-actions {
+    gap: 7px !important;
+  }
+
+  .student-filter-btn,
+  .student-invite-btn {
+    width: 46px !important;
+    min-width: 46px !important;
+    max-width: 46px !important;
+    height: 46px !important;
+    min-height: 46px !important;
+    border-radius: 13px !important;
+  }
+
+  .student-filter-menu {
+    right: -54px !important;
+    width: 198px !important;
+  }
+}
