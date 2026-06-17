@@ -98,6 +98,35 @@ function isStudentBlocked(student) {
 
 
 
+
+
+
+
+function isTutorActive(tutor) {
+  return (
+    tutor?.isActive === true ||
+    tutor?.isActive === "true" ||
+    tutor?.isActive === 1
+  );
+}
+
+function isTutorBlocked(tutor) {
+  return (
+    tutor?.isBlocked === true ||
+    tutor?.isBlocked === "true" ||
+    tutor?.isBlocked === 1
+  );
+}
+
+
+
+
+
+
+
+
+
+
 // const studentFilterOptions = [
 //   {
 //     key: "all",
@@ -823,20 +852,53 @@ useEffect(() => {
 
 
 
-  const filteredAssignTutors = useMemo(() => {
-    const q = assignSearch.toLowerCase().trim();
+  // const filteredAssignTutors = useMemo(() => {
+  //   const q = assignSearch.toLowerCase().trim();
 
-    if (!q) return tutors;
+  //   if (!q) return tutors;
 
-    return tutors.filter((tutor) => {
-      return (
-        String(tutor.name || "").toLowerCase().includes(q) ||
-        String(tutor.email || "").toLowerCase().includes(q) ||
-        String(tutor.phone || "").toLowerCase().includes(q) ||
-        String(tutor.qualification || "").toLowerCase().includes(q)
-      );
-    });
-  }, [tutors, assignSearch]);
+  //   return tutors.filter((tutor) => {
+  //     return (
+  //       String(tutor.name || "").toLowerCase().includes(q) ||
+  //       String(tutor.email || "").toLowerCase().includes(q) ||
+  //       String(tutor.phone || "").toLowerCase().includes(q) ||
+  //       String(tutor.qualification || "").toLowerCase().includes(q)
+  //     );
+  //   });
+  // }, [tutors, assignSearch]);
+
+
+
+
+
+
+
+const availableAssignTutors = useMemo(() => {
+  return tutors.filter((tutor) => {
+    return isTutorActive(tutor) && !isTutorBlocked(tutor);
+  });
+}, [tutors]);
+
+const filteredAssignTutors = useMemo(() => {
+  const q = assignSearch.toLowerCase().trim();
+
+  if (!q) return availableAssignTutors;
+
+  return availableAssignTutors.filter((tutor) => {
+    return (
+      String(tutor.name || "").toLowerCase().includes(q) ||
+      String(tutor.email || "").toLowerCase().includes(q) ||
+      String(tutor.phone || "").toLowerCase().includes(q) ||
+      String(tutor.qualification || "").toLowerCase().includes(q)
+    );
+  });
+}, [availableAssignTutors, assignSearch]);
+
+
+
+
+
+
 
   async function openAssignTutorModal(student) {
     try {
@@ -851,8 +913,28 @@ useEffect(() => {
         `/admin/student/${getStudentId(student)}/assigned-tutors`
       );
 
-      const ids = (data.tutors || []).map((tutor) => tutor._id);
-      setAssignedTutorIds(ids);
+      // const ids = (data.tutors || []).map((tutor) => tutor._id);
+      // setAssignedTutorIds(ids);
+
+
+
+
+
+const activeTutorIds = tutors
+  .filter((tutor) => isTutorActive(tutor) && !isTutorBlocked(tutor))
+  .map((tutor) => String(tutor._id));
+
+const ids = (data.tutors || [])
+  .map((tutor) => String(tutor._id))
+  .filter((id) => activeTutorIds.includes(id));
+
+setAssignedTutorIds(ids);
+
+
+
+
+
+
     } catch (err) {
       showAlert(getErrorMessage(err, "Failed to load assigned tutors"), "error");
     } finally {
@@ -876,9 +958,31 @@ useEffect(() => {
 
       setSubmitting(true);
 
-      await api.post(`/admin/student/${getStudentId(assignStudent)}/assign-tutors`, {
-        tutorIds: assignedTutorIds,
-      });
+      // await api.post(`/admin/student/${getStudentId(assignStudent)}/assign-tutors`, {
+      //   tutorIds: assignedTutorIds,
+      // });
+
+
+
+
+
+
+const activeTutorIds = tutors
+  .filter((tutor) => isTutorActive(tutor) && !isTutorBlocked(tutor))
+  .map((tutor) => String(tutor._id));
+
+const cleanTutorIds = assignedTutorIds
+  .map(String)
+  .filter((id) => activeTutorIds.includes(id));
+
+await api.post(`/admin/student/${getStudentId(assignStudent)}/assign-tutors`, {
+  tutorIds: cleanTutorIds,
+});
+
+
+
+
+
 
       showAlert("Tutors assigned successfully", "success");
       setAssignOpen(false);
