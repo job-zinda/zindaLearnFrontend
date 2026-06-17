@@ -98,10 +98,30 @@ function isStudentBlocked(student) {
 
 
 
+// const studentFilterOptions = [
+//   {
+//     key: "all",
+//     label: "All Students",
+//   },
+//   {
+//     key: "blocked",
+//     label: "Blocked Students",
+//   },
+// ];
+
+
+
+
+
+
 const studentFilterOptions = [
   {
     key: "all",
     label: "All Students",
+  },
+  {
+    key: "active",
+    label: "Active Students",
   },
   {
     key: "blocked",
@@ -109,14 +129,23 @@ const studentFilterOptions = [
   },
 ];
 
+
+
+
+
+
+// const studentFilterLabels = {
+//   all: "All Students",
+//   blocked: "Blocked Students",
+// };
+
+
+
 const studentFilterLabels = {
   all: "All Students",
+  active: "Active Students",
   blocked: "Blocked Students",
 };
-
-
-
-
 
 
 
@@ -354,11 +383,47 @@ const filterWrapRef = useRef(null);
 
 
 
+// const filteredStudents = useMemo(() => {
+//   let result = students;
+
+//   if (showOnlyNew) {
+//     result = result.filter((student) => isNewStudent(student));
+//   }
+
+//   if (studentFilter === "blocked") {
+//     result = result.filter((student) => isStudentBlocked(student));
+//   }
+
+//   const q = search.toLowerCase().trim();
+
+//   if (!q) return result;
+
+//   return result.filter((student) => {
+//     return (
+//       String(student.name || "").toLowerCase().includes(q) ||
+//       String(student.email || "").toLowerCase().includes(q) ||
+//       String(student.phone || "").toLowerCase().includes(q)
+//     );
+//   });
+// }, [students, search, showOnlyNew, studentFilter]);
+
+
+
+
+
+
+
+
+
 const filteredStudents = useMemo(() => {
   let result = students;
 
   if (showOnlyNew) {
     result = result.filter((student) => isNewStudent(student));
+  }
+
+  if (studentFilter === "active") {
+    result = result.filter((student) => !isStudentBlocked(student));
   }
 
   if (studentFilter === "blocked") {
