@@ -3335,3 +3335,103 @@
     font-size: 11px !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   ASSIGN / ASSIGNED TUTOR SWITCH RIGHT SIDE FIX
+   Paste at VERY BOTTOM of AdminStudentsPage.css
+========================================================= */
+
+.student-dark-modal .assign-tutor-item,
+.student-dark-modal .assign-tutor-item-dark {
+  grid-template-columns: 58px minmax(0, 1fr) 54px !important;
+  align-items: center !important;
+}
+
+/* checkbox/switch right side */
+.student-dark-modal .assign-tutor-item input[type="checkbox"],
+.student-dark-modal .assign-tutor-item-dark input[type="checkbox"] {
+  order: 3 !important;
+  grid-column: 3 !important;
+  justify-self: end !important;
+}
+
+/* avatar left side */
+.student-dark-modal .assign-tutor-avatar {
+  order: 1 !important;
+  grid-column: 1 !important;
+}
+
+/* tutor info middle */
+.student-dark-modal .assign-tutor-info,
+.student-dark-modal .assign-tutor-info-dark {
+  order: 2 !important;
+  grid-column: 2 !important;
+  min-width: 0 !important;
+}
+
+/* assigned date still bottom-right */
+.student-dark-modal .assign-tutor-date {
+  right: 18px !important;
+  bottom: 12px !important;
+  text-align: right !important;
+}
+
+/* assigned tutors modal-il date undenkil extra bottom space */
+.student-dark-modal .assigned-tutor-view-box .assign-tutor-item {
+  padding-bottom: 44px !important;
+}
+
+@media (max-width: 640px) {
+  .student-dark-modal .assign-tutor-item,
+  .student-dark-modal .assign-tutor-item-dark {
+    grid-template-columns: 48px minmax(0, 1fr) 48px !important;
+    gap: 10px !important;
+  }
+
+  .student-dark-modal .assign-tutor-item input[type="checkbox"],
+  .student-dark-modal .assign-tutor-item-dark input[type="checkbox"] {
+    grid-column: 3 !important;
+    justify-self: end !important;
+  }
+
+  .student-dark-modal .assign-tutor-avatar {
+    grid-column: 1 !important;
+  }
+
+  .student-dark-modal .assign-tutor-info,
+  .student-dark-modal .assign-tutor-info-dark {
+    grid-column: 2 !important;
+  }
+
+  .student-dark-modal .assign-tutor-date {
+    right: 12px !important;
+    bottom: 10px !important;
+  }
+}
