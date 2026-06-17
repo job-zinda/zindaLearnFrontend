@@ -442,6 +442,14 @@ const [studentAssignedCounts, setStudentAssignedCounts] = useState({});
 
 
 
+
+
+const [removeAssignedTutorOpen, setRemoveAssignedTutorOpen] = useState(false);
+const [removeAssignedTutorTarget, setRemoveAssignedTutorTarget] = useState(null);
+
+
+
+
   const showOnlyNew =
     new URLSearchParams(location.search).get("filter") === "new";
 
@@ -1534,13 +1542,65 @@ async function openAssignedTutorsModal(student) {
 
 
 
+function askRemoveAssignedTutor(tutor) {
+  setRemoveAssignedTutorTarget(tutor);
+  setRemoveAssignedTutorOpen(true);
+}
+
+
+
+// async function removeAssignedTutorNow(tutorId) {
+//   try {
+//     if (!assignedViewStudent) return;
+
+//     const cleanTutorId = String(tutorId);
+
+//     const remainingTutorIds = assignedTutorIds
+//       .map(String)
+//       .filter((id) => id !== cleanTutorId);
+
+//     setSubmitting(true);
+
+//     await api.post(
+//       `/admin/student/${getStudentId(assignedViewStudent)}/assign-tutors`,
+//       {
+//         tutorIds: remainingTutorIds,
+//       }
+//     );
+
+//     setAssignedTutorIds(remainingTutorIds);
+
+//     setAssignedTutorDates((prev) => {
+//       const next = { ...prev };
+//       delete next[cleanTutorId];
+//       return next;
+//     });
+
+//     setStudentAssignedCounts((prev) => ({
+//       ...prev,
+//       [String(getStudentId(assignedViewStudent))]: remainingTutorIds.length,
+//     }));
+
+//     showAlert("Tutor unassigned successfully", "success");
+
+//     fetchStudents();
+//   } catch (err) {
+//     showAlert(getErrorMessage(err, "Failed to unassign tutor"), "error");
+//   } finally {
+//     setSubmitting(false);
+//   }
+// }
+
+
+
+
 
 
 
 
 async function removeAssignedTutorNow(tutorId) {
   try {
-    if (!assignedViewStudent) return;
+    if (!assignedViewStudent) return false;
 
     const cleanTutorId = String(tutorId);
 
@@ -1570,11 +1630,14 @@ async function removeAssignedTutorNow(tutorId) {
       [String(getStudentId(assignedViewStudent))]: remainingTutorIds.length,
     }));
 
-    showAlert("Tutor unassigned successfully", "success");
+    showAlert("Tutor removed successfully", "success");
 
     fetchStudents();
+
+    return true;
   } catch (err) {
-    showAlert(getErrorMessage(err, "Failed to unassign tutor"), "error");
+    showAlert(getErrorMessage(err, "Failed to remove tutor"), "error");
+    return false;
   } finally {
     setSubmitting(false);
   }
@@ -2757,7 +2820,7 @@ onClick={() => {
               key={tutor._id}
               className="assign-tutor-item assign-tutor-item-dark assign-tutor-item--selected"
             >
-              <input
+              {/* <input
                 type="checkbox"
                 checked={true}
                 disabled={submitting}
@@ -2766,7 +2829,27 @@ onClick={() => {
                     removeAssignedTutorNow(tutor._id);
                   }
                 }}
-              />
+              /> */}
+
+
+
+
+
+<input
+  type="checkbox"
+  checked={true}
+  disabled={submitting}
+  onClick={(e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    askRemoveAssignedTutor(tutor);
+  }}
+  onChange={() => {}}
+/>
+
+
+
+
 
               <div className="assign-tutor-avatar">
                 {photo ? (
@@ -2795,6 +2878,69 @@ onClick={() => {
     )}
   </div>
 </StudentDarkModal>
+
+
+
+
+
+
+
+<StudentDarkModal
+  open={removeAssignedTutorOpen}
+  title="Remove Assigned Tutor"
+  width="560px"
+  onClose={() => {
+    if (submitting) return;
+    setRemoveAssignedTutorOpen(false);
+    setRemoveAssignedTutorTarget(null);
+  }}
+>
+  <div className="student-remove-assigned-confirm">
+    <p>
+      Do you want to remove{" "}
+      <b>{removeAssignedTutorTarget?.name || "this tutor"}</b> from this student?
+    </p>
+
+    <div className="student-remove-assigned-actions">
+      <button
+        type="button"
+        className="secondary-btn"
+        disabled={submitting}
+        onClick={() => {
+          setRemoveAssignedTutorOpen(false);
+          setRemoveAssignedTutorTarget(null);
+        }}
+      >
+        Cancel
+      </button>
+
+      <button
+        type="button"
+        className="danger-btn student-remove-assigned-remove-btn"
+        disabled={submitting}
+        onClick={async () => {
+          if (!removeAssignedTutorTarget) return;
+
+          const removed = await removeAssignedTutorNow(
+            removeAssignedTutorTarget._id
+          );
+
+          if (removed) {
+            setRemoveAssignedTutorOpen(false);
+            setRemoveAssignedTutorTarget(null);
+          }
+        }}
+      >
+        {submitting ? "Removing..." : "Remove"}
+      </button>
+    </div>
+  </div>
+</StudentDarkModal>
+
+
+
+
+
 
 
 

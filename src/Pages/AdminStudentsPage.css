@@ -3435,3 +3435,130 @@
     bottom: 10px !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   REMOVE ASSIGNED TUTOR CONFIRM MODAL
+   Paste at VERY BOTTOM of AdminStudentsPage.css
+========================================================= */
+
+.student-remove-assigned-confirm {
+  display: grid !important;
+  gap: 24px !important;
+}
+
+.student-remove-assigned-confirm p {
+  margin: 0 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-size: 18px !important;
+  font-weight: 850 !important;
+  line-height: 1.55 !important;
+}
+
+.student-remove-assigned-confirm p b {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-weight: 950 !important;
+}
+
+.student-remove-assigned-actions {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 14px !important;
+  align-items: center !important;
+  justify-content: stretch !important;
+}
+
+.student-remove-assigned-actions .secondary-btn,
+.student-remove-assigned-actions .danger-btn {
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 58px !important;
+  min-height: 58px !important;
+  border-radius: 16px !important;
+  font-size: 17px !important;
+  font-weight: 950 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.student-remove-assigned-actions .secondary-btn {
+  grid-column: 1 !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.student-remove-assigned-actions .danger-btn,
+.student-remove-assigned-remove-btn {
+  grid-column: 2 !important;
+  background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  box-shadow: 0 14px 30px rgba(239, 68, 68, 0.24) !important;
+}
+
+.student-remove-assigned-actions button:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+}
+
+/* Mobile-ilum Cancel left, Remove right same row */
+@media (max-width: 640px) {
+  .student-remove-assigned-actions {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+
+  .student-remove-assigned-actions .secondary-btn,
+  .student-remove-assigned-actions .danger-btn {
+    width: 100% !important;
+    height: 46px !important;
+    min-height: 46px !important;
+    font-size: 14px !important;
+    padding: 0 10px !important;
+  }
+
+  .student-remove-assigned-actions .secondary-btn {
+    grid-column: 1 !important;
+  }
+
+  .student-remove-assigned-actions .danger-btn {
+    grid-column: 2 !important;
+  }
+
+  .student-remove-assigned-confirm p {
+    font-size: 15px !important;
+  }
+}
