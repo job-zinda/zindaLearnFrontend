@@ -3155,3 +3155,81 @@
     white-space: normal;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* FINAL FIX: Assigned date bottom right with full date/time */
+
+.student-dark-modal .assign-tutor-item {
+  position: relative !important;
+  grid-template-columns: 54px 58px minmax(0, 1fr) !important;
+  padding-bottom: 44px !important;
+}
+
+.student-dark-modal .assign-tutor-date {
+  position: absolute !important;
+  right: 18px !important;
+  bottom: 14px !important;
+  display: grid !important;
+  gap: 2px !important;
+  text-align: right !important;
+  min-width: max-content !important;
+  margin: 0 !important;
+}
+
+.student-dark-modal .assign-tutor-date span {
+  color: rgba(255, 255, 255, 0.58) !important;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+  line-height: 1.1 !important;
+}
+
+.student-dark-modal .assign-tutor-date b {
+  color: #f0abfc !important;
+  font-size: 12px !important;
+  font-weight: 950 !important;
+  line-height: 1.15 !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 640px) {
+  .student-dark-modal .assign-tutor-item {
+    grid-template-columns: 48px 48px minmax(0, 1fr) !important;
+    padding: 12px 12px 42px !important;
+  }
+
+  .student-dark-modal .assign-tutor-date {
+    right: 12px !important;
+    bottom: 10px !important;
+    text-align: right !important;
+    justify-self: unset !important;
+    grid-column: unset !important;
+    margin: 0 !important;
+  }
+
+  .student-dark-modal .assign-tutor-date b {
+    white-space: nowrap !important;
+    font-size: 11px !important;
+  }
+}

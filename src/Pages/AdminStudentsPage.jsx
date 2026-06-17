@@ -121,23 +121,51 @@ function isTutorBlocked(tutor) {
 
 
 
+// function formatAssignedDate(value) {
+//   if (!value) return "";
+
+//   const date = new Date(value);
+
+//   if (Number.isNaN(date.getTime())) return "";
+
+//   return date
+//     .toLocaleString("en-US", {
+//       month: "short",
+//       day: "2-digit",
+//       hour: "numeric",
+//       minute: "2-digit",
+//       hour12: true,
+//     })
+//     .replace(",", "");
+// }
+
+
+
+
+
+
+
+
+
+
 function formatAssignedDate(value) {
   if (!value) return "";
 
   const date = new Date(value);
-
   if (Number.isNaN(date.getTime())) return "";
 
-  return date
-    .toLocaleString("en-US", {
-      month: "short",
-      day: "2-digit",
-      hour: "numeric",
-      minute: "2-digit",
-      hour12: true,
-    })
-    .replace(",", "");
+  return date.toLocaleString("en-US", {
+    month: "short",
+    day: "2-digit",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
 }
+
+
+
 
 
 
