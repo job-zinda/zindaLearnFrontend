@@ -3703,3 +3703,215 @@
     bottom: 9px !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   FINAL FIX: Assign Tutors / Assigned Tutors eye + switch
+   Eye click only, switch click only
+   Paste at VERY BOTTOM of AdminStudentsPage.css
+========================================================= */
+
+/* Row should not act like a clickable label */
+.student-dark-modal .assign-tutor-item,
+.student-dark-modal .assign-tutor-item-dark {
+  cursor: default !important;
+  display: grid !important;
+  grid-template-columns: 58px minmax(0, 1fr) 34px 54px !important;
+  gap: 14px !important;
+  align-items: center !important;
+  position: relative !important;
+}
+
+/* Remove any old row click feel */
+.student-dark-modal .assign-tutor-item:hover,
+.student-dark-modal .assign-tutor-item-dark:hover {
+  cursor: default !important;
+}
+
+/* Avatar fixed left */
+.student-dark-modal .assign-tutor-avatar {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  justify-self: start !important;
+}
+
+/* Info middle */
+.student-dark-modal .assign-tutor-info,
+.student-dark-modal .assign-tutor-info-dark {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  min-width: 0 !important;
+}
+
+/* Eye icon: desktop/laptop - switch button left side, same row */
+.student-dark-modal .assign-tutor-eye-btn {
+  grid-column: 3 !important;
+  grid-row: 1 !important;
+
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  min-height: 28px !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+
+  border: none !important;
+  outline: none !important;
+  border-radius: 0 !important;
+
+  background: transparent !important;
+  box-shadow: none !important;
+
+  color: rgba(255, 255, 255, 0.9) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.9) !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  justify-self: end !important;
+  align-self: center !important;
+
+  cursor: pointer !important;
+  position: relative !important;
+  z-index: 10 !important;
+
+  transform: none !important;
+}
+
+/* No white/purple circle around eye */
+.student-dark-modal .assign-tutor-eye-btn::before,
+.student-dark-modal .assign-tutor-eye-btn::after {
+  display: none !important;
+  content: none !important;
+}
+
+.student-dark-modal .assign-tutor-eye-btn:hover,
+.student-dark-modal .assign-tutor-eye-btn:focus,
+.student-dark-modal .assign-tutor-eye-btn:active {
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  transform: none !important;
+}
+
+.student-dark-modal .assign-tutor-eye-btn svg {
+  width: 20px !important;
+  height: 20px !important;
+  stroke: currentColor !important;
+  stroke-width: 2.4 !important;
+  pointer-events: none !important;
+}
+
+/* Switch: desktop/laptop - right side same row */
+.student-dark-modal .assign-tutor-item input[type="checkbox"],
+.student-dark-modal .assign-tutor-item-dark input[type="checkbox"] {
+  grid-column: 4 !important;
+  grid-row: 1 !important;
+
+  justify-self: end !important;
+  align-self: center !important;
+
+  cursor: pointer !important;
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+/* Date stays bottom right for assigned tutors */
+.student-dark-modal .assigned-tutor-view-box .assign-tutor-item,
+.student-dark-modal .assigned-tutor-view-box .assign-tutor-item-dark {
+  padding-bottom: 46px !important;
+}
+
+.student-dark-modal .assigned-tutor-view-box .assign-tutor-date {
+  position: absolute !important;
+  right: 18px !important;
+  bottom: 12px !important;
+  text-align: right !important;
+  min-width: max-content !important;
+  z-index: 3 !important;
+}
+
+/* =========================================================
+   Mobile: eye icon above switch button
+========================================================= */
+@media (max-width: 640px) {
+  .student-dark-modal .assign-tutor-item,
+  .student-dark-modal .assign-tutor-item-dark {
+    grid-template-columns: 46px minmax(0, 1fr) 46px !important;
+    grid-template-rows: auto auto !important;
+    gap: 8px 10px !important;
+    padding: 12px !important;
+    align-items: center !important;
+  }
+
+  .student-dark-modal .assign-tutor-avatar {
+    grid-column: 1 !important;
+    grid-row: 1 / span 2 !important;
+    justify-self: start !important;
+    align-self: center !important;
+  }
+
+  .student-dark-modal .assign-tutor-info,
+  .student-dark-modal .assign-tutor-info-dark {
+    grid-column: 2 !important;
+    grid-row: 1 / span 2 !important;
+    min-width: 0 !important;
+  }
+
+  /* Mobile: eye top right */
+  .student-dark-modal .assign-tutor-eye-btn {
+    grid-column: 3 !important;
+    grid-row: 1 !important;
+
+    width: 26px !important;
+    height: 24px !important;
+    min-width: 26px !important;
+    min-height: 24px !important;
+
+    justify-self: center !important;
+    align-self: end !important;
+
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .student-dark-modal .assign-tutor-eye-btn svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  /* Mobile: switch below eye */
+  .student-dark-modal .assign-tutor-item input[type="checkbox"],
+  .student-dark-modal .assign-tutor-item-dark input[type="checkbox"] {
+    grid-column: 3 !important;
+    grid-row: 2 !important;
+
+    justify-self: center !important;
+    align-self: start !important;
+  }
+
+  .student-dark-modal .assigned-tutor-view-box .assign-tutor-item,
+  .student-dark-modal .assigned-tutor-view-box .assign-tutor-item-dark {
+    padding-bottom: 42px !important;
+  }
+
+  .student-dark-modal .assigned-tutor-view-box .assign-tutor-date {
+    right: 12px !important;
+    bottom: 9px !important;
+  }
+}

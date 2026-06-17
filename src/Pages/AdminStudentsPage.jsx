@@ -2748,7 +2748,7 @@ onClose={() => {
 
 
 
-
+{/* 
 
 
 {filteredAssignTutors.map((tutor) => {
@@ -2837,13 +2837,65 @@ onClose={() => {
 
 
   );
+})} */}
+
+
+
+
+
+{filteredAssignTutors.map((tutor) => {
+  const photo = getStudentPhoto(tutor.photo);
+  const checked = newAssignTutorIds.map(String).includes(String(tutor._id));
+
+  return (
+    <div
+      key={tutor._id}
+      className={`assign-tutor-item assign-tutor-item-dark ${
+        checked ? "assign-tutor-item--selected" : ""
+      }`}
+    >
+      <div className="assign-tutor-avatar">
+        {photo ? (
+          <img src={photo} alt={tutor.name || "Tutor"} />
+        ) : (
+          <span>{tutor.name?.charAt(0)?.toUpperCase() || "T"}</span>
+        )}
+      </div>
+
+      <div className="assign-tutor-info assign-tutor-info-dark">
+        <h4>{tutor.name || "Tutor"}</h4>
+        <p>{tutor.qualification || "Qualification not added"}</p>
+        <small>{tutor.email || tutor.phone || "No contact added"}</small>
+      </div>
+
+      <button
+        type="button"
+        className="assign-tutor-eye-btn"
+        title="View tutor details"
+        aria-label="View tutor details"
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          goToTutorDetailsFromStudentModal(tutor, "assign", assignStudent);
+        }}
+      >
+        <FiEye />
+      </button>
+
+      <input
+        type="checkbox"
+        checked={checked}
+        disabled={submitting}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        onChange={(e) => {
+          toggleNewAssignTutor(tutor._id, e.target.checked);
+        }}
+      />
+    </div>
+  );
 })}
-
-
-
-
-
-
 
 
 
@@ -2951,143 +3003,85 @@ onClick={() => {
       </div>
     ) : (
       <div className="assign-tutor-list assign-tutor-list-dark">
-        {filteredAssignedViewTutors.map((tutor) => {
-          const tutorId = String(tutor._id);
-          const photo = tutor.photo ? getMediaUrl(tutor.photo) : "";
-          const assignedDateText = formatAssignedDate(
-            assignedTutorDates[tutorId]
+
+
+
+
+
+
+
+
+
+{filteredAssignedViewTutors.map((tutor) => {
+  const photo = getStudentPhoto(tutor.photo);
+  const assignedDateText = formatAssignedDate(
+    assignedTutorDates[String(tutor._id)]
+  );
+
+  return (
+    <div
+      key={tutor._id}
+      className="assign-tutor-item assign-tutor-item-dark assign-tutor-item--selected"
+    >
+      <div className="assign-tutor-avatar">
+        {photo ? (
+          <img src={photo} alt={tutor.name || "Tutor"} />
+        ) : (
+          <span>{tutor.name?.charAt(0)?.toUpperCase() || "T"}</span>
+        )}
+      </div>
+
+      <div className="assign-tutor-info assign-tutor-info-dark">
+        <h4>{tutor.name || "Tutor"}</h4>
+        <p>{tutor.qualification || "Qualification not added"}</p>
+        <small>{tutor.email || tutor.phone || "No contact added"}</small>
+      </div>
+
+      <button
+        type="button"
+        className="assign-tutor-eye-btn"
+        title="View tutor details"
+        aria-label="View tutor details"
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          goToTutorDetailsFromStudentModal(
+            tutor,
+            "assigned",
+            assignedViewStudent
           );
+        }}
+      >
+        <FiEye />
+      </button>
 
-          return (
-           
-           
-           
-           
-           
-           
-           
-//             <label
-//               key={tutor._id}
-//               className="assign-tutor-item assign-tutor-item-dark assign-tutor-item--selected"
-//             >
-//               {/* <input
-//                 type="checkbox"
-//                 checked={true}
-//                 disabled={submitting}
-//                 onChange={(e) => {
-//                   if (!e.target.checked) {
-//                     removeAssignedTutorNow(tutor._id);
-//                   }
-//                 }}
-//               /> */}
+      <input
+        type="checkbox"
+        checked={true}
+        disabled={submitting}
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          askRemoveAssignedTutor(tutor);
+        }}
+        onChange={() => {}}
+      />
 
-
-
-
-
-// <input
-//   type="checkbox"
-//   checked={true}
-//   disabled={submitting}
-//   onClick={(e) => {
-//     e.preventDefault();
-//     e.stopPropagation();
-//     askRemoveAssignedTutor(tutor);
-//   }}
-//   onChange={() => {}}
-// />
-
-
-
-
-
-//               <div className="assign-tutor-avatar">
-//                 {photo ? (
-//                   <img src={photo} alt={tutor.name || "Tutor"} />
-//                 ) : (
-//                   <span>{tutor.name?.charAt(0)?.toUpperCase() || "T"}</span>
-//                 )}
-//               </div>
-
-//               <div className="assign-tutor-info assign-tutor-info-dark">
-//                 <h4>{tutor.name || "Tutor"}</h4>
-//                 <p>{tutor.qualification || "Qualification not added"}</p>
-//                 <small>{tutor.email || tutor.phone || "No contact added"}</small>
-//               </div>
-
-//               {assignedDateText && (
-//                 <div className="assign-tutor-date">
-//                   <span>Assigned</span>
-//                   <b>{assignedDateText}</b>
-//                 </div>
-//               )}
-//             </label>
-
-
-
-
-<label
-  key={tutor._id}
-  className="assign-tutor-item assign-tutor-item-dark assign-tutor-item--selected"
->
-  <div className="assign-tutor-avatar">
-    {photo ? (
-      <img src={photo} alt={tutor.name || "Tutor"} />
-    ) : (
-      <span>{tutor.name?.charAt(0)?.toUpperCase() || "T"}</span>
-    )}
-  </div>
-
-  <div className="assign-tutor-info assign-tutor-info-dark">
-    <h4>{tutor.name || "Tutor"}</h4>
-    <p>{tutor.qualification || "Qualification not added"}</p>
-    <small>{tutor.email || tutor.phone || "No contact added"}</small>
-  </div>
-
-  <button
-    type="button"
-    className="assign-tutor-eye-btn"
-    title="View tutor details"
-    aria-label="View tutor details"
-    onClick={(e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      goToTutorDetailsFromStudentModal(
-        tutor,
-        "assigned",
-        assignedViewStudent
-      );
-    }}
-  >
-    <FiEye />
-  </button>
-
-  <input
-    type="checkbox"
-    checked={true}
-    disabled={submitting}
-    onClick={(e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      askRemoveAssignedTutor(tutor);
-    }}
-    onChange={() => {}}
-  />
-
-  {assignedDateText && (
-    <div className="assign-tutor-date">
-      <span>Assigned</span>
-      <b>{assignedDateText}</b>
+      {assignedDateText && (
+        <div className="assign-tutor-date">
+          <span>Assigned</span>
+          <b>{assignedDateText}</b>
+        </div>
+      )}
     </div>
-  )}
-</label>
+  );
+})}
 
 
 
 
 
-          );
-        })}
+        
       </div>
     )}
   </div>
