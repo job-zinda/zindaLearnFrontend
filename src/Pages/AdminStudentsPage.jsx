@@ -431,7 +431,14 @@ const filterWrapRef = useRef(null);
   const [assignedTutorDates, setAssignedTutorDates] = useState({});
 
 
+const [newAssignTutorIds, setNewAssignTutorIds] = useState([]);
 
+const [assignedViewOpen, setAssignedViewOpen] = useState(false);
+const [assignedViewStudent, setAssignedViewStudent] = useState(null);
+const [assignedViewSearch, setAssignedViewSearch] = useState("");
+const [assignedViewLoading, setAssignedViewLoading] = useState(false);
+
+const [studentAssignedCounts, setStudentAssignedCounts] = useState({});
 
 
 
@@ -529,18 +536,42 @@ const filteredStudents = useMemo(() => {
 
 
 
-  async function fetchStudents() {
-    try {
-      setLoading(true);
+  // async function fetchStudents() {
+  //   try {
+  //     setLoading(true);
 
-      const { data } = await api.get("/admin/student/all");
-      setStudents(data.students || []);
-    } catch (err) {
-      showAlert(getErrorMessage(err, "Failed to load students"), "error");
-    } finally {
-      setLoading(false);
-    }
+  //     const { data } = await api.get("/admin/student/all");
+  //     setStudents(data.students || []);
+  //   } catch (err) {
+  //     showAlert(getErrorMessage(err, "Failed to load students"), "error");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }
+
+
+
+
+
+
+
+
+
+  async function fetchStudents() {
+  try {
+    setLoading(true);
+
+    const { data } = await api.get("/admin/student/all");
+    const list = data.students || [];
+
+    setStudents(list);
+    refreshStudentAssignedCounts(list);
+  } catch (err) {
+    showAlert(getErrorMessage(err, "Failed to load students"), "error");
+  } finally {
+    setLoading(false);
   }
+}
 
 
 
@@ -816,88 +847,152 @@ useEffect(() => {
 
 
 
-  async function toggleStudentBlock(student) {
+  // async function toggleStudentBlock(student) {
 
-    try {
+  //   try {
 
-      const nextBlocked =
-        !isStudentBlocked(student);
+  //     const nextBlocked =
+  //       !isStudentBlocked(student);
 
-      const { data } = await api.patch(
+  //     const { data } = await api.patch(
 
-        `/admin/student/block/${getStudentId(student)}`,
+  //       `/admin/student/block/${getStudentId(student)}`,
 
-        {
-          isBlocked: nextBlocked
-        }
+  //       {
+  //         isBlocked: nextBlocked
+  //       }
 
-      );
+  //     );
 
-      setStudents(prev =>
+  //     setStudents(prev =>
 
-        prev.map(item =>
+  //       prev.map(item =>
 
-          getStudentId(item) ===
-            getStudentId(student)
+  //         getStudentId(item) ===
+  //           getStudentId(student)
 
-            ?
+  //           ?
 
-            {
-              ...item,
+  //           {
+  //             ...item,
 
-              isBlocked:
-                data?.student?.isBlocked
-                ??
+  //             isBlocked:
+  //               data?.student?.isBlocked
+  //               ??
 
-                nextBlocked
+  //               nextBlocked
 
-            }
+  //           }
 
-            : item
+  //           : item
 
-        )
+  //       )
 
-      )
+  //     )
 
-      setMenuOpenId(null);
+  //     setMenuOpenId(null);
 
-      showAlert(
+  //     showAlert(
 
-        nextBlocked
-          ?
-          "Student blocked"
-          :
-          "Student unblocked",
+  //       nextBlocked
+  //         ?
+  //         "Student blocked"
+  //         :
+  //         "Student unblocked",
 
-        "success"
+  //       "success"
 
-      )
+  //     )
 
-    } catch (err) {
+  //   } catch (err) {
 
-      showAlert(
+  //     showAlert(
 
-        getErrorMessage(
-          err,
-          "Failed blocking student"
-        ),
+  //       getErrorMessage(
+  //         err,
+  //         "Failed blocking student"
+  //       ),
 
-        "error"
+  //       "error"
 
-      )
+  //     )
 
-    }
+  //   }
 
+  // }
+
+
+
+
+
+
+
+
+function getAssignedCount(student) {
+  const studentId = getStudentId(student);
+
+  if (studentId && studentAssignedCounts[String(studentId)] !== undefined) {
+    return Number(studentAssignedCounts[String(studentId)] || 0);
   }
 
+  if (Array.isArray(student?.assignedTutors)) {
+    return student.assignedTutors.length;
+  }
 
+  if (Array.isArray(student?.tutors)) {
+    return student.tutors.length;
+  }
 
+  if (student?.assignedTutorsCount !== undefined) {
+    return Number(student.assignedTutorsCount || 0);
+  }
 
+  if (student?.assignedTutorCount !== undefined) {
+    return Number(student.assignedTutorCount || 0);
+  }
 
+  return 0;
+}
 
+async function refreshStudentAssignedCounts(studentList = students) {
+  try {
+    const entries = await Promise.all(
+      (studentList || []).map(async (student) => {
+        const studentId = getStudentId(student);
 
+        if (!studentId) {
+          return null;
+        }
 
+        try {
+          const { data } = await api.get(
+            `/admin/student/${studentId}/assigned-tutors`
+          );
 
+          const count = (data.tutors || []).filter((tutor) => {
+            return isTutorActive(tutor) && !isTutorBlocked(tutor);
+          }).length;
+
+          return [String(studentId), count];
+        } catch {
+          return [String(studentId), 0];
+        }
+      })
+    );
+
+    const nextCounts = {};
+
+    entries.forEach((entry) => {
+      if (entry) {
+        nextCounts[entry[0]] = entry[1];
+      }
+    });
+
+    setStudentAssignedCounts(nextCounts);
+  } catch {
+    // count load fail aayal page break aavaruth
+  }
+}
 
 
 
@@ -923,18 +1018,57 @@ useEffect(() => {
 
 
 
+// const availableAssignTutors = useMemo(() => {
+//   return tutors.filter((tutor) => {
+//     return isTutorActive(tutor) && !isTutorBlocked(tutor);
+//   });
+// }, [tutors]);
+
+// const filteredAssignTutors = useMemo(() => {
+//   const q = assignSearch.toLowerCase().trim();
+
+//   if (!q) return availableAssignTutors;
+
+//   return availableAssignTutors.filter((tutor) => {
+//     return (
+//       String(tutor.name || "").toLowerCase().includes(q) ||
+//       String(tutor.email || "").toLowerCase().includes(q) ||
+//       String(tutor.phone || "").toLowerCase().includes(q) ||
+//       String(tutor.qualification || "").toLowerCase().includes(q)
+//     );
+//   });
+// }, [availableAssignTutors, assignSearch]);
+
+
+
+
+
+
+
+
+
 const availableAssignTutors = useMemo(() => {
   return tutors.filter((tutor) => {
     return isTutorActive(tutor) && !isTutorBlocked(tutor);
   });
 }, [tutors]);
 
+const unassignedAssignTutors = useMemo(() => {
+  const alreadyAssigned = assignedTutorIds.map(String);
+
+  return availableAssignTutors.filter((tutor) => {
+    return !alreadyAssigned.includes(String(tutor._id));
+  });
+}, [availableAssignTutors, assignedTutorIds]);
+
 const filteredAssignTutors = useMemo(() => {
   const q = assignSearch.toLowerCase().trim();
 
-  if (!q) return availableAssignTutors;
+  const source = unassignedAssignTutors;
 
-  return availableAssignTutors.filter((tutor) => {
+  if (!q) return source;
+
+  return source.filter((tutor) => {
     return (
       String(tutor.name || "").toLowerCase().includes(q) ||
       String(tutor.email || "").toLowerCase().includes(q) ||
@@ -942,7 +1076,34 @@ const filteredAssignTutors = useMemo(() => {
       String(tutor.qualification || "").toLowerCase().includes(q)
     );
   });
-}, [availableAssignTutors, assignSearch]);
+}, [unassignedAssignTutors, assignSearch]);
+
+const assignedViewTutors = useMemo(() => {
+  const alreadyAssigned = assignedTutorIds.map(String);
+
+  return availableAssignTutors.filter((tutor) => {
+    return alreadyAssigned.includes(String(tutor._id));
+  });
+}, [availableAssignTutors, assignedTutorIds]);
+
+const filteredAssignedViewTutors = useMemo(() => {
+  const q = assignedViewSearch.toLowerCase().trim();
+
+  if (!q) return assignedViewTutors;
+
+  return assignedViewTutors.filter((tutor) => {
+    return (
+      String(tutor.name || "").toLowerCase().includes(q) ||
+      String(tutor.email || "").toLowerCase().includes(q) ||
+      String(tutor.phone || "").toLowerCase().includes(q) ||
+      String(tutor.qualification || "").toLowerCase().includes(q)
+    );
+  });
+}, [assignedViewTutors, assignedViewSearch]);
+
+
+
+
 
 
 
@@ -1063,10 +1224,70 @@ const filteredAssignTutors = useMemo(() => {
 
 
 
+// async function openAssignTutorModal(student) {
+//   try {
+//     setAssignStudent(student);
+//     setAssignedTutorIds([]);
+//     setAssignedTutorDates({});
+//     setAssignSearch("");
+//     setAssignOpen(true);
+//     setMenuOpenId(null);
+//     setAssignLoading(true);
+
+//     const [assignedResponse, tutorsResponse] = await Promise.all([
+//       api.get(`/admin/student/${getStudentId(student)}/assigned-tutors`),
+//       tutors.length
+//         ? Promise.resolve({ data: { tuters: tutors } })
+//         : api.get("/admin/tuter/all"),
+//     ]);
+
+//     const allTutors = tutorsResponse.data.tuters || [];
+
+//     if (!tutors.length) {
+//       setTutors(allTutors);
+//     }
+
+//     const activeTutorIds = allTutors
+//       .filter((tutor) => isTutorActive(tutor) && !isTutorBlocked(tutor))
+//       .map((tutor) => String(tutor._id));
+
+//     const assignedTutors = assignedResponse.data.tutors || [];
+
+//     const ids = assignedTutors
+//       .map((tutor) => String(tutor._id))
+//       .filter((id) => activeTutorIds.includes(id));
+
+//     const dateMap = {};
+
+//     assignedTutors.forEach((tutor) => {
+//       const id = String(tutor._id);
+
+//       if (activeTutorIds.includes(id)) {
+//         dateMap[id] = tutor.assignedAt || tutor.createdAt || null;
+//       }
+//     });
+
+//     setAssignedTutorIds(ids);
+//     setAssignedTutorDates(dateMap);
+//   } catch (err) {
+//     showAlert(getErrorMessage(err, "Failed to load assigned tutors"), "error");
+//   } finally {
+//     setAssignLoading(false);
+//   }
+// }
+
+
+
+
+
+
+
+
 async function openAssignTutorModal(student) {
   try {
     setAssignStudent(student);
     setAssignedTutorIds([]);
+    setNewAssignTutorIds([]);
     setAssignedTutorDates({});
     setAssignSearch("");
     setAssignOpen(true);
@@ -1114,6 +1335,7 @@ async function openAssignTutorModal(student) {
     setAssignLoading(false);
   }
 }
+
 
 
 
@@ -1184,6 +1406,138 @@ function toggleAssignedTutor(tutorId, checked) {
     });
   }
 }
+
+
+
+
+
+
+
+
+
+function toggleNewAssignTutor(tutorId, checked) {
+  const cleanTutorId = String(tutorId);
+
+  setNewAssignTutorIds((prev) => {
+    const currentIds = prev.map(String);
+
+    if (checked) {
+      return Array.from(new Set([...currentIds, cleanTutorId]));
+    }
+
+    return currentIds.filter((id) => id !== cleanTutorId);
+  });
+}
+
+
+
+
+
+
+
+
+async function openAssignedTutorsModal(student) {
+  try {
+    setAssignedViewStudent(student);
+    setAssignedTutorIds([]);
+    setAssignedTutorDates({});
+    setAssignedViewSearch("");
+    setAssignedViewOpen(true);
+    setMenuOpenId(null);
+    setAssignedViewLoading(true);
+
+    const [assignedResponse, tutorsResponse] = await Promise.all([
+      api.get(`/admin/student/${getStudentId(student)}/assigned-tutors`),
+      tutors.length
+        ? Promise.resolve({ data: { tuters: tutors } })
+        : api.get("/admin/tuter/all"),
+    ]);
+
+    const allTutors = tutorsResponse.data.tuters || [];
+
+    if (!tutors.length) {
+      setTutors(allTutors);
+    }
+
+    const activeTutorIds = allTutors
+      .filter((tutor) => isTutorActive(tutor) && !isTutorBlocked(tutor))
+      .map((tutor) => String(tutor._id));
+
+    const assignedTutors = assignedResponse.data.tutors || [];
+
+    const ids = assignedTutors
+      .map((tutor) => String(tutor._id))
+      .filter((id) => activeTutorIds.includes(id));
+
+    const dateMap = {};
+
+    assignedTutors.forEach((tutor) => {
+      const id = String(tutor._id);
+
+      if (activeTutorIds.includes(id)) {
+        dateMap[id] = tutor.assignedAt || tutor.createdAt || null;
+      }
+    });
+
+    setAssignedTutorIds(ids);
+    setAssignedTutorDates(dateMap);
+  } catch (err) {
+    showAlert(getErrorMessage(err, "Failed to load assigned tutors"), "error");
+  } finally {
+    setAssignedViewLoading(false);
+  }
+}
+
+
+
+
+
+
+
+
+async function removeAssignedTutorNow(tutorId) {
+  try {
+    if (!assignedViewStudent) return;
+
+    const cleanTutorId = String(tutorId);
+
+    const remainingTutorIds = assignedTutorIds
+      .map(String)
+      .filter((id) => id !== cleanTutorId);
+
+    setSubmitting(true);
+
+    await api.post(
+      `/admin/student/${getStudentId(assignedViewStudent)}/assign-tutors`,
+      {
+        tutorIds: remainingTutorIds,
+      }
+    );
+
+    setAssignedTutorIds(remainingTutorIds);
+
+    setAssignedTutorDates((prev) => {
+      const next = { ...prev };
+      delete next[cleanTutorId];
+      return next;
+    });
+
+    setStudentAssignedCounts((prev) => ({
+      ...prev,
+      [String(getStudentId(assignedViewStudent))]: remainingTutorIds.length,
+    }));
+
+    showAlert("Tutor unassigned successfully", "success");
+
+    fetchStudents();
+  } catch (err) {
+    showAlert(getErrorMessage(err, "Failed to unassign tutor"), "error");
+  } finally {
+    setSubmitting(false);
+  }
+}
+
+
 
 
 
@@ -1276,6 +1630,48 @@ function toggleAssignedTutor(tutorId, checked) {
 
 
 
+// async function saveAssignedTutors() {
+//   try {
+//     if (!assignStudent) return;
+
+//     setSubmitting(true);
+
+//     const activeTutorIds = tutors
+//       .filter((tutor) => isTutorActive(tutor) && !isTutorBlocked(tutor))
+//       .map((tutor) => String(tutor._id));
+
+//     const cleanTutorIds = assignedTutorIds
+//       .map(String)
+//       .filter((id) => activeTutorIds.includes(id));
+
+//     await api.post(`/admin/student/${getStudentId(assignStudent)}/assign-tutors`, {
+//       tutorIds: cleanTutorIds,
+//     });
+
+//     showAlert("Tutors assigned successfully", "success");
+
+//     setAssignOpen(false);
+//     setAssignStudent(null);
+//     setAssignedTutorIds([]);
+//     setAssignedTutorDates({});
+
+//     fetchStudents();
+//     fetchTutors();
+//   } catch (err) {
+//     showAlert(getErrorMessage(err, "Failed to assign tutors"), "error");
+//   } finally {
+//     setSubmitting(false);
+//   }
+// }
+
+
+
+
+
+
+
+
+
 async function saveAssignedTutors() {
   try {
     if (!assignStudent) return;
@@ -1286,19 +1682,28 @@ async function saveAssignedTutors() {
       .filter((tutor) => isTutorActive(tutor) && !isTutorBlocked(tutor))
       .map((tutor) => String(tutor._id));
 
-    const cleanTutorIds = assignedTutorIds
-      .map(String)
-      .filter((id) => activeTutorIds.includes(id));
+    const finalTutorIds = Array.from(
+      new Set([
+        ...assignedTutorIds.map(String),
+        ...newAssignTutorIds.map(String),
+      ])
+    ).filter((id) => activeTutorIds.includes(id));
 
     await api.post(`/admin/student/${getStudentId(assignStudent)}/assign-tutors`, {
-      tutorIds: cleanTutorIds,
+      tutorIds: finalTutorIds,
     });
 
     showAlert("Tutors assigned successfully", "success");
 
+    setStudentAssignedCounts((prev) => ({
+      ...prev,
+      [String(getStudentId(assignStudent))]: finalTutorIds.length,
+    }));
+
     setAssignOpen(false);
     setAssignStudent(null);
     setAssignedTutorIds([]);
+    setNewAssignTutorIds([]);
     setAssignedTutorDates({});
 
     fetchStudents();
@@ -1309,6 +1714,7 @@ async function saveAssignedTutors() {
     setSubmitting(false);
   }
 }
+
 
 
 
@@ -1589,6 +1995,26 @@ ${isStudentBlocked(student)
                       >
                         ✎ Edit
                       </button>
+
+
+
+
+
+
+<button
+  type="button"
+  className={getAssignedCount(student) === 0 ? "student-menu-disabled-btn" : ""}
+  disabled={getAssignedCount(student) === 0}
+  onClick={() => {
+    if (getAssignedCount(student) === 0) return;
+    openAssignedTutorsModal(student);
+  }}
+>
+  👨‍🏫 Assigned Tutors
+</button>
+
+
+
 
 
                       <button
@@ -1926,11 +2352,26 @@ ${isStudentBlocked(student)
         open={assignOpen}
         title={`Assign Tutors${assignStudent?.name ? ` - ${assignStudent.name}` : ""}`}
         width="760px"
-        onClose={() => {
-          setAssignOpen(false);
-          setAssignStudent(null);
-          setAssignedTutorIds([]);
-        }}
+        // onClose={() => {
+        //   setAssignOpen(false);
+        //   setAssignStudent(null);
+        //   setAssignedTutorIds([]);
+        // }}
+
+
+
+
+onClose={() => {
+  setAssignOpen(false);
+  setAssignStudent(null);
+  setAssignedTutorIds([]);
+  setNewAssignTutorIds([]);
+  setAssignedTutorDates({});
+}}
+
+
+
+
       >
         <div className="assign-tutor-box assign-tutor-box-dark">
           <div className="assign-tutor-search assign-tutor-search-dark">
@@ -1947,9 +2388,19 @@ ${isStudentBlocked(student)
               Loading tutors...
             </div>
           ) : filteredAssignTutors.length === 0 ? (
-            <div className="assign-tutor-state assign-tutor-state-dark">
-              No tutors found
-            </div>
+            // <div className="assign-tutor-state assign-tutor-state-dark">
+            //   No tutors found
+            // </div>
+
+
+
+<div className="assign-tutor-state assign-tutor-state-dark">
+  No tutors found
+</div>
+
+
+
+
           ) : (
             <div className="assign-tutor-list assign-tutor-list-dark">
               {/* {filteredAssignTutors.map((tutor) => {
@@ -2050,7 +2501,7 @@ ${isStudentBlocked(student)
 
 
 
-{filteredAssignTutors.map((tutor) => {
+{/* {filteredAssignTutors.map((tutor) => {
   const tutorId = String(tutor._id);
   const checked = assignedTutorIds.map(String).includes(tutorId);
   const photo = tutor.photo ? getMediaUrl(tutor.photo) : "";
@@ -2094,7 +2545,54 @@ ${isStudentBlocked(student)
       )}
     </label>
   );
+})} */}
+
+
+
+
+
+
+
+
+
+{filteredAssignTutors.map((tutor) => {
+  const tutorId = String(tutor._id);
+  const checked = newAssignTutorIds.map(String).includes(tutorId);
+  const photo = tutor.photo ? getMediaUrl(tutor.photo) : "";
+
+  return (
+    <label
+      key={tutor._id}
+      className={`assign-tutor-item assign-tutor-item-dark ${
+        checked ? "assign-tutor-item--selected" : ""
+      }`}
+    >
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={(e) => toggleNewAssignTutor(tutor._id, e.target.checked)}
+      />
+
+      <div className="assign-tutor-avatar">
+        {photo ? (
+          <img src={photo} alt={tutor.name || "Tutor"} />
+        ) : (
+          <span>{tutor.name?.charAt(0)?.toUpperCase() || "T"}</span>
+        )}
+      </div>
+
+      <div className="assign-tutor-info assign-tutor-info-dark">
+        <h4>{tutor.name || "Tutor"}</h4>
+        <p>{tutor.qualification || "Qualification not added"}</p>
+        <small>{tutor.email || tutor.phone || "No contact added"}</small>
+      </div>
+    </label>
+  );
 })}
+
+
+
+
 
 
 
@@ -2128,12 +2626,25 @@ ${isStudentBlocked(student)
 <button
   type="button"
   className="secondary-btn"
-  onClick={() => {
-    setAssignOpen(false);
-    setAssignStudent(null);
-    setAssignedTutorIds([]);
-    setAssignedTutorDates({});
-  }}
+  // onClick={() => {
+  //   setAssignOpen(false);
+  //   setAssignStudent(null);
+  //   setAssignedTutorIds([]);
+  //   setAssignedTutorDates({});
+  // }}
+
+
+onClick={() => {
+  setAssignOpen(false);
+  setAssignStudent(null);
+  setAssignedTutorIds([]);
+  setNewAssignTutorIds([]);
+  setAssignedTutorDates({});
+}}
+
+
+
+
   disabled={submitting}
 >
   Cancel
@@ -2156,7 +2667,91 @@ ${isStudentBlocked(student)
 
 
 
+<StudentDarkModal
+  open={assignedViewOpen}
+  title={`Assigned Tutors${
+    assignedViewStudent?.name ? ` - ${assignedViewStudent.name}` : ""
+  }`}
+  width="760px"
+  onClose={() => {
+    setAssignedViewOpen(false);
+    setAssignedViewStudent(null);
+    setAssignedTutorIds([]);
+    setAssignedTutorDates({});
+    setAssignedViewSearch("");
+  }}
+>
+  <div className="assign-tutor-box assign-tutor-box-dark assigned-tutor-view-box">
+    <div className="assign-tutor-search assign-tutor-search-dark">
+      <span>⌕</span>
 
+      <input
+        value={assignedViewSearch}
+        onChange={(e) => setAssignedViewSearch(e.target.value)}
+        placeholder="Search assigned tutors..."
+      />
+    </div>
+
+    {assignedViewLoading ? (
+      <div className="assign-tutor-state assign-tutor-state-dark">
+        Loading assigned tutors...
+      </div>
+    ) : filteredAssignedViewTutors.length === 0 ? (
+      <div className="assign-tutor-state assign-tutor-state-dark">
+        No assigned tutors found
+      </div>
+    ) : (
+      <div className="assign-tutor-list assign-tutor-list-dark">
+        {filteredAssignedViewTutors.map((tutor) => {
+          const tutorId = String(tutor._id);
+          const photo = tutor.photo ? getMediaUrl(tutor.photo) : "";
+          const assignedDateText = formatAssignedDate(
+            assignedTutorDates[tutorId]
+          );
+
+          return (
+            <label
+              key={tutor._id}
+              className="assign-tutor-item assign-tutor-item-dark assign-tutor-item--selected"
+            >
+              <input
+                type="checkbox"
+                checked={true}
+                disabled={submitting}
+                onChange={(e) => {
+                  if (!e.target.checked) {
+                    removeAssignedTutorNow(tutor._id);
+                  }
+                }}
+              />
+
+              <div className="assign-tutor-avatar">
+                {photo ? (
+                  <img src={photo} alt={tutor.name || "Tutor"} />
+                ) : (
+                  <span>{tutor.name?.charAt(0)?.toUpperCase() || "T"}</span>
+                )}
+              </div>
+
+              <div className="assign-tutor-info assign-tutor-info-dark">
+                <h4>{tutor.name || "Tutor"}</h4>
+                <p>{tutor.qualification || "Qualification not added"}</p>
+                <small>{tutor.email || tutor.phone || "No contact added"}</small>
+              </div>
+
+              {assignedDateText && (
+                <div className="assign-tutor-date">
+                  <span>Assigned</span>
+                  <b>{assignedDateText}</b>
+                </div>
+              )}
+            </label>
+          );
+        })}
+      </div>
+    )}
+  </div>
+</StudentDarkModal>
 
 
 

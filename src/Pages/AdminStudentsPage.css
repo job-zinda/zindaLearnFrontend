@@ -3233,3 +3233,105 @@
     font-size: 11px !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   ASSIGNED TUTORS MENU + MODAL FINAL FIX
+   Paste at VERY BOTTOM of AdminStudentsPage.css
+========================================================= */
+
+.student-menu-disabled-btn,
+.student-menu button:disabled {
+  opacity: 0.45 !important;
+  cursor: not-allowed !important;
+  pointer-events: auto !important;
+}
+
+.student-menu-disabled-btn:hover,
+.student-menu button:disabled:hover {
+  background: transparent !important;
+  color: rgba(255, 255, 255, 0.82) !important;
+}
+
+/* Assign Tutors modal-il unassigned tutors mathram; assigned date venda */
+.student-dark-modal .assigned-tutor-view-box .assign-tutor-item {
+  position: relative !important;
+  padding-bottom: 44px !important;
+}
+
+/* Assigned Tutors modal date bottom right */
+.student-dark-modal .assigned-tutor-view-box .assign-tutor-date {
+  position: absolute !important;
+  right: 18px !important;
+  bottom: 14px !important;
+  display: grid !important;
+  gap: 2px !important;
+  text-align: right !important;
+  min-width: max-content !important;
+  margin: 0 !important;
+}
+
+.student-dark-modal .assigned-tutor-view-box .assign-tutor-date span {
+  color: rgba(255, 255, 255, 0.58) !important;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+  line-height: 1.1 !important;
+}
+
+.student-dark-modal .assigned-tutor-view-box .assign-tutor-date b {
+  color: #f0abfc !important;
+  font-size: 12px !important;
+  font-weight: 950 !important;
+  line-height: 1.15 !important;
+  white-space: nowrap !important;
+}
+
+/* Assigned tutors modal-il save/cancel area illa */
+.student-dark-modal .assigned-tutor-view-box {
+  padding-bottom: 0 !important;
+}
+
+@media (max-width: 640px) {
+  .student-dark-modal .assigned-tutor-view-box .assign-tutor-item {
+    grid-template-columns: 48px 48px minmax(0, 1fr) !important;
+    padding: 12px 12px 42px !important;
+  }
+
+  .student-dark-modal .assigned-tutor-view-box .assign-tutor-date {
+    right: 12px !important;
+    bottom: 10px !important;
+    text-align: right !important;
+    justify-self: unset !important;
+    grid-column: unset !important;
+    margin: 0 !important;
+  }
+
+  .student-dark-modal .assigned-tutor-view-box .assign-tutor-date b {
+    white-space: nowrap !important;
+    font-size: 11px !important;
+  }
+}
