@@ -7,7 +7,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-
+import { FiEye } from "react-icons/fi";
 
 
 import { useLocation, useNavigate } from "react-router-dom";
@@ -379,6 +379,13 @@ export default function AdminStudentsPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const firstNewCardRef = useRef(null);
+
+
+
+const tutorModalRestoreDoneRef = useRef(false);
+
+
+
 
   const [students, setStudents] = useState([]);
   const [search, setSearch] = useState("");
@@ -1334,6 +1341,42 @@ const filteredAssignedViewTutors = useMemo(() => {
 
 
 
+function goToTutorDetailsFromStudentModal(tutor, modalType, student) {
+  if (!tutor?._id || !student) {
+    showAlert("Tutor or student not found", "error");
+    return;
+  }
+
+  const restoreData = {
+    studentId: String(getStudentId(student)),
+    modalType, // "assign" or "assigned"
+  };
+
+  sessionStorage.setItem(
+    "adminStudentTutorModalRestore",
+    JSON.stringify(restoreData)
+  );
+
+  const backData = {
+    backTo: "/admin/students",
+    backButtonLabel: "Tutors",
+    backLabel: "View details",
+  };
+
+  sessionStorage.setItem("adminTutorBackData", JSON.stringify(backData));
+
+  navigate(`/admin/tutors/${tutor._id}`, {
+    state: backData,
+  });
+}
+
+
+
+
+
+
+
+
 async function openAssignTutorModal(student) {
   try {
     setAssignStudent(student);
@@ -1538,6 +1581,53 @@ async function openAssignedTutorsModal(student) {
     setAssignedViewLoading(false);
   }
 }
+
+
+
+
+
+
+
+
+
+useEffect(() => {
+  if (tutorModalRestoreDoneRef.current) return;
+  if (loading) return;
+  if (!students.length) return;
+
+  const rawRestoreData = sessionStorage.getItem(
+    "adminStudentTutorModalRestore"
+  );
+
+  if (!rawRestoreData) return;
+
+  let restoreData = null;
+
+  try {
+    restoreData = JSON.parse(rawRestoreData);
+  } catch {
+    sessionStorage.removeItem("adminStudentTutorModalRestore");
+    return;
+  }
+
+  const restoreStudent = students.find(
+    (student) => String(getStudentId(student)) === String(restoreData?.studentId)
+  );
+
+  if (!restoreStudent) return;
+
+  tutorModalRestoreDoneRef.current = true;
+  sessionStorage.removeItem("adminStudentTutorModalRestore");
+
+  if (restoreData?.modalType === "assigned") {
+    openAssignedTutorsModal(restoreStudent);
+    return;
+  }
+
+  openAssignTutorModal(restoreStudent);
+}, [loading, students.length]);
+
+
 
 
 
@@ -2667,32 +2757,85 @@ onClose={() => {
   const photo = tutor.photo ? getMediaUrl(tutor.photo) : "";
 
   return (
-    <label
-      key={tutor._id}
-      className={`assign-tutor-item assign-tutor-item-dark ${
-        checked ? "assign-tutor-item--selected" : ""
-      }`}
-    >
-      <input
-        type="checkbox"
-        checked={checked}
-        onChange={(e) => toggleNewAssignTutor(tutor._id, e.target.checked)}
-      />
+    // <label
+    //   key={tutor._id}
+    //   className={`assign-tutor-item assign-tutor-item-dark ${
+    //     checked ? "assign-tutor-item--selected" : ""
+    //   }`}
+    // >
+    //   <input
+    //     type="checkbox"
+    //     checked={checked}
+    //     onChange={(e) => toggleNewAssignTutor(tutor._id, e.target.checked)}
+    //   />
 
-      <div className="assign-tutor-avatar">
-        {photo ? (
-          <img src={photo} alt={tutor.name || "Tutor"} />
-        ) : (
-          <span>{tutor.name?.charAt(0)?.toUpperCase() || "T"}</span>
-        )}
-      </div>
+    //   <div className="assign-tutor-avatar">
+    //     {photo ? (
+    //       <img src={photo} alt={tutor.name || "Tutor"} />
+    //     ) : (
+    //       <span>{tutor.name?.charAt(0)?.toUpperCase() || "T"}</span>
+    //     )}
+    //   </div>
 
-      <div className="assign-tutor-info assign-tutor-info-dark">
-        <h4>{tutor.name || "Tutor"}</h4>
-        <p>{tutor.qualification || "Qualification not added"}</p>
-        <small>{tutor.email || tutor.phone || "No contact added"}</small>
-      </div>
-    </label>
+    //   <div className="assign-tutor-info assign-tutor-info-dark">
+    //     <h4>{tutor.name || "Tutor"}</h4>
+    //     <p>{tutor.qualification || "Qualification not added"}</p>
+    //     <small>{tutor.email || tutor.phone || "No contact added"}</small>
+    //   </div>
+    // </label>
+
+
+
+
+<label
+  key={tutor._id}
+  className={`assign-tutor-item assign-tutor-item-dark ${
+    newAssignTutorIds.map(String).includes(String(tutor._id))
+      ? "assign-tutor-item--selected"
+      : ""
+  }`}
+>
+  <div className="assign-tutor-avatar">
+    {photo ? (
+      <img src={photo} alt={tutor.name || "Tutor"} />
+    ) : (
+      <span>{tutor.name?.charAt(0)?.toUpperCase() || "T"}</span>
+    )}
+  </div>
+
+  <div className="assign-tutor-info assign-tutor-info-dark">
+    <h4>{tutor.name || "Tutor"}</h4>
+    <p>{tutor.qualification || "Qualification not added"}</p>
+    <small>{tutor.email || tutor.phone || "No contact added"}</small>
+  </div>
+
+  <button
+    type="button"
+    className="assign-tutor-eye-btn"
+    title="View tutor details"
+    aria-label="View tutor details"
+    onClick={(e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      goToTutorDetailsFromStudentModal(tutor, "assign", assignStudent);
+    }}
+  >
+    <FiEye />
+  </button>
+
+  <input
+    type="checkbox"
+    checked={newAssignTutorIds.map(String).includes(String(tutor._id))}
+    disabled={submitting}
+    onChange={(e) => {
+      toggleNewAssignTutor(tutor._id, e.target.checked);
+    }}
+  />
+</label>
+
+
+
+
   );
 })}
 
@@ -2816,62 +2959,133 @@ onClick={() => {
           );
 
           return (
-            <label
-              key={tutor._id}
-              className="assign-tutor-item assign-tutor-item-dark assign-tutor-item--selected"
-            >
-              {/* <input
-                type="checkbox"
-                checked={true}
-                disabled={submitting}
-                onChange={(e) => {
-                  if (!e.target.checked) {
-                    removeAssignedTutorNow(tutor._id);
-                  }
-                }}
-              /> */}
+           
+           
+           
+           
+           
+           
+           
+//             <label
+//               key={tutor._id}
+//               className="assign-tutor-item assign-tutor-item-dark assign-tutor-item--selected"
+//             >
+//               {/* <input
+//                 type="checkbox"
+//                 checked={true}
+//                 disabled={submitting}
+//                 onChange={(e) => {
+//                   if (!e.target.checked) {
+//                     removeAssignedTutorNow(tutor._id);
+//                   }
+//                 }}
+//               /> */}
 
 
 
 
 
-<input
-  type="checkbox"
-  checked={true}
-  disabled={submitting}
-  onClick={(e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    askRemoveAssignedTutor(tutor);
-  }}
-  onChange={() => {}}
-/>
+// <input
+//   type="checkbox"
+//   checked={true}
+//   disabled={submitting}
+//   onClick={(e) => {
+//     e.preventDefault();
+//     e.stopPropagation();
+//     askRemoveAssignedTutor(tutor);
+//   }}
+//   onChange={() => {}}
+// />
 
 
 
 
 
-              <div className="assign-tutor-avatar">
-                {photo ? (
-                  <img src={photo} alt={tutor.name || "Tutor"} />
-                ) : (
-                  <span>{tutor.name?.charAt(0)?.toUpperCase() || "T"}</span>
-                )}
-              </div>
+//               <div className="assign-tutor-avatar">
+//                 {photo ? (
+//                   <img src={photo} alt={tutor.name || "Tutor"} />
+//                 ) : (
+//                   <span>{tutor.name?.charAt(0)?.toUpperCase() || "T"}</span>
+//                 )}
+//               </div>
 
-              <div className="assign-tutor-info assign-tutor-info-dark">
-                <h4>{tutor.name || "Tutor"}</h4>
-                <p>{tutor.qualification || "Qualification not added"}</p>
-                <small>{tutor.email || tutor.phone || "No contact added"}</small>
-              </div>
+//               <div className="assign-tutor-info assign-tutor-info-dark">
+//                 <h4>{tutor.name || "Tutor"}</h4>
+//                 <p>{tutor.qualification || "Qualification not added"}</p>
+//                 <small>{tutor.email || tutor.phone || "No contact added"}</small>
+//               </div>
 
-              {assignedDateText && (
-                <div className="assign-tutor-date">
-                  <span>Assigned</span>
-                  <b>{assignedDateText}</b>
-                </div>
-              )}
-            </label>
+//               {assignedDateText && (
+//                 <div className="assign-tutor-date">
+//                   <span>Assigned</span>
+//                   <b>{assignedDateText}</b>
+//                 </div>
+//               )}
+//             </label>
+
+
+
+
+<label
+  key={tutor._id}
+  className="assign-tutor-item assign-tutor-item-dark assign-tutor-item--selected"
+>
+  <div className="assign-tutor-avatar">
+    {photo ? (
+      <img src={photo} alt={tutor.name || "Tutor"} />
+    ) : (
+      <span>{tutor.name?.charAt(0)?.toUpperCase() || "T"}</span>
+    )}
+  </div>
+
+  <div className="assign-tutor-info assign-tutor-info-dark">
+    <h4>{tutor.name || "Tutor"}</h4>
+    <p>{tutor.qualification || "Qualification not added"}</p>
+    <small>{tutor.email || tutor.phone || "No contact added"}</small>
+  </div>
+
+  <button
+    type="button"
+    className="assign-tutor-eye-btn"
+    title="View tutor details"
+    aria-label="View tutor details"
+    onClick={(e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      goToTutorDetailsFromStudentModal(
+        tutor,
+        "assigned",
+        assignedViewStudent
+      );
+    }}
+  >
+    <FiEye />
+  </button>
+
+  <input
+    type="checkbox"
+    checked={true}
+    disabled={submitting}
+    onClick={(e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      askRemoveAssignedTutor(tutor);
+    }}
+    onChange={() => {}}
+  />
+
+  {assignedDateText && (
+    <div className="assign-tutor-date">
+      <span>Assigned</span>
+      <b>{assignedDateText}</b>
+    </div>
+  )}
+</label>
+
+
+
+
+
           );
         })}
       </div>

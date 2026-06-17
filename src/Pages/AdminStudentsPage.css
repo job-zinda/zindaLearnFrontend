@@ -3562,3 +3562,144 @@
     font-size: 15px !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   ASSIGN / ASSIGNED TUTOR EYE ICON
+   Paste at VERY BOTTOM of AdminStudentsPage.css
+========================================================= */
+
+.student-dark-modal .assign-tutor-item,
+.student-dark-modal .assign-tutor-item-dark {
+  grid-template-columns: 58px minmax(0, 1fr) 44px 54px !important;
+  align-items: center !important;
+}
+
+/* avatar left */
+.student-dark-modal .assign-tutor-avatar {
+  grid-column: 1 !important;
+  justify-self: start !important;
+}
+
+/* tutor info middle */
+.student-dark-modal .assign-tutor-info,
+.student-dark-modal .assign-tutor-info-dark {
+  grid-column: 2 !important;
+  min-width: 0 !important;
+}
+
+/* eye icon: switch button left side */
+.assign-tutor-eye-btn {
+  grid-column: 3 !important;
+  width: 38px !important;
+  height: 38px !important;
+  border: none !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  display: grid !important;
+  place-items: center !important;
+  cursor: pointer !important;
+  font-size: 20px !important;
+  padding: 0 !important;
+  justify-self: end !important;
+  position: relative !important;
+  z-index: 5 !important;
+  transition: 0.22s ease !important;
+}
+
+.assign-tutor-eye-btn:hover {
+  background: rgba(217, 70, 239, 0.22) !important;
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+}
+
+.assign-tutor-eye-btn svg {
+  width: 20px !important;
+  height: 20px !important;
+  stroke-width: 2.4 !important;
+}
+
+/* switch right side */
+.student-dark-modal .assign-tutor-item input[type="checkbox"],
+.student-dark-modal .assign-tutor-item-dark input[type="checkbox"] {
+  grid-column: 4 !important;
+  justify-self: end !important;
+}
+
+/* assigned date bottom right */
+.student-dark-modal .assigned-tutor-view-box .assign-tutor-item {
+  position: relative !important;
+  padding-bottom: 46px !important;
+}
+
+.student-dark-modal .assigned-tutor-view-box .assign-tutor-date {
+  position: absolute !important;
+  right: 18px !important;
+  bottom: 12px !important;
+  text-align: right !important;
+  min-width: max-content !important;
+}
+
+/* Mobile responsive */
+@media (max-width: 640px) {
+  .student-dark-modal .assign-tutor-item,
+  .student-dark-modal .assign-tutor-item-dark {
+    grid-template-columns: 46px minmax(0, 1fr) 36px 46px !important;
+    gap: 8px !important;
+    padding: 12px !important;
+  }
+
+  .assign-tutor-eye-btn {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 17px !important;
+  }
+
+  .assign-tutor-eye-btn svg {
+    width: 17px !important;
+    height: 17px !important;
+  }
+
+  .student-dark-modal .assign-tutor-item input[type="checkbox"],
+  .student-dark-modal .assign-tutor-item-dark input[type="checkbox"] {
+    grid-column: 4 !important;
+    justify-self: end !important;
+  }
+
+  .student-dark-modal .assigned-tutor-view-box .assign-tutor-item {
+    padding-bottom: 42px !important;
+  }
+
+  .student-dark-modal .assigned-tutor-view-box .assign-tutor-date {
+    right: 12px !important;
+    bottom: 9px !important;
+  }
+}
