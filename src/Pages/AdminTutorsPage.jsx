@@ -1288,7 +1288,7 @@ useEffect(() => {
 
 
 
-                  <button
+                  {/* <button
                     type="button"
                     className={`tutor-chat-btn ${isTutorBlocked(tutor) ? "tutor-chat-btn--disabled" : ""
                       }`}
@@ -1305,7 +1305,7 @@ useEffect(() => {
                     }}
                   >
                     Chat
-                  </button>
+                  </button> */}
 
 
 
@@ -1313,7 +1313,18 @@ useEffect(() => {
 
 
 
-
+{!isTutorBlocked(tutor) && (
+  <button
+    type="button"
+    className="tutor-chat-btn"
+    onClick={(e) => {
+      e.stopPropagation();
+      openTutorChat(tutor);
+    }}
+  >
+    Chat
+  </button>
+)}
 
 
 
