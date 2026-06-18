@@ -370,6 +370,22 @@ function StudentFilterIcon() {
 
 
 
+function AssignedTutorsMenuIcon() {
+  return (
+    <svg className="assigned-tutors-menu-icon" viewBox="0 0 24 24" fill="none">
+      <path d="M6 20V9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <circle cx="6" cy="5" r="2" stroke="currentColor" strokeWidth="2" />
+      <path d="M11 6H20V17H11" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+      <path d="M14 10L17 8V15L14 13" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+
+
+
+
+
 export default function AdminStudentsPage() {
   const { showAlert } = useAlert();
   const location = useLocation();
@@ -2413,7 +2429,7 @@ ${isStudentBlocked(student)
     openAssignedTutorsModal(student);
   }}
 >
-  👨‍🏫 Assigned Tutors
+  <AssignedTutorsMenuIcon /> Assigned Tutors
 </button>
 
 
@@ -2776,7 +2792,8 @@ onClose={() => {
 
 
       >
-        <div className="assign-tutor-box assign-tutor-box-dark">
+        {/* <div className="assign-tutor-box assign-tutor-box-dark"> */}
+        <div className="assign-tutor-box assign-tutor-box-dark assign-tutor-box--assigned-view">
           <div className="assign-tutor-search assign-tutor-search-dark">
             <span>⌕</span>
             <input

@@ -3915,3 +3915,98 @@
     bottom: 9px !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Assigned Tutors menu icon */
+.assigned-tutors-menu-icon {
+  width: 17px;
+  height: 17px;
+  margin-right: 8px;
+  color: currentColor;
+  vertical-align: middle;
+}
+
+/* Assigned Tutors modal only */
+.student-dark-modal .assign-tutor-box--assigned-view .assign-tutor-item {
+  grid-template-columns: 54px minmax(0, 1fr) 24px 48px !important;
+  gap: 14px !important;
+  align-items: center !important;
+}
+
+.student-dark-modal .assign-tutor-box--assigned-view .assign-tutor-view-btn {
+  width: 24px !important;
+  height: 24px !important;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  color: #ffffff !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+.student-dark-modal .assign-tutor-box--assigned-view .assign-tutor-view-btn svg {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.student-dark-modal .assign-tutor-box--assigned-view .assign-tutor-date {
+  grid-column: 2 / 5 !important;
+  justify-self: end !important;
+  text-align: right !important;
+}
+
+@media (max-width: 640px) {
+  .student-dark-modal .assign-tutor-box--assigned-view .assign-tutor-item {
+    grid-template-columns: 44px minmax(0, 1fr) 22px 46px !important;
+    gap: 8px !important;
+    padding: 12px !important;
+  }
+
+  .student-dark-modal .assign-tutor-box--assigned-view .assign-tutor-avatar {
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  .student-dark-modal .assign-tutor-box--assigned-view .assign-tutor-view-btn {
+    justify-self: end !important;
+  }
+
+  .student-dark-modal .assign-tutor-box--assigned-view input[type="checkbox"] {
+    justify-self: end !important;
+  }
+
+  .student-dark-modal .assign-tutor-box--assigned-view .assign-tutor-date {
+    grid-column: 2 / 5 !important;
+    justify-self: end !important;
+    text-align: right !important;
+    font-size: 10px !important;
+    line-height: 1.15 !important;
+  }
+}
