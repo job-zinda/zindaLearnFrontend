@@ -35,7 +35,7 @@
 }
 
 .admin-dashboard-stats {
-  margin-top: 34px;
+  margin-top: 10px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 32px;
@@ -120,18 +120,44 @@
   background: rgba(244, 63, 94, 0.14);
 }
 
-.admin-dashboard-divider {
+/* .admin-dashboard-divider {
   margin: 70px 0 44px;
   height: 2px;
   background: linear-gradient(90deg, transparent, #d946ef, #7c3aed, transparent);
   opacity: 0.85;
+} */
+
+
+
+
+
+.admin-dashboard-divider {
+  display: none;
 }
+
+
+
+
+
+/* .admin-dashboard-chart-section {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+} */
+
+
+
 
 .admin-dashboard-chart-section {
   width: 100%;
   display: flex;
   justify-content: flex-start;
+  margin-top: 34px;
 }
+
+
+
+
 
 .admin-dashboard-chart-card {
   width: min(780px, 100%);
