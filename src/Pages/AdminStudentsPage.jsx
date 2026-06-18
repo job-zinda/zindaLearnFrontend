@@ -2416,11 +2416,11 @@ await api.post(`/admin/student/${getStudentId(assignStudent)}/assign-tutors`, {
         <h2>{studentFilterLabels[studentFilter]}</h2>
       </div>
 
-      {showOnlyNew && !loading && (
+      {/* {showOnlyNew && !loading && (
         <div className="student-new-filter-note">
           Showing students registered in the last 24 hours
         </div>
-      )}
+      )} */}
 
       {loading ? (
 
