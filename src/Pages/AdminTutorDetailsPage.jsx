@@ -1588,7 +1588,16 @@ async function toggleTutorBlock() {
 
 
 
-<div className="detail-bottom-actions">
+{/* <div className="detail-bottom-actions"> */}
+
+<div
+  className={`detail-bottom-actions ${
+    isTutorBlocked(tutor)
+      ? "detail-bottom-actions--single"
+      : ""
+  }`}
+>
+
   {!isTutorBlocked(tutor) && (
     <button
       type="button"
