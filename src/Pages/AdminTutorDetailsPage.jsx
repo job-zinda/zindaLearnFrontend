@@ -508,44 +508,9 @@ const visibleCourses = useMemo(() => {
 
 
 
-async function openTutorChat() {
-  try {
-    if (!tutor) return;
-
-    if (isTutorBlocked(tutor)) {
-      showAlert("Blocked tutor chat is disabled", "error");
-      return;
-    }
-
-    const tutorUserId =
-      typeof tutor?.loginUserId === "object"
-        ? tutor.loginUserId?._id
-        : tutor?.loginUserId;
-
-    if (!tutorUserId) {
-      showAlert("Tutor login user id not found", "error");
-      return;
-    }
-
-    const { data } = await api.post(`/chat/admin-tutor-room/${tutorUserId}`);
-
-    const roomId = data?.room?._id || data?.chatRoom?._id || data?.roomId;
-
-    if (roomId) {
-      navigate(`/admin/chats?roomId=${roomId}&open=chat`);
-    } else {
-      navigate("/admin/chats");
-    }
-  } catch (err) {
-    showAlert(getErrorMessage(err, "Failed to open tutor chat"), "error");
-  }
-}
 
 
-
-
-
-
+  
 
   useEffect(() => {
     fetchData();
@@ -1575,32 +1540,9 @@ async function toggleTutorBlock() {
 
         </section>
 
-        {/* <button type="button" className="tutor-contact-btn" onClick={contactTutor}>
+        <button type="button" className="tutor-contact-btn" onClick={contactTutor}>
           Contact
-        </button> */}
-
-
-
-
-<div className="tutor-detail-bottom-actions">
-  <button
-    type="button"
-    className="tutor-detail-chat-btn"
-    onClick={openTutorChat}
-  >
-    Chat
-  </button>
-
-  <button type="button" className="tutor-contact-btn">
-    Contact
-  </button>
-</div>
-
-
-
-
-
-
+        </button>
       </div>
 
       {/* <Modal
