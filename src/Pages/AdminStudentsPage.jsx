@@ -1626,6 +1626,89 @@ function toggleNewAssignTutor(tutorId, checked) {
 
 
 
+// async function openAssignedTutorsModal(student) {
+//   try {
+//     setAssignedViewStudent(student);
+//     setAssignedTutorIds([]);
+//     setAssignedTutorDates({});
+//     setAssignedViewSearch("");
+//     setAssignedViewOpen(true);
+//     setMenuOpenId(null);
+//     setAssignedViewLoading(true);
+
+//     const [assignedResponse, tutorsResponse] = await Promise.all([
+//       api.get(`/admin/student/${getStudentId(student)}/assigned-tutors`),
+//       tutors.length
+//         ? Promise.resolve({ data: { tuters: tutors } })
+//         : api.get("/admin/tuter/all"),
+//     ]);
+
+//     const allTutors = tutorsResponse.data.tuters || [];
+
+//     if (!tutors.length) {
+//       setTutors(allTutors);
+//     }
+
+//     // const activeTutorIds = allTutors
+//     //   .filter((tutor) => isTutorActive(tutor) && !isTutorBlocked(tutor))
+//     //   .map((tutor) => String(tutor._id));
+
+//     // const assignedTutors = assignedResponse.data.tutors || [];
+
+//     // const ids = assignedTutors
+//     //   .map((tutor) => String(tutor._id))
+//     //   .filter((id) => activeTutorIds.includes(id));
+
+
+
+
+// const assignedTutors = assignedResponse.data.tutors || [];
+
+// const ids = assignedTutors
+//   .map((tutor) => String(tutor._id))
+//   .filter(Boolean);
+
+// const dateMap = {};
+
+// assignedTutors.forEach((tutor) => {
+//   const id = String(tutor._id);
+
+//   if (id) {
+//     dateMap[id] = tutor.assignedAt || tutor.createdAt || null;
+//   }
+// });
+
+// setAssignedTutorIds(ids);
+// setAssignedTutorDates(dateMap);
+
+
+
+
+//     const dateMap = {};
+
+//     assignedTutors.forEach((tutor) => {
+//       const id = String(tutor._id);
+
+//       if (activeTutorIds.includes(id)) {
+//         dateMap[id] = tutor.assignedAt || tutor.createdAt || null;
+//       }
+//     });
+
+//     setAssignedTutorIds(ids);
+//     setAssignedTutorDates(dateMap);
+//   } catch (err) {
+//     showAlert(getErrorMessage(err, "Failed to load assigned tutors"), "error");
+//   } finally {
+//     setAssignedViewLoading(false);
+//   }
+// }
+
+
+
+
+
+
+
 async function openAssignedTutorsModal(student) {
   try {
     setAssignedViewStudent(student);
@@ -1636,60 +1719,22 @@ async function openAssignedTutorsModal(student) {
     setMenuOpenId(null);
     setAssignedViewLoading(true);
 
-    const [assignedResponse, tutorsResponse] = await Promise.all([
-      api.get(`/admin/student/${getStudentId(student)}/assigned-tutors`),
-      tutors.length
-        ? Promise.resolve({ data: { tuters: tutors } })
-        : api.get("/admin/tuter/all"),
-    ]);
+    const { data } = await api.get(
+      `/admin/student/${getStudentId(student)}/assigned-tutors`
+    );
 
-    const allTutors = tutorsResponse.data.tuters || [];
+    const assignedTutors = data.tutors || [];
 
-    if (!tutors.length) {
-      setTutors(allTutors);
-    }
-
-    // const activeTutorIds = allTutors
-    //   .filter((tutor) => isTutorActive(tutor) && !isTutorBlocked(tutor))
-    //   .map((tutor) => String(tutor._id));
-
-    // const assignedTutors = assignedResponse.data.tutors || [];
-
-    // const ids = assignedTutors
-    //   .map((tutor) => String(tutor._id))
-    //   .filter((id) => activeTutorIds.includes(id));
-
-
-
-
-const assignedTutors = assignedResponse.data.tutors || [];
-
-const ids = assignedTutors
-  .map((tutor) => String(tutor._id))
-  .filter(Boolean);
-
-const dateMap = {};
-
-assignedTutors.forEach((tutor) => {
-  const id = String(tutor._id);
-
-  if (id) {
-    dateMap[id] = tutor.assignedAt || tutor.createdAt || null;
-  }
-});
-
-setAssignedTutorIds(ids);
-setAssignedTutorDates(dateMap);
-
-
-
+    const ids = assignedTutors
+      .map((tutor) => String(tutor._id))
+      .filter(Boolean);
 
     const dateMap = {};
 
     assignedTutors.forEach((tutor) => {
       const id = String(tutor._id);
 
-      if (activeTutorIds.includes(id)) {
+      if (id) {
         dateMap[id] = tutor.assignedAt || tutor.createdAt || null;
       }
     });
@@ -1702,8 +1747,6 @@ setAssignedTutorDates(dateMap);
     setAssignedViewLoading(false);
   }
 }
-
-
 
 
 
