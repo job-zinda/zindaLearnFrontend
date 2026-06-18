@@ -2375,12 +2375,40 @@ async function toggleTutorBlockStatus(tutor) {
 
 
 
+// function goToDetails(tutor, openEdit = false) {
+//   const backData = {
+//     backTo: `/admin/courses/${categoryId}/tutors/${courseId}`,
+//     backButtonLabel: "Tutors",
+//     backLabel: "View details",
+//     courseName: courseName || "Selected Course",
+//     openEdit,
+//   };
+
+//   sessionStorage.setItem("adminTutorBackData", JSON.stringify(backData));
+
+//   sessionStorage.setItem(
+//     `adminCourseTutor_${courseId}`,
+//     JSON.stringify({ courseName: courseName || "Selected Course" })
+//   );
+
+//   navigate(`/admin/tutors/${tutor._id}`, {
+//     state: backData,
+//   });
+// }
+
+
+
+
+
+
 function goToDetails(tutor, openEdit = false) {
+  const cleanCourseName = courseName || "Selected Course";
+
   const backData = {
     backTo: `/admin/courses/${categoryId}/tutors/${courseId}`,
-    backButtonLabel: "Tutors",
+    backButtonLabel: `${cleanCourseName} tutors`,
     backLabel: "View details",
-    courseName: courseName || "Selected Course",
+    courseName: cleanCourseName,
     openEdit,
   };
 
@@ -2388,13 +2416,18 @@ function goToDetails(tutor, openEdit = false) {
 
   sessionStorage.setItem(
     `adminCourseTutor_${courseId}`,
-    JSON.stringify({ courseName: courseName || "Selected Course" })
+    JSON.stringify({ courseName: cleanCourseName })
   );
 
   navigate(`/admin/tutors/${tutor._id}`, {
     state: backData,
   });
 }
+
+
+
+
+
 
 
 // const backTo = location.state?.backTo || "/admin/tutors";

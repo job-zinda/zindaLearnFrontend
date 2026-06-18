@@ -1483,6 +1483,72 @@ const filteredAssignedViewTutors = useMemo(() => {
 
 
 
+// function goToTutorDetailsFromStudentModal(tutor, modalType, student) {
+//   if (!tutor?._id || !student) {
+//     showAlert("Tutor or student not found", "error");
+//     return;
+//   }
+
+//   const restoreData = {
+//     studentId: String(getStudentId(student)),
+//     modalType, // "assign" or "assigned"
+//   };
+
+//   sessionStorage.setItem(
+//     "adminStudentTutorModalRestore",
+//     JSON.stringify(restoreData)
+//   );
+
+//   const backData = {
+//     backTo: "/admin/students",
+//     backButtonLabel: "Tutors",
+//     backLabel: "View details",
+//   };
+
+//   sessionStorage.setItem("adminTutorBackData", JSON.stringify(backData));
+
+//   navigate(`/admin/tutors/${tutor._id}`, {
+//     state: backData,
+//   });
+// }
+
+
+
+// function goToTutorDetailsFromStudentModal(tutor, modalType, student) {
+//   if (!tutor?._id || !student) {
+//     showAlert("Tutor or student not found", "error");
+//     return;
+//   }
+
+//   const restoreData = {
+//     studentId: String(getStudentId(student)),
+//     modalType, // "assign" or "assigned"
+//   };
+
+//   sessionStorage.setItem(
+//     "adminStudentTutorModalRestore",
+//     JSON.stringify(restoreData)
+//   );
+
+//   const backData = {
+//     backTo: "/admin/students",
+//     backButtonLabel: modalType === "assigned" ? "assignedtutors" : "assigntutors",
+//     backLabel: "View details",
+//   };
+
+//   sessionStorage.setItem("adminTutorBackData", JSON.stringify(backData));
+
+//   navigate(`/admin/tutors/${tutor._id}`, {
+//     state: backData,
+//   });
+// }
+
+
+
+
+
+
+
 function goToTutorDetailsFromStudentModal(tutor, modalType, student) {
   if (!tutor?._id || !student) {
     showAlert("Tutor or student not found", "error");
@@ -1501,7 +1567,7 @@ function goToTutorDetailsFromStudentModal(tutor, modalType, student) {
 
   const backData = {
     backTo: "/admin/students",
-    backButtonLabel: "Tutors",
+    backButtonLabel: modalType === "assigned" ? "assignedtutors" : "assigntutors",
     backLabel: "View details",
   };
 
@@ -3258,7 +3324,7 @@ onClose={() => {
         <small>{tutor.email || tutor.phone || "No contact added"}</small>
       </div>
 
-      <button
+      {/* <button
         type="button"
         className="assign-tutor-eye-btn"
         title="View tutor details"
@@ -3270,7 +3336,28 @@ onClose={() => {
         }}
       >
         <FiEye />
-      </button>
+      </button> */}
+
+
+
+
+
+<button
+  type="button"
+  className="assign-tutor-eye-btn"
+  onClick={(e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    goToTutorDetailsFromStudentModal(tutor, "assign", assignStudent);
+  }}
+  aria-label="View tutor details"
+>
+  <FiEye />
+</button>
+
+
+
+
 
       <input
         type="checkbox"
@@ -3427,7 +3514,7 @@ onClick={() => {
         <small>{tutor.email || tutor.phone || "No contact added"}</small>
       </div>
 
-      <button
+      {/* <button
         type="button"
         className="assign-tutor-eye-btn"
         title="View tutor details"
@@ -3443,7 +3530,27 @@ onClick={() => {
         }}
       >
         <FiEye />
-      </button>
+      </button> */}
+
+
+
+
+<button
+  type="button"
+  className="assign-tutor-eye-btn"
+  onClick={(e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    goToTutorDetailsFromStudentModal(tutor, "assigned", assignedViewStudent);
+  }}
+  aria-label="View tutor details"
+>
+  <FiEye />
+</button>
+
+
+
+
 
       <input
         type="checkbox"
