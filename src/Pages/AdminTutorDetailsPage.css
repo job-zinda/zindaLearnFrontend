@@ -3755,3 +3755,89 @@
     font-size: 20px !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* FINAL PASSWORD COPY ICON FIX - paste at very bottom */
+
+.tutor-detail-dark-modal .tutor-password-field.tutor-password-field--with-copy {
+  width: 100% !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 54px 54px !important;
+  gap: 0 !important;
+  align-items: stretch !important;
+  overflow: hidden !important;
+  border-radius: 14px !important;
+}
+
+.tutor-detail-dark-modal .tutor-password-field.tutor-password-field--with-copy input {
+  min-width: 0 !important;
+  width: 100% !important;
+  height: 54px !important;
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  padding: 0 16px !important;
+}
+
+.tutor-detail-dark-modal .tutor-password-field.tutor-password-field--with-copy .tutor-password-eye,
+.tutor-detail-dark-modal .tutor-password-field.tutor-password-field--with-copy .tutor-password-copy {
+  width: 54px !important;
+  height: 54px !important;
+  min-width: 54px !important;
+  border: none !important;
+  border-radius: 0 !important;
+  background: rgba(124, 58, 237, 0.55) !important;
+  color: #c084fc !important;
+  display: grid !important;
+  place-items: center !important;
+  font-size: 20px !important;
+  cursor: pointer !important;
+}
+
+.tutor-detail-dark-modal .tutor-password-field.tutor-password-field--with-copy .tutor-password-copy {
+  color: #ffffff !important;
+}
+
+.tutor-detail-dark-modal .tutor-password-field.tutor-password-field--with-copy .tutor-password-copy svg,
+.tutor-detail-dark-modal .tutor-password-field.tutor-password-field--with-copy .tutor-password-eye svg {
+  width: 20px !important;
+  height: 20px !important;
+  display: block !important;
+}
+
+@media (max-width: 720px) {
+  .tutor-detail-dark-modal .tutor-password-field.tutor-password-field--with-copy {
+    grid-template-columns: minmax(0, 1fr) 42px 42px !important;
+  }
+
+  .tutor-detail-dark-modal .tutor-password-field.tutor-password-field--with-copy input {
+    height: 42px !important;
+  }
+
+  .tutor-detail-dark-modal .tutor-password-field.tutor-password-field--with-copy .tutor-password-eye,
+  .tutor-detail-dark-modal .tutor-password-field.tutor-password-field--with-copy .tutor-password-copy {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+  }
+}
