@@ -10,9 +10,9 @@
 
 
 
-
-
-import { FiEye, FiEyeOff } from "react-icons/fi";
+// import { FiEye, FiEyeOff } from "react-icons/fi";
+import { FiCopy, FiEye, FiEyeOff } from "react-icons/fi";
+// import { FiEye, FiEyeOff, FiCopy, FiShield } from "react-icons/fi";
 
 
 // import React, {
@@ -197,6 +197,39 @@ function Stars({ rating = 0, compact = false }) {
     </div>
   );
 }
+
+
+
+
+
+
+
+function PasswordShieldIcon() {
+  return (
+    <svg
+      className="detail-password-shield-icon"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path
+        d="M12 2.3L4.2 5.5V10.8C4.2 15.8 7.4 20.2 12 21.7C16.6 20.2 19.8 15.8 19.8 10.8V5.5L12 2.3Z"
+        fill="currentColor"
+      />
+      <path
+        d="M12 10.1C10.9 10.1 10 11 10 12.1C10 12.8 10.4 13.5 11 13.8L10.6 16.7H13.4L13 13.8C13.6 13.5 14 12.8 14 12.1C14 11 13.1 10.1 12 10.1Z"
+        fill="#ffffff"
+      />
+    </svg>
+  );
+}
+
+
+
+
+
+
+
+
 
 function getStudentName(review) {
   return review?.studentId?.name || review?.studentName || "Student";
@@ -1353,7 +1386,7 @@ async function toggleTutorBlock() {
       ↗ Share
     </button>
 
-    <button
+    {/* <button
       type="button"
       onClick={() => {
         setDetailMenuOpen(false);
@@ -1362,7 +1395,27 @@ async function toggleTutorBlock() {
       }}
     >
       🔐 Password
-    </button>
+    </button> */}
+
+
+
+
+
+<button
+  type="button"
+  onClick={() => {
+    setDetailMenuOpen(false);
+    setShowPassword(false);
+    setPasswordOpen(true);
+  }}
+>
+  <PasswordShieldIcon />
+  Password
+</button>
+
+
+
+
 
     <button
       type="button"
@@ -2051,7 +2104,7 @@ async function toggleTutorBlock() {
 
 
 
-
+{/* 
 <TutorDetailDarkModal
   open={passwordOpen}
   title="Tutor Login Password"
@@ -2091,14 +2144,62 @@ async function toggleTutorBlock() {
       Copy Password
     </button>
   </div>
+</TutorDetailDarkModal> */}
+
+
+
+
+
+
+<TutorDetailDarkModal
+  open={passwordOpen}
+  title="Tutor Login Password"
+  width="430px"
+  onClose={() => setPasswordOpen(false)}
+>
+  <div className="tutor-password-view-box">
+    <p>
+      <b>{tutor?.name}</b> login password
+    </p>
+
+    <div className="tutor-password-field tutor-password-field--with-copy">
+      <input
+        type={showPassword ? "text" : "password"}
+        value={tutor?.loginPasswordText || "Password not available"}
+        readOnly
+      />
+
+      <button
+        type="button"
+        className="tutor-password-eye"
+        onClick={() => setShowPassword((prev) => !prev)}
+        title={showPassword ? "Hide password" : "Show password"}
+        aria-label={showPassword ? "Hide password" : "Show password"}
+      >
+        {showPassword ? <FiEyeOff /> : <FiEye />}
+      </button>
+
+      <button
+        type="button"
+        className="tutor-password-copy"
+        onClick={() => {
+          if (!tutor?.loginPasswordText) {
+            showAlert("Password not available", "error");
+            return;
+          }
+
+          navigator.clipboard.writeText(tutor.loginPasswordText);
+          showAlert("Password copied successfully", "success");
+        }}
+        disabled={!tutor?.loginPasswordText}
+        title="Copy password"
+        aria-label="Copy password"
+      >
+        <FiCopy />
+      </button>
+    </div>
+  </div>
 </TutorDetailDarkModal>
-
-
-
-
-
-
-
 
 
 

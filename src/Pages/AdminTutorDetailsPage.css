@@ -3611,3 +3611,147 @@
 .detail-bottom-actions--single .tutor-contact-btn {
   width: 100% !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   PASSWORD MENU ICON + PASSWORD MODAL COPY ICON
+   Paste at VERY BOTTOM of AdminTutorDetailsPage.css
+   ========================================================= */
+
+.detail-menu button {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.detail-password-shield-icon {
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  color: #ffffff !important;
+  display: inline-block !important;
+}
+
+.tutor-password-view-box {
+  display: grid !important;
+  gap: 18px !important;
+  color: #ffffff !important;
+}
+
+.tutor-password-view-box p {
+  margin: 0 !important;
+  color: #ffffff !important;
+  font-weight: 900 !important;
+  line-height: 1.4 !important;
+}
+
+.tutor-password-view-box p b {
+  color: #ffffff !important;
+  font-weight: 950 !important;
+}
+
+.tutor-password-field--with-copy {
+  width: 100% !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 58px 58px !important;
+  align-items: stretch !important;
+  gap: 0 !important;
+}
+
+.tutor-password-field--with-copy input {
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 62px !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-right: 0 !important;
+  border-radius: 16px 0 0 16px !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-size: 18px !important;
+  font-weight: 950 !important;
+  padding: 0 18px !important;
+  outline: none !important;
+}
+
+.tutor-password-field--with-copy .tutor-password-eye,
+.tutor-password-field--with-copy .tutor-password-copy {
+  width: 58px !important;
+  height: 62px !important;
+  margin: 0 !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-left: 0 !important;
+  border-radius: 0 !important;
+  background: #4c1d95 !important;
+  color: #c084fc !important;
+  display: grid !important;
+  place-items: center !important;
+  font-size: 22px !important;
+  cursor: pointer !important;
+  transition: 0.22s ease !important;
+}
+
+.tutor-password-field--with-copy .tutor-password-copy {
+  border-radius: 0 16px 16px 0 !important;
+  color: #ffffff !important;
+}
+
+.tutor-password-field--with-copy .tutor-password-eye:hover,
+.tutor-password-field--with-copy .tutor-password-copy:hover {
+  background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
+  color: #ffffff !important;
+}
+
+.tutor-password-field--with-copy .tutor-password-copy:disabled {
+  opacity: 0.45 !important;
+  cursor: not-allowed !important;
+}
+
+@media (max-width: 520px) {
+  .tutor-password-field--with-copy {
+    grid-template-columns: minmax(0, 1fr) 52px 52px !important;
+  }
+
+  .tutor-password-field--with-copy input {
+    height: 58px !important;
+    font-size: 16px !important;
+    padding: 0 14px !important;
+  }
+
+  .tutor-password-field--with-copy .tutor-password-eye,
+  .tutor-password-field--with-copy .tutor-password-copy {
+    width: 52px !important;
+    height: 58px !important;
+    font-size: 20px !important;
+  }
+}
