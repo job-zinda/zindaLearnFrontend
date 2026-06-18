@@ -3516,3 +3516,67 @@
 
 
 
+/* =========================================================
+   DETAIL PAGE BOTTOM CHAT + CONTACT BUTTONS
+   Paste at VERY BOTTOM of AdminTutorDetailsPage.css
+   ========================================================= */
+
+.detail-bottom-actions {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  align-items: center;
+}
+
+.tutor-detail-chat-btn,
+.detail-bottom-actions .tutor-contact-btn {
+  width: 100% !important;
+  margin-top: 0 !important;
+  border: none !important;
+  cursor: pointer;
+  padding: 16px 20px;
+  border-radius: 18px;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 950;
+  transition: 0.25s ease;
+}
+
+.tutor-detail-chat-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(217, 70, 239, 0.4) !important;
+}
+
+.detail-bottom-actions .tutor-contact-btn {
+  background: linear-gradient(135deg, #d946ef, #7c3aed);
+}
+
+.tutor-detail-chat-btn:hover,
+.detail-bottom-actions .tutor-contact-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 35px rgba(217, 70, 239, 0.25);
+}
+
+.tutor-detail-chat-btn:hover {
+  background: rgba(217, 70, 239, 0.18);
+}
+
+/* Mobile view-lum Chat left, Contact right */
+@media (max-width: 720px) {
+  .detail-bottom-actions {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+
+  .tutor-detail-chat-btn,
+  .detail-bottom-actions .tutor-contact-btn {
+    min-height: 46px !important;
+    padding: 12px 10px !important;
+    border-radius: 14px !important;
+    font-size: 14px !important;
+  }
+}
