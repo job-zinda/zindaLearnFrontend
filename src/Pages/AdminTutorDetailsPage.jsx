@@ -11,7 +11,14 @@
 
 
 // import { FiEye, FiEyeOff } from "react-icons/fi";
-import { FiCopy, FiEye, FiEyeOff } from "react-icons/fi";
+// import { FiCopy, FiEye, FiEyeOff } from "react-icons/fi";
+
+import { FiCopy, FiEye, FiEyeOff, FiUsers } from "react-icons/fi";
+
+
+
+
+
 // import { FiEye, FiEyeOff, FiCopy, FiShield } from "react-icons/fi";
 
 
@@ -182,6 +189,29 @@ function getErrorMessage(error, fallback = "Something went wrong") {
   );
 }
 
+
+
+
+function formatAssignedDate(value) {
+  if (!value) return "";
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+
+  return date.toLocaleString("en-US", {
+    month: "short",
+    day: "2-digit",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+}
+
+
+
+
+
 function Stars({ rating = 0, compact = false }) {
   const fixedRating = Number(rating || 0);
   const rounded = Math.round(fixedRating);
@@ -223,6 +253,42 @@ function PasswordShieldIcon() {
   );
 }
 
+
+
+
+
+
+
+function AssignedStudentsIcon() {
+  return (
+    <svg
+      className="detail-assigned-students-icon"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path
+        d="M8 11.5C10.2 11.5 12 9.7 12 7.5C12 5.3 10.2 3.5 8 3.5C5.8 3.5 4 5.3 4 7.5C4 9.7 5.8 11.5 8 11.5Z"
+        fill="currentColor"
+      />
+      <path
+        d="M2.5 20C2.5 16.7 4.7 14.5 8 14.5C9.5 14.5 10.8 14.95 11.75 15.75C11.27 16.57 11 17.53 11 18.55C11 19.06 11.07 19.55 11.2 20H2.5Z"
+        fill="currentColor"
+      />
+      <path
+        d="M17.5 21.5C20 21.5 22 19.5 22 17C22 14.5 20 12.5 17.5 12.5C15 12.5 13 14.5 13 17C13 19.5 15 21.5 17.5 21.5Z"
+        fill="currentColor"
+      />
+      <path
+        d="M15.5 17L17 18.5L20 15.5"
+        fill="none"
+        stroke="#ffffff"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 
 
 
@@ -1417,7 +1483,7 @@ async function toggleTutorBlock() {
 
 
 
-    <button
+    {/* <button
       type="button"
       onClick={() => {
         setDetailMenuOpen(false);
@@ -1425,7 +1491,26 @@ async function toggleTutorBlock() {
       }}
     >
       👥 Assigned Students
-    </button>
+    </button> */}
+
+
+
+
+
+<button
+  type="button"
+  onClick={() => {
+    setDetailMenuOpen(false);
+    openAssignedStudentsModal();
+  }}
+>
+  <AssignedStudentsIcon />
+  Assigned Students
+</button>
+
+
+
+
 
     {/* <button
       type="button"
@@ -2040,11 +2125,30 @@ async function toggleTutorBlock() {
                       )}
                     </div>
 
-                    <div className="assigned-student-info">
+                    {/* <div className="assigned-student-info">
                       <h4>{student.name || "Student"}</h4>
                       <p>{student.email || "No email"}</p>
                       <small>{student.phone || "No phone"}</small>
-                    </div>
+                    </div> */}
+
+
+
+<div className="assigned-student-info">
+  <h4>{student.name || "Student"}</h4>
+  <p>{student.email || "No email"}</p>
+  <small>{student.phone || "No phone"}</small>
+</div>
+
+{formatAssignedDate(student.assignedAt) && (
+  <div className="assigned-student-date">
+    <span>Assigned</span>
+    <b>{formatAssignedDate(student.assignedAt)}</b>
+  </div>
+)}
+
+
+
+
                   </div>
                 );
               })}

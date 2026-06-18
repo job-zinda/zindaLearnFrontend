@@ -4011,3 +4011,71 @@
 .tutor-password-eye:hover {
   color: #e9d5ff !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.detail-menu button {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.detail-assigned-students-icon {
+  width: 18px;
+  height: 18px;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.assigned-student-card {
+  grid-template-columns: 58px 1fr auto !important;
+}
+
+.assigned-student-date {
+  text-align: right;
+  display: grid;
+  gap: 4px;
+  min-width: 145px;
+}
+
+.assigned-student-date span {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.assigned-student-date b {
+  color: #f0abfc;
+  font-size: 13px;
+  font-weight: 950;
+}
+
+@media (max-width: 620px) {
+  .assigned-student-card {
+    grid-template-columns: 52px 1fr !important;
+  }
+
+  .assigned-student-date {
+    grid-column: 2 / -1;
+    text-align: left;
+    min-width: 0;
+  }
+}
