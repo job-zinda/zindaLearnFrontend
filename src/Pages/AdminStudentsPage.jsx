@@ -1023,9 +1023,16 @@ async function refreshStudentAssignedCounts(studentList = students) {
             `/admin/student/${studentId}/assigned-tutors`
           );
 
-          const count = (data.tutors || []).filter((tutor) => {
-            return isTutorActive(tutor) && !isTutorBlocked(tutor);
-          }).length;
+          // const count = (data.tutors || []).filter((tutor) => {
+          //   return isTutorActive(tutor) && !isTutorBlocked(tutor);
+          // }).length;
+
+
+
+
+const count = (data.tutors || []).length;
+
+
 
           return [String(studentId), count];
         } catch {
@@ -1101,6 +1108,80 @@ async function refreshStudentAssignedCounts(studentList = students) {
 
 
 
+// const availableAssignTutors = useMemo(() => {
+//   return tutors.filter((tutor) => {
+//     return isTutorActive(tutor) && !isTutorBlocked(tutor);
+//   });
+// }, [tutors]);
+
+// const unassignedAssignTutors = useMemo(() => {
+//   const alreadyAssigned = assignedTutorIds.map(String);
+
+//   return availableAssignTutors.filter((tutor) => {
+//     return !alreadyAssigned.includes(String(tutor._id));
+//   });
+// }, [availableAssignTutors, assignedTutorIds]);
+
+// const filteredAssignTutors = useMemo(() => {
+//   const q = assignSearch.toLowerCase().trim();
+
+//   const source = unassignedAssignTutors;
+
+//   if (!q) return source;
+
+//   return source.filter((tutor) => {
+//     return (
+//       String(tutor.name || "").toLowerCase().includes(q) ||
+//       String(tutor.email || "").toLowerCase().includes(q) ||
+//       String(tutor.phone || "").toLowerCase().includes(q) ||
+//       String(tutor.qualification || "").toLowerCase().includes(q)
+//     );
+//   });
+// }, [unassignedAssignTutors, assignSearch]);
+
+// // const assignedViewTutors = useMemo(() => {
+// //   const alreadyAssigned = assignedTutorIds.map(String);
+
+// //   return availableAssignTutors.filter((tutor) => {
+// //     return alreadyAssigned.includes(String(tutor._id));
+// //   });
+// // }, [availableAssignTutors, assignedTutorIds]);
+
+
+
+
+
+// const assignedViewTutors = useMemo(() => {
+//   const alreadyAssigned = assignedTutorIds.map(String);
+
+//   return tutors.filter((tutor) => {
+//     return alreadyAssigned.includes(String(tutor._id));
+//   });
+// }, [tutors, assignedTutorIds]);
+
+
+
+
+
+// const filteredAssignedViewTutors = useMemo(() => {
+//   const q = assignedViewSearch.toLowerCase().trim();
+
+//   if (!q) return assignedViewTutors;
+
+//   return assignedViewTutors.filter((tutor) => {
+//     return (
+//       String(tutor.name || "").toLowerCase().includes(q) ||
+//       String(tutor.email || "").toLowerCase().includes(q) ||
+//       String(tutor.phone || "").toLowerCase().includes(q) ||
+//       String(tutor.qualification || "").toLowerCase().includes(q)
+//     );
+//   });
+// }, [assignedViewTutors, assignedViewSearch]);
+
+
+
+
+
 const availableAssignTutors = useMemo(() => {
   return tutors.filter((tutor) => {
     return isTutorActive(tutor) && !isTutorBlocked(tutor);
@@ -1135,10 +1216,10 @@ const filteredAssignTutors = useMemo(() => {
 const assignedViewTutors = useMemo(() => {
   const alreadyAssigned = assignedTutorIds.map(String);
 
-  return availableAssignTutors.filter((tutor) => {
+  return tutors.filter((tutor) => {
     return alreadyAssigned.includes(String(tutor._id));
   });
-}, [availableAssignTutors, assignedTutorIds]);
+}, [tutors, assignedTutorIds]);
 
 const filteredAssignedViewTutors = useMemo(() => {
   const q = assignedViewSearch.toLowerCase().trim();
@@ -1154,12 +1235,6 @@ const filteredAssignedViewTutors = useMemo(() => {
     );
   });
 }, [assignedViewTutors, assignedViewSearch]);
-
-
-
-
-
-
 
 
 
@@ -1397,25 +1472,50 @@ async function openAssignTutorModal(student) {
       setTutors(allTutors);
     }
 
-    const activeTutorIds = allTutors
-      .filter((tutor) => isTutorActive(tutor) && !isTutorBlocked(tutor))
-      .map((tutor) => String(tutor._id));
+    // const activeTutorIds = allTutors
+    //   .filter((tutor) => isTutorActive(tutor) && !isTutorBlocked(tutor))
+    //   .map((tutor) => String(tutor._id));
 
-    const assignedTutors = assignedResponse.data.tutors || [];
+    // const assignedTutors = assignedResponse.data.tutors || [];
 
-    const ids = assignedTutors
-      .map((tutor) => String(tutor._id))
-      .filter((id) => activeTutorIds.includes(id));
+    // const ids = assignedTutors
+    //   .map((tutor) => String(tutor._id))
+    //   .filter((id) => activeTutorIds.includes(id));
 
-    const dateMap = {};
+    // const dateMap = {};
 
-    assignedTutors.forEach((tutor) => {
-      const id = String(tutor._id);
+    // assignedTutors.forEach((tutor) => {
+    //   const id = String(tutor._id);
 
-      if (activeTutorIds.includes(id)) {
-        dateMap[id] = tutor.assignedAt || tutor.createdAt || null;
-      }
-    });
+    //   if (activeTutorIds.includes(id)) {
+    //     dateMap[id] = tutor.assignedAt || tutor.createdAt || null;
+    //   }
+    // });
+
+
+
+
+
+const assignedTutors = assignedResponse.data.tutors || [];
+
+const ids = assignedTutors
+  .map((tutor) => String(tutor._id))
+  .filter(Boolean);
+
+const dateMap = {};
+
+assignedTutors.forEach((tutor) => {
+  const id = String(tutor._id);
+
+  if (id) {
+    dateMap[id] = tutor.assignedAt || tutor.createdAt || null;
+  }
+});
+
+
+
+
+
 
     setAssignedTutorIds(ids);
     setAssignedTutorDates(dateMap);
@@ -1549,15 +1649,40 @@ async function openAssignedTutorsModal(student) {
       setTutors(allTutors);
     }
 
-    const activeTutorIds = allTutors
-      .filter((tutor) => isTutorActive(tutor) && !isTutorBlocked(tutor))
-      .map((tutor) => String(tutor._id));
+    // const activeTutorIds = allTutors
+    //   .filter((tutor) => isTutorActive(tutor) && !isTutorBlocked(tutor))
+    //   .map((tutor) => String(tutor._id));
 
-    const assignedTutors = assignedResponse.data.tutors || [];
+    // const assignedTutors = assignedResponse.data.tutors || [];
 
-    const ids = assignedTutors
-      .map((tutor) => String(tutor._id))
-      .filter((id) => activeTutorIds.includes(id));
+    // const ids = assignedTutors
+    //   .map((tutor) => String(tutor._id))
+    //   .filter((id) => activeTutorIds.includes(id));
+
+
+
+
+const assignedTutors = assignedResponse.data.tutors || [];
+
+const ids = assignedTutors
+  .map((tutor) => String(tutor._id))
+  .filter(Boolean);
+
+const dateMap = {};
+
+assignedTutors.forEach((tutor) => {
+  const id = String(tutor._id);
+
+  if (id) {
+    dateMap[id] = tutor.assignedAt || tutor.createdAt || null;
+  }
+});
+
+setAssignedTutorIds(ids);
+setAssignedTutorDates(dateMap);
+
+
+
 
     const dateMap = {};
 
@@ -1870,20 +1995,63 @@ async function saveAssignedTutors() {
 
     setSubmitting(true);
 
+
+
+
+
+
+
+
+
+
+    // const activeTutorIds = tutors
+    //   .filter((tutor) => isTutorActive(tutor) && !isTutorBlocked(tutor))
+    //   .map((tutor) => String(tutor._id));
+
+    // const finalTutorIds = Array.from(
+    //   new Set([
+    //     ...assignedTutorIds.map(String),
+    //     ...newAssignTutorIds.map(String),
+    //   ])
+    // ).filter((id) => activeTutorIds.includes(id));
+
+    // await api.post(`/admin/student/${getStudentId(assignStudent)}/assign-tutors`, {
+    //   tutorIds: finalTutorIds,
+    // });
+
+
+
+
+
+
+
+
+
     const activeTutorIds = tutors
-      .filter((tutor) => isTutorActive(tutor) && !isTutorBlocked(tutor))
-      .map((tutor) => String(tutor._id));
+  .filter((tutor) => isTutorActive(tutor) && !isTutorBlocked(tutor))
+  .map((tutor) => String(tutor._id));
 
-    const finalTutorIds = Array.from(
-      new Set([
-        ...assignedTutorIds.map(String),
-        ...newAssignTutorIds.map(String),
-      ])
-    ).filter((id) => activeTutorIds.includes(id));
+const cleanNewTutorIds = newAssignTutorIds
+  .map(String)
+  .filter((id) => activeTutorIds.includes(id));
 
-    await api.post(`/admin/student/${getStudentId(assignStudent)}/assign-tutors`, {
-      tutorIds: finalTutorIds,
-    });
+const finalTutorIds = Array.from(
+  new Set([
+    ...assignedTutorIds.map(String),
+    ...cleanNewTutorIds,
+  ])
+);
+
+await api.post(`/admin/student/${getStudentId(assignStudent)}/assign-tutors`, {
+  tutorIds: finalTutorIds,
+});
+
+
+
+
+
+
+
 
     showAlert("Tutors assigned successfully", "success");
 
