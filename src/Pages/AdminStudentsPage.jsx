@@ -2310,7 +2310,7 @@ await api.post(`/admin/student/${getStudentId(assignStudent)}/assign-tutors`, {
 
 
 
-{studentFilterOptions.map((option) => (
+{/* {studentFilterOptions.map((option) => (
   <button
     key={option.key}
     type="button"
@@ -2329,7 +2329,45 @@ await api.post(`/admin/student/${getStudentId(assignStudent)}/assign-tutors`, {
     {studentFilter === option.key ? "✓" : ""}
     {option.label}
   </button>
+))} */}
+
+
+
+
+
+
+
+
+
+{studentFilterOptions.map((option) => (
+  <button
+    key={option.key}
+    type="button"
+    className={
+      studentFilter === option.key
+        ? "student-filter-option student-filter-option--active"
+        : "student-filter-option"
+    }
+    onClick={() => {
+      setStudentFilter(option.key);
+      setFilterOpen(false);
+
+      if (option.key === "new") {
+        navigate("/admin/students?filter=new");
+      } else {
+        navigate("/admin/students");
+      }
+    }}
+  >
+    <span className="student-filter-check">
+      {studentFilter === option.key ? "✓" : ""}
+    </span>
+
+    {option.label}
+  </button>
 ))}
+
+
 
 
 
