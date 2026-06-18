@@ -2709,7 +2709,7 @@ className={`tutor-card ${
 
 
 
-{/* <button
+<button
   type="button"
   className={`tutor-chat-btn ${
     isTutorBlocked(tutor) ? "tutor-chat-btn--disabled" : ""
@@ -2727,23 +2727,12 @@ className={`tutor-card ${
   }}
 >
   Chat
-</button> */}
+</button>
 
 
 
 
-{!isTutorBlocked(tutor) && (
-  <button
-    type="button"
-    className="tutor-chat-btn"
-    onClick={(e) => {
-      e.stopPropagation();
-      openTutorChat(tutor);
-    }}
-  >
-    Chat
-  </button>
-)}
+
 
 
   <button
@@ -2753,35 +2742,6 @@ className={`tutor-card ${
   >
     View Details
   </button>
-
-
-
-
-
-
-{/* <button
-  type="button"
-  className="view-details-btn"
-  onClick={() => {
-    const backData = {
-      backTo: "/admin/tutors",
-      backButtonLabel: "Tutors",
-      backLabel: "View details",
-    };
-
-    sessionStorage.setItem("adminTutorBackData", JSON.stringify(backData));
-
-    navigate(`/admin/tutors/${tutor._id}`, {
-      state: backData,
-    });
-  }}
->
-  View Details
-</button> */}
-
-
-
-
 </div>
 
 
