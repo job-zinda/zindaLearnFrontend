@@ -206,7 +206,7 @@ export default function StudentCourseTutorsPage() {
 
 
 
-              <button
+              {/* <button
                 type="button"
                 className="student-course-view-details-btn"
                 onClick={() => {
@@ -217,12 +217,29 @@ export default function StudentCourseTutorsPage() {
 
 
 
+                  // const backData = {
+                  //   backTo: `/student/courses/${categoryId}/tutors/${courseId}`,
+                  //   backButtonLabel: "Tutors",
+                  //   backLabel: "View details",
+                  //   courseName: courseName || "Selected Course",
+                  // };
+
+
+
+
+
+
+
+
+
+
+
                   const backData = {
-                    backTo: `/student/courses/${categoryId}/tutors/${courseId}`,
-                    backButtonLabel: "Tutors",
-                    backLabel: "View details",
-                    courseName: courseName || "Selected Course",
-                  };
+  backTo: `/student/courses/${categoryId}/tutors/${courseId}`,
+  backButtonLabel: `${courseName || "Selected Course"} tutors`,
+  backLabel: "View details",
+  courseName: courseName || "Selected Course",
+};
 
 
 
@@ -236,10 +253,38 @@ export default function StudentCourseTutorsPage() {
                 }}
               >
                 View Details
-              </button>
+              </button> */}
 
 
 
+
+
+
+
+
+<button
+  type="button"
+  className="student-course-view-details-btn"
+  onClick={() => {
+    const backData = {
+      backTo: `/student/courses/${categoryId}/tutors/${courseId}`,
+      backButtonLabel: `${courseName || "Selected Course"} tutors`,
+      backLabel: "View details",
+      courseName: courseName || "Selected Course",
+    };
+
+    sessionStorage.setItem(
+      "studentTutorBackData",
+      JSON.stringify(backData)
+    );
+
+    navigate(`/student/tutors/${tutor._id}`, {
+      state: backData,
+    });
+  }}
+>
+  View Details
+</button>
 
 
 
