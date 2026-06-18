@@ -4079,3 +4079,74 @@
     min-width: 0;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.assigned-student-card {
+  grid-template-columns: 58px minmax(0, 1fr) !important;
+  align-items: center !important;
+}
+
+.assigned-student-info {
+  min-width: 0 !important;
+}
+
+.assigned-student-email-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 14px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.assigned-student-email-row p {
+  margin: 0 !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.assigned-student-date {
+  margin-left: auto !important;
+  color: #f0abfc !important;
+  font-size: 13px !important;
+  font-weight: 950 !important;
+  white-space: nowrap !important;
+  text-align: right !important;
+}
+
+.assigned-student-date span {
+  display: none !important;
+}
+
+@media (max-width: 620px) {
+  .assigned-student-email-row {
+    align-items: flex-start !important;
+  }
+
+  .assigned-student-date {
+    font-size: 12px !important;
+  }
+}

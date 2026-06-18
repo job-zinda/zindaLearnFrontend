@@ -18,7 +18,6 @@ import { FiCopy, FiEye, FiEyeOff, FiUsers } from "react-icons/fi";
 
 
 
-
 // import { FiEye, FiEyeOff, FiCopy, FiShield } from "react-icons/fi";
 
 
@@ -192,19 +191,35 @@ function getErrorMessage(error, fallback = "Something went wrong") {
 
 
 
+// function formatAssignedDate(value) {
+//   if (!value) return "";
+
+//   const date = new Date(value);
+//   if (Number.isNaN(date.getTime())) return "";
+
+//   return date.toLocaleString("en-US", {
+//     month: "short",
+//     day: "2-digit",
+//     year: "numeric",
+//     hour: "numeric",
+//     minute: "2-digit",
+//     hour12: true,
+//   });
+// }
+
+
+
+
 function formatAssignedDate(value) {
   if (!value) return "";
 
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return "";
 
-  return date.toLocaleString("en-US", {
+  return date.toLocaleDateString("en-US", {
     month: "short",
     day: "2-digit",
     year: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true,
   });
 }
 
@@ -2133,7 +2148,7 @@ async function toggleTutorBlock() {
 
 
 
-<div className="assigned-student-info">
+{/* <div className="assigned-student-info">
   <h4>{student.name || "Student"}</h4>
   <p>{student.email || "No email"}</p>
   <small>{student.phone || "No phone"}</small>
@@ -2144,7 +2159,32 @@ async function toggleTutorBlock() {
     <span>Assigned</span>
     <b>{formatAssignedDate(student.assignedAt)}</b>
   </div>
-)}
+)} */}
+
+
+
+
+
+<div className="assigned-student-info">
+  <h4>{student.name || "Student"}</h4>
+
+  <div className="assigned-student-email-row">
+    <p>{student.email || "No email"}</p>
+
+    {formatAssignedDate(student.assignedAt) && (
+      <b className="assigned-student-date">
+        {formatAssignedDate(student.assignedAt)}
+      </b>
+    )}
+  </div>
+
+  <small>{student.phone || "No phone"}</small>
+</div>
+
+
+
+
+
 
 
 
