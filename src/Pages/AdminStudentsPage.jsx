@@ -2636,7 +2636,15 @@ ${isStudentBlocked(student)
 
 
 
-                <div className="student-card-actions">
+
+
+
+
+
+
+
+
+                {/* <div className="student-card-actions">
 
 
 
@@ -2677,7 +2685,42 @@ ${isStudentBlocked(student)
                   >
                     Assign Tutors
                   </button>
-                </div>
+                </div> */}
+
+
+
+
+
+
+
+{!isStudentBlocked(student) && (
+  <div className="student-card-actions">
+    <button
+      type="button"
+      className="student-chat-btn"
+      onClick={(e) => {
+        e.stopPropagation();
+        openStudentChat(student);
+      }}
+    >
+      Chat
+    </button>
+
+    <button
+      type="button"
+      className="student-assign-btn"
+      onClick={(e) => {
+        e.stopPropagation();
+        openAssignTutorModal(student);
+      }}
+    >
+      Assign Tutors
+    </button>
+  </div>
+)}
+
+
+
 
 
 
