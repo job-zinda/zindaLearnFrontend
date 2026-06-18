@@ -1327,7 +1327,7 @@ max-height:95vh!important;
 
 
 
-.student-detail-info-grid--two {
+/* .student-detail-info-grid--two {
   grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 }
 
@@ -1335,4 +1335,4 @@ max-height:95vh!important;
   .student-detail-info-grid--two {
     grid-template-columns: 1fr !important;
   }
-}
+} */
