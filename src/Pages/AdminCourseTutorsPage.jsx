@@ -2746,20 +2746,20 @@ className={`tutor-card ${
 )}
 
 
-  {/* <button
+  <button
     type="button"
     className="view-details-btn"
     onClick={() => goToDetails(tutor)}
   >
     View Details
-  </button> */}
+  </button>
 
 
 
 
 
 
-<button
+{/* <button
   type="button"
   className="view-details-btn"
   onClick={() => {
@@ -2777,7 +2777,7 @@ className={`tutor-card ${
   }}
 >
   View Details
-</button>
+</button> */}
 
 
 
