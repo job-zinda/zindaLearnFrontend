@@ -1243,3 +1243,74 @@ max-height:95vh!important;
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* STUDENT TUTOR DETAILS RESPONSIVE FULL WIDTH FIX */
+.student-detail-page {
+  width: 100% !important;
+  max-width: 100% !important;
+  display: block !important;
+  overflow-x: hidden !important;
+}
+
+.student-detail-card {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* info boxes responsive */
+.student-detail-info-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+}
+
+@media (max-width: 1100px) {
+  .student-detail-info-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .student-detail-card {
+    padding: 22px !important;
+    border-radius: 20px !important;
+  }
+
+  .student-detail-head {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  .student-detail-info-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .student-detail-bottom-actions {
+    grid-template-columns: 1fr !important;
+  }
+}
