@@ -3580,3 +3580,34 @@
     font-size: 14px !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.detail-bottom-actions--single {
+  grid-template-columns: 1fr !important;
+}
+
+.detail-bottom-actions--single .tutor-contact-btn {
+  width: 100% !important;
+}
