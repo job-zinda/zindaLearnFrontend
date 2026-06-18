@@ -4847,3 +4847,42 @@
     width: 198px !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.tutor-card-actions--blocked {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+}
+
+.tutor-card-actions--blocked .view-details-btn {
+  width: 100% !important;
+  min-width: 100% !important;
+}

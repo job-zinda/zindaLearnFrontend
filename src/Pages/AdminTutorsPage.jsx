@@ -1278,104 +1278,44 @@ useEffect(() => {
 
 
 
+<div
+  className={`tutor-card-actions ${
+    isTutorBlocked(tutor) ? "tutor-card-actions--blocked" : ""
+  }`}
+>
+  {!isTutorBlocked(tutor) && (
+    <button
+      type="button"
+      className="tutor-chat-btn"
+      onClick={(e) => {
+        e.stopPropagation();
+        openTutorChat(tutor);
+      }}
+    >
+      Chat
+    </button>
+  )}
 
-                <div className="tutor-card-actions">
-
-
-
-
-
-
-
-
-                  {/* <button
-                    type="button"
-                    className={`tutor-chat-btn ${isTutorBlocked(tutor) ? "tutor-chat-btn--disabled" : ""
-                      }`}
-                    disabled={isTutorBlocked(tutor)}
-                    onClick={(e) => {
-                      e.stopPropagation();
-
-                      if (isTutorBlocked(tutor)) {
-                        showAlert("Blocked tutor chat is disabled", "error");
-                        return;
-                      }
-
-                      openTutorChat(tutor);
-                    }}
-                  >
-                    Chat
-                  </button> */}
-
-
-
-
-
-
-
-{!isTutorBlocked(tutor) && (
   <button
     type="button"
-    className="tutor-chat-btn"
-    onClick={(e) => {
-      e.stopPropagation();
-      openTutorChat(tutor);
+    className="view-details-btn"
+    onClick={() => {
+      const backData = {
+        backTo: "/admin/tutors",
+        backButtonLabel: "Tutors",
+        backLabel: "View details",
+      };
+
+      sessionStorage.setItem("adminTutorBackData", JSON.stringify(backData));
+
+      navigate(`/admin/tutors/${tutor._id}`, {
+        state: backData,
+      });
     }}
   >
-    Chat
+    View Details
   </button>
-)}
-
-
-
-
-
-                  {/* <button
-                    type="button"
-                    className="view-details-btn"
-                    onClick={() => {
-                      const backData = {
-                        backTo: "/admin/tutors",
-                        backButtonLabel: "Tutors",
-                        backLabel: "View details",
-                      };
-
-                      sessionStorage.setItem(
-                        "adminTutorBackData",
-                        JSON.stringify(backData)
-                      );
-
-                      navigate(`/admin/tutors/${tutor._id}`, {
-                        state: backData,
-                      });
-                    }}
-                  >
-                    View Details
-                  </button> */}
-
-
-<button
-  type="button"
-  className="view-details-btn"
-  onClick={() => {
-    const backData = {
-      backTo: "/admin/tutors",
-      backButtonLabel: "Tutors",
-      backLabel: "View details",
-    };
-
-    sessionStorage.setItem("adminTutorBackData", JSON.stringify(backData));
-
-    navigate(`/admin/tutors/${tutor._id}`, {
-      state: backData,
-    });
-  }}
->
-  View Details
-</button>
-
-
-                </div>
+</div>
 
 
 
