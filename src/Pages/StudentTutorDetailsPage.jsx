@@ -475,7 +475,7 @@ export default function StudentTutorDetailsPage() {
           </div>
         </div>
 
-        <div className="student-detail-info-grid">
+        {/* <div className="student-detail-info-grid">
           <div className="student-detail-info-box">
             <span>Qualification</span>
             <b>{tutor.qualification || "Not added"}</b>
@@ -492,7 +492,29 @@ export default function StudentTutorDetailsPage() {
               <b>{formatSyllabus(tutor.syllabus)}</b>
             </div>
           )}
-        </div>
+        </div> */}
+
+
+
+
+<div className="student-detail-info-grid student-detail-info-grid--two">
+  <div className="student-detail-info-box">
+    <span>Course / Class</span>
+    <b>{getCourseNames(tutor) || "Not added"}</b>
+  </div>
+
+  {isOnlineTuition && (
+    <div className="student-detail-info-box">
+      <span>Syllabus</span>
+      <b>{formatSyllabus(tutor.syllabus)}</b>
+    </div>
+  )}
+</div>
+
+
+
+
+
 
         <section className="student-detail-section">
           <h3>About</h3>

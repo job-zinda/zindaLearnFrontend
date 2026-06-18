@@ -1314,3 +1314,25 @@ max-height:95vh!important;
     grid-template-columns: 1fr !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+.student-detail-info-grid--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+@media (max-width: 720px) {
+  .student-detail-info-grid--two {
+    grid-template-columns: 1fr !important;
+  }
+}
