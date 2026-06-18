@@ -183,10 +183,36 @@ function formatAssignedDate(value) {
 
 
 
+// const studentFilterOptions = [
+//   {
+//     key: "all",
+//     label: "All Students",
+//   },
+//   {
+//     key: "active",
+//     label: "Active Students",
+//   },
+//   {
+//     key: "blocked",
+//     label: "Blocked Students",
+//   },
+// ];
+
+
+
+
+
+
+
+
 const studentFilterOptions = [
   {
     key: "all",
     label: "All Students",
+  },
+  {
+    key: "new",
+    label: "New Signups",
   },
   {
     key: "active",
@@ -203,6 +229,7 @@ const studentFilterOptions = [
 
 
 
+
 // const studentFilterLabels = {
 //   all: "All Students",
 //   blocked: "Blocked Students",
@@ -210,11 +237,23 @@ const studentFilterOptions = [
 
 
 
+// const studentFilterLabels = {
+//   all: "All Students",
+//   active: "Active Students",
+//   blocked: "Blocked Students",
+// };
+
+
+
+
+
 const studentFilterLabels = {
   all: "All Students",
+  new: "New Signups",
   active: "Active Students",
   blocked: "Blocked Students",
 };
+
 
 
 
@@ -469,8 +508,18 @@ const [removeAssignedTutorTarget, setRemoveAssignedTutorTarget] = useState(null)
 
 
 
-  const showOnlyNew =
-    new URLSearchParams(location.search).get("filter") === "new";
+  // const showOnlyNew =
+  //   new URLSearchParams(location.search).get("filter") === "new";
+
+
+
+
+
+const showOnlyNew = studentFilter === "new";
+
+
+
+
 
   // const filteredStudents = useMemo(() => {
   //   let result = students;
@@ -658,7 +707,13 @@ const filteredStudents = useMemo(() => {
 
 
 
+useEffect(() => {
+  const filterValue = new URLSearchParams(location.search).get("filter");
 
+  if (filterValue === "new") {
+    setStudentFilter("new");
+  }
+}, [location.search]);
 
 
 
@@ -2229,7 +2284,7 @@ await api.post(`/admin/student/${getStudentId(assignStudent)}/assign-tutors`, {
           className="student-filter-menu"
           onClick={(e) => e.stopPropagation()}
         >
-          {studentFilterOptions.map((option) => (
+          {/* {studentFilterOptions.map((option) => (
             <button
               key={option.key}
               type="button"
@@ -2249,7 +2304,37 @@ await api.post(`/admin/student/${getStudentId(assignStudent)}/assign-tutors`, {
 
               {option.label}
             </button>
-          ))}
+          ))} */}
+
+
+
+
+
+{studentFilterOptions.map((option) => (
+  <button
+    key={option.key}
+    type="button"
+    className={studentFilter === option.key ? "active" : ""}
+    onClick={() => {
+      setStudentFilter(option.key);
+      setFilterOpen(false);
+
+      if (option.key === "new") {
+        navigate("/admin/students?filter=new");
+      } else {
+        navigate("/admin/students");
+      }
+    }}
+  >
+    {studentFilter === option.key ? "✓" : ""}
+    {option.label}
+  </button>
+))}
+
+
+
+
+
         </div>
       )}
     </div>
