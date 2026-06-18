@@ -222,6 +222,51 @@ export default function TutorCourseTutorsPage() {
 
 
 
+{/* 
+
+<button
+  type="button"
+  className="tutor-course-view-details-btn"
+  onClick={() => {
+    // const backData = {
+    //   backTo: `/tutor/courses/${categoryId}/tutors/${courseId}`,
+    //   backButtonLabel: "Tutors",
+    //   backLabel: "View details",
+    //   courseName: courseName || "Selected Course",
+    // };
+
+
+
+
+const backData = {
+  backTo: `/tutor/courses/${categoryId}/tutors/${courseId}`,
+  backButtonLabel: `${courseName || "Selected Course"} tutors`,
+  backLabel: "View details",
+  courseName: courseName || "Selected Course",
+};
+
+
+
+
+
+    sessionStorage.setItem(
+      "tutorTutorBackData",
+      JSON.stringify(backData)
+    );
+
+    navigate(`/tutor/tutors/${tutor._id}`, {
+      state: backData,
+    });
+  }}
+>
+  View Details
+</button> */}
+
+
+
+
+
+
 
 
 <button
@@ -230,7 +275,7 @@ export default function TutorCourseTutorsPage() {
   onClick={() => {
     const backData = {
       backTo: `/tutor/courses/${categoryId}/tutors/${courseId}`,
-      backButtonLabel: "Tutors",
+      backButtonLabel: `${courseName || "Selected Course"} tutors`,
       backLabel: "View details",
       courseName: courseName || "Selected Course",
     };
@@ -247,6 +292,7 @@ export default function TutorCourseTutorsPage() {
 >
   View Details
 </button>
+
 
 
 
