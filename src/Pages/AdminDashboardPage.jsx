@@ -101,12 +101,29 @@ export default function AdminDashboardPage() {
   const { showAlert } = useAlert();
   const navigate = useNavigate();
 
-  const [dashboard, setDashboard] = useState({
-    newSignups: 0,
-    totalStudents: 0,
-    activeTutors: 0,
-    graphData: [],
-  });
+  // const [dashboard, setDashboard] = useState({
+  //   newSignups: 0,
+  //   totalStudents: 0,
+  //   activeTutors: 0,
+  //   graphData: [],
+  // });
+
+
+
+
+const [dashboard, setDashboard] = useState({
+  newSignups: 0,
+  activeStudents: 0,
+  activeTutors: 0,
+  deactiveTutors: 0,
+  assignedTutors: 0,
+  graphData: [],
+});
+
+
+
+
+
 
   const [loading, setLoading] = useState(true);
 
@@ -122,12 +139,29 @@ export default function AdminDashboardPage() {
       const { data } = await api.get("/admin/dashboard");
       const payload = data?.data || data || {};
 
-      setDashboard({
-        newSignups: payload.newSignups || 0,
-        totalStudents: payload.totalStudents || 0,
-        activeTutors: payload.activeTutors || 0,
-        graphData: payload.graphData || [],
-      });
+      // setDashboard({
+      //   newSignups: payload.newSignups || 0,
+      //   totalStudents: payload.totalStudents || 0,
+      //   activeTutors: payload.activeTutors || 0,
+      //   graphData: payload.graphData || [],
+      // });
+
+
+
+
+setDashboard({
+  newSignups: payload.newSignups || 0,
+  activeStudents: payload.activeStudents || 0,
+  activeTutors: payload.activeTutors || 0,
+  deactiveTutors: payload.deactiveTutors || 0,
+  assignedTutors: payload.assignedTutors || 0,
+  graphData: payload.graphData || [],
+});
+
+
+
+
+
     } catch (err) {
       showAlert(getErrorMessage(err, "Failed to load dashboard"), "error");
     } finally {
@@ -147,7 +181,7 @@ export default function AdminDashboardPage() {
       ) : (
         <>
           <section className="admin-dashboard-stats">
-            <StatCard
+            {/* <StatCard
               title="New Signups (24 h)"
               value={dashboard.newSignups}
               change="+11%"
@@ -169,7 +203,56 @@ export default function AdminDashboardPage() {
               change="+19%"
               changeType="up"
               onClick={() => navigate("/admin/tutors")}
-            />
+            /> */}
+
+
+
+
+
+<StatCard
+  title="New Signups (24 h)"
+  value={dashboard.newSignups}
+  change="+11%"
+  changeType="up"
+  onClick={() => navigate("/admin/students?filter=new")}
+/>
+
+<StatCard
+  title="Active Students"
+  value={dashboard.activeStudents}
+  change="+"
+  changeType="up"
+  onClick={() => navigate("/admin/students?filter=active")}
+/>
+
+<StatCard
+  title="Active Tutors"
+  value={dashboard.activeTutors}
+  change="+19%"
+  changeType="up"
+  onClick={() => navigate("/admin/tutors?filter=active")}
+/>
+
+<StatCard
+  title="Deactive Tutors"
+  value={dashboard.deactiveTutors}
+  change="-"
+  changeType="down"
+  onClick={() => navigate("/admin/tutors?filter=deactive")}
+/>
+
+<StatCard
+  title="Assigned Tutors"
+  value={dashboard.assignedTutors}
+  change="+"
+  changeType="up"
+  onClick={() => navigate("/admin/students")}
+/>
+
+
+
+
+
           </section>
 
           <div className="admin-dashboard-divider" />

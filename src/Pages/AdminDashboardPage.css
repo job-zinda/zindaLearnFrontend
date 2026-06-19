@@ -237,3 +237,53 @@
     font-size: 16px;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.admin-dashboard-stats {
+  margin-top: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 22px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 1450px) {
+  .admin-dashboard-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1000px) {
+  .admin-dashboard-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .admin-dashboard-stats {
+    grid-template-columns: 1fr;
+  }
+}
