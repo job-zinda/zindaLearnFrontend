@@ -688,3 +688,24 @@
   color: rgba(255, 255, 255, 0.68);
   font-weight: 850;
 }
+
+
+
+
+
+
+
+
+
+/* Course / Classes toggle right side */
+.tutor-about-course-list .tutor-about-check-item {
+  justify-content: space-between;
+}
+
+.tutor-about-course-list .tutor-about-check-item input {
+  order: 2;
+}
+
+.tutor-about-course-list .tutor-about-check-item span {
+  order: 1;
+}
