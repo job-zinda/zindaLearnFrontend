@@ -577,7 +577,7 @@ function contactTutor() {
 
 
 
-        <button
+        {/* <button
           type="button"
           onClick={() =>
             navigate(backTo, {
@@ -588,7 +588,35 @@ function contactTutor() {
           }
         >
           ← {backButtonLabel}
-        </button>
+        </button> */}
+
+
+
+
+
+<button
+  type="button"
+  onClick={() => {
+    if (backTo === "/student/tutors") {
+      navigate("/student/tutors");
+      return;
+    }
+
+    navigate(backTo, {
+      state: {
+        courseName: location.state?.courseName || savedBackData?.courseName,
+      },
+    });
+  }}
+>
+  ← {backButtonLabel}
+</button>
+
+
+
+
+
+
         <span>»</span>
         <b>{backLabel}</b>
 

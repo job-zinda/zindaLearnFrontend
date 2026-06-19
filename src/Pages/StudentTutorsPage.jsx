@@ -476,9 +476,37 @@ if (isTutorBlocked(tutor)) return false;
     });
   }, [tutors, assignedTutorIds, search]);
 
-  function goToDetails(tutor) {
-    navigate(`/student/tutors/${tutor._id}`);
+  // function goToDetails(tutor) {
+  //   navigate(`/student/tutors/${tutor._id}`);
+  // }
+
+
+
+
+
+
+function goToDetails(tutor) {
+  if (!tutor?._id) {
+    showAlert("Tutor id not found", "error");
+    return;
   }
+
+  const backData = {
+    backTo: "/student/tutors",
+    backButtonLabel: "Tutors",
+    backLabel: "View details",
+  };
+
+  sessionStorage.setItem("studentTutorBackData", JSON.stringify(backData));
+
+  navigate(`/student/tutors/${tutor._id}`, {
+    state: backData,
+  });
+}
+
+
+
+
 
   async function openTutorChat(tutor) {
     try {
