@@ -4916,3 +4916,50 @@
   order: 1 !important;
   justify-self: start !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* FIX: Chat + View Details same row, no text break */
+.student-tutor-card-actions {
+  display: grid !important;
+  grid-template-columns: 92px 1fr !important;
+  gap: 12px !important;
+  align-items: stretch !important;
+}
+
+.student-tutor-chat-btn,
+.student-view-details-btn {
+  min-width: 0 !important;
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  font-size: 15px !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+.student-tutor-card-actions .student-view-details-btn {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+}
