@@ -2239,31 +2239,68 @@ rooms
               {loadingRooms ? (
                 <div className="admin-chat-list-state">Loading chats...</div>
               ) : search.trim() && searchResults.length > 0 ? (
-                searchResults.map(({ student, isNew }) => (
-                  <button
-                    key={student._id || student.id}
-                    type="button"
-                    className="admin-chat-room-item"
-                    onClick={() => selectStudentFromSearch(student)}
-                  >
-                    {/* <Avatar user={student} className="admin-chat-room-avatar" /> */}
 
-                    <Avatar user={chatUser} className="admin-chat-room-avatar" />
 
-                    <div className="admin-chat-room-info">
-                      <div className="admin-chat-room-top">
-                        {/* <h4>{getUserName(student)}</h4> */}
 
-<h4>{getUserName(chatUser)}</h4>
 
-                        {isNew && <span>New</span>}
-                      </div>
 
-                      <p>{student.email}</p>
-                      <small>Tap to chat</small>
-                    </div>
-                  </button>
-                ))
+
+                
+//                 searchResults.map(({ student, isNew }) => (
+//                   <button
+//                     key={student._id || student.id}
+//                     type="button"
+//                     className="admin-chat-room-item"
+//                     onClick={() => selectStudentFromSearch(student)}
+//                   >
+//                     {/* <Avatar user={student} className="admin-chat-room-avatar" /> */}
+
+//                     <Avatar user={chatUser} className="admin-chat-room-avatar" />
+
+//                     <div className="admin-chat-room-info">
+//                       <div className="admin-chat-room-top">
+//                         {/* <h4>{getUserName(student)}</h4> */}
+
+// <h4>{getUserName(chatUser)}</h4>
+
+//                         {isNew && <span>New</span>}
+//                       </div>
+
+//                       <p>{student.email}</p>
+//                       <small>Tap to chat</small>
+//                     </div>
+//                   </button>
+//                 ))
+
+
+
+
+
+searchResults.map(({ student, isNew }) => (
+  <button
+    key={student._id || student.id}
+    type="button"
+    className="admin-chat-room-item"
+    onClick={() => selectStudentFromSearch(student)}
+  >
+    <Avatar user={student} className="admin-chat-room-avatar" />
+
+    <div className="admin-chat-room-info">
+      <div className="admin-chat-room-top">
+        <h4>{getUserName(student)}</h4>
+        {isNew && <span>New</span>}
+      </div>
+
+      <p>{student.email}</p>
+      <small>Tap to chat</small>
+    </div>
+  </button>
+))
+
+
+
+
+
               ) : filteredRooms.length === 0 ? (
                 <div className="admin-chat-list-state">No chats found</div>
               ) : (
