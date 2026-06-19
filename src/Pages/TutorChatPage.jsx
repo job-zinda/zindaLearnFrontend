@@ -427,7 +427,9 @@ export default function TutorChatPage() {
   const emojiPickerRef = useRef(null);
 
   const activeRoomId = getRoomId(activeRoom);
-  const activeAdmin = useMemo(() => getAdmin(activeRoom), [activeRoom]);
+  // const activeAdmin = useMemo(() => getAdmin(activeRoom), [activeRoom]);
+
+  const activePartner = useMemo(() => getChatPartner(activeRoom), [activeRoom]);
 
   useEffect(() => {
     activeRoomIdRef.current = activeRoomId || "";
@@ -1015,7 +1017,7 @@ export default function TutorChatPage() {
                   </button>
 
                   <div className="tutor-admin-chat-user">
-                    <Avatar user={activeAdmin} />
+                    {/* <Avatar user={activeAdmin} />
 
                     <div>
                       <h3>{getUserName(activeAdmin, "Admin")}</h3>
@@ -1024,7 +1026,25 @@ export default function TutorChatPage() {
                           ? "Online"
                           : formatLastSeen(activeAdmin?.lastSeen)}
                       </p>
-                    </div>
+                    </div> */}
+
+
+
+
+
+<Avatar user={activePartner} />
+
+<div>
+  <h3>{getUserName(activePartner, getChatPartnerFallback(activeRoom))}</h3>
+  <p className={activePartner?.isOnline ? "online" : ""}>
+    {activePartner?.isOnline
+      ? "Online"
+      : formatLastSeen(activePartner?.lastSeen)}
+  </p>
+</div>
+
+
+
                   </div>
                 </header>
 

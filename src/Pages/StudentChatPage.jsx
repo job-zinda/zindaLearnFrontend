@@ -1514,7 +1514,9 @@ export default function StudentChatPage() {
   const emojiPickerRef = useRef(null);
 
   const activeRoomId = getRoomId(activeRoom);
-  const activeAdmin = useMemo(() => getAdmin(activeRoom), [activeRoom]);
+  // const activeAdmin = useMemo(() => getAdmin(activeRoom), [activeRoom]);
+
+  const activePartner = useMemo(() => getChatPartner(activeRoom), [activeRoom]);
 
   useEffect(() => {
     activeRoomIdRef.current = activeRoomId || "";
@@ -1527,7 +1529,7 @@ export default function StudentChatPage() {
 
     return rooms.filter((room) => {
       // const admin = getAdmin(room);
-      const partner = getChatPartner(room);
+      const admin = getChatPartner(room);
       const name = getUserName(admin, "").toLowerCase();
       const email = String(admin?.email || "").toLowerCase();
 
@@ -2023,7 +2025,7 @@ export default function StudentChatPage() {
                 filteredRooms.map((room) => {
                   const roomId = getRoomId(room);
                   // const admin = getAdmin(room);
-                  const partner = getChatPartner(room);
+                 const admin = getChatPartner(room);
                   // const name = getUserName(admin, "Admin");
                  const name = getUserName(partner, getChatPartnerFallback(room))
 
@@ -2115,11 +2117,11 @@ export default function StudentChatPage() {
                     <Avatar user={partner} />
 
                     <div>
-                      <h3>{getUserName(activeAdmin, "Admin")}</h3>
-                      <p className={activeAdmin?.isOnline ? "online" : ""}>
-                        {activeAdmin?.isOnline
+                      <h3>{getUserName(activePartner, "Admin")}</h3>
+                      <p className={aactivePartner?.isOnline ? "online" : ""}>
+                        {activePartner?.isOnline
                           ? "Online"
-                          : formatLastSeen(activeAdmin?.lastSeen)}
+                          : formatLastSeen(activePartner?.lastSeen)}
                       </p>
                     </div>
                   </div>
