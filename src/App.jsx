@@ -1703,6 +1703,11 @@ export default function App() {
           <Route path="tutors" element={<TutorTutorsPage />} />
 
           <Route
+  path="my-students"
+  element={<TutorPlaceholderPage title="My Students" />}
+/>
+
+          <Route
             path="tutors/:tuterId"
             element={<TutorTutorDetailsPage />}
           />

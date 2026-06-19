@@ -532,6 +532,26 @@ function TutorIcon() {
   );
 }
 
+
+
+
+
+function MyStudentsIcon() {
+  return (
+    <svg viewBox="0 0 24 24">
+      <circle cx="8" cy="8" r="3" />
+      <path d="M3.5 19c.5-3.2 2.2-5 4.5-5s4 1.8 4.5 5" />
+      <circle cx="17" cy="7" r="2.5" />
+      <path d="M14.5 14.5c.6-.4 1.4-.6 2.5-.6 2.2 0 3.7 1.5 4 4.5" />
+    </svg>
+  );
+}
+
+
+
+
+
+
 function AboutIcon() {
   return (
     <svg viewBox="0 0 24 24">
@@ -687,13 +707,28 @@ function TutorProfileEditModal({
   );
 }
 
+// const navItems = [
+//   { label: "Home", to: "/tutor", icon: <HomeIcon /> },
+//   { label: "Tutors", to: "/tutor/tutors", icon: <TutorIcon /> },
+//   { label: "About", to: "/tutor/about", icon: <AboutIcon /> },
+//   { label: "Chats", to: "/tutor/chats", icon: <ChatIcon /> },
+//   { label: "Settings", to: "/tutor/settings", icon: <SettingsIcon /> },
+// ];
+
+
+
 const navItems = [
   { label: "Home", to: "/tutor", icon: <HomeIcon /> },
   { label: "Tutors", to: "/tutor/tutors", icon: <TutorIcon /> },
+  { label: "My Students", to: "/tutor/my-students", icon: <MyStudentsIcon /> },
   { label: "About", to: "/tutor/about", icon: <AboutIcon /> },
   { label: "Chats", to: "/tutor/chats", icon: <ChatIcon /> },
   { label: "Settings", to: "/tutor/settings", icon: <SettingsIcon /> },
 ];
+
+
+
+
 
 export default function TutorSideNav({ open, onClose }) {
   const navigate = useNavigate();
