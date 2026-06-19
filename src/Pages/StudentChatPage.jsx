@@ -2082,7 +2082,7 @@ const name = getUserName(partner, getChatPartnerFallback(room));
 
                         <small
                           className={
-                            admin?.isOnline ? "online" : ""
+                            partner?.isOnline ? "online" : ""
                           }
                         >
                           {partner?.isOnline
