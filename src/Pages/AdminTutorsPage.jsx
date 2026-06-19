@@ -5,7 +5,8 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 // import React, { useEffect, useMemo, useState } from "react";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAlert } from "../context/AlertContext";
 import { getMediaUrl } from "../utils/media";
 import api from "../api/axios";
@@ -301,6 +302,7 @@ Login to view full tutor details.`;
 
 export default function AdminTutorsPage() {
   const navigate = useNavigate();
+    const location = useLocation();
   const { showAlert } = useAlert();
 
   const [tutors, setTutors] = useState([]);
@@ -482,6 +484,23 @@ const filteredTutors = useMemo(() => {
   useEffect(() => {
     fetchData();
   }, []);
+
+
+
+
+
+useEffect(() => {
+  const filterValue = new URLSearchParams(location.search).get("filter");
+
+  if (["active", "deactive", "blocked"].includes(filterValue)) {
+    setTutorFilter(filterValue);
+  } else {
+    setTutorFilter("all");
+  }
+}, [location.search]);
+
+
+
 
 
 
@@ -1081,10 +1100,28 @@ useEffect(() => {
                   ? "tutor-filter-option tutor-filter-option--active"
                   : "tutor-filter-option"
               }
-              onClick={() => {
-                setTutorFilter(option.key);
-                setFilterOpen(false);
-              }}
+              // onClick={() => {
+              //   setTutorFilter(option.key);
+              //   setFilterOpen(false);
+              // }}
+
+
+
+
+onClick={() => {
+  setTutorFilter(option.key);
+  setFilterOpen(false);
+
+  if (option.key === "all") {
+    navigate("/admin/tutors");
+  } else {
+    navigate(`/admin/tutors?filter=${option.key}`);
+  }
+}}
+
+
+
+
             >
               <span className="tutor-filter-check">
                 {tutorFilter === option.key ? "✓" : ""}

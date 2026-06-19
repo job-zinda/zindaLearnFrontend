@@ -259,6 +259,26 @@ setDashboard({
   onClick={() => navigate("/admin/students?filter=new")}
 />
 
+{/* <StatCard
+  title="Active Students"
+  value={dashboard.activeStudents}
+  onClick={() => navigate("/admin/students?filter=active")}
+/>
+
+<StatCard
+  title="Active Tutors"
+  value={dashboard.activeTutors}
+  onClick={() => navigate("/admin/tutors?filter=active")}
+/>
+
+<StatCard
+  title="Deactive Tutors"
+  value={dashboard.deactiveTutors}
+  onClick={() => navigate("/admin/tutors?filter=deactive")}
+/> */}
+
+
+
 <StatCard
   title="Active Students"
   value={dashboard.activeStudents}
@@ -277,10 +297,13 @@ setDashboard({
   onClick={() => navigate("/admin/tutors?filter=deactive")}
 />
 
+
+
+
+
 <StatCard
   title="Assigned Tutors"
   value={dashboard.assignedTutors}
-  onClick={() => navigate("/admin/students")}
 />
 
 

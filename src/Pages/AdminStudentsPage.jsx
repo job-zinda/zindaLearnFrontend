@@ -707,13 +707,28 @@ const filteredStudents = useMemo(() => {
 
 
 
+// useEffect(() => {
+//   const filterValue = new URLSearchParams(location.search).get("filter");
+
+//   if (filterValue === "new") {
+//     setStudentFilter("new");
+//   }
+// }, [location.search]);
+
+
+
+
+
 useEffect(() => {
   const filterValue = new URLSearchParams(location.search).get("filter");
 
-  if (filterValue === "new") {
-    setStudentFilter("new");
+  if (["new", "active", "blocked"].includes(filterValue)) {
+    setStudentFilter(filterValue);
+  } else {
+    setStudentFilter("all");
   }
 }, [location.search]);
+
 
 
 
@@ -2414,16 +2429,32 @@ await api.post(`/admin/student/${getStudentId(assignStudent)}/assign-tutors`, {
         ? "student-filter-option student-filter-option--active"
         : "student-filter-option"
     }
-    onClick={() => {
-      setStudentFilter(option.key);
-      setFilterOpen(false);
+    // onClick={() => {
+    //   setStudentFilter(option.key);
+    //   setFilterOpen(false);
 
-      if (option.key === "new") {
-        navigate("/admin/students?filter=new");
-      } else {
-        navigate("/admin/students");
-      }
-    }}
+    //   if (option.key === "new") {
+    //     navigate("/admin/students?filter=new");
+    //   } else {
+    //     navigate("/admin/students");
+    //   }
+    // }}
+
+
+
+onClick={() => {
+  setStudentFilter(option.key);
+  setFilterOpen(false);
+
+  if (option.key === "all") {
+    navigate("/admin/students");
+  } else {
+    navigate(`/admin/students?filter=${option.key}`);
+  }
+}}
+
+
+
   >
     <span className="student-filter-check">
       {studentFilter === option.key ? "✓" : ""}
