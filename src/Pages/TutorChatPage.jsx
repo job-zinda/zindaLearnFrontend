@@ -93,14 +93,29 @@ function getStudent(room) {
   return null;
 }
 
+// function getChatPartner(room) {
+//   if (room?.roomType === "student_tutor") {
+//     return getStudent(room);
+//   }
+
+//   // return getAdmin(room);
+//    return getChatPartner(room)
+// }
+
+
+
+
 function getChatPartner(room) {
   if (room?.roomType === "student_tutor") {
     return getStudent(room);
   }
 
-  // return getAdmin(room);
-   return getChatPartner(room)
+  return getAdmin(room);
 }
+
+
+
+
 
 function getChatPartnerFallback(room) {
   return room?.roomType === "student_tutor" ? "Student" : "Admin";
