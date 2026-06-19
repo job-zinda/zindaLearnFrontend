@@ -468,6 +468,62 @@ async function fetchTutor() {
     }
   }
 
+
+
+
+
+
+async function openAssignedTutorChat() {
+  try {
+    if (!isAssignedTutor) {
+      showAlert("This tutor is not assigned to you", "error");
+      return;
+    }
+
+    if (!tuterId) {
+      showAlert("Tutor id not found", "error");
+      return;
+    }
+
+    setSubmitting(true);
+
+    const { data } = await api.post(`/chat/student-tutor-room/${tuterId}`);
+
+    const roomId = data?.room?._id || data?.chatRoom?._id || data?.roomId;
+
+    if (roomId) {
+      navigate(`/student/chats?roomId=${roomId}&open=chat`);
+    } else {
+      navigate("/student/chats");
+    }
+  } catch (err) {
+    showAlert(getErrorMessage(err, "Failed to open tutor chat"), "error");
+  } finally {
+    setSubmitting(false);
+  }
+}
+
+function contactTutor() {
+  if (isAssignedTutor) {
+    const phone = String(tutor?.phone || "").replace(/\D/g, "");
+
+    if (!phone) {
+      showAlert("Tutor phone number not available", "error");
+      return;
+    }
+
+    window.location.href = `tel:${phone}`;
+    return;
+  }
+
+  setConnectModalOpen(true);
+}
+
+
+
+
+
+
   if (loading) {
     return (
       <div className="student-detail-page">
@@ -715,7 +771,7 @@ async function fetchTutor() {
 
         </section>
 
-        <div className="student-detail-bottom-actions">
+        {/* <div className="student-detail-bottom-actions">
           <button
             type="button"
             className="student-write-review-btn"
@@ -740,7 +796,57 @@ async function fetchTutor() {
           onClick={() => setConnectModalOpen(true)}
         >
           Contact
-        </button>
+        </button> */}
+
+
+
+
+
+
+<div className="student-detail-bottom-actions">
+  <button
+    type="button"
+    className="student-write-review-btn"
+    onClick={openReviewModal}
+  >
+    Write Review
+  </button>
+
+  {isAssignedTutor ? (
+    <button
+      type="button"
+      className="student-connect-btn"
+      disabled={submitting}
+      onClick={openAssignedTutorChat}
+    >
+      {submitting ? "Opening..." : "Chat"}
+    </button>
+  ) : (
+    <button
+      type="button"
+      className="student-connect-btn"
+      disabled={submitting}
+      onClick={sendConnectRequest}
+    >
+      {submitting ? "Sending..." : "Send Request"}
+    </button>
+  )}
+</div>
+
+<button
+  type="button"
+  className="student-connect-full-btn"
+  onClick={contactTutor}
+>
+  Contact
+</button>
+
+
+
+
+
+
+
       </div>
 
       {/* <Modal

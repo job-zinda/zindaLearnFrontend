@@ -1383,3 +1383,60 @@ max-height:95vh!important;
     grid-template-columns: 1fr !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.student-detail-bottom-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.student-detail-bottom-actions .student-write-review-btn,
+.student-detail-bottom-actions .student-connect-btn {
+  width: 100%;
+  min-height: 54px;
+}
+
+.student-connect-full-btn {
+  width: 100%;
+  min-height: 54px;
+}
+
+@media (max-width: 720px) {
+  .student-detail-bottom-actions {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .student-detail-bottom-actions .student-write-review-btn,
+  .student-detail-bottom-actions .student-connect-btn,
+  .student-connect-full-btn {
+    min-height: 48px;
+    font-size: 14px;
+    padding: 12px 10px;
+  }
+}
