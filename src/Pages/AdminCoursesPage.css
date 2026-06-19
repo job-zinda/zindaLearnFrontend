@@ -577,3 +577,294 @@
     width: 100%;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   ADMIN COURSES MODAL DARK THEME FINAL FIX
+   Paste at VERY BOTTOM of AdminCoursesPage.css
+   ========================================================= */
+
+.admin-courses-page ~ .modal-overlay,
+body:has(.admin-courses-page) .modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  background: rgba(2, 6, 23, 0.72) !important;
+  backdrop-filter: blur(7px) !important;
+  z-index: 999999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 24px !important;
+}
+
+body:has(.admin-courses-page) .modal-content,
+body:has(.admin-courses-page) .modal-box,
+body:has(.admin-courses-page) .modal-container {
+  width: min(660px, 94vw) !important;
+  max-height: 88vh !important;
+  overflow-y: auto !important;
+  background: linear-gradient(180deg, #111633 0%, #070a21 100%) !important;
+  border: 1px solid rgba(217, 70, 239, 0.35) !important;
+  border-radius: 22px !important;
+  color: #ffffff !important;
+  padding: 0 !important;
+  box-shadow: 0 30px 85px rgba(0, 0, 0, 0.62) !important;
+}
+
+body:has(.admin-courses-page) .modal-header {
+  background: rgba(15, 20, 48, 0.98) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  padding: 22px 24px !important;
+}
+
+body:has(.admin-courses-page) .modal-header h2,
+body:has(.admin-courses-page) .modal-header h3,
+body:has(.admin-courses-page) .modal-title {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-weight: 950 !important;
+}
+
+body:has(.admin-courses-page) .modal-close,
+body:has(.admin-courses-page) .close-btn {
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 50% !important;
+  background: rgba(217, 70, 239, 0.22) !important;
+  color: #ffffff !important;
+  border: none !important;
+  font-size: 28px !important;
+}
+
+body:has(.admin-courses-page) .modal-body,
+body:has(.admin-courses-page) form {
+  background: linear-gradient(180deg, #0d1230 0%, #070a21 100%) !important;
+  color: #ffffff !important;
+}
+
+body:has(.admin-courses-page) form {
+  padding: 24px !important;
+  display: grid !important;
+  gap: 18px !important;
+}
+
+body:has(.admin-courses-page) form label,
+body:has(.admin-courses-page) form label span,
+body:has(.admin-courses-page) form > span {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-weight: 900 !important;
+}
+
+body:has(.admin-courses-page) form input,
+body:has(.admin-courses-page) form textarea,
+body:has(.admin-courses-page) form select {
+  width: 100% !important;
+  min-height: 52px !important;
+  background: linear-gradient(180deg, #252a42 0%, #1f2439 100%) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-radius: 14px !important;
+  padding: 13px 15px !important;
+  font-weight: 800 !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+body:has(.admin-courses-page) form textarea {
+  min-height: 120px !important;
+  resize: vertical !important;
+}
+
+body:has(.admin-courses-page) form input::placeholder,
+body:has(.admin-courses-page) form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.45) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.45) !important;
+}
+
+body:has(.admin-courses-page) form input:focus,
+body:has(.admin-courses-page) form textarea:focus,
+body:has(.admin-courses-page) form select:focus {
+  border-color: #d946ef !important;
+  box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.16) !important;
+}
+
+body:has(.admin-courses-page) form input[type="file"] {
+  color-scheme: dark !important;
+}
+
+body:has(.admin-courses-page) form input[type="file"]::file-selector-button {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-radius: 12px !important;
+  padding: 10px 14px !important;
+  font-weight: 900 !important;
+  margin-right: 12px !important;
+}
+
+body:has(.admin-courses-page) form input[type="file"]::file-selector-button:hover {
+  background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
+}
+
+/* Delete modal text */
+body:has(.admin-courses-page) .delete-confirm-box,
+body:has(.admin-courses-page) .delete-confirm-box p,
+body:has(.admin-courses-page) .delete-confirm-box b {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Button row */
+body:has(.admin-courses-page) .form-actions,
+body:has(.admin-courses-page) .modal-actions,
+body:has(.admin-courses-page) .delete-confirm-actions {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  gap: 14px !important;
+  flex-wrap: nowrap !important;
+  margin-top: 8px !important;
+  padding-top: 12px !important;
+}
+
+/* Buttons */
+body:has(.admin-courses-page) .primary-btn,
+body:has(.admin-courses-page) button[type="submit"] {
+  min-width: 110px !important;
+  min-height: 50px !important;
+  border: none !important;
+  border-radius: 14px !important;
+  background: linear-gradient(135deg, #d946ef, #7c3aed) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-weight: 950 !important;
+}
+
+body:has(.admin-courses-page) .secondary-btn,
+body:has(.admin-courses-page) button[type="button"] {
+  min-width: 110px !important;
+  min-height: 50px !important;
+  border: none !important;
+  border-radius: 14px !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-weight: 950 !important;
+}
+
+body:has(.admin-courses-page) .danger-btn {
+  min-width: 110px !important;
+  min-height: 50px !important;
+  border: none !important;
+  border-radius: 14px !important;
+  background: #ef4444 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-weight: 950 !important;
+}
+
+/* Mobile button same row */
+@media (max-width: 760px) {
+  body:has(.admin-courses-page) .modal-content,
+  body:has(.admin-courses-page) .modal-box,
+  body:has(.admin-courses-page) .modal-container {
+    width: calc(100vw - 28px) !important;
+    max-height: 82vh !important;
+    border-radius: 18px !important;
+  }
+
+  body:has(.admin-courses-page) form {
+    padding: 18px !important;
+  }
+
+  body:has(.admin-courses-page) .form-actions,
+  body:has(.admin-courses-page) .modal-actions,
+  body:has(.admin-courses-page) .delete-confirm-actions {
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    flex-wrap: nowrap !important;
+  }
+
+  body:has(.admin-courses-page) .primary-btn,
+  body:has(.admin-courses-page) .secondary-btn,
+  body:has(.admin-courses-page) .danger-btn,
+  body:has(.admin-courses-page) button[type="submit"],
+  body:has(.admin-courses-page) button[type="button"] {
+    width: 50% !important;
+    min-width: 0 !important;
+    min-height: 46px !important;
+    font-size: 14px !important;
+  }
+}
