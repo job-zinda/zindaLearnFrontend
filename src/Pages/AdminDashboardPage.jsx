@@ -28,9 +28,23 @@ YAxis,
 
 
 } from "recharts";
+// import api from "../api/axios";
+// import { useAlert } from "../context/AlertContext";
+// import "./AdminDashboardPage.css";
+
+
+
+
+
+
 import api from "../api/axios";
 import { useAlert } from "../context/AlertContext";
+import { getMediaUrl } from "../utils/media";
 import "./AdminDashboardPage.css";
+
+
+
+
 
 function getErrorMessage(error, fallback = "Something went wrong") {
   return (
@@ -86,70 +100,70 @@ function buildLast30DaysGraph(apiGraphData = []) {
 
 
 
-function getImageSrc(value) {
-  if (!value) return "";
-  const src = String(value).trim();
+// function getImageSrc(value) {
+//   if (!value) return "";
+//   const src = String(value).trim();
 
-  if (
-    src.startsWith("data:image") ||
-    src.startsWith("blob:") ||
-    src.startsWith("http://") ||
-    src.startsWith("https://")
-  ) {
-    return src;
-  }
+//   if (
+//     src.startsWith("data:image") ||
+//     src.startsWith("blob:") ||
+//     src.startsWith("http://") ||
+//     src.startsWith("https://")
+//   ) {
+//     return src;
+//   }
 
-  return getMediaUrl(src);
-}
+//   return getMediaUrl(src);
+// }
 
-function formatAssignedDate(value) {
-  if (!value) return "Not added";
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "Not added";
+// function formatAssignedDate(value) {
+//   if (!value) return "Not added";
+//   const date = new Date(value);
+//   if (Number.isNaN(date.getTime())) return "Not added";
 
-  return date.toLocaleString("en-US", {
-    month: "short",
-    day: "2-digit",
-    year: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true,
-  });
-}
+//   return date.toLocaleString("en-US", {
+//     month: "short",
+//     day: "2-digit",
+//     year: "numeric",
+//     hour: "numeric",
+//     minute: "2-digit",
+//     hour12: true,
+//   });
+// }
 
-async function fetchAssignmentTable() {
-  try {
-    setAssignmentLoading(true);
-    const { data } = await api.get("/admin/dashboard/assignment-table");
-    setAssignmentRows(data?.rows || []);
-  } catch (err) {
-    showAlert(getErrorMessage(err, "Failed to load assignment table"), "error");
-  } finally {
-    setAssignmentLoading(false);
-  }
-}
+// async function fetchAssignmentTable() {
+//   try {
+//     setAssignmentLoading(true);
+//     const { data } = await api.get("/admin/dashboard/assignment-table");
+//     setAssignmentRows(data?.rows || []);
+//   } catch (err) {
+//     showAlert(getErrorMessage(err, "Failed to load assignment table"), "error");
+//   } finally {
+//     setAssignmentLoading(false);
+//   }
+// }
 
-async function removeAssignedTutor() {
-  if (!removeTarget) return;
+// async function removeAssignedTutor() {
+//   if (!removeTarget) return;
 
-  try {
-    setRemoving(true);
+//   try {
+//     setRemoving(true);
 
-    await api.delete(
-      `/admin/student/${removeTarget.student._id}/assigned-tutor/${removeTarget.tutor._id}`
-    );
+//     await api.delete(
+//       `/admin/student/${removeTarget.student._id}/assigned-tutor/${removeTarget.tutor._id}`
+//     );
 
-    showAlert("Assigned tutor removed successfully", "success");
-    setRemoveOpen(false);
-    setRemoveTarget(null);
-    fetchAssignmentTable();
-    fetchDashboard();
-  } catch (err) {
-    showAlert(getErrorMessage(err, "Failed to remove assigned tutor"), "error");
-  } finally {
-    setRemoving(false);
-  }
-}
+//     showAlert("Assigned tutor removed successfully", "success");
+//     setRemoveOpen(false);
+//     setRemoveTarget(null);
+//     fetchAssignmentTable();
+//     fetchDashboard();
+//   } catch (err) {
+//     showAlert(getErrorMessage(err, "Failed to remove assigned tutor"), "error");
+//   } finally {
+//     setRemoving(false);
+//   }
+// }
 
 
 
@@ -315,6 +329,90 @@ setDashboard({
       setLoading(false);
     }
   }
+
+
+
+
+
+function getImageSrc(value) {
+  if (!value) return "";
+
+  const src = String(value).trim();
+
+  if (
+    src.startsWith("data:image") ||
+    src.startsWith("blob:") ||
+    src.startsWith("http://") ||
+    src.startsWith("https://")
+  ) {
+    return src;
+  }
+
+  return getMediaUrl(src);
+}
+
+function formatAssignedDate(value) {
+  if (!value) return "Not added";
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Not added";
+
+  return date.toLocaleString("en-US", {
+    month: "short",
+    day: "2-digit",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+}
+
+async function fetchAssignmentTable() {
+  try {
+    setAssignmentLoading(true);
+
+    const { data } = await api.get("/admin/dashboard/assignment-table");
+
+    console.log("ASSIGNMENT TABLE RESPONSE:", data);
+
+    setAssignmentRows(data?.rows || []);
+  } catch (err) {
+    console.log("ASSIGNMENT TABLE ERROR:", err?.response?.data || err);
+    showAlert(getErrorMessage(err, "Failed to load assignment table"), "error");
+  } finally {
+    setAssignmentLoading(false);
+  }
+}
+
+async function removeAssignedTutor() {
+  if (!removeTarget) return;
+
+  try {
+    setRemoving(true);
+
+    await api.delete(
+      `/admin/student/${removeTarget.student._id}/assigned-tutor/${removeTarget.tutor._id}`
+    );
+
+    showAlert("Assigned tutor removed successfully", "success");
+
+    setRemoveOpen(false);
+    setRemoveTarget(null);
+
+    await fetchAssignmentTable();
+    await fetchDashboard();
+  } catch (err) {
+    showAlert(getErrorMessage(err, "Failed to remove assigned tutor"), "error");
+  } finally {
+    setRemoving(false);
+  }
+}
+
+
+
+
+
+
 
   // useEffect(() => {
   //   fetchDashboard();
