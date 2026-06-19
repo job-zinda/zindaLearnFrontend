@@ -925,8 +925,7 @@ export default function TutorChatPage() {
               <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search admin..."
-              />
+placeholder="Search chat..."              />
             </div>
 
             <div className="tutor-admin-chat-room-list">
@@ -945,7 +944,8 @@ export default function TutorChatPage() {
                     room?.lastMessage?.message ||
                     room?.lastMessage?.content ||
                     room?.lastMessage ||
-                    "Tap to chat with admin";
+                    // "Tap to chat with admin";
+                    `Tap to chat with ${getChatPartnerFallback(room).toLowerCase()}`;
 
                   return (
                     <button

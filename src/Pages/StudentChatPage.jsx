@@ -2012,7 +2012,7 @@ export default function StudentChatPage() {
               <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search admin..."
+               placeholder="Search chat..."
               />
             </div>
 
@@ -2044,7 +2044,9 @@ const name = getUserName(partner, getChatPartnerFallback(room));
                     room?.lastMessage?.message ||
                     room?.lastMessage?.content ||
                     room?.lastMessage ||
-                    "Tap to chat with admin";
+                    // "Tap to chat with admin";
+
+                    `Tap to chat with ${getChatPartnerFallback(room).toLowerCase()}`;
 
                   return (
                     <button
@@ -2066,11 +2068,24 @@ const name = getUserName(partner, getChatPartnerFallback(room));
                         <div className="student-admin-chat-room-top">
                           <h4>{name}</h4>
                           <span>
-                            {formatTime(
+                            {/* {formatTime(
                               room?.lastMessage?.createdAt ||
                                 room?.updatedAt ||
                                 room?.createdAt
-                            )}
+                            )} */}
+
+
+
+
+{formatTime(
+  room?.lastMessageAt ||
+    room?.lastMessage?.createdAt ||
+    room?.updatedAt ||
+    room?.createdAt
+)}
+
+
+
                           </span>
                         </div>
 
@@ -2080,7 +2095,7 @@ const name = getUserName(partner, getChatPartnerFallback(room));
                             : "New message"}
                         </p>
 
-                        <small
+                        {/* <small
                           className={
                             partner?.isOnline ? "online" : ""
                           }
@@ -2088,7 +2103,20 @@ const name = getUserName(partner, getChatPartnerFallback(room));
                           {partner?.isOnline
                             ? "Online"
                             : formatLastSeen(admin?.lastSeen)}
-                        </small>
+                        </small> */}
+
+
+
+
+
+<small className={partner?.isOnline ? "online" : ""}>
+  {partner?.isOnline
+    ? "Online"
+    : formatLastSeen(partner?.lastSeen)}
+</small>
+
+
+
                       </div>
                     </button>
                   );
