@@ -868,3 +868,380 @@ body:has(.admin-courses-page) .danger-btn {
     font-size: 14px !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   ADMIN COURSE DARK MODAL - SAME STYLE AS ADMIN TUTOR MODAL
+   Paste at VERY BOTTOM of AdminCoursesPage.css
+   ========================================================= */
+
+.course-dark-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background: rgba(2, 6, 23, 0.74);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.course-dark-modal {
+  max-width: 94vw;
+  max-height: 88vh;
+  overflow: hidden;
+  border-radius: 22px;
+  background: linear-gradient(180deg, #111633 0%, #070a21 100%);
+  border: 1px solid rgba(217, 70, 239, 0.35);
+  color: #ffffff;
+  box-shadow: 0 34px 95px rgba(0, 0, 0, 0.68);
+}
+
+.course-dark-modal-header {
+  min-height: 78px;
+  padding: 22px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: rgba(15, 20, 48, 0.98);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.course-dark-modal-header h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: 950;
+  line-height: 1.15;
+}
+
+.course-dark-modal-close {
+  width: 46px;
+  height: 46px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(217, 70, 239, 0.26);
+  color: #ffffff;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: 0.24s ease;
+  flex-shrink: 0;
+}
+
+.course-dark-modal-close:hover {
+  background: rgba(217, 70, 239, 0.46);
+  transform: rotate(90deg);
+}
+
+.course-dark-modal-body {
+  max-height: calc(88vh - 78px);
+  overflow-y: auto;
+  padding: 26px 28px;
+  background:
+    radial-gradient(circle at top right, rgba(217, 70, 239, 0.12), transparent 36%),
+    linear-gradient(180deg, #0d1230 0%, #070a21 100%);
+}
+
+.course-dark-modal-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.course-dark-modal-body::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #d946ef, #7c3aed);
+  border-radius: 999px;
+}
+
+.course-dark-modal-body::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.course-dark-form {
+  display: grid;
+  gap: 20px;
+}
+
+.course-dark-field {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.course-dark-field span {
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 950;
+}
+
+.course-dark-field input,
+.course-dark-field textarea,
+.course-dark-field select {
+  width: 100%;
+  min-height: 58px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  background: linear-gradient(180deg, #252a42 0%, #1f2439 100%);
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  outline: none;
+  padding: 15px 18px;
+  font-size: 16px;
+  font-weight: 850;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition: 0.24s ease;
+}
+
+.course-dark-field textarea {
+  min-height: 138px;
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.course-dark-field input::placeholder,
+.course-dark-field textarea::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.45);
+}
+
+.course-dark-field input:focus,
+.course-dark-field textarea:focus,
+.course-dark-field select:focus {
+  border-color: #d946ef;
+  box-shadow: 0 0 0 4px rgba(217, 70, 239, 0.14);
+}
+
+.course-dark-field input[type="file"] {
+  color-scheme: dark;
+  cursor: pointer;
+}
+
+.course-dark-field input[type="file"]::file-selector-button {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  font-weight: 950;
+  padding: 10px 16px;
+  margin-right: 14px;
+  cursor: pointer;
+  transition: 0.24s ease;
+}
+
+.course-dark-field input[type="file"]::file-selector-button:hover {
+  background: linear-gradient(135deg, #d946ef, #7c3aed);
+  border-color: transparent;
+}
+
+.course-dark-preview {
+  width: 130px;
+  height: 130px;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 2px solid rgba(217, 70, 239, 0.35);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.28);
+}
+
+.course-dark-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.course-dark-delete-box {
+  display: grid;
+  gap: 22px;
+}
+
+.course-dark-delete-box p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 16px;
+  font-weight: 850;
+  line-height: 1.6;
+}
+
+.course-dark-delete-box strong {
+  color: #ffffff;
+  font-weight: 950;
+}
+
+.course-dark-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: nowrap;
+  margin-top: 8px;
+}
+
+.course-dark-primary-btn,
+.course-dark-secondary-btn,
+.course-dark-danger-btn {
+  min-width: 126px;
+  min-height: 56px;
+  border: none;
+  border-radius: 16px;
+  padding: 0 22px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 950;
+  cursor: pointer;
+  transition: 0.24s ease;
+}
+
+.course-dark-primary-btn {
+  background: linear-gradient(135deg, #d946ef, #7c3aed);
+  box-shadow: 0 16px 34px rgba(124, 58, 237, 0.3);
+}
+
+.course-dark-secondary-btn {
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.course-dark-danger-btn {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  box-shadow: 0 16px 34px rgba(239, 68, 68, 0.24);
+}
+
+.course-dark-primary-btn:hover,
+.course-dark-secondary-btn:hover,
+.course-dark-danger-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+
+.course-dark-primary-btn:disabled,
+.course-dark-secondary-btn:disabled,
+.course-dark-danger-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* =========================================================
+   MOBILE - BUTTONS SAME ROW
+   Cancel left, Add/Update/Delete right
+   ========================================================= */
+
+@media (max-width: 760px) {
+  .course-dark-modal-overlay {
+    padding: 14px;
+    align-items: center;
+  }
+
+  .course-dark-modal {
+    width: calc(100vw - 28px) !important;
+    max-width: calc(100vw - 28px);
+    max-height: 84vh;
+    border-radius: 18px;
+  }
+
+  .course-dark-modal-header {
+    min-height: 66px;
+    padding: 17px 18px;
+  }
+
+  .course-dark-modal-header h2 {
+    font-size: 22px;
+  }
+
+  .course-dark-modal-close {
+    width: 40px;
+    height: 40px;
+    font-size: 28px;
+  }
+
+  .course-dark-modal-body {
+    max-height: calc(84vh - 66px);
+    padding: 18px;
+  }
+
+  .course-dark-form {
+    gap: 16px;
+  }
+
+  .course-dark-field input,
+  .course-dark-field textarea,
+  .course-dark-field select {
+    min-height: 52px;
+    border-radius: 14px;
+    font-size: 15px;
+    padding: 13px 14px;
+  }
+
+  .course-dark-field textarea {
+    min-height: 112px;
+  }
+
+  .course-dark-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    justify-content: stretch;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+
+  .course-dark-primary-btn,
+  .course-dark-secondary-btn,
+  .course-dark-danger-btn {
+    width: 100%;
+    min-width: 0;
+    min-height: 48px;
+    padding: 0 10px;
+    font-size: 14px;
+    border-radius: 14px;
+  }
+
+  .course-dark-secondary-btn {
+    order: 1;
+  }
+
+  .course-dark-primary-btn,
+  .course-dark-danger-btn {
+    order: 2;
+  }
+}
+
+@media (max-width: 380px) {
+  .course-dark-actions {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .course-dark-primary-btn,
+  .course-dark-secondary-btn,
+  .course-dark-danger-btn {
+    font-size: 13px;
+  }
+}
