@@ -1336,3 +1336,50 @@ max-height:95vh!important;
     grid-template-columns: 1fr !important;
   }
 } */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Assigned tutor details: phone, email, course, syllabus */
+.student-detail-info-grid--assigned {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+}
+
+/* Not assigned tutor details: course and syllabus only */
+.student-detail-info-grid--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+@media (max-width: 1000px) {
+  .student-detail-info-grid--assigned,
+  .student-detail-info-grid--two {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .student-detail-info-grid--assigned,
+  .student-detail-info-grid--two {
+    grid-template-columns: 1fr !important;
+  }
+}

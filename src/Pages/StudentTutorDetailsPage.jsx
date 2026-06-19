@@ -108,6 +108,41 @@ function getCurrentUserId() {
   return user?._id || user?.id || "";
 }
 
+
+
+
+
+
+function getTutorId(tutor) {
+  return tutor?._id || tutor?.id || "";
+}
+
+function sameId(a, b) {
+  return String(a || "") === String(b || "");
+}
+
+function mergeTutorWithAssignedData(publicTutor, assignedTutor) {
+  if (!assignedTutor) return publicTutor;
+
+  return {
+    ...publicTutor,
+
+    // assigned API il phone/email undenkil ath use cheyyum
+    phone: assignedTutor.phone || publicTutor?.phone || "",
+    email: assignedTutor.email || publicTutor?.email || "",
+
+    // assigned API il extra populated data undenkil athum preserve cheyyum
+    courseIds: assignedTutor.courseIds || publicTutor?.courseIds || [],
+    courseId: assignedTutor.courseId || publicTutor?.courseId || null,
+    syllabus: assignedTutor.syllabus || publicTutor?.syllabus || "",
+  };
+}
+
+
+
+
+
+
 function Stars({ rating = 0, compact = false }) {
   const fixedRating = Number(rating || 0);
   const rounded = Math.round(fixedRating);
@@ -263,8 +298,15 @@ export default function StudentTutorDetailsPage() {
 
   const { showAlert } = useAlert();
 
-  const [tutor, setTutor] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // const [tutor, setTutor] = useState(null);
+  // const [loading, setLoading] = useState(true);
+
+
+
+const [tutor, setTutor] = useState(null);
+const [isAssignedTutor, setIsAssignedTutor] = useState(false);
+const [loading, setLoading] = useState(true);
+
 
   const [allReviewsOpen, setAllReviewsOpen] = useState(false);
   const [reviewOpen, setReviewOpen] = useState(false);
@@ -303,18 +345,54 @@ export default function StudentTutorDetailsPage() {
     });
   }, [tutor]);
 
-  async function fetchTutor() {
-    try {
-      setLoading(true);
+  // async function fetchTutor() {
+  //   try {
+  //     setLoading(true);
 
-      const { data } = await api.get(`/tuter/${tuterId}`);
-      setTutor(data.tuter || null);
-    } catch (err) {
-      showAlert(getErrorMessage(err, "Failed to load tutor details"), "error");
-    } finally {
-      setLoading(false);
-    }
+  //     const { data } = await api.get(`/tuter/${tuterId}`);
+  //     setTutor(data.tuter || null);
+  //   } catch (err) {
+  //     showAlert(getErrorMessage(err, "Failed to load tutor details"), "error");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }
+
+
+
+
+
+
+async function fetchTutor() {
+  try {
+    setLoading(true);
+
+    const [tutorRes, assignedRes] = await Promise.all([
+      api.get(`/tuter/${tuterId}`),
+      api.get("/student/my-assigned-tutors"),
+    ]);
+
+    const publicTutor = tutorRes.data?.tuter || null;
+    const assignedTutors = assignedRes.data?.tutors || [];
+
+    const assignedTutor = assignedTutors.find((item) =>
+      sameId(getTutorId(item), tuterId)
+    );
+
+    const assigned = Boolean(assignedTutor);
+
+    setIsAssignedTutor(assigned);
+    setTutor(mergeTutorWithAssignedData(publicTutor, assignedTutor));
+  } catch (err) {
+    showAlert(getErrorMessage(err, "Failed to load tutor details"), "error");
+  } finally {
+    setLoading(false);
   }
+}
+
+
+
+
 
   useEffect(() => {
     fetchTutor();
@@ -406,7 +484,12 @@ export default function StudentTutorDetailsPage() {
     );
   }
 
-  const isOnlineTuition = tutor?.categoryId?.key === "online_tuition";
+  // const isOnlineTuition = tutor?.categoryId?.key === "online_tuition";
+
+  const isOnlineTuition =
+  Array.isArray(tutor?.categoryIds) && tutor.categoryIds.length
+    ? tutor.categoryIds.some((cat) => cat?.key === "online_tuition")
+    : tutor?.categoryId?.key === "online_tuition";
 
   return (
     <div className="student-detail-page">
@@ -497,7 +580,50 @@ export default function StudentTutorDetailsPage() {
 
 
 
-<div className="student-detail-info-grid student-detail-info-grid--two">
+{/* <div className="student-detail-info-grid student-detail-info-grid--two">
+  <div className="student-detail-info-box">
+    <span>Course / Class</span>
+    <b>{getCourseNames(tutor) || "Not added"}</b>
+  </div>
+
+  {isOnlineTuition && (
+    <div className="student-detail-info-box">
+      <span>Syllabus</span>
+      <b>{formatSyllabus(tutor.syllabus)}</b>
+    </div>
+  )}
+</div> */}
+
+
+
+
+
+
+
+
+
+
+<div
+  className={
+    isAssignedTutor
+      ? "student-detail-info-grid student-detail-info-grid--assigned"
+      : "student-detail-info-grid student-detail-info-grid--two"
+  }
+>
+  {isAssignedTutor && (
+    <>
+      <div className="student-detail-info-box">
+        <span>Phone</span>
+        <b>{tutor.phone || "Not added"}</b>
+      </div>
+
+      <div className="student-detail-info-box">
+        <span>Email</span>
+        <b>{tutor.email || "Not added"}</b>
+      </div>
+    </>
+  )}
+
   <div className="student-detail-info-box">
     <span>Course / Class</span>
     <b>{getCourseNames(tutor) || "Not added"}</b>
