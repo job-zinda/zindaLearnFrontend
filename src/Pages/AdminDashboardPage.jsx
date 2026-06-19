@@ -4,13 +4,29 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  Area,
-  AreaChart,
-  CartesianGrid,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
+  // Area,
+  // AreaChart,
+  // CartesianGrid,
+  // ResponsiveContainer,
+  // Tooltip,
+  // XAxis,
+  // YAxis,
+
+
+
+Area,
+AreaChart,
+CartesianGrid,
+Cell,
+Pie,
+PieChart,
+ResponsiveContainer,
+Tooltip,
+XAxis,
+YAxis,
+
+
+
 } from "recharts";
 import api from "../api/axios";
 import { useAlert } from "../context/AlertContext";
@@ -111,12 +127,28 @@ export default function AdminDashboardPage() {
 
 
 
+// const [dashboard, setDashboard] = useState({
+//   newSignups: 0,
+//   activeStudents: 0,
+//   activeTutors: 0,
+//   deactiveTutors: 0,
+//   assignedTutors: 0,
+//   graphData: [],
+// });
+
+
+
+
+
+
+
 const [dashboard, setDashboard] = useState({
   newSignups: 0,
   activeStudents: 0,
   activeTutors: 0,
   deactiveTutors: 0,
   assignedTutors: 0,
+  assignedStudents: 0,
   graphData: [],
 });
 
@@ -131,6 +163,28 @@ const [dashboard, setDashboard] = useState({
     () => buildLast30DaysGraph(dashboard.graphData),
     [dashboard.graphData]
   );
+
+
+
+
+const assignmentPieData = useMemo(() => {
+  return [
+    {
+      name: "Assigned Tutors",
+      value: Number(dashboard.assignedTutors || 0),
+    },
+    {
+      name: "Assigned Students",
+      value: Number(dashboard.assignedStudents || 0),
+    },
+  ];
+}, [dashboard.assignedTutors, dashboard.assignedStudents]);
+
+const assignmentColors = ["#a855f7", "#ec4899"];
+
+
+
+
 
   async function fetchDashboard() {
     try {
@@ -149,14 +203,31 @@ const [dashboard, setDashboard] = useState({
 
 
 
+// setDashboard({
+//   newSignups: payload.newSignups || 0,
+//   activeStudents: payload.activeStudents || 0,
+//   activeTutors: payload.activeTutors || 0,
+//   deactiveTutors: payload.deactiveTutors || 0,
+//   assignedTutors: payload.assignedTutors || 0,
+//   graphData: payload.graphData || [],
+// });
+
+
+
+
+
+
+
 setDashboard({
   newSignups: payload.newSignups || 0,
   activeStudents: payload.activeStudents || 0,
   activeTutors: payload.activeTutors || 0,
   deactiveTutors: payload.deactiveTutors || 0,
   assignedTutors: payload.assignedTutors || 0,
+  assignedStudents: payload.assignedStudents || 0,
   graphData: payload.graphData || [],
 });
+
 
 
 
@@ -320,7 +391,7 @@ setDashboard({
 
           <div className="admin-dashboard-divider" />
 
-          <section className="admin-dashboard-chart-section">
+          {/* <section className="admin-dashboard-chart-section">
             <div className="admin-dashboard-chart-card">
               <div className="admin-dashboard-chart-title">
                 <h3>User Activity</h3>
@@ -380,7 +451,109 @@ setDashboard({
                 </AreaChart>
               </ResponsiveContainer>
             </div>
-          </section>
+          </section> */}
+
+
+
+
+<section className="admin-dashboard-chart-section">
+  <div className="admin-dashboard-chart-card">
+    <div className="admin-dashboard-chart-title">
+      <h3>User Activity</h3>
+      <p>Last 30 days registrations</p>
+    </div>
+
+    <ResponsiveContainer width="100%" height={280}>
+      <AreaChart data={chartData}>
+        <defs>
+          <linearGradient id="dashboardUsers" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#8b3dff" stopOpacity={0.45} />
+            <stop offset="95%" stopColor="#8b3dff" stopOpacity={0.03} />
+          </linearGradient>
+        </defs>
+
+        <CartesianGrid strokeDasharray="4 4" stroke="#334155" />
+
+        <XAxis
+          dataKey="label"
+          stroke="#94a3b8"
+          tick={{ fontSize: 11 }}
+          interval="preserveStartEnd"
+        />
+
+        <YAxis stroke="#94a3b8" tick={{ fontSize: 11 }} allowDecimals={false} />
+
+        <Tooltip
+          formatter={(value) => [`${value} registrations`, "Users"]}
+          labelFormatter={(label) => `Date: ${label}`}
+          contentStyle={{
+            background: "#111827",
+            border: "1px solid #334155",
+            borderRadius: "12px",
+            color: "#ffffff",
+          }}
+          labelStyle={{ color: "#ffffff" }}
+        />
+
+        <Area
+          type="monotone"
+          dataKey="users"
+          stroke="#c4b5fd"
+          strokeWidth={3}
+          fill="url(#dashboardUsers)"
+          activeDot={{ r: 6 }}
+        />
+      </AreaChart>
+    </ResponsiveContainer>
+  </div>
+
+  <div className="admin-dashboard-chart-card admin-dashboard-pie-card">
+    <div className="admin-dashboard-chart-title">
+      <h3>Assignment Ratio</h3>
+      <p>Assigned tutors : assigned students</p>
+    </div>
+
+    <ResponsiveContainer width="100%" height={280}>
+      <PieChart>
+        <Tooltip
+          formatter={(value, name) => [`${value}`, name]}
+          contentStyle={{
+            background: "#111827",
+            border: "1px solid #334155",
+            borderRadius: "12px",
+            color: "#ffffff",
+          }}
+          labelStyle={{ color: "#ffffff" }}
+        />
+
+        <Pie
+          data={assignmentPieData}
+          dataKey="value"
+          nameKey="name"
+          cx="50%"
+          cy="50%"
+          outerRadius={92}
+          innerRadius={48}
+          paddingAngle={4}
+          label={({ name, value }) => `${name}: ${value}`}
+        >
+          {assignmentPieData.map((entry, index) => (
+            <Cell key={entry.name} fill={assignmentColors[index]} />
+          ))}
+        </Pie>
+      </PieChart>
+    </ResponsiveContainer>
+
+    <div className="admin-dashboard-ratio-text">
+      {dashboard.assignedTutors} : {dashboard.assignedStudents}
+    </div>
+  </div>
+</section>
+
+
+
+
+
         </>
       )}
     </div>
