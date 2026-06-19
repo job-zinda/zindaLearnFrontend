@@ -2025,9 +2025,19 @@ export default function StudentChatPage() {
                 filteredRooms.map((room) => {
                   const roomId = getRoomId(room);
                   // const admin = getAdmin(room);
-                 const admin = getChatPartner(room);
-                  // const name = getUserName(admin, "Admin");
-                 const name = getUserName(partner, getChatPartnerFallback(room))
+                //  const admin = getChatPartner(room);
+                //   // const name = getUserName(admin, "Admin");
+                //  const name = getUserName(partner, getChatPartnerFallback(room))
+
+
+
+
+const partner = getChatPartner(room);
+const name = getUserName(partner, getChatPartnerFallback(room));
+
+
+
+
 
                   const lastMessage =
                     room?.lastMessage?.text ||
@@ -2048,7 +2058,7 @@ export default function StudentChatPage() {
                       onClick={() => openChatView(room)}
                     >
                       <Avatar
-                        user={admin}
+                        user={partner}
                         className="student-admin-chat-room-avatar"
                       />
 
@@ -2075,7 +2085,7 @@ export default function StudentChatPage() {
                             admin?.isOnline ? "online" : ""
                           }
                         >
-                          {admin?.isOnline
+                          {partner?.isOnline
                             ? "Online"
                             : formatLastSeen(admin?.lastSeen)}
                         </small>
@@ -2114,11 +2124,19 @@ export default function StudentChatPage() {
                   <div className="student-admin-chat-user">
                     {/* <Avatar user={activeAdmin} /> */}
 
-                    <Avatar user={partner} />
+                    {/* <Avatar user={partner} />
 
                     <div>
                       <h3>{getUserName(activePartner, "Admin")}</h3>
-                      <p className={aactivePartner?.isOnline ? "online" : ""}>
+                      <p className={aactivePartner?.isOnline ? "online" : ""}> */}
+
+
+<Avatar user={activePartner} />
+
+<div>
+  <h3>{getUserName(activePartner, getChatPartnerFallback(activeRoom))}</h3>
+  <p className={activePartner?.isOnline ? "online" : ""}>
+
                         {activePartner?.isOnline
                           ? "Online"
                           : formatLastSeen(activePartner?.lastSeen)}
@@ -2143,7 +2161,7 @@ export default function StudentChatPage() {
                     ))
                   ) : (
                     <div className="student-admin-chat-no-message">
-                      No messages yet. Send a message to admin.
+                    No messages yet. Send a message.
                     </div>
                   )}
 

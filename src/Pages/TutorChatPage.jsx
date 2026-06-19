@@ -1064,7 +1064,7 @@ export default function TutorChatPage() {
                     ))
                   ) : (
                     <div className="tutor-admin-chat-no-message">
-                      No messages yet. Send a message to admin.
+                  No messages yet. Send a message.
                     </div>
                   )}
 
