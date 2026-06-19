@@ -1166,6 +1166,48 @@ function getAdmin(room) {
   return null;
 }
 
+
+
+
+
+
+
+function getTutor(room) {
+  if (room?.tutorId && typeof room.tutorId === "object") return room.tutorId;
+  if (room?.tutor && typeof room.tutor === "object") return room.tutor;
+  if (room?.tutorDetails && typeof room.tutorDetails === "object") {
+    return room.tutorDetails;
+  }
+
+  if (Array.isArray(room?.participants)) {
+    return room.participants.find(
+      (user) =>
+        String(user?.role || "").toLowerCase() === "tutor" ||
+        String(user?.userType || "").toLowerCase() === "tutor"
+    );
+  }
+
+  return null;
+}
+
+function getChatPartner(room) {
+  if (room?.roomType === "student_tutor") {
+    return getTutor(room);
+  }
+
+  return getAdmin(room);
+}
+
+function getChatPartnerFallback(room) {
+  return room?.roomType === "student_tutor" ? "Tutor" : "Admin";
+}
+
+
+
+
+
+
+
 function getUserName(user, fallback = "Admin") {
   return user?.name || user?.email || fallback;
 }
@@ -1484,7 +1526,8 @@ export default function StudentChatPage() {
     if (!keyword) return rooms;
 
     return rooms.filter((room) => {
-      const admin = getAdmin(room);
+      // const admin = getAdmin(room);
+      const partner = getChatPartner(room);
       const name = getUserName(admin, "").toLowerCase();
       const email = String(admin?.email || "").toLowerCase();
 
@@ -1979,8 +2022,11 @@ export default function StudentChatPage() {
               ) : filteredRooms.length ? (
                 filteredRooms.map((room) => {
                   const roomId = getRoomId(room);
-                  const admin = getAdmin(room);
-                  const name = getUserName(admin, "Admin");
+                  // const admin = getAdmin(room);
+                  const partner = getChatPartner(room);
+                  // const name = getUserName(admin, "Admin");
+                 const name = getUserName(partner, getChatPartnerFallback(room))
+
                   const lastMessage =
                     room?.lastMessage?.text ||
                     room?.lastMessage?.message ||
@@ -2064,7 +2110,9 @@ export default function StudentChatPage() {
                   </button>
 
                   <div className="student-admin-chat-user">
-                    <Avatar user={activeAdmin} />
+                    {/* <Avatar user={activeAdmin} /> */}
+
+                    <Avatar user={partner} />
 
                     <div>
                       <h3>{getUserName(activeAdmin, "Admin")}</h3>
@@ -2237,8 +2285,8 @@ export default function StudentChatPage() {
             ) : (
               <div className="student-admin-chat-empty">
                 <div>
-                  <h2>Select Admin</h2>
-                  <p>Choose admin profile to start chatting.</p>
+                  <h2>Select Chat</h2>
+                  <p>Choose a profile to start chatting.</p>
                 </div>
               </div>
             )}

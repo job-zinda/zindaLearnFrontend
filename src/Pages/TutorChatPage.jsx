@@ -71,6 +71,45 @@ function getAdmin(room) {
   return null;
 }
 
+
+
+
+
+function getStudent(room) {
+  if (room?.studentId && typeof room.studentId === "object") return room.studentId;
+  if (room?.student && typeof room.student === "object") return room.student;
+  if (room?.studentDetails && typeof room.studentDetails === "object") {
+    return room.studentDetails;
+  }
+
+  if (Array.isArray(room?.participants)) {
+    return room.participants.find(
+      (user) =>
+        String(user?.role || "").toLowerCase() === "student" ||
+        String(user?.userType || "").toLowerCase() === "student"
+    );
+  }
+
+  return null;
+}
+
+function getChatPartner(room) {
+  if (room?.roomType === "student_tutor") {
+    return getStudent(room);
+  }
+
+  // return getAdmin(room);
+   return getChatPartner(room)
+}
+
+function getChatPartnerFallback(room) {
+  return room?.roomType === "student_tutor" ? "Student" : "Admin";
+}
+
+
+
+
+
 function getUserName(user, fallback = "Admin") {
   return user?.name || user?.email || fallback;
 }
@@ -385,7 +424,8 @@ export default function TutorChatPage() {
     if (!keyword) return rooms;
 
     return rooms.filter((room) => {
-      const admin = getAdmin(room);
+      // const admin = getAdmin(room);
+       const admin = getChatPartner(room)
       const name = getUserName(admin, "").toLowerCase();
       const email = String(admin?.email || "").toLowerCase();
 
@@ -880,7 +920,8 @@ export default function TutorChatPage() {
               ) : filteredRooms.length ? (
                 filteredRooms.map((room) => {
                   const roomId = getRoomId(room);
-                  const admin = getAdmin(room);
+                  // const admin = getAdmin(room);
+                  const admin = getChatPartner(room)
                   const name = getUserName(admin, "Admin");
                   const lastMessage =
                     room?.lastMessage?.text ||
