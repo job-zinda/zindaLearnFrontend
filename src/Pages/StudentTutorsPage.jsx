@@ -382,34 +382,66 @@ export default function StudentTutorsPage() {
     return new Set(assignedTutors.map((tutor) => String(tutor._id)));
   }, [assignedTutors]);
 
-  const filteredAssignedTutors = useMemo(() => {
-    const q = search.trim().toLowerCase();
+  // const filteredAssignedTutors = useMemo(() => {
+  //   const q = search.trim().toLowerCase();
 
-    return assignedTutors.filter((tutor) => {
-      if (!isTutorActive(tutor) || isTutorBlocked(tutor)) return false;
+  //   return assignedTutors.filter((tutor) => {
+  //     if ( isTutorBlocked(tutor)) return false;
 
-      if (!q) return true;
+  //     if (!q) return true;
 
-      return [
-        tutor.name,
-        tutor.email,
-        tutor.phone,
-        tutor.qualification,
-        tutor.about,
-        getCourseNames(tutor),
-      ]
-        .join(" ")
-        .toLowerCase()
-        .includes(q);
-    });
-  }, [assignedTutors, search]);
+  //     return [
+  //       tutor.name,
+  //       tutor.email,
+  //       tutor.phone,
+  //       tutor.qualification,
+  //       tutor.about,
+  //       getCourseNames(tutor),
+  //     ]
+  //       .join(" ")
+  //       .toLowerCase()
+  //       .includes(q);
+  //   });
+  // }, [assignedTutors, search]);
+
+
+
+
+
+
+const filteredAssignedTutors = useMemo(() => {
+  const q = search.trim().toLowerCase();
+
+  return assignedTutors.filter((tutor) => {
+    if (isTutorBlocked(tutor)) return false;
+
+    if (!q) return true;
+
+    return [
+      tutor.name,
+      tutor.email,
+      tutor.phone,
+      tutor.qualification,
+      tutor.about,
+      getCourseNames(tutor),
+    ]
+      .join(" ")
+      .toLowerCase()
+      .includes(q);
+  });
+}, [assignedTutors, search]);
+
+
+
+
+
 
   const filteredOtherTutors = useMemo(() => {
     const q = search.trim().toLowerCase();
 
     return tutors.filter((tutor) => {
       if (assignedTutorIds.has(String(tutor._id))) return false;
-      if (!isTutorActive(tutor) || isTutorBlocked(tutor)) return false;
+      if ( isTutorBlocked(tutor)) return false;
 
       if (!q) return true;
 
