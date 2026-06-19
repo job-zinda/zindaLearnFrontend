@@ -2022,105 +2022,172 @@ export default function StudentChatPage() {
                   Loading chats...
                 </div>
               ) : filteredRooms.length ? (
-                filteredRooms.map((room) => {
-                  const roomId = getRoomId(room);
-                  // const admin = getAdmin(room);
-                //  const admin = getChatPartner(room);
-                //   // const name = getUserName(admin, "Admin");
-                //  const name = getUserName(partner, getChatPartnerFallback(room))
+//                 filteredRooms.map((room) => {
+//                   const roomId = getRoomId(room);
+//                   // const admin = getAdmin(room);
+//                 //  const admin = getChatPartner(room);
+//                 //   // const name = getUserName(admin, "Admin");
+//                 //  const name = getUserName(partner, getChatPartnerFallback(room))
 
 
 
 
-const partner = getChatPartner(room);
-const name = getUserName(partner, getChatPartnerFallback(room));
-
-
-
-
-
-                  const lastMessage =
-                    room?.lastMessage?.text ||
-                    room?.lastMessage?.message ||
-                    room?.lastMessage?.content ||
-                    room?.lastMessage ||
-                    // "Tap to chat with admin";
-
-                    `Tap to chat with ${getChatPartnerFallback(room).toLowerCase()}`;
-
-                  return (
-                    <button
-                      key={roomId}
-                      type="button"
-                      className={`student-admin-chat-room-item ${
-                        String(activeRoomId) === String(roomId)
-                          ? "student-admin-chat-room-item--active"
-                          : ""
-                      }`}
-                      onClick={() => openChatView(room)}
-                    >
-                      <Avatar
-                        user={partner}
-                        className="student-admin-chat-room-avatar"
-                      />
-
-                      <div className="student-admin-chat-room-info">
-                        <div className="student-admin-chat-room-top">
-                          <h4>{name}</h4>
-                          <span>
-                            {/* {formatTime(
-                              room?.lastMessage?.createdAt ||
-                                room?.updatedAt ||
-                                room?.createdAt
-                            )} */}
-
-
-
-
-{formatTime(
-  room?.lastMessageAt ||
-    room?.lastMessage?.createdAt ||
-    room?.updatedAt ||
-    room?.createdAt
-)}
-
-
-
-                          </span>
-                        </div>
-
-                        <p>
-                          {typeof lastMessage === "string"
-                            ? lastMessage
-                            : "New message"}
-                        </p>
-
-                        {/* <small
-                          className={
-                            partner?.isOnline ? "online" : ""
-                          }
-                        >
-                          {partner?.isOnline
-                            ? "Online"
-                            : formatLastSeen(admin?.lastSeen)}
-                        </small> */}
+// const partner = getChatPartner(room);
+// const name = getUserName(partner, getChatPartnerFallback(room));
 
 
 
 
 
-<small className={partner?.isOnline ? "online" : ""}>
-  {partner?.isOnline
-    ? "Online"
-    : formatLastSeen(partner?.lastSeen)}
-</small>
+//                   const lastMessage =
+//                     room?.lastMessage?.text ||
+//                     room?.lastMessage?.message ||
+//                     room?.lastMessage?.content ||
+//                     room?.lastMessage ||
+//                     // "Tap to chat with admin";
+
+//                     `Tap to chat with ${getChatPartnerFallback(room).toLowerCase()}`;
+
+//                   return (
+//                     <button
+//                       key={roomId}
+//                       type="button"
+//                       className={`student-admin-chat-room-item ${
+//                         String(activeRoomId) === String(roomId)
+//                           ? "student-admin-chat-room-item--active"
+//                           : ""
+//                       }`}
+//                       onClick={() => openChatView(room)}
+//                     >
+//                       <Avatar
+//                         user={partner}
+//                         className="student-admin-chat-room-avatar"
+//                       />
+
+//                       <div className="student-admin-chat-room-info">
+//                         <div className="student-admin-chat-room-top">
+//                           <h4>{name}</h4>
+//                           <span>
+//                             {/* {formatTime(
+//                               room?.lastMessage?.createdAt ||
+//                                 room?.updatedAt ||
+//                                 room?.createdAt
+//                             )} */}
 
 
 
-                      </div>
-                    </button>
-                  );
-                })
+
+// {formatTime(
+//   room?.lastMessageAt ||
+//     room?.lastMessage?.createdAt ||
+//     room?.updatedAt ||
+//     room?.createdAt
+// )}
+
+
+
+//                           </span>
+//                         </div>
+
+//                         <p>
+//                           {typeof lastMessage === "string"
+//                             ? lastMessage
+//                             : "New message"}
+//                         </p>
+
+//                         {/* <small
+//                           className={
+//                             partner?.isOnline ? "online" : ""
+//                           }
+//                         >
+//                           {partner?.isOnline
+//                             ? "Online"
+//                             : formatLastSeen(admin?.lastSeen)}
+//                         </small> */}
+
+
+
+
+
+// <small className={partner?.isOnline ? "online" : ""}>
+//   {partner?.isOnline
+//     ? "Online"
+//     : formatLastSeen(partner?.lastSeen)}
+// </small>
+
+
+
+//                       </div>
+//                     </button>
+//                   );
+//                 })
+
+
+
+
+
+filteredRooms.map((room) => {
+  const roomId = getRoomId(room);
+  const partner = getChatPartner(room);
+  const name = getUserName(partner, getChatPartnerFallback(room));
+
+  const lastMessage =
+    room?.lastMessage?.text ||
+    room?.lastMessage?.message ||
+    room?.lastMessage?.content ||
+    room?.lastMessage ||
+    `Tap to chat with ${getChatPartnerFallback(room).toLowerCase()}`;
+
+  return (
+    <button
+      key={roomId}
+      type="button"
+      className={`student-admin-chat-room-item ${
+        String(activeRoomId) === String(roomId)
+          ? "student-admin-chat-room-item--active"
+          : ""
+      }`}
+      onClick={() => openChatView(room)}
+    >
+      <Avatar
+        user={partner}
+        className="student-admin-chat-room-avatar"
+      />
+
+      <div className="student-admin-chat-room-info">
+        <div className="student-admin-chat-room-top">
+          <h4>{name}</h4>
+          <span>
+            {formatTime(
+              room?.lastMessageAt ||
+                room?.lastMessage?.createdAt ||
+                room?.updatedAt ||
+                room?.createdAt
+            )}
+          </span>
+        </div>
+
+        <p>
+          {typeof lastMessage === "string"
+            ? lastMessage
+            : "New message"}
+        </p>
+
+        <small className={partner?.isOnline ? "online" : ""}>
+          {partner?.isOnline
+            ? "Online"
+            : formatLastSeen(partner?.lastSeen)}
+        </small>
+      </div>
+    </button>
+  );
+})
+
+
+
+
+
+
               ) : (
                 <div className="student-admin-chat-list-state">
                   No admin chat found
