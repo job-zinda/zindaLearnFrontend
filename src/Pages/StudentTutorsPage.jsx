@@ -307,10 +307,23 @@ function TutorCard({ tutor, assigned = false, onDetails, onChat }) {
           )}
         </div>
 
-        <div>
+        {/* <div>
           <h3>{tutor?.name || "Tutor"}</h3>
           <p>{tutor?.qualification || getCourseNames(tutor) || "Qualification not added"}</p>
-        </div>
+        </div> */}
+
+
+
+<div className="student-tutor-info">
+  <h3>{tutor?.name || "Tutor"}</h3>
+  <p title={tutor?.qualification || getCourseNames(tutor) || "Qualification not added"}>
+    {tutor?.qualification || getCourseNames(tutor) || "Qualification not added"}
+  </p>
+</div>
+
+
+
+
       </div>
 
       <p className="student-tutor-about">

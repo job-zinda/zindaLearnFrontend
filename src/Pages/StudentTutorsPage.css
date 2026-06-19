@@ -1114,3 +1114,64 @@
     grid-template-columns: 88px minmax(0, 1fr);
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.student-tutor-info {
+  min-width: 0 !important;
+  flex: 1 !important;
+  overflow: hidden !important;
+}
+
+.student-tutor-info h3,
+.student-tutor-card h3 {
+  max-height: 52px !important;
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  word-break: break-word !important;
+}
+
+.student-tutor-info p,
+.student-tutor-card-top p {
+  max-height: 42px !important;
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  word-break: break-word !important;
+}
+
+.student-tutor-card {
+  height: 410px !important;
+  min-height: 410px !important;
+  max-height: 410px !important;
+}
