@@ -1,5 +1,5 @@
 
-
+import { FiEye, FiTrash2 } from "react-icons/fi";
 
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -83,6 +83,78 @@ function buildLast30DaysGraph(apiGraphData = []) {
   return result;
 }
 
+
+
+
+function getImageSrc(value) {
+  if (!value) return "";
+  const src = String(value).trim();
+
+  if (
+    src.startsWith("data:image") ||
+    src.startsWith("blob:") ||
+    src.startsWith("http://") ||
+    src.startsWith("https://")
+  ) {
+    return src;
+  }
+
+  return getMediaUrl(src);
+}
+
+function formatAssignedDate(value) {
+  if (!value) return "Not added";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Not added";
+
+  return date.toLocaleString("en-US", {
+    month: "short",
+    day: "2-digit",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+}
+
+async function fetchAssignmentTable() {
+  try {
+    setAssignmentLoading(true);
+    const { data } = await api.get("/admin/dashboard/assignment-table");
+    setAssignmentRows(data?.rows || []);
+  } catch (err) {
+    showAlert(getErrorMessage(err, "Failed to load assignment table"), "error");
+  } finally {
+    setAssignmentLoading(false);
+  }
+}
+
+async function removeAssignedTutor() {
+  if (!removeTarget) return;
+
+  try {
+    setRemoving(true);
+
+    await api.delete(
+      `/admin/student/${removeTarget.student._id}/assigned-tutor/${removeTarget.tutor._id}`
+    );
+
+    showAlert("Assigned tutor removed successfully", "success");
+    setRemoveOpen(false);
+    setRemoveTarget(null);
+    fetchAssignmentTable();
+    fetchDashboard();
+  } catch (err) {
+    showAlert(getErrorMessage(err, "Failed to remove assigned tutor"), "error");
+  } finally {
+    setRemoving(false);
+  }
+}
+
+
+
+
+
 function StatCard({ title, value, change, changeType, onClick }) {
   return (
     <button
@@ -154,7 +226,11 @@ const [dashboard, setDashboard] = useState({
 
 
 
-
+const [assignmentRows, setAssignmentRows] = useState([]);
+const [assignmentLoading, setAssignmentLoading] = useState(false);
+const [removeOpen, setRemoveOpen] = useState(false);
+const [removeTarget, setRemoveTarget] = useState(null);
+const [removing, setRemoving] = useState(false);
 
 
   const [loading, setLoading] = useState(true);
@@ -240,10 +316,22 @@ setDashboard({
     }
   }
 
-  useEffect(() => {
-    fetchDashboard();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   fetchDashboard();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+
+
+
+
+useEffect(() => {
+  fetchDashboard();
+  fetchAssignmentTable();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
+
+
+
 
   return (
     <div className="admin-dashboard-page">
@@ -552,6 +640,193 @@ setDashboard({
 
 
 
+
+
+
+
+
+
+<section className="admin-assignment-table-card">
+  <div className="admin-assignment-table-head">
+    <div>
+      <h3>Tutor Assignment Table</h3>
+      <p>Students, assigned tutors, assigned date and last 30 days interaction</p>
+    </div>
+  </div>
+
+  {assignmentLoading ? (
+    <div className="admin-assignment-empty">Loading assignments...</div>
+  ) : assignmentRows.length === 0 ? (
+    <div className="admin-assignment-empty">No tutor assignments found</div>
+  ) : (
+    <div className="admin-assignment-table-scroll">
+      <table className="admin-assignment-table">
+        <thead>
+          <tr>
+            <th>Students</th>
+            <th>Assigned Tutors</th>
+            <th>Assigned Date</th>
+            <th>Student - Tutor Interaction</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {assignmentRows.map((row) =>
+            row.tutors.map((tutor, index) => {
+              const studentPhoto = getImageSrc(row.student?.photo);
+              const tutorPhoto = getImageSrc(tutor?.photo);
+
+              return (
+                <tr key={`${row.student._id}-${tutor._id}`}>
+                  {index === 0 && (
+                    <td rowSpan={row.tutors.length}>
+                      <div className="admin-assignment-profile">
+                        <div className="admin-assignment-avatar">
+                          {studentPhoto ? (
+                            <img src={studentPhoto} alt={row.student.name} />
+                          ) : (
+                            <span>
+                              {row.student?.name?.charAt(0)?.toUpperCase() || "S"}
+                            </span>
+                          )}
+                        </div>
+
+                        <div>
+                          <h4>{row.student?.name || "Student"}</h4>
+                          <p>{row.student?.email || "No email"}</p>
+                          <small>{row.student?.phone || "No phone"}</small>
+                        </div>
+                      </div>
+                    </td>
+                  )}
+
+                  <td>
+                    <div className="admin-assignment-profile admin-assignment-tutor-profile">
+                      <div className="admin-assignment-avatar">
+                        {tutorPhoto ? (
+                          <img src={tutorPhoto} alt={tutor.name} />
+                        ) : (
+                          <span>{tutor?.name?.charAt(0)?.toUpperCase() || "T"}</span>
+                        )}
+                      </div>
+
+                      <div>
+                        <h4>{tutor?.name || "Tutor"}</h4>
+                        <p>{tutor?.qualification || "Qualification not added"}</p>
+                        <small>{tutor?.email || tutor?.phone || "No contact"}</small>
+                      </div>
+                    </div>
+                  </td>
+
+                  <td>
+                    <div className="admin-assignment-date">
+                      {formatAssignedDate(tutor.assignedAt)}
+                    </div>
+                  </td>
+
+                  <td>
+                    <div className="admin-assignment-sparkline">
+                      <ResponsiveContainer width="100%" height={58}>
+                        <AreaChart data={tutor.interaction || []}>
+                          <Area
+                            type="monotone"
+                            dataKey="count"
+                            stroke="#22c55e"
+                            fill="rgba(34,197,94,0.18)"
+                            strokeWidth={2}
+                            dot={false}
+                          />
+                        </AreaChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </td>
+
+                  <td>
+                    <div className="admin-assignment-actions">
+                      <button
+                        type="button"
+                        title="View tutor details"
+                        onClick={() => navigate(`/admin/tutors/${tutor._id}`)}
+                      >
+                        <FiEye />
+                      </button>
+
+                      <button
+                        type="button"
+                        className="remove"
+                        title="Remove assigned tutor"
+                        onClick={() => {
+                          setRemoveTarget({
+                            student: row.student,
+                            tutor,
+                          });
+                          setRemoveOpen(true);
+                        }}
+                      >
+                        <FiTrash2 />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })
+          )}
+        </tbody>
+      </table>
+    </div>
+  )}
+</section>
+
+{removeOpen && (
+  <div className="admin-dashboard-remove-overlay">
+    <div className="admin-dashboard-remove-modal">
+      <div className="admin-dashboard-remove-header">
+        <h2>Remove Assigned Tutor</h2>
+        <button
+          type="button"
+          onClick={() => {
+            if (removing) return;
+            setRemoveOpen(false);
+            setRemoveTarget(null);
+          }}
+        >
+          ×
+        </button>
+      </div>
+
+      <div className="admin-dashboard-remove-body">
+        <p>
+          Do you want to remove{" "}
+          <b>{removeTarget?.tutor?.name || "this tutor"}</b> from this student?
+        </p>
+
+        <div className="admin-dashboard-remove-actions">
+          <button
+            type="button"
+            className="cancel"
+            disabled={removing}
+            onClick={() => {
+              setRemoveOpen(false);
+              setRemoveTarget(null);
+            }}
+          >
+            Cancel
+          </button>
+
+          <button
+            type="button"
+            className="remove"
+            disabled={removing}
+            onClick={removeAssignedTutor}
+          >
+            {removing ? "Removing..." : "Remove"}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
 
 
         </>
