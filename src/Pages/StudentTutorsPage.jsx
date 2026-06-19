@@ -440,8 +440,12 @@ const filteredAssignedTutors = useMemo(() => {
     const q = search.trim().toLowerCase();
 
     return tutors.filter((tutor) => {
+      // if (assignedTutorIds.has(String(tutor._id))) return false;
+      // if ( isTutorBlocked(tutor)) return false;
+
       if (assignedTutorIds.has(String(tutor._id))) return false;
-      if ( isTutorBlocked(tutor)) return false;
+if (!isTutorActive(tutor)) return false;
+if (isTutorBlocked(tutor)) return false;
 
       if (!q) return true;
 
