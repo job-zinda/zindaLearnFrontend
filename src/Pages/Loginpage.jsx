@@ -131,6 +131,11 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const [viewMode, setViewMode] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("token") || params.get("login") === "true" ? "login" : "landing";
+  });
+
   const [loginForm, setLoginForm] = useState({
     input: "",
     pass: "",
@@ -180,6 +185,7 @@ export default function LoginPage() {
 
         if (!inviteToken) return;
 
+        setViewMode("login");
         setLoginMsg("Verifying invite link...");
 
         const { data } = await api.get(
@@ -436,96 +442,134 @@ export default function LoginPage() {
         </div>
 
         <div className="zs-right">
-          <div className="zs-card">
-            <h2 className="zs-title">Welcome Back</h2>
-            <p className="zs-desc">
-              Sign in to access the online school management platform
-            </p>
+          {viewMode === "landing" ? (
+            <div className="zs-card zs-landing-card">
+              <div className="zs-landing-badge">Zinda Online School</div>
+              <h2 className="zs-title zs-landing-title">Learn. Teach. Grow Together.</h2>
+              <p className="zs-desc zs-landing-desc">
+                Welcome to Zinda Online School. Choose how you'd like to continue.
+              </p>
 
-            {loginMsg ? <div className="zs-msg">{loginMsg}</div> : null}
-
-            <form className="zs-form" onSubmit={handleLogin}>
-              <label className="zs-label">Email or Phone</label>
-              <input
-                className="zs-input"
-                type="text"
-                value={loginForm.input}
-                onChange={(e) =>
-                  setLoginForm((p) => ({ ...p, input: e.target.value }))
-                }
-                required
-              />
-
-              <label className="zs-label">Password</label>
-              <input
-                className="zs-input"
-                type="password"
-                value={loginForm.pass}
-                onChange={(e) =>
-                  setLoginForm((p) => ({ ...p, pass: e.target.value }))
-                }
-                required
-              />
-
-              <div className="zs-row">
+              <div className="zs-landing-actions">
                 <button
                   type="button"
-                  className="zs-link"
+                  className="zs-btn zs-btn-guest-primary"
                   onClick={() => {
-                    const value = loginForm.input.trim();
-                    setForgotEmail(value.includes("@") ? value : "");
-                    setForgotMsg("");
-                    setModal("forgot");
+                    localStorage.setItem("token", "guest-token");
+                    localStorage.setItem("role", "guest");
+                    localStorage.setItem(
+                      "user",
+                      JSON.stringify({ name: "Guest", role: "guest", isGuest: true })
+                    );
+                    navigate("/student", { replace: true });
                   }}
                 >
-                  Forgot password?
+                  Continue as Guest
                 </button>
-              </div>
 
-              <button className="zs-btn" disabled={loginLoading}>
-                {loginLoading ? "Signing in..." : "Sign In"}
-              </button>
-
-              <button
-                type="button"
-                className="zs-btn zs-btn-guest"
-                onClick={() => {
-                  localStorage.setItem("token", "guest-token");
-                  localStorage.setItem("role", "guest");
-                  localStorage.setItem(
-                    "user",
-                    JSON.stringify({ name: "Guest", role: "guest", isGuest: true })
-                  );
-                  navigate("/student", { replace: true });
-                }}
-              >
-                Continue as Guest
-              </button>
-
-              <div className="zs-bottom">
-                <span>New user?</span>
                 <button
                   type="button"
-                  className="zs-link"
-                  onClick={() => setModal("signup")}
+                  className="zs-btn zs-btn-login-secondary"
+                  onClick={() => setViewMode("login")}
                 >
-                  Register
+                  Login
                 </button>
+
+                <a
+                  className="zs-teaching-team-btn"
+                  href="https://wa.me/919847561998"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <img src={whatsappIcon} alt="WhatsApp" />
+                  <span>Joining Our Teaching Team</span>
+                </a>
               </div>
-            </form>
-            <a
-              className="zs-teaching-team"
-              href={TEACHING_TEAM_WHATSAPP_LINK}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <img src={whatsappIcon} alt="WhatsApp" />
-              <span>Join our teaching team</span>
-            </a>
-          </div>
 
+              <div className="zs-landing-footer">
+                Trusted by students and educators.
+              </div>
+            </div>
+          ) : (
+            <div className="zs-card">
+              <button
+                type="button"
+                className="zs-back-to-landing-btn"
+                onClick={() => setViewMode("landing")}
+              >
+                ← Back
+              </button>
+              <h2 className="zs-title">Welcome Back</h2>
+              <p className="zs-desc">
+                Sign in to access the online school management platform
+              </p>
 
+              {loginMsg ? <div className="zs-msg">{loginMsg}</div> : null}
 
+              <form className="zs-form" onSubmit={handleLogin}>
+                <label className="zs-label">Email or Phone</label>
+                <input
+                  className="zs-input"
+                  type="text"
+                  value={loginForm.input}
+                  onChange={(e) =>
+                    setLoginForm((p) => ({ ...p, input: e.target.value }))
+                  }
+                  required
+                />
+
+                <label className="zs-label">Password</label>
+                <input
+                  className="zs-input"
+                  type="password"
+                  value={loginForm.pass}
+                  onChange={(e) =>
+                    setLoginForm((p) => ({ ...p, pass: e.target.value }))
+                  }
+                  required
+                />
+
+                <div className="zs-row">
+                  <button
+                    type="button"
+                    className="zs-link"
+                    onClick={() => {
+                      const value = loginForm.input.trim();
+                      setForgotEmail(value.includes("@") ? value : "");
+                      setForgotMsg("");
+                      setModal("forgot");
+                    }}
+                  >
+                    Forgot password?
+                  </button>
+                </div>
+
+                <button className="zs-btn" disabled={loginLoading}>
+                  {loginLoading ? "Signing in..." : "Sign In"}
+                </button>
+
+                <div className="zs-bottom">
+                  <span>New user?</span>
+                  <button
+                    type="button"
+                    className="zs-link"
+                    onClick={() => setModal("signup")}
+                  >
+                    Register
+                  </button>
+                </div>
+              </form>
+              <a
+                className="zs-teaching-team"
+                href="https://wa.me/919847561998"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <img src={whatsappIcon} alt="WhatsApp" />
+                <span>Join our teaching team</span>
+              </a>
+            </div>
+          )}
         </div>
 
       </div>
