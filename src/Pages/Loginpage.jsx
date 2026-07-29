@@ -455,11 +455,11 @@ export default function LoginPage() {
                   type="button"
                   className="zs-btn zs-btn-guest-primary"
                   onClick={() => {
-                    localStorage.setItem("token", "guest-token");
+                    localStorage.removeItem("token");
                     localStorage.setItem("role", "guest");
                     localStorage.setItem(
                       "user",
-                      JSON.stringify({ name: "Guest", role: "guest", isGuest: true })
+                      JSON.stringify({ name: "Guest User", role: "guest" })
                     );
                     navigate("/student", { replace: true });
                   }}
