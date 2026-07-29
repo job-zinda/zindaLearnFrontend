@@ -428,7 +428,9 @@ async function saveProfile() {
             onClick={openProfileEditModal}
           >
             <div className="admin-profile-card__avatar">
-              {profilePhoto ? (
+              {localStorage.getItem("role") === "guest" ? (
+                <span>👤</span>
+              ) : profilePhoto ? (
                 <img src={profilePhoto} alt={user?.name || "Student"} />
               ) : (
                 <span>👨‍🎓</span>
@@ -436,8 +438,8 @@ async function saveProfile() {
             </div>
 
             <div className="admin-profile-card__meta">
-              <h4>{user?.name || "Student"}</h4>
-              <p>Student</p>
+              <h4>{localStorage.getItem("role") === "guest" ? "Guest Mode" : (user?.name || "Student")}</h4>
+              <p>{localStorage.getItem("role") === "guest" ? "Click to Login" : "Student"}</p>
             </div>
           </button>
 
@@ -473,17 +475,44 @@ async function saveProfile() {
           </nav>
         </div>
 
-        <button
-          type="button"
-          className="admin-logout-btn student-logout-btn"
-          onClick={handleLogout}
-        >
-          <span>
-            <LogoutIcon />
-          </span>
+        {localStorage.getItem("role") === "guest" ? (
+          <div className="student-sidenav-guest-actions">
+            <button
+              type="button"
+              className="student-guest-btn student-guest-btn--login"
+              onClick={() => {
+                localStorage.clear();
+                navigate("/?login=true");
+              }}
+            >
+              <span>🔑</span>
+              <span>Login</span>
+            </button>
+            <button
+              type="button"
+              className="student-guest-btn student-guest-btn--register"
+              onClick={() => {
+                localStorage.clear();
+                navigate("/?login=true");
+              }}
+            >
+              <span>📝</span>
+              <span>Register</span>
+            </button>
+          </div>
+        ) : (
+          <button
+            type="button"
+            className="admin-logout-btn student-logout-btn"
+            onClick={handleLogout}
+          >
+            <span>
+              <LogoutIcon />
+            </span>
 
-          <span>Logout</span>
-        </button>
+            <span>Logout</span>
+          </button>
+        )}
       </aside>
 
       {open && <div className="admin-sidenav-overlay" onClick={onClose} />}
