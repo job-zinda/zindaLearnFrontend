@@ -92,8 +92,16 @@ api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
 
-    if (token && token !== "guest-session") {
+    if (
+      token &&
+      token !== "undefined" &&
+      token !== "null" &&
+      token !== "guest-session" &&
+      token !== "guest-token"
+    ) {
       config.headers.Authorization = `Bearer ${token}`;
+    } else {
+      delete config.headers.Authorization;
     }
 
     return config;
