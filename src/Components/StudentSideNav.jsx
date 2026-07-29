@@ -263,6 +263,10 @@ const [profileForm, setProfileForm] = useState({
   }, []);
 
   function openProfileEditModal() {
+    if (localStorage.getItem("role") === "guest") {
+      navigate("/");
+      return;
+    }
     setProfileForm({
       name: user?.name || "",
       email: user?.email || "",
@@ -450,7 +454,17 @@ async function saveProfile() {
                       : ""
                   }`
                 }
-                onClick={onClose}
+                onClick={(e) => {
+                  if (
+                    localStorage.getItem("role") === "guest" &&
+                    (item.to.includes("/chats") || item.to.includes("/settings"))
+                  ) {
+                    e.preventDefault();
+                    navigate("/");
+                    return;
+                  }
+                  if (typeof onClose === "function") onClose();
+                }}
               >
                 <span>{item.icon}</span>
                 <span>{item.label}</span>

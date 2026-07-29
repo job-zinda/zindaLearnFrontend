@@ -363,10 +363,13 @@ export default function StudentTutorsPage() {
   async function fetchTutors() {
     try {
       setLoading(true);
+      const isGuest = localStorage.getItem("role") === "guest";
 
       const [allRes, assignedRes] = await Promise.all([
         api.get("/tuter/all"),
-        api.get("/student/my-assigned-tutors"),
+        isGuest
+          ? Promise.resolve({ data: { tutors: [] } })
+          : api.get("/student/my-assigned-tutors"),
       ]);
 
       const allTutors =
@@ -509,6 +512,10 @@ function goToDetails(tutor) {
 
 
   async function openTutorChat(tutor) {
+    if (localStorage.getItem("role") === "guest") {
+      navigate("/");
+      return;
+    }
     try {
       const { data } = await api.post(`/chat/student-tutor-room/${tutor._id}`);
 

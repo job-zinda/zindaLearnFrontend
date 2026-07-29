@@ -486,6 +486,22 @@ export default function LoginPage() {
                 {loginLoading ? "Signing in..." : "Sign In"}
               </button>
 
+              <button
+                type="button"
+                className="zs-btn zs-btn-guest"
+                onClick={() => {
+                  localStorage.setItem("token", "guest-token");
+                  localStorage.setItem("role", "guest");
+                  localStorage.setItem(
+                    "user",
+                    JSON.stringify({ name: "Guest", role: "guest", isGuest: true })
+                  );
+                  navigate("/student", { replace: true });
+                }}
+              >
+                Continue as Guest
+              </button>
+
               <div className="zs-bottom">
                 <span>New user?</span>
                 <button

@@ -366,10 +366,13 @@ const [loading, setLoading] = useState(true);
 async function fetchTutor() {
   try {
     setLoading(true);
+    const isGuest = localStorage.getItem("role") === "guest";
 
     const [tutorRes, assignedRes] = await Promise.all([
       api.get(`/tuter/${tuterId}`),
-      api.get("/student/my-assigned-tutors"),
+      isGuest
+        ? Promise.resolve({ data: { tutors: [] } })
+        : api.get("/student/my-assigned-tutors"),
     ]);
 
     const publicTutor = tutorRes.data?.tuter || null;
@@ -399,6 +402,10 @@ async function fetchTutor() {
   }, [tuterId]);
 
   function openReviewModal() {
+    if (localStorage.getItem("role") === "guest") {
+      navigate("/");
+      return;
+    }
     setRating(myReview?.rating || 0);
     setReviewText(myReview?.review || "");
     setReviewOpen(true);
@@ -447,6 +454,10 @@ async function fetchTutor() {
   }
 
   async function sendConnectRequest() {
+    if (localStorage.getItem("role") === "guest") {
+      navigate("/");
+      return;
+    }
     try {
       setSubmitting(true);
 
@@ -474,6 +485,10 @@ async function fetchTutor() {
 
 
 async function openAssignedTutorChat() {
+  if (localStorage.getItem("role") === "guest") {
+    navigate("/");
+    return;
+  }
   try {
     if (!isAssignedTutor) {
       showAlert("This tutor is not assigned to you", "error");
@@ -504,6 +519,10 @@ async function openAssignedTutorChat() {
 }
 
 function contactTutor() {
+  if (localStorage.getItem("role") === "guest") {
+    navigate("/");
+    return;
+  }
   if (isAssignedTutor) {
     const phone = String(tutor?.phone || "").replace(/\D/g, "");
 
@@ -638,7 +657,18 @@ function contactTutor() {
           <div className="student-detail-title">
             <h2>{tutor.name}</h2>
             <p>{tutor.qualification || "Qualification not added"}</p>
-            <Stars rating={tutor.averageRating} />
+            <div className="student-detail-rating-row">
+              <Stars rating={tutor.averageRating} />
+              <a
+                href="https://wa.me/919847561998"
+                target="_blank"
+                rel="noreferrer"
+                className="student-whatsapp-btn"
+              >
+                <img src={whatsappIcon} alt="WhatsApp" />
+                <span>WhatsApp</span>
+              </a>
+            </div>
           </div>
         </div>
 

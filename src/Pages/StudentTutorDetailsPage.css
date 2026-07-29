@@ -126,10 +126,45 @@
   overflow-wrap: anywhere;
 }
 
-.student-detail-stars {
+.student-detail-rating-row {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.student-whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #25D366;
+  color: #ffffff !important;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 8px 16px;
+  border-radius: 20px;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+  transition: all 0.25s ease;
+  line-height: 1;
+}
+
+.student-whatsapp-btn img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.student-whatsapp-btn:hover {
+  background: #20bd5a;
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+  color: #ffffff !important;
+}
+
+.student-whatsapp-btn:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .student-detail-star {
