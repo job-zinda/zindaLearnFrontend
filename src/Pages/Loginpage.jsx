@@ -455,7 +455,7 @@ export default function LoginPage() {
                   type="button"
                   className="zs-btn zs-btn-guest-primary"
                   onClick={() => {
-                    localStorage.removeItem("token");
+                    localStorage.setItem("token", "guest-session");
                     localStorage.setItem("role", "guest");
                     localStorage.setItem(
                       "user",

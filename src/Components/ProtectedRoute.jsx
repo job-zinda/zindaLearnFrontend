@@ -12,10 +12,6 @@ export default function ProtectedRoute({ allowedRole, children }) {
   const role = normalizeRole(localStorage.getItem("role"));
   const allowed = normalizeRole(allowedRole);
 
-  if (!token) {
-    return <Navigate to="/" replace />;
-  }
-
   if (role === "guest") {
     if (allowed !== "student") {
       return <Navigate to="/" replace />;
@@ -28,6 +24,10 @@ export default function ProtectedRoute({ allowedRole, children }) {
       return <Navigate to="/" replace />;
     }
     return children;
+  }
+
+  if (!token) {
+    return <Navigate to="/" replace />;
   }
 
   if (allowed && role !== allowed) {
